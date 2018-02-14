@@ -1,0 +1,24 @@
+html, body {
+    height: 100%;
+    
+}
+
+.col-md-2 {
+    outline: 2px solid #ccc;
+    
+}
+#timeBlocks .clickable .col-sm {
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+#timeBlocks #tableHeader {
+    text-align: center;
+}
+
+#timeBlocks .clickable {
+    height: 8em;
+    vertical-align: middle;
+    text-align: center;
+
+}
