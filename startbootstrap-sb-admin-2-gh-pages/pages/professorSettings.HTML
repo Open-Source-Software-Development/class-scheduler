@@ -1,0 +1,279 @@
+<!Doctype HTML>
+<HTML lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Professor Settings</title>
+        
+        <!-- Bootstrap CSS Stylesheet and metadata -->
+        
+          <!-- Bootstrap Core CSS -->
+            <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+            <!-- MetisMenu CSS -->
+            <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+            <!-- Custom CSS -->
+            <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+            <!-- Morris Charts CSS -->
+            <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+            <!-- Custom Fonts -->
+            <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- Stylesheet  -->
+        <link rel="stylesheet" href="../cssLocal/professorSettings.css">
+        
+    </head>
+    <body>
+        
+        <!-- Page title and header info -->
+        <H1 id="titleScreen"> Professor Settings</H1>
+        <h4 id="userGreetingPlaceholder"> Hello user!</h4>
+        
+        <!-- Time entry box info -->
+        <!--
+        plan: 
+            - users will be able to click each individual box, each box will change colors when clicked
+            - There will be three color options :
+                -Blue: Good time for Prodessor
+                -Yellow: Prefer not to teach this time block
+                -Red: Not avalable to teach this time block.
+            --> 
+        
+        <!--
+
+            TODO: fit a nice key block into here    
+        
+            -->
+        
+        <h5>Time </h5>
+        <p>Click on the boxes until the color matches your desired color</p>
+        <div clas="container" id="timeBlocks">
+        
+
+             <!-- Header Row -->
+            <div class="row" id="tableHeader" >
+                <div class="col-md">  
+                </div>   
+                <div class="col-md-2">
+                    Monday
+                </div> 
+                <div class="col-md-2">
+                    Tuesday
+                </div>
+                <div class="col-md-2">
+                    Wednesday
+                </div>
+                <div class="col-md-2">
+                    Thursday
+                </div>
+                <div class="col-md-2">
+                    Friday
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+
+            <div class="row clickable" >
+                <div class="col-md"> 
+                    8:00 - 9:15
+                </div>   
+                <div class="col-md-2">
+					<p id="1"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="2"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="3"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="4"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="5"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+
+            <div class="row clickable" >
+                <div class="col-md"> 
+                    9:30-10:45
+                </div>   
+                <div class="col-md-2">
+					<p id="6"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="7"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="8"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="9"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="10"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+
+
+            <div class="row clickable" >
+                <div class="col-md"> 
+                    11:00-12:15
+                </div>   
+                <div class="col-md-2">
+					<p id="11"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="12"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="13"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="14"> Avalable </p>
+                </div>
+				<div class="col-md-2">
+                    <p id="15"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+
+            <div class="row clickable" >
+                <div class="col-md"> 
+                    12:30-1:45
+                </div>   
+                <div class="col-md-2">
+					<p id="16"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="17"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="18"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="19"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="20"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+            <div class="row clickable" >
+                <div class="col-md">  
+                    2:00-3:15
+                </div>   
+                <div class="col-md-2">
+					<p id="21"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="22"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="23"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="24"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="25"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+            <div class="row clickable" >
+                <div class="col-md">
+                    3:30-4:45
+                </div>   
+                <div class="col-md-2">
+					<p id="26"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="27"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="28"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="29"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="30"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+            <div class="row clickable" >
+                <div class="col-md"> 
+                    5:30-6:15
+                </div>   
+                <div class="col-md-2">
+					<p id="31"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="32"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="33"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="34"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="35"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+
+            <div class="row clickable" >
+                <div class="col-md">  
+                    7:00-8:15
+                </div>   
+                <div class="col-md-2">
+					<p id="36"> Avalable </p>
+                </div> 
+                <div class="col-md-2">
+                    <p id="37"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="38"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="39"> Avalable </p>
+                </div>
+                <div class="col-md-2">
+                    <p id="40"> Avalable </p>
+                </div>
+                <div class="col-sm">
+                </div> 
+            </div>
+        </div>
+        
+        <!-- Bootstrap JS file Dependencies -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    </body>
+
+
+</HTML>
