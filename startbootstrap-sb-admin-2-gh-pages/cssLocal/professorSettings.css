@@ -1,29 +1,36 @@
 html, body {
-    height: 100%;
-    
+    height: 100%;   
+}
+
+.submitButton {
+  margin: 50px;
+  height: 10%;
+  width: 30%  
+}
+
+.ClickableTimeBlock {
+  line-height: 8em;
+}
+
+#timeBlocks {
+  height: 100%;
+  text-align: center;
 }
 
 .col-md-2 {
-    outline: 2px solid #ccc;  
+  outline: 2px solid #ccc;  
 }
 
 .col-md {
-    margin-left: 40px;
-    outline: 2px solid #ccc;
+  height : 8em;
+  margin-left: 40px;
+  outline: 2px solid #ccc;
 }
 
-#timeBlocks .clickable .col-sm {
-    height: 100%;
-    vertical-align: middle;
-    text-align: center;
-}
-#timeBlocks #tableHeader {
-    text-align: center;
+.row
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
 }
 
-#timeBlocks .clickable {
-    height: 8em;
-    vertical-align: middle;
-    text-align: center;
 
-}
