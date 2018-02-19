@@ -4,9 +4,14 @@ html, body {
 }
 
 .col-md-2 {
-    outline: 2px solid #ccc;
-    
+    outline: 2px solid #ccc;  
 }
+
+.col-md {
+    margin-left: 40px;
+    outline: 2px solid #ccc;
+}
+
 #timeBlocks .clickable .col-sm {
     height: 100%;
     vertical-align: middle;
