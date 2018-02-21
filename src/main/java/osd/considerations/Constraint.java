@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.output.hunk;
+import osd.output.Hunk;
 
 public interface Constraint extends Consideration<Boolean>, Predicate<Hunk> {
 

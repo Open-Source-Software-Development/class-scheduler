@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.output.hunk;
+import osd.output.Hunk;
 
 /**
  * Superinterface for user preferences and user constraints.
