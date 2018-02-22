@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
+{% if error %}
+{{ error }}
+{% endif %}
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="../cssLocal/styles.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 	<title>Champlain Schedule Creation</title>
 </head>
 
@@ -11,7 +15,7 @@
 </header>
 
 <div id="main">
-<a href="Login.html">
+<a href="#">
 	<button id="logoutButton">Logout</button>
 </a>
 
