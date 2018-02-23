@@ -65,46 +65,11 @@ Searching for files in directory /home/travis/build/Open-Source-Software-Develop
 Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/morrisjs
 Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/raphael
 Searching for files to process...
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/code_docs
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/code_docs/class-scheduler
 Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite
 Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite
 Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/__pycache__
 Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler
 Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/migrations
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/cssLocal
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/data
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/dist
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/dist/css
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/dist/js
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/js
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/less
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/pages
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/css
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/fonts
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap-social
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/datatables
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/css
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/images
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/js
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/datatables-plugins
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/datatables-responsive
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/flot
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/flot-tooltip
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/font-awesome
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/font-awesome/css
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/font-awesome/fonts
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/font-awesome/less
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/font-awesome/scss
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/jquery
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/metisMenu
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/morrisjs
-Searching for files in directory /home/travis/build/Open-Source-Software-Development/class-scheduler/startbootstrap-sb-admin-2-gh-pages/vendor/raphael
 Reading and parsing tag files
 Parsing files
 Building group list...
