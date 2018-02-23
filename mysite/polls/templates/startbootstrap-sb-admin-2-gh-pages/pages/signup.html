@@ -4,7 +4,7 @@
 
 <head>
 
-    <title>Login Page</title>
+    <title>Sign-Up Page</title>
 	
 	<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
@@ -15,6 +15,8 @@
 
 </head>
 
+</html>
+
 <body>
     <div class="center">
 	
@@ -23,42 +25,47 @@
 		</div>
 		
 		<div id="loginForm" class="panel panel-primary">
+		
 			<div class="panel-heading">
 				<h3 class="wrapper">Champlain Scheduler</h3>
 			</div>
 			
 			<div class="panel-footer">
 			
-				<form action="{% url 'login'%}" method="post">
+				<form action="{% url 'signup' %}" method="post">
 					{% csrf_token %}
+					
 					<div class="spacing wrapper">
 						<input id="loginFields" onClick="this.select();" placeholder="Username" name="username" type="text" value="username" autofocus>
 					</div>
 					
 					<div class="spacing wrapper">
-						<input id="loginFields" onClick="this.select();" placeholder="Password" name="password" type="password" value="password">
+						<input id="loginFields" onClick="this.select();" placeholder="Password" name="password1" type="password" value="password">
 					</div>
 					
+					<div class="spacing wrapper">
+						<input id="loginFields" onClick="this.select();" placeholder="Password" name="password2" type="password" value="password">
+					</div>
+
 					{% if error %}
-					<span id="errorMsg" onclick='this.remove(this); return false;'>
-						<div class="panel panel-primary wrapper">
-							<p>
-								{{ error }}
-							</p>
-						</div>
-					</span>
+						<span id="errorMsg" onclick='this.remove(this); return false;'>
+							<div class="panel panel-primary wrapper">
+								<p>
+									{{ error }}
+								</p>
+							</div>
+						</span>
 					{% endif %}
 					
 					<div class="spacing wrapper">
-						<input type="submit" value="Login" id="Button"/>
+						<input type="submit" value="Sign Up" id="Button"/>
 					</div>
 					
-				</form>
+				</form>	
 				
-				<div>
-					<a id="signUp" class="linkHide themeLight" href="{% url 'signup' %}">Signup</a>
-					<a id="forgotPass" class="linkHide themeLight" href="#">Forgot my password</a>
-				</div>	
+				<div class="wrapper">
+					<a class="linkHide themeLight" href="{% url 'login' %}">Back</a>
+				</div>
 				
 			</div>
 			
