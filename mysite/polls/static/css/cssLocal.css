@@ -19,7 +19,7 @@ body {
 }
 
 .ClickableTimeBlock {
-  line-height: 8em;
+
 }
 
 .center {
@@ -167,4 +167,8 @@ body {
 #errorMsg div p {
 	margin: 5px auto 5px auto;
 	line-height: 100%;
+}
+
+#timeTable, #timeTable table tbody th, #timeTable table thead th{
+	text-align: center;
 }
