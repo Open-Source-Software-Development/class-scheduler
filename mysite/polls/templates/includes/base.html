@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% load static %}
+{% if error %}
+{{ error }}
+{% endif %}
+<html>
+	{% include 'head.html' %}
+	<body>
+		{% include 'header.html' %}
+		<div id="main">
+			{% block content %}{% endblock %}
+		</div>
+		{% include 'footer.html' %}
+	</body>
+</html>
