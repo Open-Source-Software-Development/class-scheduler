@@ -7,10 +7,16 @@
 
 var indexSectionsWithContent =
 {
+  0: "bcdhmnprsu",
+  1: "bcdhmnprsu",
+  2: "m"
 };
 
 var indexSectionNames =
 {
+  0: "all",
+  1: "classes",
+  2: "namespaces"
 };
 
 function convertToId(search)
