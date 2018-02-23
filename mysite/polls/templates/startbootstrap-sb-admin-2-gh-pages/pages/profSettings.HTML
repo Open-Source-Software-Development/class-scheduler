@@ -20,14 +20,30 @@
 
     <body onload="setup()")>
 		
-        <H1 id="titleScreen"> Professor Settings</H1>
+		<div id="profSettingsHead">
 		
-		<a href="{% url 'index' %}">Back</a>
+			<div class="panel panel-primary">
+			
+				<div class="panel-heading">
+				
+					<H1 id="titleScreen"> Professor Settings</H1>
+					
+				</div>
+				
+				<div class="panel-footer">
+				
+					<h4> Hello, {{request.user.username}}</h4>
+					<h6>Click on the boxes until the color matches your desired color</h6>
+					
+					<a class="linkHide" href="{% url 'index' %}">
+						<button class="smallButton">Back</button>
+					</a>
+					
+				</div>
+				
+			</div>
 		
-        <h4 id="userGreetingPlaceholder"> Hello user!</h4>
-        
-        <h5>Time </h5>
-        <p>Click on the boxes until the color matches your desired color</p>
+		</div>
         
 		<div class="container" id="timeBlocks">
         

@@ -8,6 +8,9 @@ def professor_settings(request):
 	
 def index(request):
 	return render(request, 'index.html')
+	
+def blank(request):
+	return render(request, 'blank.html')
 
 def signup(request):
     if request.method == 'POST':
