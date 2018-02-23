@@ -18,12 +18,6 @@ body {
   text-align: center;
 }
 
-.submitButton {
-  margin: 50px;
-  height: 10%;
-  width: 30%  
-}
-
 .ClickableTimeBlock {
   line-height: 8em;
 }
@@ -35,8 +29,6 @@ body {
      right: 0;
      bottom: 0;
      left: 0;
-     width: 50%;
-     height: 60%;
 }
 
 .inline {
@@ -64,6 +56,34 @@ body {
 	color: #0057A1;
 }
 
+.smallButton {
+	background-color: #3278b3;
+	border: none;
+	width: 10%;
+	color: white;
+	padding: 3px 10px;
+	text-align: center;
+	font-size: 14px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+.smallButton:focus {
+	outline:0;
+}
+
+.smallButton:hover {
+	background-color: #0057A1;
+}
+
+#profSettingsHead {
+	margin: 25px auto;
+	width: 100%;
+}
+
 #loginFields {
 	width: 98%;
 	height: 36px;
@@ -80,7 +100,7 @@ body {
 	font-size: 16px;
 }
 
-#Button {
+#loginButton {
 	background-color: #3278b3;
 	border: none;
 	width: 98%;
@@ -95,7 +115,7 @@ body {
 	font-weight: bold;
 }
 
-#Button:hover {
+#loginButton:hover {
 	background-color: #0057A1;
 }
 
@@ -105,18 +125,14 @@ body {
 	margin: 20px 0px;
 }
 
-#rememberMe {
-	margin:auto 1% auto auto;
-	float: right;
-}
-
-#rememberMe input {
-	margin:4px 4px auto auto;
-}
-
 #forgotPass {
 	margin:auto 1% auto auto;
 	float: right;
+}
+
+#login {
+	width: 50%;
+    height: 60%;
 }
 
 #signUp {
@@ -124,8 +140,8 @@ body {
 }
 
 #timeBlocks {
-  height: 100%;
-  text-align: center;
+	height: 100%;
+	text-align: center;
 }
 
 #loginForm {

@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="center">
+    <div class="center" id="login">
 	
 		<div class="wrapper">
 			<img id="logo" src="https://www.champlain.edu/Images/Faculty-Staff/Campus-Services/Marketing-Department/Redesign/lockup_horizontal.png">
@@ -32,11 +32,11 @@
 				<form action="{% url 'login'%}" method="post">
 					{% csrf_token %}
 					<div class="spacing wrapper">
-						<input id="loginFields" onClick="this.select();" placeholder="Username" name="username" type="text" value="username" autofocus>
+						<input id="loginFields" onClick="this.select();" placeholder="Username" name="username" type="text" autofocus>
 					</div>
 					
 					<div class="spacing wrapper">
-						<input id="loginFields" onClick="this.select();" placeholder="Password" name="password" type="password" value="password">
+						<input id="loginFields" onClick="this.select();" placeholder="Password" name="password" type="password">
 					</div>
 					
 					{% if error %}
@@ -50,7 +50,7 @@
 					{% endif %}
 					
 					<div class="spacing wrapper">
-						<input type="submit" value="Login" id="Button"/>
+						<input type="submit" value="Login" id="loginButton"/>
 					</div>
 					
 				</form>
