@@ -72,107 +72,35 @@ Building member list...
 Searching for friends...
 Searching for documented defines...
 Computing class inheritance relations...
-Computing /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:9: warning: Compound scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:76: warning: Compound scheduler::models::UserPreference is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:46: warning: Compound scheduler::models::PregenSection is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:41: warning: Compound scheduler::models::Block is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:12: warning: Compound scheduler::models::Named::Meta is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:84: warning: Compound scheduler::models::UserConstaint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:66: warning: Compound scheduler::models::UserPreferenceOrConstraint::Meta is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:58: warning: Compound scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:27: warning: Compound scheduler::models::Professor is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:98: warning: Compound scheduler::models::Section is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:31: warning: Compound scheduler::models::Course is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/apps.py:4: warning: Compound scheduler::apps::SchedulerConfig is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:36: warning: Compound scheduler::models::Room is not documented.
+Computing /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Compound scheduler::models::Named::Meta is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:121: warning: Compound scheduler::models::UserPreferenceOrConstraint::Meta is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/migrations/0001_initial.py:7: warning: Compound scheduler::migrations::0001_initial::Migration is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:107: warning: Compound scheduler::models::Hunk is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:16: warning: Member BASE_DIR (variable) of namespace mysite::settings is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:23: warning: Member SECRET_KEY (variable) of namespace mysite::settings is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:26: warning: Member DEBUG (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:28: warning: Member ALLOWED_HOSTS (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:30: warning: Member LOGIN_REDIRECT_URL (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:34: warning: Member INSTALLED_APPS (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:44: warning: Member MIDDLEWARE (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:54: warning: Member ROOT_URLCONF (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:56: warning: Member TEMPLATES (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:72: warning: Member WSGI_APPLICATION (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:78: warning: Member DATABASES (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:89: warning: Member AUTH_PASSWORD_VALIDATORS (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:108: warning: Member LANGUAGE_CODE (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:110: warning: Member TIME_ZONE (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:112: warning: Member USE_I18N (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:114: warning: Member USE_L10N (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:116: warning: Member USE_TZ (variable) of namespace mysite::settings is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:122: warning: Member STATIC_URL (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:29: warning: Member ALLOWED_HOSTS (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:31: warning: Member LOGIN_REDIRECT_URL (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:36: warning: Member INSTALLED_APPS (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:46: warning: Member MIDDLEWARE (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:56: warning: Member ROOT_URLCONF (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:58: warning: Member TEMPLATES (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:75: warning: Member WSGI_APPLICATION (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:81: warning: Member DATABASES (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:92: warning: Member AUTH_PASSWORD_VALIDATORS (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:111: warning: Member LANGUAGE_CODE (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:113: warning: Member TIME_ZONE (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:115: warning: Member USE_I18N (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:117: warning: Member USE_L10N (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:119: warning: Member USE_TZ (variable) of namespace mysite::settings is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/settings.py:125: warning: Member STATIC_URL (variable) of namespace mysite::settings is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/urls.py:19: warning: Member urlpatterns (variable) of namespace mysite::urls is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/mysite/wsgi.py:16: warning: Member application (variable) of namespace mysite::wsgi is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/apps.py:5: warning: Member name (variable) of class scheduler::apps::SchedulerConfig is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/apps.py:6: warning: Member name (variable) of class scheduler::apps::SchedulerConfig is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/migrations/0001_initial.py:9: warning: Member initial (variable) of class scheduler::migrations::0001_initial::Migration is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/migrations/0001_initial.py:11: warning: Member dependencies (variable) of class scheduler::migrations::0001_initial::Migration is not documented.
 /home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/migrations/0001_initial.py:15: warning: Member operations (variable) of class scheduler::migrations::0001_initial::Migration is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Member __str__ (function) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:10: warning: Member name (variable) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:13: warning: Member abstract (variable) of class scheduler::models::Named::Meta is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Member __str__ (function) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:10: warning: Member name (variable) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Member __str__ (function) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:10: warning: Member name (variable) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:28: warning: Member division (variable) of class scheduler::models::Professor is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:10: warning: Member name (variable) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Member __str__ (function) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:32: warning: Member division (variable) of class scheduler::models::Course is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:33: warning: Member section_count (variable) of class scheduler::models::Course is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:10: warning: Member name (variable) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Member __str__ (function) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:37: warning: Member division (variable) of class scheduler::models::Room is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:38: warning: Member room_type (variable) of class scheduler::models::Room is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:10: warning: Member name (variable) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Member __str__ (function) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:42: warning: Member next_block (variable) of class scheduler::models::Block is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:43: warning: Member paired_with (variable) of class scheduler::models::Block is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:10: warning: Member name (variable) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:15: warning: Member __str__ (function) of class scheduler::models::Named is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:50: warning: Member __str__ (function) of class scheduler::models::PregenSection is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:47: warning: Member course (variable) of class scheduler::models::PregenSection is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:48: warning: Member suffix (variable) of class scheduler::models::PregenSection is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:69: warning: Member __str__ (function) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:72: warning: Member describe (function) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:59: warning: Member left_argument_type (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:60: warning: Member left_argument_id (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:61: warning: Member left_argument_object (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:62: warning: Member right_argument_type (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:63: warning: Member right_argument_id (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:64: warning: Member right_argument_object (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:67: warning: Member abstract (variable) of class scheduler::models::UserPreferenceOrConstraint::Meta is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:79: warning: Member describe (function) of class scheduler::models::UserPreference is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:69: warning: Member __str__ (function) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:72: warning: Member describe (function) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:77: warning: Member score (variable) of class scheduler::models::UserPreference is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:59: warning: Member left_argument_type (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:60: warning: Member left_argument_id (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:61: warning: Member left_argument_object (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:62: warning: Member right_argument_type (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:63: warning: Member right_argument_id (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:64: warning: Member right_argument_object (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:88: warning: Member describe (function) of class scheduler::models::UserConstaint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:69: warning: Member __str__ (function) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:72: warning: Member describe (function) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:86: warning: Member is_blacklist (variable) of class scheduler::models::UserConstaint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:59: warning: Member left_argument_type (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:60: warning: Member left_argument_id (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:61: warning: Member left_argument_object (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:62: warning: Member right_argument_type (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:63: warning: Member right_argument_id (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:64: warning: Member right_argument_object (variable) of class scheduler::models::UserPreferenceOrConstraint is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:102: warning: Member __str__ (function) of class scheduler::models::Section is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:99: warning: Member course (variable) of class scheduler::models::Section is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:100: warning: Member suffix (variable) of class scheduler::models::Section is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:113: warning: Member __str__ (function) of class scheduler::models::Hunk is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:108: warning: Member section (variable) of class scheduler::models::Hunk is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:109: warning: Member professor (variable) of class scheduler::models::Hunk is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:110: warning: Member room (variable) of class scheduler::models::Hunk is not documented.
-/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:111: warning: Member block (variable) of class scheduler::models::Hunk is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:16: warning: Member abstract (variable) of class scheduler::models::Named::Meta is not documented.
+/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py:122: warning: Member abstract (variable) of class scheduler::models::UserPreferenceOrConstraint::Meta is not documented.
 class usage relations...
 Flushing cached template relations that have become invalid...
 Creating members for template instances...
