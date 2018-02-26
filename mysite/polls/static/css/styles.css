@@ -2,6 +2,27 @@ body {
 	background-color: #f7f7f7;
 }
 
+nav {
+	text-decoration: none;
+	padding-bottom: 20px;
+}
+   
+nav a {
+    text-decoration: none;
+}
+
+a:link {
+    color: #0057A1;
+}
+
+a:visited {
+    color: #0057A1;
+}
+
+a:hover {
+    color: #3278b3;
+}
+
 .center {
 	position: absolute;
      margin: auto;
@@ -69,15 +90,48 @@ body {
 	background-color: #0057A1;
 }
 
+#main {	
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #container {
+	clear: both;
 	border: 2px solid grey;
 	border-radius: 8px;
 	padding: 5px 15px 15px 10px;
-	background-color: #f2f2f2; 
+	background-color: #f2f2f2;
 }
 
 #logo {
 	height: auto;
-	width: 60%;
-	margin: 20px 0px;
+	width: 20%;
+	height: 36px;
+}
+
+#logoutButton {
+	float: right;
+	background-color: #3278b3;
+	border: none;
+	width: 6%;
+	color: white;
+	padding: 5px 19px;
+	text-align: center;
+	font-size: 13px;
+	margin: 2px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#logoutButton:hover {
+	background-color: #0057A1;
+}
+
+footer {
+	text-align: center;
+	padding: 5px;
+	font-weight: bold;
 }
