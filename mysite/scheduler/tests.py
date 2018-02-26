@@ -1,14 +1,11 @@
 from django.test import TestCase
 
-from .models import Entry
-
-from scheduler.models import Named
+from scheduler.models import *
 # Create your tests here.
 
-class testModels():
+class TestModels(TestCase):
 
-    def test_model_string_representaion(self):
-        entry = Entry(title="My entry title")
-        self.assertEqual(str(entry), entry.title)
+    def test_named_string_representaion(self):
+        named = Named(name="name")
+        self.assertEqual(str(named), named.name)
         
-    

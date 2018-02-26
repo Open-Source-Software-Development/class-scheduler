@@ -81,7 +81,7 @@ class UserPreference(UserPreferenceOrConstraint):
         return six.text_type(label).format(self.score)
 
 
-class UserConstaint(UserPreferenceOrConstraint):
+class UserConstraint(UserPreferenceOrConstraint):
 
     is_blacklist = models.BooleanField()
     
