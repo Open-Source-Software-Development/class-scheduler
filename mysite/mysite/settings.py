@@ -56,7 +56,11 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.getcwd(), 'polls/templates/startbootstrap-sb-admin-2-gh-pages/pages')],
+        'DIRS': [
+            os.path.join(os.getcwd(), 'polls/templates/startbootstrap-sb-admin-2-gh-pages/pages'),
+            os.path.join(os.getcwd(), 'polls/templates/includes/'),
+            os.path.join(os.getcwd(), 'polls/templates/pages/')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
