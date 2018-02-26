@@ -34,7 +34,7 @@ class Course(Named):
 
 
 class Room(Named):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE, null=True, blank=True)
     room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
 
 
