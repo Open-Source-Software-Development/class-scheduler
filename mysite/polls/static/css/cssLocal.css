@@ -171,4 +171,5 @@ body {
 
 #timeTable, #timeTable table tbody th, #timeTable table thead th{
 	text-align: center;
+	user-select: none;
 }
