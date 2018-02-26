@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<title> DataTables </title>
+			<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+			<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+			<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
+			<style>
+			body {
+			    background-color: #f3f3f3;
+			}
+
+			h1 {
+			    color: #f3f3f3;
+			    margin-left: 40px;
+			}
+			#wrapper{
+		    width:70%;
+		    margin-left:15%;
+		    margin-right:15%;
+				margin-top: 5%;
+		  }
+			#next_page{
+				float:right;
+			}
+			</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div>
+				<h3>ssss Details</h3>
+			</div>
+			<table id="details">
+			<script type="text/javascript">
+			    $(document).ready(function () {
+			        $('#details').dataTable({
+			        	"pagingType": "full_numbers",
+			        });
+			    });
+			</script>
+			<thead>
+				<tr>
+					<th>Division</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Subject</th>
+					<th>Course</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for tch in teachers %}
+					<tr>
+						<td>{{ tch.division }}</td>
+						<td>{{ tch.first_name }}</td>
+						<td>{{ tch.last_name }}</td>
+						<td>{{ tch.subject }}</td>
+						<td>{{ tch.course }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div id="next_page">
+			<p>show next data points <a href=""> here </a></p>
+		</div>
+		</div>
+	</body>
+</html>
