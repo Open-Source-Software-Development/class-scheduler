@@ -1,4 +1,4 @@
-package schedule;
+package osd.schedule;
 
 import java.util.Comparator;
 
@@ -12,6 +12,6 @@ public interface PriorityList<E> {
      * <p>If no more elements are available, returns {@code null}.</p>
      * @return a high-priority element
      */
-    E pop(final Comparator<E> comparator);
+    E pop();
 
 }

@@ -1,7 +1,5 @@
-package schedule;
+package osd.schedule;
 
-import osd.considerations.Constraint;
-import osd.considerations.Preference;
 import osd.input.Section;
 import osd.output.Hunk;
 
@@ -12,17 +10,15 @@ import java.util.concurrent.Callable;
 public class SchedulingAttempt implements Callable<List<Hunk>> {
 
     private final PriorityList<Section> sections;
-    private final Trackers trackers;
+    private final CandidateHunkSource candidateHunkSource;
     private final Scheduler scheduler;
-    private final Prioritizer prioritizer;
 
     @Inject
-    SchedulingAttempt(final PriorityList<Section> sections, final Trackers trackers, final Constraint constraints,
-                      final Preference preferences) {
+    SchedulingAttempt(final Scheduler scheduler, final PriorityList<Section> sections,
+                      final CandidateHunkSource candidateHunkSource) {
+        this.scheduler = scheduler;
         this.sections = sections;
-        this.trackers = trackers;
-        this.scheduler = new Scheduler(trackers, constraints, preferences);
-        this.prioritizer = new Prioritizer(trackers);
+        this.candidateHunkSource = candidateHunkSource;
     }
 
     @Override
@@ -31,19 +27,19 @@ public class SchedulingAttempt implements Callable<List<Hunk>> {
     }
 
     private List<Hunk> backtrackingSearch(final PriorityList<Section> sections) {
-        final Section section = sections.pop(prioritizer);
+        final Section section = sections.pop();
         if (section == null) {
             return scheduler.getHunks();
         }
-        for (final Hunk hunk: trackers.candidates(section)) {
-            final int score = scheduler.schedule(hunk);
-            if (score > 0) {
+        for (final Hunk hunk: candidateHunkSource.iterable(section)) {
+            final boolean wasAdded = scheduler.addHunk(hunk);
+            if (wasAdded) {
                 final List<Hunk> result = backtrackingSearch(sections.clone());
                 if (result != null) {
                     return result;
                 }
+                scheduler.removeHunk(section);
             }
-            scheduler.remove(section);
         }
         return null;
     }
