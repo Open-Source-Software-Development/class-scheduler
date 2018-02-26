@@ -1,0 +1,166 @@
+<!Doctype HTML>
+{% load static %}
+<HTML lang="en">
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+    <title>Professor Settings</title>
+        
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/morrisjs/morris.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
+        
+</head>
+
+    <body onload="setup()")>
+		
+		<div id="profSettingsHead">
+		
+			<div class="panel panel-primary">
+			
+				<div class="panel-heading">
+				
+					<H1 id="titleScreen"> Professor Settings</H1>
+					
+				</div>
+				
+				<div class="panel-footer">
+				
+					<h4> Hello, {{request.user.username}}</h4>
+					<h6>Click on the boxes until the color matches your desired color</h6>
+					
+					<a class="linkHide" href="{% url 'index' %}">
+						<button class="smallButton">Back</button>
+					</a>
+					
+				</div>
+				
+			</div>
+		
+		</div>
+        
+		<div class="container" id="timeBlocks">
+        
+            <div class="row" id="tableHeader" >
+                <div class="col-md">  </div>   
+                <div class="col-md-2">
+                    Monday</div> 
+                <div class="col-md-2">
+                    Tuesday</div>
+                <div class="col-md-2">
+                    Wednesday</div>
+                <div class="col-md-2">
+                    Thursday</div>
+                <div class="col-md-2">
+                    Friday</div>
+                <div class="col-sm"></div> 
+			</div>
+
+
+            <div class="row" >
+                <div class="col-md"> 
+                    8:00 - 9:15</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div>
+			</div>
+
+
+            <div class="row" >
+                <div class="col-md"> 
+                    9:30-10:45</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div> 
+			</div>
+
+            <div class="row" >
+                <div class="col-md"> 
+                    11:00-12:15</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+				<div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div> 
+			</div>
+
+
+            <div class="row" >
+                <div class="col-md"> 
+                    12:30-1:45</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div> 
+			</div>
+
+            <div class="row" >
+                <div class="col-md">  
+                    2:00-3:15</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div> 
+			</div>
+
+            <div class="row" >
+                <div class="col-md">
+                    3:30-4:45</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div> 
+			</div>
+
+            <div class="row" >
+                <div class="col-md"> 
+                    5:30-6:15</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div> 
+			</div>
+
+            <div class="row" >
+                <div class="col-md">  
+                    7:00-8:15</div>   
+                <div class="col-md-2 ClickableTimeBlock"></div> 
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-md-2 ClickableTimeBlock"></div>
+                <div class="col-sm"></div> 
+			</div>
+				
+			<button type="button" class="submitButton">Submit</button>
+		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="{% static 'js/professorSettings.js' %}"></script>
+		
+    </body>
+
+</HTML>
