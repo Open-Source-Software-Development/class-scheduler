@@ -12,5 +12,4 @@ public interface Consideration<T> extends Function<Hunk, T> {
 	default T apply(final Hunk hunk) {
 		return evaulate(hunk);
 	}
-
 }

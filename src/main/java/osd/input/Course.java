@@ -1,12 +1,44 @@
 package osd.input;
 
-public interface Course extends Named {
+public class Course {
+	
+	int studentInt;
+	String courseId;
+	String divId;
+	RoomType roomReq;
+	int level;
+	int sectionCapacity;
+	
+	public Course(int tStudentInt, String tCourseId, String tDivId, RoomType tRoomReq, int tLevel, int tSecCapacity) {
+		studentInt = tStudentInt;
+		courseId = tCourseId;
+		divId = tDivId;
+		roomReq = tRoomReq;
+		level = tLevel;
+		sectionCapacity = tSecCapacity;
+	}
 
-	/**
-	 * Returns all the sections for this course. This should consider both
-	 * "pregenerated" sections specified in the database, and "additional"
-	 * sections specified in the course's "sections" column.
-	 */
-	Iterable<Section> getSections();
+	public int getStudentInt() {
+		return studentInt;
+	}
 
+	public String getCourseId() {
+		return courseId;
+	}
+
+	public String getDivId() {
+		return divId;
+	}
+
+	public RoomType getRoomReq() {
+		return roomReq;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public int getSectionCapacity() {
+		return sectionCapacity;
+	}
 }

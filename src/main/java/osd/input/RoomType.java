@@ -1,5 +1,12 @@
 package osd.input;
 
-public interface RoomType extends Named {
+public class RoomType{
 
+	String name;
+	int id;
+	
+	public RoomType(String tName, int tId) {
+		name = tName;
+		id = tId;
+	}
 }
