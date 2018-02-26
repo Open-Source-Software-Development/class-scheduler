@@ -13,6 +13,7 @@ urlpatterns = [
 	url(r'^blank/', polls.views.blank, name='blank'),
 	url(r'^index/', polls.views.index, name='index'),
     url(r'^admin/', admin.site.urls),
+	url(r'^run/', polls.views.run, name='run'),
 ]
 
 if settings.DEBUG:

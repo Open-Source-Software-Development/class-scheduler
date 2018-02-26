@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
+def run(request):
+	return render(request, 'run.html')
+
 def professor_settings(request):
 	return render(request, 'profSettings.html')
 	
