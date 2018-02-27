@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-
 	<head>
-
 		<title>Champlain Scheduler</title>
-
 		<link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 		<link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
 		<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
@@ -14,13 +11,9 @@
 		<link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 		<title>Champlain Schedule Creation</title>
-
 	</head>
-
 	<body>
-
 		<div id="wrapper">
-
 			<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -33,13 +26,11 @@
 				</div>
 
 				<ul class="nav navbar-top-links navbar-right">
-
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 							<i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
 						</a>
 						<ul class="dropdown-menu dropdown-alerts">
-
 							<li class="divider"></li>
 							<li>
 								<a href="#">
@@ -85,59 +76,15 @@
 							<li>
 								<a href="{% url 'professor_settings' %}"><i class="fa fa-table fa-fw"></i> Input</a>
 							</li>
-
+							<li>
+								<a href="{% url 'student_details' %}"><i class="fa fa-cloud-download"></i> View Data</a>
+							</li>
 					</div>
 				</div>
 			</nav>
-
 			<div id="page-wrapper">
-
+				<p>hwoo</p>
 			</div>
-
 		</div>
-
-		<script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
-		<script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-		<script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
-		<script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
-		<script src="{% static 'js/professorSettings.js' %}"></script>
-
-		<header id="logo">
-
-			<img id="logo" src="https://www.champlain.edu/Images/Faculty-Staff/Campus-Services/Marketing-Department/Redesign/lockup_horizontal.png">
-
-		</header>
-
-		<div id="main">
-
-			<a href="#">
-
-				<button id="logoutButton">Logout</button>
-
-			</a>
-
-			<article id="container">
-
-				<h1 class="themeDark">Champlain Schedule Creation - Hub</h1>
-				<p class="themeDark">Choose a link to get started:</p>
-
-				<nav>
-
-					<li><a href="{% url 'professor_settings' %}">Professor Settings</a></li>
-					<li><a href="{% url 'blank' %}">Blank Page</a></li>
-					<li><a href="{% url 'login' %}">Login</a></li>
-					<li><a href="{% url 'student_details'%}">Upload Schedule Data</a></li>
-					<li><a href="../htm/schedules.htm">View Generated Schedules</a></li>
-
-				</nav>
-
-			</article>
-
-		</div>
-
-		<footer class="wrapper themeDark">
-			Copyright &copy; Champlain College 2018
-		</footer>
-
 	</body>
 </html>
