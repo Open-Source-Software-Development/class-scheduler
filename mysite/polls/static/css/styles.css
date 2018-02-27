@@ -1,0 +1,137 @@
+body {
+	background-color: #f7f7f7;
+}
+
+nav {
+	text-decoration: none;
+	padding-bottom: 20px;
+}
+   
+nav a {
+    text-decoration: none;
+}
+
+a:link {
+    color: #0057A1;
+}
+
+a:visited {
+    color: #0057A1;
+}
+
+a:hover {
+    color: #3278b3;
+}
+
+.center {
+	position: absolute;
+     margin: auto;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     width: 50%;
+     height: 60%;
+}
+
+.wrapper {
+	text-align: center;
+}
+
+.spacing {
+	padding: 5px 0px 5px 0px;
+}
+
+.linkHide {
+	text-decoration: none;
+	color: black;
+}
+
+.themeLight {
+	color: #3278b3;
+}
+
+.themeDark {
+	color: #0057A1;
+}
+
+#loginFields {
+	width: 98%;
+	height: 36px;
+	border-radius: 6px;
+}
+
+#loginFields[type=text]:focus, #loginFields[type=password]:focus {
+	border: 2px solid #0057A1;
+	outline: none;
+}
+
+#loginFields[type=text], #loginFields[type=password] {
+	padding: 0px 5px;
+	font-size: 16px;
+}
+
+#loginButton {
+	background-color: #3278b3;
+	border: none;
+	width: 98%;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#loginButton:hover {
+	background-color: #0057A1;
+}
+
+#main {	
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#container {
+	clear: both;
+	border: 2px solid grey;
+	border-radius: 8px;
+	padding: 5px 15px 15px 10px;
+	background-color: #f2f2f2;
+}
+
+#logo {
+	height: auto;
+	width: 20%;
+	height: 36px;
+}
+
+#logoutButton {
+	float: right;
+	background-color: #3278b3;
+	border: none;
+	width: 6%;
+	color: white;
+	padding: 5px 19px;
+	text-align: center;
+	font-size: 13px;
+	margin: 2px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#logoutButton:hover {
+	background-color: #0057A1;
+}
+
+footer {
+	text-align: center;
+	padding: 5px;
+	font-weight: bold;
+}

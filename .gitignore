@@ -10,7 +10,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -56,6 +55,7 @@ coverage.xml
 .static_storage/
 .media/
 local_settings.py
+db.sqlite3
 
 # Flask stuff:
 instance/

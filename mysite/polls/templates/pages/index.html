@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+	<a href="#">
+		<button id="logoutButton">Logout</button>
+	</a>
+
+	<article id="container">
+
+		<h1 class="themeDark">Champlain Schedule Creation - Hub</h1>
+		
+		<p class="themeDark">Choose a link to get started:</p>
+
+		<nav>
+			<li><a href="{% url 'professor_settings' %}">Professor Settings</a></li>
+			<li><a href="{% url 'login' %}">Login</a></li>
+			<li><a href="../htm/upload.htm">Upload Schedule Data</a></li>
+			<li><a href="../htm/schedules.htm">View Generated Schedules</a></li>
+		</nav>
+
+	</article>
+{% endblock %}
