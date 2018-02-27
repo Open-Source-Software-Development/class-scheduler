@@ -6,6 +6,8 @@ from django.conf.urls import url, include
 import polls.views
 from django.contrib import admin
 
+## TODO: Documentation
+#
 urlpatterns = [
     url(r'^$', polls.views.loginUser, name='login'),
 	url(r'^signup/', polls.views.signup, name='signup'),
