@@ -34,7 +34,7 @@ class Course(Named):
 
 
 class Room(Named):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE, null=True, blank=True)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE)
     room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
 
 
@@ -81,7 +81,7 @@ class UserPreference(UserPreferenceOrConstraint):
         return six.text_type(label).format(self.score)
 
 
-class UserConstraint(UserPreferenceOrConstraint):
+class UserConstaint(UserPreferenceOrConstraint):
 
     is_blacklist = models.BooleanField()
     
