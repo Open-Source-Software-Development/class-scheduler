@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
     <div class="center" id="login">
 	
 		<div class="wrapper">
@@ -47,6 +48,16 @@
 							</p>
 						</div>
 					</span>
+					{% endif %}
+					
+					{% if message %}
+						<span id="goodMsg" onclick='this.remove(this); return false;'>
+							<div class="panel panel-primary wrapper">
+								<p>
+									{{ message }}
+								</p>
+							</div>
+						</span>
 					{% endif %}
 					
 					<div class="spacing wrapper">

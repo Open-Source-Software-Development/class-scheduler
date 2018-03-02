@@ -10,10 +10,12 @@ from django.contrib import admin
 #
 urlpatterns = [
     url(r'^$', polls.views.loginUser, name='login'),
-	url(r'^signup/', polls.views.signup, name='signup'),
-	url(r'^professor_settings/', polls.views.professor_settings, name='professor_settings'),
-	url(r'^blank/', polls.views.blank, name='blank'),
-	url(r'^index/', polls.views.index, name='index')
+    url(r'^signup/', polls.views.signup, name='signup'),
+    url(r'^professor_settings/', polls.views.professor_settings, name='professor_settings'),
+    url(r'^user_setting/', polls.views.user_settings, name='user_settings'),
+    url(r'^index/', polls.views.index, name='index'),
+    url(r'^admin/', admin.site.urls),
+    url(r'^logout/', polls.views.logout_view, name='logout'),
 ]
 
 if settings.DEBUG:
