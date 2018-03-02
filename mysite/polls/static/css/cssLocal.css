@@ -194,3 +194,25 @@ body {
 	text-align: center;
 	user-select: none;
 }
+
+#dropdownMenu {
+	margin: 0px 0px 15px 45%;
+}
+
+#dropdownMenu button{
+	background-color: #3278b3;
+	border: none;
+	width: 98%;
+	color: white;
+	padding: 12px 24px;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#dropdownMenu:hover button{
+	background-color: #0057A1;
+}

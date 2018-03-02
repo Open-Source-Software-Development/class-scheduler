@@ -6,11 +6,17 @@
 
     <title>Login Page</title>
 	
+	<!-- bootstsrap css -->
 	<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
     <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- SB admin2 css -->
     <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
     <link href="{% static 'vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
     <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<!-- custom css -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/cssLocal.css' %}">
 
 </head>
@@ -19,27 +25,37 @@
 
     <div class="center" id="login">
 	
+		<!-- Champlain logo -->
 		<div class="wrapper">
 			<img id="logo" src="https://www.champlain.edu/Images/Faculty-Staff/Campus-Services/Marketing-Department/Redesign/lockup_horizontal.png">
 		</div>
 		
+		<!-- login panel -->
 		<div id="loginForm" class="panel panel-primary">
+		
+			<!-- top of login panel -->
 			<div class="panel-heading">
 				<h3 class="wrapper">Champlain Scheduler</h3>
 			</div>
 			
+			<!-- bottom of login panel -->
 			<div class="panel-footer">
 			
+				<!-- login form -->
 				<form action="{% url 'login'%}" method="post">
 					{% csrf_token %}
+					
+					<!--  username input field -->
 					<div class="spacing wrapper">
 						<input id="loginFields" onClick="this.select();" placeholder="Username" name="username" type="text" autofocus>
 					</div>
 					
+					<!-- password input field -->
 					<div class="spacing wrapper">
 						<input id="loginFields" onClick="this.select();" placeholder="Password" name="password" type="password">
 					</div>
 					
+					<!-- error message form -->
 					{% if error %}
 					<span id="errorMsg" onclick='this.remove(this); return false;'>
 						<div class="panel panel-primary wrapper">
@@ -50,6 +66,7 @@
 					</span>
 					{% endif %}
 					
+					<!-- success message form -->
 					{% if message %}
 						<span id="goodMsg" onclick='this.remove(this); return false;'>
 							<div class="panel panel-primary wrapper">
@@ -60,12 +77,14 @@
 						</span>
 					{% endif %}
 					
+					<!-- login button/input -->
 					<div class="spacing wrapper">
 						<input type="submit" value="Login" id="loginButton"/>
 					</div>
 					
 				</form>
 				
+				<!-- extra buttons -->
 				<div>
 					<a id="signUp" class="linkHide themeLight" href="{% url 'signup' %}">Signup</a>
 					<a id="forgotPass" class="linkHide themeLight" href="#">Forgot my password</a>
@@ -76,6 +95,7 @@
 		</div>
 		
 	</div>
+	
 </body>
 
 </html>
