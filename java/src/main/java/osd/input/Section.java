@@ -1,15 +1,26 @@
 package osd.input;
 
-import java.util.Collections;
-
 /**
  * Represents a specific section of some course.
  */
-public interface Section extends Course {
+public interface Section extends Named {
 
-    @Override
-    default Iterable<Section> getSections() {
-        return Collections.singleton(this);
+    Course getCourse();
+
+    static Section of(final Course course, final String suffix) {
+        return new Section() {
+
+            @Override
+            public Course getCourse() {
+                return course;
+            }
+
+            @Override
+            public String getName() {
+                return course.getName() + "-" + suffix;
+            }
+
+        };
     }
 
 }
