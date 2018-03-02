@@ -20,8 +20,7 @@ echo "found python executable: $EXE"
 cd mysite
 
 echo "setting up database..."
-$EXE manage.py makemigrations
-$EXE manage.py migrate
-
-echo "launching server..."
+$EXE manage.py makemigrations &&\
+$EXE manage.py migrate &&\
+echo "launching server..." &&\
 $EXE manage.py runserver
