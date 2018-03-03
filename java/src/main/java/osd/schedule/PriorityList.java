@@ -1,9 +1,18 @@
 package osd.schedule;
 
-import java.util.Comparator;
+/**
+ * A priority queue specialized for backtracking search. Once the list is
+ * constructed, no new elements may be added. The sole mutation operation pops
+ * the highest-priority element.
+ * @param <E>
+ */
+interface PriorityList<E> {
 
-public interface PriorityList<E> {
-
+    /**
+     * Copies this priority list. Subsequently {@linkplain #pop() popping}
+     * either list must not change the other.
+     * @return a copy of this priority list
+     */
     PriorityList<E> clone();
 
     /**

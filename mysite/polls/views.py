@@ -3,15 +3,26 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
+def run(request):
+	return render(request, 'run.html')
+
+## TODO: Documentation
+#
 def professor_settings(request):
 	return render(request, 'profSettings.html')
-	
+
+## TODO: Documentation
+#
 def index(request):
 	return render(request, 'index.html')
-	
+
+## TODO: Documentation
+#
 def blank(request):
 	return render(request, 'blank.html')
 
+## TODO: Documentation
+#
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
@@ -29,10 +40,14 @@ def signup(request):
     else:
         return render(request, 'signup.html')
 		
+## TODO: Documentation
+#
 def logout_view(request):
     logout(request, user)
     return render(request, 'Login.html')		
 
+## TODO: Documentation
+#
 def loginUser(request):
     if request.method == 'POST':
         username = request.POST['username']
