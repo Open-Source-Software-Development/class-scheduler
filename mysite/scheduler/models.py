@@ -125,7 +125,8 @@ class PregenSection(models.Model):
 
 
 
-class Room(Named):
+@six.python_2_unicode_compatible
+class Room(models.Model):
     """
         Table: Room
         PrimaryKey: Composite (building, room_number)
@@ -149,6 +150,9 @@ class Room(Named):
     subject = models.CharField(max_length=10, null=True, blank=True)
     style = models.CharField(max_length=10, null=True, blank=True)
     room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{}-{}".format(self.building, self.room_number)
 
 
 
