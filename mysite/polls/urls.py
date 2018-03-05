@@ -23,6 +23,7 @@ urlpatterns = [
 	url(r'^course_review/', polls.views.results, name='course_review'),
 	url(r'^simple_upload/', polls.views.view_history, name='simple_upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
+    url(r'^logout/', polls.views.logout_view, name='logout'),
 ]
 
 if settings.DEBUG:
