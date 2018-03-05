@@ -148,6 +148,27 @@ body {
 	position: relative;
 }
 
+#goodMsg div {
+	background-color: #f5f5f5;
+	border: 3px solid #3bee3b;
+	border-radius: 8px;
+	color: black;
+	font-size: 120%;
+	cursor: pointer;
+    width: 80%;
+    height: auto;
+	margin: 10px auto;
+}
+
+#goodMsg div:hover {
+	background-color: #c4c4c4;
+}
+
+#goodMsg div p {
+	margin: 5px auto 5px auto;
+	line-height: 100%;
+}
+
 #errorMsg div {
 	background-color: #f5f5f5;
 	border: 3px solid #EE3B3B;
@@ -172,4 +193,26 @@ body {
 #timeTable, #timeTable table tbody th, #timeTable table thead th{
 	text-align: center;
 	user-select: none;
+}
+
+#dropdownMenu {
+	margin: 0px 0px 15px 45%;
+}
+
+#dropdownMenu button{
+	background-color: #3278b3;
+	border: none;
+	width: 98%;
+	color: white;
+	padding: 12px 24px;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#dropdownMenu:hover button{
+	background-color: #0057A1;
 }

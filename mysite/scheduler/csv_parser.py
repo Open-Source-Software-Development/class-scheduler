@@ -95,28 +95,32 @@ class ParseMode:
 @ParseMode.register
 class BlockParser(ParseMode):
 
-    columns = ("day", "start", "end")
+    columns = ("id", "day", "start", "end")
+
+    suffixes = ("A", "B")
 
     def __init__(self, header):
-        parse_mode.set_header(header)
-        self.block_count = 0
+        super().__init__(header)
+        self.counts_for_id = {}
+        self.blocks = []
 
     def add_row_impl(self, row):
-        self.block_count += 1
+        name = self._get_next_name(row["id"])
+        day = row["day"]
+        start_time = row["start"]
+        end_time = row["end"]
+        model = models.Block(name=name, day=day, start_time=start_time, end_time=end_time)
+        self.blocks.append(model)
 
     def get_models(self):
-        blocks = []
-        # Count backwards so we can set up the next_block associations
-        old_block_b = None
-        old_block_a = None
-        for i in range(self.block_count, 0, -1):
-            block_b = models.Block(name=("{}B".format(i)), next_block=old_block_b, paired_with=None)
-            block_a = models.Block(name=("{}A".format(i)), next_block=old_block_a, pared_with=block_b)
-            old_block_b = block_b
-            old_block_a = block_a
-            blocks.append(block_b)
-            blocks.append(block_a)
-        return {models.Block: blocks}
+        return list(self.blocks)
+
+    def _get_next_name(self, id):
+        id = self.counts_for_id.get(id, 0)
+        suffix = BlockParser.suffixes[id]
+        id = id + 1
+        self.counts_for_id[id] = id
+        return suffix + str(id)
 
 @ParseMode.register
 class RoomParser(ParseMode):
@@ -129,10 +133,13 @@ class RoomParser(ParseMode):
         self.room_types = {}
 
     def add_row_impl(self, row):
-        name = "{}-{}".format(row["building"], row["room"])
-        room_type = self._get_room_type(row["type"])
+        room_number = int(row["room"])
+        building = row["building"]
         division = self._get_division(row["division"])
-        model = models.Room(name=name, room_type=room_type, division=division)
+        subject = row["subject"]
+        style = row["course style"]
+        room_type = self._get_room_type(row["type"])
+        model = models.Room(room_number=room_number, building=building, division=division, subject=subject, style=style, room_type=room_type)
         self.rooms.append(model)
 
     def get_models(self):
