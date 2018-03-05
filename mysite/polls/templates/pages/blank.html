@@ -1,4 +1,25 @@
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <title>Champlain Scheduler</title>
+
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -6,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Champlain Scheduler</a>
+                <a class="navbar-brand" href="{% url 'index' %}">Champlain Scheduler</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -44,7 +65,7 @@
                         </li>
 						<li><a href="#">Staff?: <b>{{ request.user.is_staff }}</b></a>
                         </li>
-                        <li><a href="{% url 'userSettings' %}"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{% url 'login' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -63,13 +84,10 @@
                             <a href="{% url 'professor_settings' %}"><i class="fa fa-edit fa-fw"></i> Input Schedule Data</a>
                         </li>
 						<li>
-                            <a href="{% url 'simple_upload' %}"><i class="fa fa-upload fa-fw"></i> Upload CSV File</a>
+                            <a href="{% url 'professor_settings' %}"><i class="fa fa-upload fa-fw"></i> Upload CSV File</a>
                         </li>
 						<li>
-                            <a href="{% url 'course_review' %}"><i class="fa fa-files-o fa-fw"></i> Review Program Courses</a>
-                        </li>
-						<li>
-                            <a href="{% url 'PDProfSettings' %}"><i class="fa fa-sitemap fa-fw"></i> Professor Review</a>
+                            <a href="{% url 'professor_settings' %}"><i class="fa fa-files-o fa-fw"></i> Review Program Courses</a>
                         </li>
                         <li>
                             <a href="{% url 'run' %}"><i class="fa fa-tasks fa-fw"></i> Run Scheduler</a>
@@ -80,3 +98,19 @@
                 </div>
             </div>
         </nav>
+
+        <div id="page-wrapper">
+            
+        </div>
+
+    </div>
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+    <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+	<script src="{% static 'js/professorSettings.js' %}"></script>
+
+</body>
+
+</html>
