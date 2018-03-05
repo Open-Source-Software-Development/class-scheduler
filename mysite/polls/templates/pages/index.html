@@ -1,21 +1,37 @@
-{% extends 'base.html' %}
-{% block content %}
-	<a href="#">
-		<button id="logoutButton">Logout</button>
-	</a>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
 
-	<article id="container">
+<head>
 
-		<h1 class="themeDark">Champlain Schedule Creation - Hub</h1>
-		
-		<p class="themeDark">Choose a link to get started:</p>
+    <title>Champlain Scheduler</title>
 
-		<nav>
-			<li><a href="{% url 'professor_settings' %}">Professor Settings</a></li>
-			<li><a href="{% url 'login' %}">Login</a></li>
-			<li><a href="../htm/upload.htm">Upload Schedule Data</a></li>
-			<li><a href="../htm/schedules.htm">View Generated Schedules</a></li>
-		</nav>
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
 
-	</article>
-{% endblock %}
+</head>
+
+<body>
+
+    <div id="wrapper">
+        {% include 'blank.html' %}
+
+        <div id="page-wrapper">
+            
+        </div>
+
+    </div>
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+    <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+	<script src="{% static 'js/professorSettings.js' %}"></script>
+
+</body>
+
+</html>
