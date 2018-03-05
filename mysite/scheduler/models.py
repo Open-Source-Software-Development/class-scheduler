@@ -243,6 +243,10 @@ class UserPreferenceOrConstraint(models.Model):
 
 
 class UserPreference(UserPreferenceOrConstraint):
+    """
+        TODO:
+            Documentation
+    """
     score = models.IntegerField()
 
     def describe(self):
@@ -251,6 +255,11 @@ class UserPreference(UserPreferenceOrConstraint):
 
 
 class UserConstraint(UserPreferenceOrConstraint):
+    
+    """
+        TODO:
+            Documentation
+    """
 
     is_blacklist = models.BooleanField()
     
@@ -265,6 +274,11 @@ class UserConstraint(UserPreferenceOrConstraint):
 
 @six.python_2_unicode_compatible
 class Section(models.Model):
+    """
+        Used for output sections
+        TODO:
+            Documentation
+    """
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     section_identifier = models.CharField(max_length=50)
 
@@ -273,6 +287,10 @@ class Section(models.Model):
 
 @six.python_2_unicode_compatible
 class Hunk(models.Model):
+    """
+        TODO:
+            Documentation
+    """
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
