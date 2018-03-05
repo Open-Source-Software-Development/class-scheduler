@@ -5,6 +5,9 @@ from django.contrib.auth import login, authenticate, logout
 
 def run(request):
 	return render(request, 'run.html')
+	
+def history(request):
+	return render(request, 'history.html')
 
 ## TODO: Documentation
 #

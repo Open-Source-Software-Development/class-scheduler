@@ -14,8 +14,9 @@ urlpatterns = [
 	url(r'^professor_settings/', polls.views.professor_settings, name='professor_settings'),
 	url(r'^blank/', polls.views.blank, name='blank'),
 	url(r'^index/', polls.views.index, name='index'),
-        url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
 	url(r'^run/', polls.views.run, name='run'),
+	url(r'^history/', polls.views.history, name='history'),
 ]
 
 if settings.DEBUG:
