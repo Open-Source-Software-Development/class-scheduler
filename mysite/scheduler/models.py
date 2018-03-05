@@ -16,7 +16,7 @@ class Named(models.Model):
     """
         Gives better naming to things added manually
     """
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, null=True)
 
     class Meta:
         abstract = True
@@ -176,9 +176,6 @@ class PregenSection(models.Model):
 
     def __str__(self):
         return six.text_type("{}{}").format(str(self.course), self.suffix)
-
-    
-
 
 
 
