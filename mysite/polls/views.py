@@ -3,9 +3,11 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
+##Adds view for run scheduler page
 def run(request):
 	return render(request, 'run.html')
-	
+
+##Adds view for season history page	
 def history(request):
 	return render(request, 'history.html')
 

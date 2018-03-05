@@ -27,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Champlain Scheduler</a>
+                <a class="navbar-brand" href="{% url 'index' %}">Champlain Scheduler</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -100,17 +100,22 @@
         </nav>
 
     <div id="page-wrapper">
-		Choose a Semester/Division:
+		Choose a Semester:
 		<select>
 		<option value="none">Select...</option>
-		<option value="F2017ITS">Fall 2017 - ITS</option>
-		<option value="F2017COR">Fall 2017 - COR</option>
-		<option value="F2017CCM">Fall 2017 - CCM</option>
-		<option value="F2017EHS">Fall 2017 - EHS</option>
-		<option value="F2017BUS">Fall 2017 - BUS</option>
-		<option value="F2017GRAD">Fall 2017 - GRAD</option>
+		<option value="F2017">Fall 2017</option>
 		</select>
-		<input type="submit" value="Submit">
+		<br>Choose a Division:
+		<select>
+		<option value="none">Select...</option>
+		<option value="ITS">ITS</option>
+		<option value="COR">COR</option>
+		<option value="CCM">CCM</option>
+		<option value="EHS">EHS</option>
+		<option value="BUS">BUS</option>
+		<option value="GRAD">GRAD</option>
+		</select>
+		<br><input type="submit" value="Submit">
     </div>
 
     <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
