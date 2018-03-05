@@ -90,8 +90,7 @@ class Course(Named):
                 - The courses instructional method (ex STN)
             style: Charfield (Max Length 20)
                 - The style of the course (ex: studio)
-            section count: Positive Integer
-                -generated data, not input
+           
     """
     
     
@@ -114,6 +113,8 @@ class Professor(Named):
                 - Professors First Name (ex: James)
             last: CharField(max_length=20)
                 -Professor Last Name (ex: Wilson)
+            qualifications: ManyToManyField with Course
+                -Each professor teaches multiple courses 
     """
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     first = models.CharField(max_length=20, null=True, blank=True)
