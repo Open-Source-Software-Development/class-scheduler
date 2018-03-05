@@ -3,13 +3,29 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
-##Adds view for run scheduler page
+def simple_upload(request):
+	return render(request, 'simple_upload.html')
+	
+def course_review(request):
+	return render(request, 'course_review.html')
+
+def PDProfSettings(request):
+	return render(request, 'PDProfSettings.html')
+	
+def userSettings(request):
+	return render(request, 'userSettings.html')
+
 def run(request):
 	return render(request, 'run.html')
-
-##Adds view for season history page	
+	
 def history(request):
 	return render(request, 'history.html')
+
+def results(request):
+	return render(request, 'results.html')
+	
+def view_history(request):
+	return render(request, 'view_history.html')
 
 ## TODO: Documentation
 #
