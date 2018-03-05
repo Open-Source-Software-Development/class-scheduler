@@ -19,9 +19,9 @@ urlpatterns = [
 	url(r'^history/', polls.views.history, name='history'),
 	url(r'^results/', polls.views.results, name='results'),
 	url(r'^view_history/', polls.views.view_history, name='view_history'),
-	url(r'^PDProfSettings/', polls.views.history, name='PDProfSettings'),
-	url(r'^course_review/', polls.views.results, name='course_review'),
-	url(r'^simple_upload/', polls.views.view_history, name='simple_upload'),
+	url(r'^PDProfSettings/', polls.views.PDProfSettings, name='PDProfSettings'),
+	url(r'^course_review/', polls.views.course_review, name='course_review'),
+	url(r'^simple_upload/', polls.views.simple_upload, name='simple_upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
 ]
 
