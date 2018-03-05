@@ -17,6 +17,11 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^run/', polls.views.run, name='run'),
 	url(r'^history/', polls.views.history, name='history'),
+<<<<<<< HEAD
+=======
+	url(r'^results/', polls.views.results, name='results'),
+	url(r'^view_history/', polls.views.view_history, name='view_history'),
+>>>>>>> feature/run_scheduler
 ]
 
 if settings.DEBUG:

@@ -8,6 +8,15 @@ def run(request):
 	
 def history(request):
 	return render(request, 'history.html')
+<<<<<<< HEAD
+=======
+
+def results(request):
+	return render(request, 'results.html')
+	
+def view_history(request):
+	return render(request, 'view_history.html')
+>>>>>>> feature/run_scheduler
 
 ## TODO: Documentation
 #
