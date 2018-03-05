@@ -3,20 +3,65 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
+def simple_upload(request):
+	return render(request, 'simple_upload.html')
+	
+def course_review(request):
+	return render(request, 'course_review.html')
+
+def PDProfSettings(request):
+	return render(request, 'PDProfSettings.html')
+	
+def userSettings(request):
+	return render(request, 'userSettings.html')
+
 def run(request):
 	return render(request, 'run.html')
 	
 def history(request):
 	return render(request, 'history.html')
-<<<<<<< HEAD
-=======
 
 def results(request):
 	return render(request, 'results.html')
 	
 def view_history(request):
 	return render(request, 'view_history.html')
->>>>>>> feature/run_scheduler
+
+## TODO: Documentation
+#
+def user_settings(request):
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		first = request.POST['first']
+		last = request.POST['last']
+		email = request.POST['email']
+		
+		user = request.user
+
+		if username:
+			if username != request.user.username:
+				try:
+					user = User.objects.get(username=request.POST['username'])
+					return render(request, 'userSettings.html', {'error': 'Username Already Taken'} )
+				except User.DoesNotExist:
+					user.username = username
+
+		if password:
+			user.set_password(password)
+
+		user.first_name = first
+
+		user.last_name = last
+
+		if email: 
+			user.email = email
+
+		user.save()
+		return render(request, 'userSettings.html', {'message': 'Settings Applied'} )
+			
+	else:
+		return render(request, 'userSettings.html')
 
 ## TODO: Documentation
 #
@@ -24,12 +69,12 @@ def professor_settings(request):
 	return render(request, 'profSettings.html')
 
 ## TODO: Documentation
-#
+#	
 def index(request):
 	return render(request, 'index.html')
 
 ## TODO: Documentation
-#
+#	
 def blank(request):
 	return render(request, 'blank.html')
 
@@ -40,37 +85,37 @@ def signup(request):
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.get(username=request.POST['username'])
-                return render(request, 'signup.html', {'error': 'username already taken'} )
+                return render(request, 'signup.html', {'error': 'Username Already Taken'} )
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
-                login(request, user)
-                return render(request, 'Login.html')
+                return render(request, 'Login.html', {'message': 'Account Created'} )
         else:
-            match = "password didn't match"
-            content = {'error': match}
-            return render(request, 'signup.html', content)
+            return render(request, 'signup.html', {'error': 'Passwords Did\'t Match'})
     else:
         return render(request, 'signup.html')
-		
+
 ## TODO: Documentation
-#
+#		
 def logout_view(request):
-    logout(request, user)
-    return render(request, 'Login.html')		
+	logout(request)
+	return render(request, 'Login.html')		
 
 ## TODO: Documentation
 #
 def loginUser(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return render(request, 'index.html')
-        else:
-            failed = "Unable to login in"
-            content = {'error':failed}
-            return render(request, 'Login.html', content)
-    else:
-        return render(request, 'Login.html')
+	if request.user.is_authenticated:
+		return render(request, 'index.html')
+	else:
+		if request.method == 'POST':
+			username = request.POST['username']
+			password = request.POST['password']
+			user = authenticate(request, username=username, password=password)
+			if user is not None:
+				login(request, user)
+				return render(request, 'index.html')
+			else:
+				failed = "Unable to login in"
+				content = {'error':failed}
+				return render(request, 'Login.html', content)
+		else:
+			return render(request, 'Login.html')
