@@ -11,7 +11,7 @@
 	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
     <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
     <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-	<link href="{% static '/cssLocal/styles.css' %}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
 
 </head>
 
@@ -100,18 +100,78 @@
         </nav>
 
         <div id="page-wrapper">
-		<label>Choose a Semester/Division:</label>
-			<select>
-			 <option value="Select">Select...</option>
-			 <option value="F2017_ITS">Fall 2017 - ITS</option>
-             <option value="F2017_COR">Fall 2017 - COR</option>
-             <option value="F2017_CCM">Fall 2017 - CCM</option>
-             <option value="F2017_EHS">Fall 2017 - EHS</option>
-             <option value="F2017_BUS">Fall 2017 - BUS</option>
-             <option value="F2017_GRAD">Fall 2017 - GRAD</option>
-			</select>
-			<input type="submit" value="Submit">			
-        </div>
+				<table class="table table-striped table-bordered">						
+					<thead>
+											
+						<tr>
+							<th>Section Name</th>
+							<th>Title</th>
+							<th>Room</th>
+							<th>Time Block</th>
+							<th>Professor</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr>
+							<th width="120px">CCC-410ITS-06</th>
+							<th width="120px">Capstone Design:FOR</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">12A,13A</th>
+							<th width="120px">Yogeshkumar Khatri</th>
+						</tr>
+						<tr>
+							<th width="120px">FOR-100-01</th>
+							<th width="120px">Intro to Cybercrime & Df</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">6A,6B</th>
+							<th width="120px">Joseph Letourneau</th>
+						</tr>
+						<tr>
+							<th width="120px">FOR-100-51</th>	
+							<th width="120px">Intro to Cybercrime & Df</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">15A,17A</th>
+							<th width="120px">Joseph Letourneau</th>
+						</tr>
+						<tr>
+							<th width="120px">FOR-100-52</th>
+							<th width="120px">Intro to Cybercrime & Df</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">15B,17B</th>
+							<th width="120px">Joseph Letourneau</th>							
+						</tr>
+						<tr>
+							<th width="120px">FOR-240-01</th>
+							<th width="120px">Intro. to Digital Forensics</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">10A,10B</th>
+							<th width="120px">Devin	Paden</th>
+						</tr>
+						<tr>
+							<th width="120px">FOR-240-02</th>
+							<th width="120px">Intro. to Digital Forensics</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">9A,9B</th>
+							<th width="120px">Yogeshkumar Khatri</th>
+						</tr>
+						<tr>
+							<th width="120px" >FOR-240-03</th>
+							<th width="120px">Intro. to Digital Forensics</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">10A,10B</th>
+							<th width="120px">Yogeshkumar Khatri</th>
+						</tr>
+						<tr>
+							<th width="120px" >FOR-240-51</th>
+							<th width="120px">Intro. to Digital Forensics</th>
+							<th width="120px">FOST-100</th>
+							<th width="120px">11A,11B</th>
+							<th width="120px">Patrick Dunston</th>
+						</tr>
+					</tbody>
+				</table>
+		</div>
 
     </div>
 
