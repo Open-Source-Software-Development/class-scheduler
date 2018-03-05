@@ -78,112 +78,39 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="{% url 'index' %}"><i class="fa fa-dashboard fa-fw"></i> Index</a>
+                            <a href="{% url 'index' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="{% url 'professor_settings' %}"><i class="fa fa-table fa-fw"></i> Input</a>
+                            <a href="{% url 'professor_settings' %}"><i class="fa fa-edit fa-fw"></i> Input Schedule Data</a>
                         </li>
-                        
+						<li>
+                            <a href="{% url 'professor_settings' %}"><i class="fa fa-upload fa-fw"></i> Upload CSV File</a>
+                        </li>
+						<li>
+                            <a href="{% url 'professor_settings' %}"><i class="fa fa-files-o fa-fw"></i> Review Program Courses</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'run' %}"><i class="fa fa-tasks fa-fw"></i> Run Scheduler</a>
+                        </li>
+						<li>
+                            <a href="{% url 'history' %}"><i class="fa fa-table fa-fw"></i> View Season History</a>
+                        </li>       
                 </div>
             </div>
         </nav>
 
-        <div id="page-wrapper">
-		<i class="fa fa-wrench fa-fw"></i>Choose a Semester/Division<span class="fa arrow"></span>
-            <ul class="nav nav-second-level">
-             <li>
-              Fall 2017 - ITS
-             </li>
-             <li>
-              Fall 2017 - COR
-             </li>
-             <li>
-              Fall 2017 - CCM
-             </li>
-             <li>
-              Fall 2017 - EHS
-             </li>
-             <li>
-              Fall 2017 - BUS
-             </li>
-             <li>
-              Fall 2017 - GRAD
-             </li>
-        </ul>
-		
-		<table>						
-					<thead>
-											
-						<tr>
-							<th>Section Name</th>
-							<th>Title</th>
-							<th>Room</th>
-							<th>Time Block</th>
-							<th>Professor</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-						<tr>
-							<th width="120px">CCC-410ITS-06</th>
-							<th width="120px">Capstone Design:FOR</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">12A,13A</th>
-							<th width="120px">Yogeshkumar Khatri</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-100-01</th>
-							<th width="120px">Intro to Cybercrime & Df</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">6A,6B</th>
-							<th width="120px">Joseph Letourneau</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-100-51</th>	
-							<th width="120px">Intro to Cybercrime & Df</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">15A,17A</th>
-							<th width="120px">Joseph Letourneau</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-100-52</th>
-							<th width="120px">Intro to Cybercrime & Df</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">15B,17B</th>
-							<th width="120px">Joseph Letourneau</th>							
-						</tr>
-						<tr>
-							<th width="120px">FOR-240-01</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">10A,10B</th>
-							<th width="120px">Devin	Paden</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-240-02</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">9A,9B</th>
-							<th width="120px">Yogeshkumar Khatri</th>
-						</tr>
-						<tr>
-							<th width="120px" >FOR-240-03</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">10A,10B</th>
-							<th width="120px">Yogeshkumar Khatri</th>
-						</tr>
-						<tr>
-							<th width="120px" >FOR-240-51</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">11A,11B</th>
-							<th width="120px">Patrick Dunston</th>
-						</tr>
-					</tbody>
-				</table>			
-        </div>
-
+    <div id="page-wrapper">
+		Choose a Semester/Division:
+		<select>
+		<option value="none">Select...</option>
+		<option value="F2017ITS">Fall 2017 - ITS</option>
+		<option value="F2017COR">Fall 2017 - COR</option>
+		<option value="F2017CCM">Fall 2017 - CCM</option>
+		<option value="F2017EHS">Fall 2017 - EHS</option>
+		<option value="F2017BUS">Fall 2017 - BUS</option>
+		<option value="F2017GRAD">Fall 2017 - GRAD</option>
+		</select>
+		<input type="submit" value="Submit">
     </div>
 
     <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
