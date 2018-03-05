@@ -3,6 +3,19 @@ import models
 
 
 def parse_csv(filename):
+    """Parse a CSV file. Discard the first line, and take the second
+    to be a header. Use this header to determine the file's schema,
+    failing with an IndexError if the schema could not be determined.
+    Parse each row of the file, and return a dictionary representing
+    them. The dict keys are Django models, and the valuess are lists
+    of instances of those models.
+
+    Args:
+        filename(str): A string representing a path to the CSV file.
+
+    Returns:
+        A dict from Django models to lists of instances.
+    """
     with open(filename) as f:
         reader = csv.reader(f)
         file_format = None
@@ -20,11 +33,20 @@ def parse_csv(filename):
 
 
 class ParseMode:
+    """A CSV schema. Schemas should be created by extending this class
+    and decorating them with @ParseMode.register. Such subclasses MUST
+    declare the columns they care about with a static tuple named
+    'columns'.
+
+    Args:
+        header (list str): The CSV's header.
+    """
 
     modes = []
 
     @classmethod
     def register(cls, mode):
+        """Automatically registers this parse mode."""
         cls.modes.append(mode)
         return mode
 
@@ -37,6 +59,7 @@ class ParseMode:
 
     @classmethod
     def can_parse(cls, header):
+        """Checks if all this mode's columns are in the header."""
         for i in cls.columns:
             if i not in header:
                 return False
@@ -44,18 +67,23 @@ class ParseMode:
 
     @classmethod
     def for_header(cls, header):
+        """Gets a parse mode for a header or fails with an IndexError."""
+        # TODO: IndexError is probably not the right exception type.
         for mode in cls.modes:
             if mode.can_parse(header):
                 return mode(header)
         raise IndexError("couldn't determine what type of CSV this is - check the header")
 
     def add_row(self, row):
+        """Parse a single CSV row and store it."""
         return self.add_row_impl(self._parse_row(row))
 
     def get_models(self):
+        """Gets the models corresponding to our CSV rows."""
         raise NotImplementedError()
 
     def add_row_impl(self, row):
+        """Hook to define parse logic."""
         raise NotImplementedError()
 
     def _parse_row(self, row):
