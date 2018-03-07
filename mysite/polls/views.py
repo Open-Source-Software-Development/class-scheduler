@@ -11,9 +11,6 @@ def course_review(request):
 
 def PDProfSettings(request):
 	return render(request, 'PDProfSettings.html')
-	
-def userSettings(request):
-	return render(request, 'userSettings.html')
 
 def run(request):
 	return render(request, 'run.html')
@@ -26,7 +23,7 @@ def view_history(request):
 
 ## TODO: Documentation
 #
-def user_settings(request):
+def userSettings(request):
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
@@ -101,7 +98,7 @@ def logout_view(request):
 #
 def loginUser(request):
 	if request.user.is_authenticated:
-		return render(request, 'index.html')
+		return index(request)
 	else:
 		if request.method == 'POST':
 			username = request.POST['username']
