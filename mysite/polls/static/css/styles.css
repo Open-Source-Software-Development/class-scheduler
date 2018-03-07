@@ -106,8 +106,8 @@ a:hover {
 
 #logo {
 	height: auto;
-	width: 20%;
-	height: 36px;
+	width: 60%;
+	margin: 20px 0px;
 }
 
 #logoutButton {

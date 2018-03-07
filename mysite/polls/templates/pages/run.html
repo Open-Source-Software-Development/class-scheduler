@@ -18,84 +18,16 @@
 <body>
 
     <div id="wrapper">
-
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Champlain Scheduler</a>
-            </div>
-
-            <ul class="nav navbar-top-links navbar-right">
-                
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Scheduler Finished
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-				<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Hello, {{request.user.username}}!</a>
-                        </li>
-						<li><a href="#">Staff?: <b>{{ request.user.is_staff }}</b></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="{% url 'login' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="{% url 'index' %}"><i class="fa fa-dashboard fa-fw"></i> Index</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'professor_settings' %}"><i class="fa fa-table fa-fw"></i> Input</a>
-                        </li>
-                        
-                </div>
-            </div>
-        </nav>
+{% include 'blank.html' %}
 
         <div id="page-wrapper">
-		<input type="checkbox" name="vehicle" value="Business">Business Division Schedule<br>
-		<input type="checkbox" name="vehicle" value="CCM">Communication & Creative Media Division Schedule<br>
-		<input type="checkbox" name="vehicle" value="EHS">Education & Human Studies Division Schedule<br>
-		<input type="checkbox" name="vehicle" value="ITS">Information Technology & Sciences Division Schedule<br>
-		<input type="checkbox" name="vehicle" value="Core">Core Division Schedule<br>
-		<input type="checkbox" name="vehicle" value="Cont">Continuing Professional Studies Division Schedule<br>
-        <button type="button">Run Scheduler</button> 
+		<input type="checkbox" name="division" value="Business">Business Division Schedule<br>
+		<input type="checkbox" name="division" value="CCM">Communication & Creative Media Division Schedule<br>
+		<input type="checkbox" name="division" value="EHS">Education & Human Studies Division Schedule<br>
+		<input type="checkbox" name="division" value="ITS">Information Technology & Sciences Division Schedule<br>
+		<input type="checkbox" name="division" value="Core">Core Division Schedule<br>
+		<input type="checkbox" name="division" value="Cont">Continuing Professional Studies Division Schedule<br>
+        <button type="button" id="loginButton">Run Scheduler</button> <button type="button">Cancel Scheduler</button>
         </div>
 
     </div>

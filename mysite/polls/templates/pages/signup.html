@@ -6,47 +6,63 @@
 
     <title>Sign-Up Page</title>
 	
-	<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
-    <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/morrisjs/morris.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/cssLocal.css' %}">
+	<!-- bootstrap css -->
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- SB admin 2 css -->
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
 
 </head>
 
 </html>
 
 <body>
+
     <div id="login" class="center">
 	
+		<!-- Champlain logo -->
 		<div class="wrapper">
 			<img id="logo" src="https://www.champlain.edu/Images/Faculty-Staff/Campus-Services/Marketing-Department/Redesign/lockup_horizontal.png">
 		</div>
 		
+		<!-- sign up panel -->
 		<div id="loginForm" class="panel panel-primary">
 		
+			<!-- sign up panel top -->
 			<div class="panel-heading">
 				<h3 class="wrapper">Champlain Scheduler</h3>
 			</div>
 			
+			<!-- sign up panel bottom -->
 			<div class="panel-footer">
 			
+				<!-- sign up form -->
 				<form action="{% url 'signup' %}" method="post">
 					{% csrf_token %}
 					
+					<!-- username input field -->
 					<div class="spacing wrapper">
 						<input id="loginFields" onClick="this.select();" placeholder="Username" name="username" type="text" autofocus>
 					</div>
 					
+					<!-- password input field -->
 					<div class="spacing wrapper">
 						<input id="loginFields" onClick="this.select();" placeholder="Password" name="password1" type="password">
 					</div>
 					
+					<!-- password check field -->
 					<div class="spacing wrapper">
 						<input id="loginFields" onClick="this.select();" placeholder="Re-Type Password" name="password2" type="password">
 					</div>
 
+					<!-- error message -->
 					{% if error %}
 						<span id="errorMsg" onclick='this.remove(this); return false;'>
 							<div class="panel panel-primary wrapper">
@@ -57,12 +73,14 @@
 						</span>
 					{% endif %}
 					
+					<!-- sign up form submit button -->
 					<div class="spacing wrapper">
 						<input type="submit" value="Sign Up" id="loginButton"/>
 					</div>
 					
 				</form>	
 				
+				<!-- back link -->
 				<div class="wrapper">
 					<a class="linkHide themeLight" href="{% url 'login' %}">Back</a>
 				</div>
