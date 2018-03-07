@@ -23,6 +23,7 @@ urlpatterns = [
 	url(r'^simple_upload/', polls.views.view_history, name='simple_upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
+	url(r'^file_upload/', polls.views.file_upload, name='file_upload'),
 ]
 
 if settings.DEBUG:
