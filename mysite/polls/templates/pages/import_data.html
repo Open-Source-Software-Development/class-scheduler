@@ -1,0 +1,103 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+
+  <title>Champlain Scheduler</title>
+
+  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+  <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
+  <link rel="stylesheet" href="{% static 'css/course_review_box.css' %}">
+
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
+
+  <style>
+    form {
+      margin-top: 15px;
+    }
+
+    #step1,
+    #step2,
+    #step3 {
+      background: #e8e8e8;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-top: 10px;
+      padding: 15px;
+    }
+
+    h1 {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body onload="setup()" )>
+
+  <div id="wrapper">
+    {% include 'blank.html' %}
+
+    <div id="page-wrapper">
+      <!-- Start: Import CSV-->
+      {% block content %}
+      <div class="container" style="width: 1000px;">
+        <div class="panel panel-primary" style="width: 89%; margin-top:3%">
+          <div class="panel-heading">
+            <h3 class="panel-title" style="padding:12px 0px;font-size:16px;"><strong>Import schedule data</strong></h3>
+          </div>
+          <div class="panel-body">
+            <h4>Import File To Database:</h4>
+            <div style="border: 3px solid #a1a1a1;margin-top: 15px;padding: 20px;">
+              <a href="#"><button class="btn btn-active btn-lg">Course Data</button></a>
+              <a href="#"><button class="btn btn-success btn-lg">Faculty Data</button></a>
+              <a href="#"><button class="btn btn-success btn-lg">Room Data</button></a>
+              <a href="#"><button class="btn btn-success btn-lg">Time Block</button></a>
+            </div>
+            <h4>Import File Form:</h4>
+            <form style="border: 3px solid #a1a1a1;margin-top: 10px;padding: 10px;" class="form-horizontal" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="file" name="myfile" />
+              <br/>
+              <button class="btn btn-primary">Import CSV</button>
+            </form>
+            <br/>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+      <!-- End: Import CSV-->
+    </div>
+
+  </div>
+  <script src="{% static 'js/course_review_jsbox.js' %}"></script>
+  <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+  <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+  <script src="{% static 'js/professorSettings.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+      });
+
+      $('#sidebarCollapse').on('click', function() {
+        $('#sidebar, #content').toggleClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
