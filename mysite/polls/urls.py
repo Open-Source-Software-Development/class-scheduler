@@ -11,19 +11,20 @@ import room_data.views
 #
 urlpatterns = [
     url(r'^$', polls.views.loginUser, name='login'),
+    url(r'^index/', polls.views.index, name='index'),
 	url(r'^signup/', polls.views.signup, name='signup'),
 	url(r'^professor_settings/', polls.views.professor_settings, name='professor_settings'),
 	url(r'^blank/', polls.views.blank, name='blank'),
-	url(r'^index/', polls.views.index, name='index'),
     url(r'^admin/', admin.site.urls),
 	url(r'^run/', polls.views.run, name='run'),
 	url(r'^history/', polls.views.history, name='history'),
 	url(r'^view_history/', polls.views.view_history, name='view_history'),
 	url(r'^PDProfSettings/', polls.views.PDProfSettings, name='PDProfSettings'),
 	url(r'^course_review/', polls.views.course_review, name='course_review'),
-	url(r'^simple_upload/', polls.views.view_history, name='simple_upload'),
+	url(r'^upload/', polls.views.simple_upload, name='upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
+
 ]
 
 if settings.DEBUG:
