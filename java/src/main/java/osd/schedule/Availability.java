@@ -5,6 +5,7 @@ import osd.output.Hunk;
 import osd.util.relation.ManyToManyRelation;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -46,19 +47,22 @@ class Availability {
     }
 
     void onHunkAdded(final Hunk hunk) {
+        final Section section = hunk.getSection();
         final Professor professor = hunk.getProfessor();
         final Room room = hunk.getRoom();
         final Block block = hunk.getBlock();
         blockAvailability.setUnavailable(block, room);
         blockAvailability.setUnavailable(block, professor);
+        professors.remove(section);
+        rooms.remove(section);
     }
 
     Stream<Professor> getProfessors(final Section section) {
-        return professors.get(section).stream();
+        return professors.getOrDefault(section, Collections::emptySet).stream();
     }
 
     Stream<Room> getRooms(final Section section) {
-        return rooms.get(section).stream();
+        return rooms.getOrDefault(section, Collections::emptySet).stream();
     }
 
     Stream<Block> getBlocks(final Professor professor, final Room room) {

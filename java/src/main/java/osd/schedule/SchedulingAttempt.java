@@ -37,8 +37,10 @@ public class SchedulingAttempt implements Callable<List<Hunk>> {
         if (section == null) {
             return hunks;
         }
+        System.out.println("Moving into " + section.getName());
         for (final Hunk hunk: scheduler.getCandidateHunks(section)) {
             final boolean wasAdded = scheduler.addHunk(hunk);
+            System.out.println(hunk + " was " + (wasAdded ? "added" : "rejected"));
             if (wasAdded) {
                 final List<Hunk> newHunks = new ArrayList<>(hunks);
                 newHunks.add(hunk);
@@ -48,6 +50,7 @@ public class SchedulingAttempt implements Callable<List<Hunk>> {
                 }
             }
         }
+        System.out.println("Backtracking...");
         return null;
     }
 

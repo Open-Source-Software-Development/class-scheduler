@@ -6,6 +6,7 @@ import osd.output.Hunk;
 
 import javax.inject.Inject;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class Scheduler {
@@ -58,7 +59,7 @@ class Scheduler {
         if (!constraints.test(hunk)) {
             return false;
         }
-        final Stream<Section> impact = availability.getImpacted(hunk);
+        final List<Section> impact = availability.getImpacted(hunk).collect(Collectors.toList());
         availability.onHunkAdded(hunk);
         impact.forEach(this::update);
         sections.reversed().remove(section);

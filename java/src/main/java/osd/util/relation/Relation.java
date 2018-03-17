@@ -2,6 +2,7 @@ package osd.util.relation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public abstract class Relation<K, L, V, W> {
 
@@ -37,6 +38,16 @@ public abstract class Relation<K, L, V, W> {
         return data.get(key);
     }
 
+    public W getOrDefault(final K key, final Supplier<W> defaultSupplier) {
+        final W w = get(key);
+        return w == null ? defaultSupplier.get() : w;
+    }
+
     public abstract Relation<V, W, K, L> reversed();
+
+    @Override
+    public String toString() {
+        return data.toString();
+    }
 
 }
