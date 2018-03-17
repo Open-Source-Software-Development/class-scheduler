@@ -17,9 +17,12 @@ class AvailabilityTest {
 
     // Some bullshit test data.
     // We'll use the following rules for our mock constraints:
-    // - For mockSection3, any hunk is valid.
     // - For mockSection1, everything else in the hunk must contain a 1.
     // - For mockSection2, everything else in the hunk must contain a 2.
+    // - For mockSection3, the room must contain a 1, but any block or
+    //   either professor is okay.
+    // This isn't a particularly realistic test case, but it keeps the
+    // number of combinations sane.
     @Mock private Sources mockSources;
     @Mock private Professor mockProfessor1;
     @Mock private Professor mockProfessor2;
@@ -60,7 +63,7 @@ class AvailabilityTest {
                 final Room room = hunk.getRoom();
                 final Block block = hunk.getBlock();
                 if (section.equals(mockSection3)) {
-                    return true;
+                    return (room == mockRoom1 || room == null);
                 }
                 if (section == mockSection1) {
                     return (professor == mockProfessor1 || professor == null)
@@ -79,8 +82,8 @@ class AvailabilityTest {
 
     @Test
     void getImpacted() {
-        // Since mockSection3 can be scheduled anywhere, it should be impacted
-        // by either of the other mock sections.
+        // Since mockSection3 can be scheduled with any professor, it should
+        // be impacted by either of the other mock sections.
         final Hunk hunk = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockA1);
         final Set<Section> expected = Collections.singleton(mockSection3);
         final Set<Section> result = instance.getImpacted(hunk)
@@ -152,11 +155,17 @@ class AvailabilityTest {
     void candidates_RespectsAddHunk() {
         instance.onHunkAdded(new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2));
         final Set<Hunk> expected = new HashSet<>(Arrays.asList(
-                new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockA1),
-                new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockA2),
-                new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB1)
+                // Professor 1 isn't available at block B2.
+                new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlockA1),
+                new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlockA2),
+                new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlockB1),
+                // Professor 2 is available at every block, but room 2 isn't
+                // available block B2, so we get the same possibilities.
+                new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockA1),
+                new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockA2),
+                new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockB1)
         ));
-        final Set<Hunk> result = instance.candidates(mockSection1).collect(Collectors.toSet());
+        final Set<Hunk> result = instance.candidates(mockSection3).collect(Collectors.toSet());
         assertEquals(expected, result);
     }
 
