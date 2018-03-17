@@ -1,16 +1,41 @@
 package osd.schedule;
 
 import osd.input.Section;
+import osd.input.Sources;
 import osd.output.Hunk;
 
-import java.util.List;
+import javax.inject.Inject;
+import java.util.*;
+import java.util.stream.Stream;
 
-/**
- * A mutable work-in-progress schedule. Hunks may be added to the scheduler,
- * but no two hunks may have the same {@linkplain Hunk#getSection() section}.
- * Hunks may also be removed by section.
- */
-interface Scheduler {
+class Scheduler {
+
+    private final PriorityTracker sections;
+
+    private final Availability availability;
+    private final Constraints constraints;
+    private final Preferences preferences;
+
+    @Inject
+    Scheduler(final Sources sources, final Constraints constraints, final Preferences preferences,
+              final Availability availability) {
+        sections = new PriorityTracker();
+        this.availability = availability;
+        this.constraints = constraints;
+        this.preferences = preferences;
+        sources.getSections().forEach(this::update);
+    }
+
+    private Scheduler(final Scheduler copyOf) {
+        this.sections = new PriorityTracker(copyOf.sections);
+        this.availability = new Availability(copyOf.availability);
+        this.constraints = copyOf.constraints;
+        this.preferences = copyOf.preferences;
+    }
+
+    Scheduler copy() {
+        return new Scheduler(this);
+    }
 
     /**
      * Attempts to add a hunk to this scheduler. First, the scheduler checks
@@ -25,21 +50,53 @@ interface Scheduler {
      * @param hunk the hunk to add to the scheduler
      * @return whether the hunk was added
      */
-    boolean addHunk(final Hunk hunk);
+    boolean addHunk(final Hunk hunk) {
+        final Section section = hunk.getSection();
+        if (sections.reversed().get(section) == null) {
+            throw new IllegalArgumentException(section + " is not pending");
+        }
+        if (!constraints.test(hunk)) {
+            return false;
+        }
+        final Stream<Section> impact = availability.getImpacted(hunk);
+        availability.onHunkAdded(hunk);
+        impact.forEach(this::update);
+        sections.reversed().remove(section);
+        return true;
+    }
 
     /**
-     * Gets the hunk for some section and removes it. If no hunk existed with
-     * that section, the removal fails with a {@link java.util.NoSuchElementException}.
-     * @param section
+     * Computes a "high priority" section. A section's priority is defined
+     * according to the following algorithm:
+     * <ol>
+     * <li>Find all rooms that this section can be scheduled at.</li>
+     * <li>Find all professors that can teach this section.</li>
+     * <li>For each professor, room pair, count all the blocks that pair is
+     * available at.</li>
+     * <li>Sum those counts.</li>
+     * </ol>
+     * Lower numbers are higher priority. Therefore, this method shall return
+     * a section such that no section yields a lower number. If all sections
+     * have been scheduled, this returns {@code null}.
+     * @return a "high priority" section
      */
-    void removeHunk(final Section section);
+    Section getNextSection() {
+        if (sections.isEmpty()) {
+            return null;
+        }
+        assert sections.getLowest() != null;
+        return sections.getLowest().iterator().next();
+    }
 
-    /**
-     * Gets all the hunks that have been added (and not removed). The
-     * returned list supports mutation operations; changes to that list
-     * will not affect the scheduler, nor vice-verse.
-     * @return all the hunks in the schedule
-     */
-    List<Hunk> getHunks();
+    Iterable<Hunk> getCandidateHunks(final Section section) {
+        return () -> availability.candidates(section)
+                .sorted(preferences)
+                .iterator();
+    }
+
+    private void update(final Section section) {
+        long priority = availability.candidates(section).count();
+        sections.add(priority, section);
+    }
 
 }

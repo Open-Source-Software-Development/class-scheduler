@@ -4,6 +4,7 @@ import osd.input.Section;
 import osd.output.Hunk;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
@@ -14,24 +15,11 @@ import java.util.function.Supplier;
  */
 public class SchedulingAttempt implements Callable<List<Hunk>> {
 
-    private final PriorityList<Section> sections;
-    private final CandidateHunkSource candidateHunkSource;
-    private final Supplier<Scheduler> schedulerFactory;
+    private final Scheduler scheduler;
 
-    /**
-     * {@linkplain Inject Injectable} constructor. Input data is provided via
-     * the {@code sections} and {@code candidateHunkSource} arguments.
-     * @param schedulerFactory a supplier for blank schedulers
-     * @param sections a priority list of sections
-     * @param candidateHunkSource a {@linkplain CandidateHunkSource candidate hunk source}
-     */
     @Inject
-    SchedulingAttempt(final Supplier<Scheduler> schedulerFactory,
-                      final PriorityList<Section> sections,
-                      final CandidateHunkSource candidateHunkSource) {
-        this.schedulerFactory = schedulerFactory;
-        this.sections = sections;
-        this.candidateHunkSource = candidateHunkSource;
+    SchedulingAttempt(final Scheduler scheduler) {
+        this.scheduler = scheduler;
     }
 
     /**
@@ -41,22 +29,23 @@ public class SchedulingAttempt implements Callable<List<Hunk>> {
      */
     @Override
     public List<Hunk> call() {
-        return backtrackingSearch(sections.clone(), schedulerFactory.get());
+        return backtrackingSearch(new ArrayList<>(), scheduler);
     }
 
-    private List<Hunk> backtrackingSearch(final PriorityList<Section> sections, final Scheduler scheduler) {
-        final Section section = sections.pop();
+    private List<Hunk> backtrackingSearch(final List<Hunk> hunks, final Scheduler scheduler) {
+        final Section section = scheduler.getNextSection();
         if (section == null) {
-            return scheduler.getHunks();
+            return hunks;
         }
-        for (final Hunk hunk: candidateHunkSource.iterable(section)) {
+        for (final Hunk hunk: scheduler.getCandidateHunks(section)) {
             final boolean wasAdded = scheduler.addHunk(hunk);
             if (wasAdded) {
-                final List<Hunk> result = backtrackingSearch(sections.clone(), scheduler);
+                final List<Hunk> newHunks = new ArrayList<>(hunks);
+                newHunks.add(hunk);
+                final List<Hunk> result = backtrackingSearch(newHunks, scheduler.copy());
                 if (result != null) {
                     return result;
                 }
-                scheduler.removeHunk(section);
             }
         }
         return null;
