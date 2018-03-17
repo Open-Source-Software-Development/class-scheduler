@@ -26,13 +26,13 @@ class PriorityTrackerTest {
 
     @Test
     void getLowest_InitiallyNull() {
-        assertNull(instance.getLowest());
+        assertNull(instance.getHighPriority());
     }
 
     @Test
     void getLowest_AfterAddition() {
         instance.add(1L, mockSectionPriority1);
-        assertEquals(Collections.singleton(mockSectionPriority1), instance.getLowest());
+        assertEquals(Collections.singleton(mockSectionPriority1), instance.getHighPriority());
     }
 
     @Test
@@ -40,7 +40,7 @@ class PriorityTrackerTest {
         instance.add(2L, mockSectionPriority2);
         instance.add(1L, mockSectionPriority1);
         instance.add(3L, mockSectionPriority3);
-        assertEquals(Collections.singleton(mockSectionPriority1), instance.getLowest());
+        assertEquals(Collections.singleton(mockSectionPriority1), instance.getHighPriority());
     }
 
     @Test
@@ -48,7 +48,7 @@ class PriorityTrackerTest {
         instance.add(2L, mockSectionPriority2);
         instance.add(1L, mockSectionPriority1);
         instance.remove(1L);
-        assertEquals(Collections.singleton(mockSectionPriority2), instance.getLowest());
+        assertEquals(Collections.singleton(mockSectionPriority2), instance.getHighPriority());
     }
 
 
@@ -57,7 +57,7 @@ class PriorityTrackerTest {
         instance.add(2L, mockSectionPriority2);
         instance.add(1L, mockSectionPriority1);
         instance.reversed().remove(mockSectionPriority1);
-        assertEquals(Collections.singleton(mockSectionPriority2), instance.getLowest());
+        assertEquals(Collections.singleton(mockSectionPriority2), instance.getHighPriority());
     }
 
 }

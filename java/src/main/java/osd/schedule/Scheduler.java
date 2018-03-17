@@ -7,7 +7,6 @@ import osd.output.Hunk;
 import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class Scheduler {
 
@@ -17,6 +16,13 @@ class Scheduler {
     private final Constraints constraints;
     private final Preferences preferences;
 
+    /**
+     * DI constructor
+     * @param sources everything that exists in this schedule
+     * @param constraints the constraints for this schedule
+     * @param preferences the preferences for this schedule
+     * @param availability an {@link Availability instance}
+     */
     @Inject
     Scheduler(final Sources sources, final Constraints constraints, final Preferences preferences,
               final Availability availability) {
@@ -85,10 +91,17 @@ class Scheduler {
         if (sections.isEmpty()) {
             return null;
         }
-        assert sections.getLowest() != null;
-        return sections.getLowest().iterator().next();
+        assert sections.getHighPriority() != null;
+        return sections.getHighPriority().iterator().next();
     }
 
+    /**
+     * Gets all the candidate hunks for some section. These are sorted
+     * by preferences; hunks that score higher will come before those that
+     * score lower.
+     * @param section the section to generate candidates for
+     * @return the (sorted) candidates for that section
+     */
     Iterable<Hunk> getCandidateHunks(final Section section) {
         return () -> availability.candidates(section)
                 .sorted(preferences)
