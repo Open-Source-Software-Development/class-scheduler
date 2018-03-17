@@ -1,10 +1,5 @@
 package osd.input;
 
-import osd.input.Block;
-import osd.input.Professor;
-import osd.input.Room;
-import osd.input.Section;
-
 import java.util.stream.Stream;
 
 public interface Sources {
