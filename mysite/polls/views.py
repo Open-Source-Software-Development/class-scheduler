@@ -9,6 +9,9 @@ def simple_upload(request):
 def course_review(request):
 	return render(request, 'course_review.html')
 
+def course_selection(request):
+	return render(request, 'PDcoursesSelector.html')
+
 def PDProfSettings(request):
 	return render(request, 'PDProfSettings.html')
 

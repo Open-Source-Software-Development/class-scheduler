@@ -23,6 +23,7 @@ urlpatterns = [
 	url(r'^course_review/', polls.views.course_review, name='course_review'),
 	url(r'^upload/', polls.views.simple_upload, name='upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
+    url(r'^course_selection/', polls.views.course_selection, name='course_selection'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
 
 ]

@@ -69,7 +69,8 @@
 			<a href="{% url 'professor_settings' %}"><i class="fa fa-edit"></i> Input Availability</a>
 		</li>
 		<li>
-			<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"> Data page</a>
+			<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+				<i class="glyphicon glyphicon-duplicate"></i> Data page</a>
 			<ul class="collapse list-unstyled" id="pageSubmenu">
 				<li><a href="{% url 'PDProfSettings' %}"><i class="fa fa-files-o fa-fw"></i> Review Schedule Data</a></li>
 				<li><a href="#"><i class="fa fa-tasks fa-fw"></i> Review Course Data</a></li>
@@ -78,6 +79,9 @@
 		</li>
 		<li>
 			<a href="{% url 'run' %}"><i class="fa fa-power-off"></i> Run Scheduler</a>
+		</li>
+		<li>
+			<a href="{% url 'course_selection' %}"><i class="glyphicon glyphicon-edit"></i> Course Selection</a>
 		</li>
 		<li>
 			<a href="#"><i class="fa fa-download"></i> Download Schedule</a>
