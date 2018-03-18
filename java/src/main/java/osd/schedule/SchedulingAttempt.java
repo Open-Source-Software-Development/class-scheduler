@@ -1,13 +1,10 @@
 package osd.schedule;
 
-import osd.input.Section;
 import osd.output.Hunk;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.function.Supplier;
 
 /**
  * An attempt to schedule some classes. Once one is constructed, its
@@ -15,11 +12,11 @@ import java.util.function.Supplier;
  */
 public class SchedulingAttempt implements Callable<List<Hunk>> {
 
-    private final Scheduler scheduler;
+    private final WIPSchedule wipSchedule;
 
     @Inject
-    SchedulingAttempt(final Scheduler scheduler) {
-        this.scheduler = scheduler;
+    SchedulingAttempt(final WIPSchedule wipSchedule) {
+        this.wipSchedule = wipSchedule;
     }
 
     /**
@@ -29,29 +26,7 @@ public class SchedulingAttempt implements Callable<List<Hunk>> {
      */
     @Override
     public List<Hunk> call() {
-        return backtrackingSearch(new ArrayList<>(), scheduler);
-    }
-
-    private List<Hunk> backtrackingSearch(final List<Hunk> hunks, final Scheduler scheduler) {
-        final Section section = scheduler.getNextSection();
-        if (section == null) {
-            return hunks;
-        }
-        System.out.println("Moving into " + section.getName());
-        for (final Hunk hunk: scheduler.getCandidateHunks(section)) {
-            final boolean wasAdded = scheduler.addHunk(hunk);
-            System.out.println(hunk + " was " + (wasAdded ? "added" : "rejected"));
-            if (wasAdded) {
-                final List<Hunk> newHunks = new ArrayList<>(hunks);
-                newHunks.add(hunk);
-                final List<Hunk> result = backtrackingSearch(newHunks, scheduler.copy());
-                if (result != null) {
-                    return result;
-                }
-            }
-        }
-        System.out.println("Backtracking...");
-        return null;
+        return wipSchedule.getResult();
     }
 
 }

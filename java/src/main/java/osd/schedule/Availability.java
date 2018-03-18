@@ -19,8 +19,8 @@ import java.util.stream.Stream;
  */
 class Availability {
 
-    private final ManyToManyRelation<Section, Professor> professors;
-    private final ManyToManyRelation<Section, Room> rooms;
+    final ManyToManyRelation<Section, Professor> professors;
+    final ManyToManyRelation<Section, Room> rooms;
     private final BlockAvailability blockAvailability;
 
     /**
@@ -55,24 +55,6 @@ class Availability {
         this.professors = new ManyToManyRelation<>(copyOf.professors);
         this.rooms = new ManyToManyRelation<>(copyOf.rooms);
         this.blockAvailability = new BlockAvailability(copyOf.blockAvailability);
-    }
-
-    /**
-     * Gets all the sections with a room or professor mentioned in the hunk.
-     * Exception: The hunk's section itself is <em>not</em> included.
-     * This lets the algorithm know what sections' priority is impacted by
-     * adding that hunk.
-     * @param hunk the hunk that's being added
-     * @return the sections whose priority is impacted by that addition
-     */
-    Stream<Section> getImpacted(final Hunk hunk) {
-        final Section section = hunk.getSection();
-        final Professor professor = hunk.getProfessor();
-        final Room room = hunk.getRoom();
-        return Stream.concat(
-                professors.reversed().get(professor).stream(),
-                rooms.reversed().get(room).stream()
-        ).filter(s -> !section.equals(s)).unordered().distinct();
     }
 
     /**
@@ -126,18 +108,17 @@ class Availability {
      * @param section the section to get candidate hunks for
      * @return a stream of candidate hunks for that section
      */
-    Stream<Hunk> candidates(final Section section) {
+    Stream<Hunk> getCandidateHunks(final Section section) {
         // This three-layered flatMap is less intimidating than it looks.
         // We start by getting the professors and rooms available for this
         // section, from which we can compute the blocks. That gives us the
         // four elements we need to write out our hunks.
         return getProfessors(section)
                 .flatMap(p ->
-                                getRooms(section).flatMap(r ->
-                                        getBlocks(p, r)
-                                                .map(b -> new Hunk(section, p, r, b))
-                                )
-                );
+                        getRooms(section).flatMap(r ->
+                                getBlocks(p, r).map(b ->
+                                        new Hunk(section, p, r, b))))
+                .distinct();
     }
 
 }

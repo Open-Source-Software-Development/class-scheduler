@@ -18,6 +18,8 @@ public class ManyToManyRelation<K, V> extends Relation<K, Set<K>, V, Set<V>> {
      */
     public ManyToManyRelation(final Relation<K, Set<K>, V, Set<V>> copyOf) {
         super(copyOf);
+        forward.replaceAll((k, v) -> new HashSet<>(v));
+        reverse.replaceAll((k, v) -> new HashSet<>(v));
     }
 
     /**

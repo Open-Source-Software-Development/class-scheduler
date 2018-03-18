@@ -37,6 +37,7 @@ class AvailabilityTest {
     @Mock private Block mockBlockB2;
     @Mock private Constraints mockConstraints;
 
+    private Hunk hunkForSection1;
     private Availability instance;
 
     @BeforeEach
@@ -78,17 +79,7 @@ class AvailabilityTest {
                 throw new AssertionError();
             });
         instance = new Availability(mockSources, mockConstraints);
-    }
-
-    @Test
-    void getImpacted() {
-        // Since mockSection3 can be scheduled with any professor, it should
-        // be impacted by either of the other mock sections.
-        final Hunk hunk = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockA1);
-        final Set<Section> expected = Collections.singleton(mockSection3);
-        final Set<Section> result = instance.getImpacted(hunk)
-                .collect(Collectors.toSet());
-        assertEquals(expected, result);
+        hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2);
     }
 
     @Test
@@ -119,7 +110,7 @@ class AvailabilityTest {
 
     @Test
     void getBlocks_RespectsAddHunk_ForProfessor() {
-        instance.onHunkAdded(new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2));
+        instance.onHunkAdded(hunkForSection1);
         final Set<Block> expected = new HashSet<>(Arrays.asList(
                 mockBlockA1, mockBlockA2,
                 mockBlockB1));
@@ -130,7 +121,7 @@ class AvailabilityTest {
 
     @Test
     void getBlocks_RespectsAddHunk_ForRoom() {
-        instance.onHunkAdded(new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2));
+        instance.onHunkAdded(hunkForSection1);
         final Set<Block> expected = new HashSet<>(Arrays.asList(
                 mockBlockA1, mockBlockA2,
                 mockBlockB1));
@@ -147,13 +138,13 @@ class AvailabilityTest {
                 new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB1),
                 new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2)
         ));
-        final Set<Hunk> result = instance.candidates(mockSection1).collect(Collectors.toSet());
+        final Set<Hunk> result = instance.getCandidateHunks(mockSection1).collect(Collectors.toSet());
         assertEquals(expected, result);
     }
 
     @Test
     void candidates_RespectsAddHunk() {
-        instance.onHunkAdded(new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2));
+        instance.onHunkAdded(hunkForSection1);
         final Set<Hunk> expected = new HashSet<>(Arrays.asList(
                 // Professor 1 isn't available at block B2.
                 new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlockA1),
@@ -165,7 +156,33 @@ class AvailabilityTest {
                 new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockA2),
                 new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockB1)
         ));
-        final Set<Hunk> result = instance.candidates(mockSection3).collect(Collectors.toSet());
+        final Set<Hunk> result = instance.getCandidateHunks(mockSection3).collect(Collectors.toSet());
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void copyConstructor_SameData() {
+        final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
+        final Availability copy = new Availability(instance);
+        final Set<Hunk> result = copy.getCandidateHunks(mockSection2).collect(Collectors.toSet());
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void copyConstructor_Distinct_FromOriginalToCopy() {
+        final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
+        final Availability copy = new Availability(instance);
+        instance.onHunkAdded(hunkForSection1);
+        final Set<Hunk> result = copy.getCandidateHunks(mockSection2).collect(Collectors.toSet());
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void copyConstructor_Distinct_FromCopyToOriginal() {
+        final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
+        final Availability copy = new Availability(instance);
+        copy.onHunkAdded(hunkForSection1);
+        final Set<Hunk> result = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);
     }
 

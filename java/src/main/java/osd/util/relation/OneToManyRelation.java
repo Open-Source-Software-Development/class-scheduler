@@ -18,6 +18,7 @@ public class OneToManyRelation<K, V> extends Relation<K, K, V, Set<V>> {
      */
     public OneToManyRelation(final Relation<K, K, V, Set<V>> copyOf) {
         super(copyOf);
+        forward.replaceAll((k, v) -> new HashSet<>(v));
     }
 
     /**
@@ -42,6 +43,7 @@ public class OneToManyRelation<K, V> extends Relation<K, K, V, Set<V>> {
                 }
             }
         }
+        assert get(key) == null || !get(key).isEmpty();
         final Set<V> values = forward.computeIfAbsent(key, z -> new HashSet<>());
         values.add(value);
         reverse.put(value, key);
@@ -53,10 +55,11 @@ public class OneToManyRelation<K, V> extends Relation<K, K, V, Set<V>> {
         if (values == null || !values.remove(value)) {
             return;
         }
-        reverse.remove(value, key);
+        reverse.remove(value);
         if (values.isEmpty()) {
             forward.remove(key);
         }
+        assert get(key) == null || !get(key).isEmpty();
     }
 
     @Override
@@ -65,6 +68,7 @@ public class OneToManyRelation<K, V> extends Relation<K, K, V, Set<V>> {
         for (final V value: values) {
             reverse.remove(value, key);
         }
+        assert get(key) == null || !get(key).isEmpty();
     }
 
     @Override

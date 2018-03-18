@@ -4,6 +4,7 @@ import osd.input.Section;
 import osd.util.relation.ManyToOneRelation;
 import osd.util.relation.OneToManyRelation;
 
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -38,8 +39,10 @@ class PriorityTracker extends OneToManyRelation<Long, Section> {
      * no sections, returns {@code null}.
      * @return a section with highest priority, or null
      */
-    Set<Section> getHighPriority() {
-        return get(lowest);
+    Set<Section> getHighPrioritySections() {
+        final Set<Section> result = get(lowest);
+        assert result == null || !result.isEmpty();
+        return result;
     }
 
     @Override
@@ -53,6 +56,7 @@ class PriorityTracker extends OneToManyRelation<Long, Section> {
     @Override
     public void remove(final Long key, final Section value) {
         super.remove(key, value);
+        assert get(key) == null || !get(key).isEmpty();
         if (lowest != null && key <= lowest) {
             updateLowest();
         }
@@ -61,6 +65,7 @@ class PriorityTracker extends OneToManyRelation<Long, Section> {
     @Override
     public void remove(final Long key) {
         super.remove(key);
+        assert get(key) == null || !get(key).isEmpty();
         if (lowest != null && key <= lowest) {
             updateLowest();
         }
@@ -71,10 +76,17 @@ class PriorityTracker extends OneToManyRelation<Long, Section> {
         return new ReversedPriorityTracker();
     }
 
+    void ensurePresent(final Section section) {
+        if (reversed().get(section) == null) {
+            throw new NoSuchElementException(section + " is not pending");
+        }
+    }
+
     private void updateLowest() {
         lowest = forward.keySet().stream()
                 .min(Long::compareTo)
                 .orElse(null);
+        assert get(lowest) == null || !get(lowest).isEmpty();
     }
 
     private final class ReversedPriorityTracker extends ManyToOneRelation<Section, Long> {
@@ -90,10 +102,8 @@ class PriorityTracker extends OneToManyRelation<Long, Section> {
 
         @Override
         public void remove(final Section section) {
-            if (!forward.containsKey(section)) {
-                return;
-            }
-            final boolean needsUpdate = forward.get(section) <= lowest;
+            final Long priority = forward.get(section);
+            final boolean needsUpdate = priority != null && lowest != null && priority <= lowest;
             super.remove(section);
             if (needsUpdate) {
                 PriorityTracker.this.updateLowest();

@@ -1,5 +1,6 @@
 package osd.util.relation;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class ManyToOneRelation<K, V> extends Relation<K, Set<K>, V, V> {
      */
     public ManyToOneRelation(final Relation<K, Set<K>, V, V> copyOf) {
         super(copyOf);
+        reverse.replaceAll((k, v) -> new HashSet<>(v));
     }
 
     /**
