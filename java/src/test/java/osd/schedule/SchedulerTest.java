@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 
-class WIPScheduleTest {
+class SchedulerTest {
 
     // For our dummy schedule, we have two sections. Therefore, there are three
     // generations: the last being the liminal space after the final section
@@ -43,7 +43,7 @@ class WIPScheduleTest {
     @Mock private Room mockRoomNotPreferred;
     @Mock private Preference mockPreference;
 
-    private WIPSchedule instance;
+    private Scheduler instance;
 
     @BeforeEach
     void setUp() {
@@ -58,7 +58,7 @@ class WIPScheduleTest {
 
         when(mockPreference.evaluate(any())).then(i -> preferenceImpl(i.getArgument(0)));
         Preferences preferences = new Preferences(Collections.singleton(mockPreference));
-        instance = new WIPSchedule(mockPriorityGen1, preferences);
+        instance = new SchedulerImpl(mockPriorityGen1, preferences);
     }
 
     @Test

@@ -47,7 +47,6 @@ class Priority extends Availability {
         // We no longer need to track this section.
         data.reversed().remove(section);
         // Update all the sections we found before.
-        // TODO: uncomment this!
         impact.forEach(this::updateSection);
     }
 
