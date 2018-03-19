@@ -2,7 +2,14 @@ package osd.considerations;
 
 import osd.output.Hunk;
 
-public class UserConstraint extends UserConsideration implements Constraint{
+/**
+ * User constraints use their element pairs as white- or blacklists. See
+ * {@linkplain UserConsideration the parent class documentation} for what an
+ * "element pair" is. Blacklist constraints are satisfied if at least one
+ * member doesn't match. Whitelist constraints are satisfied if either both
+ * members match or neither does.
+ */
+public class UserConstraint extends UserConsideration implements Constraint {
 
     private final boolean blacklist;
 
@@ -15,7 +22,15 @@ public class UserConstraint extends UserConsideration implements Constraint{
 
     @Override
     public boolean test(final Hunk hunk) {
-        return blacklist != super.test(hunk);
+        final Match match = getMatch(hunk);
+        if (match == Match.NULL) {
+            return true;
+        }
+        if (blacklist) {
+            return match != Match.BOTH;
+        } else {
+            return match != Match.ONE;
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package osd.considerations;
 
+import osd.output.Hunk;
+
 public class UserPreference extends UserConsideration implements Preference {
 
     private final int worth;
@@ -14,5 +16,10 @@ public class UserPreference extends UserConsideration implements Preference {
     @Override
     public int worth() {
         return worth;
+    }
+
+    @Override
+    public boolean test(final Hunk hunk) {
+        return getMatch(hunk) == Match.BOTH;
     }
 }
