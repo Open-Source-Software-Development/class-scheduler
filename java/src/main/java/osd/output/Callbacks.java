@@ -14,4 +14,6 @@ public interface Callbacks {
      */
     void onCompleteResult(final Results results);
 
+    void onBacktrack(final Results results);
+
 }

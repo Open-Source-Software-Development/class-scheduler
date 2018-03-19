@@ -48,13 +48,26 @@ class SchedulerImpl implements Scheduler {
 
     private void run0(final Callbacks callbacks) {
         if (callbacks.stopCondition()) {
+            System.err.flush();
             throw new ScheduleDoneSignal();
         }
         if (isComplete()) {
             callbacks.onCompleteResult(results);
         }
-        streamNextGeneration()
-                .forEach(s -> s.run0(callbacks));
+        final Scheduler lastChild = streamNextGeneration()
+                .peek(s -> System.err.println("Descending"))
+                .peek(s -> s.run0(callbacks))
+                // This is a somewhat hacky reduction to ensure we
+                // a) consider every child (unless we exit early), and
+                // b) can tell whether or not we descended at all.
+                // ASK NAOMI BEFORE CHANGING THIS, because most of the
+                // other obvious solutions will violate the first objective,
+                // for subtle reasons related to lazy evaluation.
+                .reduce(null, (a, b) -> b);
+        if (lastChild == null && !callbacks.stopCondition()) {
+            System.err.println("Backtracking");
+            callbacks.onBacktrack(results);
+        }
     }
 
     private boolean isComplete() {
@@ -62,9 +75,6 @@ class SchedulerImpl implements Scheduler {
     }
 
     private Stream<SchedulerImpl> streamNextGeneration() {
-        if (isComplete()) {
-            return Stream.of(this);
-        }
         final Section section = priority.getHighPrioritySection();
         return streamCandidates(section);
     }

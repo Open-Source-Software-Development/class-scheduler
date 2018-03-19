@@ -7,6 +7,7 @@ class DemoCallbacks implements Callbacks {
 
     private final int desiredResultCount;
     private int resultCount = 0;
+    private int backtracks = 0;
 
     DemoCallbacks(final int desiredResultCount) {
         this.desiredResultCount = desiredResultCount;
@@ -21,6 +22,14 @@ class DemoCallbacks implements Callbacks {
     public void onCompleteResult(final Results results) {
         results.getHunks().forEach(System.out::println);
         resultCount++;
+        if (stopCondition()) {
+            System.out.println("Completed with " + backtracks + " backtracks");
+        }
+    }
+
+    @Override
+    public void onBacktrack(final Results results) {
+        backtracks++;
     }
 
 }
