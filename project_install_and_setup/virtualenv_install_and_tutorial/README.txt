@@ -1,11 +1,12 @@
 For the batch file 'install_virtual_env.bat'
 
 
-Assumptions: python3 and pip are already installed
+Assumptions: python3 and pip are already installed and avaliable in the environment path
 
 How to install:
 
-Start cmd prompt as Admin
+Start cmd prompt as Admin, I use anaconda as the environment path already includes pip. If you use the normal command line ensure that pip
+is accessible by simply running 'pip' you should get a help message instead of an error message saying 'no such command'
 cd into folder containing script
 Type the name of this file then hit enter
 INFO: errors will occur as the script checks which python environment variable your system uses
