@@ -4,7 +4,6 @@ import osd.input.*;
 import osd.output.Hunk;
 import osd.util.relation.ManyToManyRelation;
 
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,17 +21,15 @@ class Availability {
     final ManyToManyRelation<Section, Professor> professors;
     final ManyToManyRelation<Section, Room> rooms;
     private final BlockAvailability blockAvailability;
+    private final Constraints constraints;
+    private final Results results;
 
-    /**
-     * DI constructor.
-     * @param sources a {@link Sources} instance indicating everything available
-     * @param constraints {@link Constraints} used to filter out impossible combinations
-     */
-    @Inject
     Availability(final Sources sources, final Constraints constraints) {
         this.professors = new ManyToManyRelation<>();
         this.rooms = new ManyToManyRelation<>();
         this.blockAvailability = new BlockAvailability(sources.getBlocks().collect(Collectors.toList()));
+        this.constraints = constraints;
+        this.results = Results.empty();
 
         // For each section, find all the professors and rooms that are
         // compatible with it.
@@ -46,15 +43,12 @@ class Availability {
         });
     }
 
-    /**
-     * Copy constructor. After construction, the original and copy are
-     * completely independent.
-     * @param copyOf the instance to copy
-     */
-    Availability(final Availability copyOf) {
-        this.professors = new ManyToManyRelation<>(copyOf.professors);
-        this.rooms = new ManyToManyRelation<>(copyOf.rooms);
-        this.blockAvailability = new BlockAvailability(copyOf.blockAvailability);
+    Availability(final Availability rebind, final Results results) {
+        this.professors = new ManyToManyRelation<>(rebind.professors);
+        this.rooms = new ManyToManyRelation<>(rebind.rooms);
+        this.blockAvailability = new BlockAvailability(rebind.blockAvailability);
+        this.constraints = rebind.constraints;
+        this.results = results;
     }
 
     /**
@@ -118,7 +112,8 @@ class Availability {
                         getRooms(section).flatMap(r ->
                                 getBlocks(p, r).map(b ->
                                         new Hunk(section, p, r, b))))
-                .distinct();
+                .distinct()
+                .filter(constraints.bindBaseConstraints(results));
     }
 
 }

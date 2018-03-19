@@ -21,11 +21,6 @@ class UserConsideration implements Consideration {
         return predicate.test(hunk);
     }
 
-    @Override
-    public boolean isConstant() {
-        return true;
-    }
-
     private static Predicate<Hunk> getPredicate(final Class<?> clazz, final Object o) {
         final Function<Hunk, ?> extractor = getExtractor(clazz);
         return h -> {

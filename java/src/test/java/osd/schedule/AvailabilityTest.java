@@ -7,6 +7,7 @@ import osd.input.*;
 import osd.output.Hunk;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,6 +37,7 @@ class AvailabilityTest {
     @Mock private Block mockBlockB1;
     @Mock private Block mockBlockB2;
     @Mock private Constraints mockConstraints;
+    @Mock private Predicate<Hunk> mockBaseConstraints;
 
     private Hunk hunkForSection1;
     private Availability instance;
@@ -78,6 +80,8 @@ class AvailabilityTest {
                 }
                 throw new AssertionError();
             });
+        when(mockConstraints.bindBaseConstraints(any())).thenReturn(mockBaseConstraints);
+        when(mockBaseConstraints.test(any())).thenReturn(true);
         instance = new Availability(mockSources, mockConstraints);
         hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2);
     }
@@ -140,6 +144,9 @@ class AvailabilityTest {
         ));
         final Set<Hunk> result = instance.getCandidateHunks(mockSection1).collect(Collectors.toSet());
         assertEquals(expected, result);
+        for (final Hunk hunk: expected) {
+            verify(mockBaseConstraints).test(hunk);
+        }
     }
 
     @Test
@@ -161,26 +168,17 @@ class AvailabilityTest {
     }
 
     @Test
-    void copyConstructor_SameData() {
+    void rebindConstructor_SameData() {
         final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        final Availability copy = new Availability(instance);
+        final Availability copy = new Availability(instance, Results.empty());
         final Set<Hunk> result = copy.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);
     }
 
     @Test
-    void copyConstructor_Distinct_FromOriginalToCopy() {
+    void rebindConstructor_ChangingCopyDoesntChangeOriginal() {
         final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        final Availability copy = new Availability(instance);
-        instance.onHunkAdded(hunkForSection1);
-        final Set<Hunk> result = copy.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void copyConstructor_Distinct_FromCopyToOriginal() {
-        final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        final Availability copy = new Availability(instance);
+        final Availability copy = new Availability(instance, Results.empty());
         copy.onHunkAdded(hunkForSection1);
         final Set<Hunk> result = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);

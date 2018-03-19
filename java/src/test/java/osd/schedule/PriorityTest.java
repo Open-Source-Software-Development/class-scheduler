@@ -10,6 +10,7 @@ import osd.output.Hunk;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +20,7 @@ class PriorityTest {
 
     @Mock private Sources mockSources;
     @Mock private Constraints mockConstraints;
+    @Mock private Predicate<Hunk> mockBaseConstraints;
 
     @Mock private Section mockSection1;
     @Mock private Section mockSection2;
@@ -49,6 +51,8 @@ class PriorityTest {
                 Stream.of(mockRoom1, mockRoom2));
         when(mockSources.getBlocks()).thenAnswer(a -> Stream.of(mockBlock));
         when(mockConstraints.test(any())).then(this::mockConstraintsImpl);
+        when(mockConstraints.bindBaseConstraints(any())).thenReturn(mockBaseConstraints);
+        when(mockBaseConstraints.test(any())).thenReturn(true);
 
         instance = new Priority(mockSources, mockConstraints);
         hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlock);
@@ -89,26 +93,17 @@ class PriorityTest {
     }
 
     @Test
-    void copy_SameData() {
+    void rebind_SameData() {
         final Section expected = instance.getHighPrioritySection();
-        final Priority copy = instance.copy();
+        final Priority copy = instance.rebind(Results.empty());
         final Section result = copy.getHighPrioritySection();
         assertEquals(expected, result);
     }
 
     @Test
-    void copy_Distinct_FromOriginalToCopy() {
+    void rebind_ChangingCopyDoesntChangeOriginal() {
         final Section expected = instance.getHighPrioritySection();
-        final Priority copy = instance.copy();
-        instance.onHunkAdded(hunkForSection1);
-        final Section result = copy.getHighPrioritySection();
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void copy_Distinct_FromCopyToOriginal() {
-        final Section expected = instance.getHighPrioritySection();
-        final Priority copy = instance.copy();
+        final Priority copy = instance.rebind(Results.empty());
         copy.onHunkAdded(hunkForSection1);
         final Section result = instance.getHighPrioritySection();
         assertEquals(expected, result);

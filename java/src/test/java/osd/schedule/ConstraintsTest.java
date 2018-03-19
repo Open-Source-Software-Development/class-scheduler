@@ -37,7 +37,8 @@ class ConstraintsTest {
 
     @Test
     void of() {
-        final Constraints instance = new Constraints(Collections.singleton(mockConstraintAlwaysTrue));
+        final Constraints instance = new Constraints(Collections.singleton(mockConstraintAlwaysTrue),
+                Collections.emptyList());
         final boolean result = instance.test(mockHunk);
         verify(mockConstraintAlwaysTrue).test(mockHunk);
         assertTrue(result);
@@ -45,7 +46,9 @@ class ConstraintsTest {
 
     @Test
     void of2() {
-        final Constraints instance = new Constraints(Arrays.asList(mockConstraintAlwaysTrue, mockConstraintAlwaysFalse));
+        final Constraints instance = new Constraints(
+                Arrays.asList(mockConstraintAlwaysTrue, mockConstraintAlwaysFalse),
+                Collections.emptyList());
         final boolean result = instance.test(mockHunk);
         verify(mockConstraintAlwaysTrue).test(mockHunk);
         verify(mockConstraintAlwaysFalse).test(mockHunk);

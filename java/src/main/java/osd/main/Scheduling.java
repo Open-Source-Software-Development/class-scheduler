@@ -1,7 +1,9 @@
 package osd.main;
 
 import dagger.Component;
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import org.apache.commons.cli.ParseException;
+import osd.considerations.ConsiderationModule;
 import osd.input.placeholder.PlaceholderModule;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
@@ -16,8 +18,9 @@ public interface Scheduling {
     static void main(final String[] args) throws ParseException {
         Scheduling scheduling = DaggerScheduling.builder()
                 .flagModule(new FlagModule(args))
+                .considerationModule(new ConsiderationModule(FastClasspathScanner::new))
                 .build();
-        System.out.println(scheduling.schedulingAttempt().getResults().allHunks().collect(Collectors.toList()));
+        scheduling.schedulingAttempt().getResults().allHunks().forEach(System.out::println);
     }
 
 }

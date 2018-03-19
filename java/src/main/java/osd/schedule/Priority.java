@@ -16,11 +16,6 @@ class Priority extends Availability {
 
     private final PriorityTracker data;
 
-    /**
-     * DI constructor.
-     * @param sources everything that exists in this schedule
-     * @param constraints the constraints for this schedule
-     */
     @Inject
     Priority(final Sources sources, final Constraints constraints) {
         super(sources, constraints);
@@ -28,13 +23,9 @@ class Priority extends Availability {
         sources.getSections().forEach(this::initSection);
     }
 
-    /**
-     * Copy constructor.
-     * @param copyOf the instance to copy
-     */
-    private Priority(final Priority copyOf) {
-        super(copyOf);
-        this.data = new PriorityTracker(copyOf.data);
+    private Priority(final Priority rebind, final Results bindTo) {
+        super(rebind, bindTo);
+        this.data = new PriorityTracker(rebind.data);
     }
 
     @Override
@@ -76,13 +67,8 @@ class Priority extends Availability {
         return data.getHighPrioritySections().iterator().next();
     }
 
-    /**
-     * Returns a copy of this priority. (Copy constructors and mocks don't play
-     * nicely together.)
-     * @return a copy of this priority
-     */
-    Priority copy() {
-        return new Priority(this);
+    Priority rebind(final Results results) {
+        return new Priority(this, results);
     }
 
     @Override

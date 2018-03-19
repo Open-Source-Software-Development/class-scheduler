@@ -1,5 +1,6 @@
 package osd.schedule;
 
+import osd.considerations.Lookups;
 import osd.input.Block;
 import osd.input.Professor;
 import osd.input.Section;
@@ -8,7 +9,7 @@ import osd.output.Hunk;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class Results {
+public class Results implements Lookups {
 
     // These containers are a little bit kludgey. The primary consideration
     // was obtaining a decent tradeoff between lookup performance and
@@ -37,6 +38,7 @@ public class Results {
                 .reduce(Stream.empty(), Stream::concat);
     }
 
+    @Override
     public Stream<Hunk> lookup(final Professor professor) {
         if (hunksByProfessor.containsKey(professor)) {
             return hunksByProfessor.get(professor).stream();
@@ -44,6 +46,7 @@ public class Results {
         return Stream.empty();
     }
 
+    @Override
     public Stream<Hunk> lookup(final Block block) {
         if (hunksByBlock.containsKey(block)) {
             return hunksByBlock.get(block).stream();
@@ -51,6 +54,7 @@ public class Results {
         return Stream.empty();
     }
 
+    @Override
     public Hunk lookup(final Section section) {
         final Professor intermediate = sectionToProfessor.get(section);
         if (intermediate == null) {

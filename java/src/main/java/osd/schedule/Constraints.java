@@ -1,5 +1,6 @@
 package osd.schedule;
 
+import osd.considerations.BaseConstraint;
 import osd.considerations.Constraint;
 import osd.input.Room;
 import osd.input.Section;
@@ -9,6 +10,7 @@ import osd.output.Hunk;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.function.Predicate;
 
 /**
@@ -19,14 +21,16 @@ import java.util.function.Predicate;
 class Constraints implements Predicate<Hunk> {
 
     private final Collection<Constraint> constraints;
+    private final Collection<BaseConstraint> baseConstraints;
 
     /**
      * DI constructor.
      * @param constraints the constraints for the schedule
      */
     @Inject
-    Constraints(final Collection<Constraint> constraints) {
+    Constraints(final Collection<Constraint> constraints, final Collection<BaseConstraint> baseConstraints) {
         this.constraints = new ArrayList<>(constraints);
+        this.baseConstraints = baseConstraints;
     }
 
     /**
@@ -42,6 +46,12 @@ class Constraints implements Predicate<Hunk> {
             }
         }
         return true;
+    }
+
+    Predicate<Hunk> bindBaseConstraints(final Results results) {
+        return h -> baseConstraints.stream()
+                .map(b -> b.bind(results))
+                .allMatch(p -> p.test(h));
     }
 
     /**

@@ -49,11 +49,11 @@ class SchedulerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(mockPriorityGen1.copy()).thenReturn(mockPriorityGen2);
+        when(mockPriorityGen1.rebind(any())).thenReturn(mockPriorityGen2);
         when(mockPriorityGen1.getHighPrioritySection()).thenReturn(mockSection1);
         when(mockPriorityGen1.getCandidateHunks(any())).then(i -> getCandidateHunkImpl(i.getArgument(0)));
 
-        when(mockPriorityGen2.copy()).thenReturn(mockPriorityEmpty);
+        when(mockPriorityGen2.rebind(any())).thenReturn(mockPriorityEmpty);
         when(mockPriorityGen2.getHighPrioritySection()).thenReturn(mockSection2);
         when(mockPriorityGen2.getCandidateHunks(any())).then(i -> getCandidateHunkImpl(i.getArgument(0)));
 
@@ -74,11 +74,6 @@ class SchedulerTest {
 
     private int preferenceImpl(final Hunk hunk) {
         return mockRoomPreferred.equals(hunk.getRoom()) ? 1 : 0;
-    }
-
-    private <T extends Collection<Hunk>> T getHunksForSection(final Section section, final T result) {
-        getCandidateHunkImpl(section).forEach(result::add);
-        return result;
     }
 
     private Stream<Hunk> getCandidateHunkImpl(final Section section) {

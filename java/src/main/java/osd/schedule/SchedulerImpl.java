@@ -5,7 +5,6 @@ import osd.output.Hunk;
 
 import javax.inject.Inject;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -28,7 +27,7 @@ class SchedulerImpl implements Scheduler {
 
     private SchedulerImpl(final SchedulerImpl copyOf, final Hunk withHunk) {
         this.results = copyOf.results.extend(withHunk);
-        this.priority = copyOf.priority.copy();
+        this.priority = copyOf.priority.rebind(this.results);
         this.preferences = copyOf.preferences;
         this.priority.onHunkAdded(withHunk);
     }
