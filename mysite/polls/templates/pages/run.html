@@ -1,43 +1,58 @@
-<!DOCTYPE html>
-{% load static %}
+<!DOCTYPE html> {% load static %}
 <html lang="en">
 
 <head>
 
-    <title>Champlain Scheduler</title>
+  <title>Champlain Scheduler</title>
 
-    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
-	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
-    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
-    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
+  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+  <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
 
 </head>
 
 <body>
 
-    <div id="wrapper">
-{% include 'blank.html' %}
+  <div id="wrapper">
+    {% include 'blank.html' %}
 
-        <div id="page-wrapper">
-		<input type="checkbox" name="division" value="Business">Business Division Schedule<br>
-		<input type="checkbox" name="division" value="CCM">Communication & Creative Media Division Schedule<br>
-		<input type="checkbox" name="division" value="EHS">Education & Human Studies Division Schedule<br>
-		<input type="checkbox" name="division" value="ITS">Information Technology & Sciences Division Schedule<br>
-		<input type="checkbox" name="division" value="Core">Core Division Schedule<br>
-		<input type="checkbox" name="division" value="Cont">Continuing Professional Studies Division Schedule<br>
-        <button type="button" id="loginButton">Run Scheduler</button> <button type="button">Cancel Scheduler</button>
-        </div>
-
+    <div id="page-wrapper">
+      <div></div>
+      <br/>
+      <input type="checkbox" name="division" value="Business">Business Division Schedule<br>
+      <input type="checkbox" name="division" value="CCM">Communication & Creative Media Division Schedule<br>
+      <input type="checkbox" name="division" value="EHS">Education & Human Studies Division Schedule<br>
+      <input type="checkbox" name="division" value="ITS">Information Technology & Sciences Division Schedule<br>
+      <input type="checkbox" name="division" value="Core">Core Division Schedule<br>
+      <input type="checkbox" name="division" value="Cont">Continuing Professional Studies Division Schedule<br>
+      <button type="button" id="loginButton">Run Scheduler</button> <button type="button">Cancel Scheduler</button>
     </div>
 
-    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
-    <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
-	<script src="{% static 'js/professorSettings.js' %}"></script>
+  </div>
 
+  <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+  <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+  <script src="{% static 'js/professorSettings.js' %}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+      });
+
+      $('#sidebarCollapse').on('click', function() {
+        $('#sidebar, #content').toggleClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+      });
+    });
+  </script>
 </body>
 
 </html>

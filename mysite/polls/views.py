@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
 def simple_upload(request):
-	return render(request, 'simple_upload.html')
-	
+	return render(request, 'import_data.html')
+
 def course_review(request):
 	return render(request, 'course_review.html')
 
@@ -14,12 +14,13 @@ def PDProfSettings(request):
 
 def run(request):
 	return render(request, 'run.html')
-	
+
 def history(request):
 	return render(request, 'history.html')
 
 def view_history(request):
 	return render(request, 'view_history.html')
+
 
 ## TODO: Documentation
 #
@@ -30,7 +31,7 @@ def userSettings(request):
 		first = request.POST['first']
 		last = request.POST['last']
 		email = request.POST['email']
-		
+
 		user = request.user
 
 		if username:
@@ -48,12 +49,12 @@ def userSettings(request):
 
 		user.last_name = last
 
-		if email: 
+		if email:
 			user.email = email
 
 		user.save()
 		return render(request, 'userSettings.html', {'message': 'Settings Applied'} )
-			
+
 	else:
 		return render(request, 'userSettings.html')
 
@@ -63,12 +64,12 @@ def professor_settings(request):
 	return render(request, 'profSettings.html')
 
 ## TODO: Documentation
-#	
+#
 def index(request):
 	return render(request, 'index.html')
 
 ## TODO: Documentation
-#	
+#
 def blank(request):
 	return render(request, 'blank.html')
 
@@ -89,10 +90,10 @@ def signup(request):
         return render(request, 'signup.html')
 
 ## TODO: Documentation
-#		
+#
 def logout_view(request):
 	logout(request)
-	return render(request, 'Login.html')		
+	return render(request, 'Login.html')
 
 ## TODO: Documentation
 #
