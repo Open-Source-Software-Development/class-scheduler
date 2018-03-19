@@ -18,6 +18,12 @@ class SchedulerImpl implements Scheduler {
     private final Priority priority;
     private final Preferences preferences;
 
+    /**
+     * DI constructor. Input data comes in through the {@link Priority}
+     * dependency.
+     * @param priority a Priority instance giving input data
+     * @param preferences preferences to sort candidates with
+     */
     @Inject
     SchedulerImpl(final Priority priority, final Preferences preferences) {
         this.data = SchedulerLookups.empty();
@@ -45,13 +51,13 @@ class SchedulerImpl implements Scheduler {
     }
 
     private void run0(final Callbacks callbacks) {
-        if (callbacks.stopCondition()) {
-            System.err.flush();
-            throw new ScheduleDoneSignal();
-        }
         if (isComplete()) {
             final SchedulerResults results = new SchedulerResults(priority.getExpectedHunks(), data);
             callbacks.onCompleteResult(results);
+        }
+        if (callbacks.stopCondition()) {
+            System.err.flush();
+            throw new ScheduleDoneSignal();
         }
         final Scheduler lastChild = streamNextGeneration()
                 .peek(s -> System.err.println("Descending"))
