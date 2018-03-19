@@ -4,11 +4,14 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
 
+def course_review(request):
+	return render(request, 'PDcoursesReview.html')
+
+def course_selection(request):
+	return render(request, 'PDcoursesSelector.html')
+
 def simple_upload(request):
 	return render(request, 'simple_upload.html')
-	
-def course_review(request):
-	return render(request, 'course_review.html')
 
 def PDProfSettings(request):
 	return render(request, 'PDProfSettings.html')

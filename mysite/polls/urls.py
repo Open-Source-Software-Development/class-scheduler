@@ -19,11 +19,12 @@ urlpatterns = [
 	url(r'^history/', polls.views.history, name='history'),
 	url(r'^view_history/', polls.views.view_history, name='view_history'),
 	url(r'^PDProfSettings/', polls.views.PDProfSettings, name='PDProfSettings'),
-	url(r'^course_review/', polls.views.course_review, name='course_review'),
 	url(r'^simple_upload/', polls.views.view_history, name='simple_upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
 	url(r'^file_upload/', polls.views.file_upload, name='file_upload'),
+	url(r'^course_selection/', polls.views.course_selection, name='course_selection'),
+	url(r'^course_review/', polls.views.course_review, name='course_review'),	
 ]
 
 if settings.DEBUG:
