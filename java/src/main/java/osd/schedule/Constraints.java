@@ -37,7 +37,7 @@ class Constraints implements Predicate<Hunk> {
     @Override
     public boolean test(final Hunk hunk) {
         for (final Constraint constraint : constraints) {
-            if (!constraint.evaluate(hunk)) {
+            if (!constraint.test(hunk)) {
                 return false;
             }
         }

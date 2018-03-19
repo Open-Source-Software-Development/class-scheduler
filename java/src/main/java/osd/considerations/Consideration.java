@@ -2,23 +2,16 @@ package osd.considerations;
 
 import osd.output.Hunk;
 
-import java.util.function.Function;
+import java.util.function.Predicate;
 
-/**
- * Superinterface for user preferences and user constraints.
- * @param <T> what sort of decision this consideration makes
- */
-public interface Consideration<T> extends Function<Hunk, T> {
+interface Consideration extends Predicate<Hunk> {
 
-	/**
-	 * Determines whether the hunk meets this consideration.
-	 * @param hunk the hunk to evaluate
-	 * @return an indication of whether the hunk meets this consideration
-	 */
-	T evaluate(final Hunk hunk);
-
-	default T apply(final Hunk hunk) {
-		return evaluate(hunk);
-	}
+    /**
+     * Indicates whether we always make the same decision for the same hunk.
+     * This should always be true for user considerations, and will often be
+     * false for base considerations.
+     * @return whether the predicate is constant per hunk
+     */
+    boolean isConstant();
 
 }

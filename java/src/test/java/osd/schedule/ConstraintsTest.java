@@ -31,15 +31,15 @@ class ConstraintsTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(mockConstraintAlwaysTrue.evaluate(any())).thenReturn(true);
-        when(mockConstraintAlwaysFalse.evaluate(any())).thenReturn(false);
+        when(mockConstraintAlwaysTrue.test(any())).thenReturn(true);
+        when(mockConstraintAlwaysFalse.test(any())).thenReturn(false);
     }
 
     @Test
     void of() {
         final Constraints instance = new Constraints(Collections.singleton(mockConstraintAlwaysTrue));
         final boolean result = instance.test(mockHunk);
-        verify(mockConstraintAlwaysTrue).evaluate(mockHunk);
+        verify(mockConstraintAlwaysTrue).test(mockHunk);
         assertTrue(result);
     }
 
@@ -47,8 +47,8 @@ class ConstraintsTest {
     void of2() {
         final Constraints instance = new Constraints(Arrays.asList(mockConstraintAlwaysTrue, mockConstraintAlwaysFalse));
         final boolean result = instance.test(mockHunk);
-        verify(mockConstraintAlwaysTrue).evaluate(mockHunk);
-        verify(mockConstraintAlwaysFalse).evaluate(mockHunk);
+        verify(mockConstraintAlwaysTrue).test(mockHunk);
+        verify(mockConstraintAlwaysFalse).test(mockHunk);
         assertFalse(result);
     }
 
