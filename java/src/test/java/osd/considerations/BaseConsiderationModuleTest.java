@@ -17,12 +17,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class ConsiderationModuleTest<T> {
+class BaseConsiderationModuleTest<T> {
 
     @Mock private FastClasspathScanner mockScanner;
     private Class<? extends T> scanResult;
     private ImplementingClassMatchProcessor<T> callback;
-    private ConsiderationModule instance;
+    private BaseConsiderationModule instance;
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -37,7 +37,7 @@ class ConsiderationModuleTest<T> {
             callback.processMatch(scanResult);
             return mock(ScanResult.class);
         });
-        instance = new ConsiderationModule(() -> mockScanner);
+        instance = new BaseConsiderationModule(() -> mockScanner);
     }
 
     @Test

@@ -1,15 +1,15 @@
-package osd.input;
+package osd.database;
 
-import osd.database.ProfessorRecord;
+import osd.input.Professor;
+
 import javax.inject.Inject;
 
 public class ProfessorFactory implements DatabaseFactory<ProfessorRecord, Professor> {
 
-	// feel free to expand this constructor if needed
-	// just leave the @Inject
-	// (remove this comment once you've read it)
 	@Inject
-	ProfessorFactory() {}
+	ProfessorFactory(/* Add arguments here, if needed.*/) {
+		// Do any setup you need here.
+	}
 
 	@Override
 	public Professor create(final ProfessorRecord record) {

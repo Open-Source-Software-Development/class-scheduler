@@ -1,5 +1,6 @@
 package osd.schedule;
 
+import osd.input.Sources;
 import osd.input.*;
 import osd.output.Hunk;
 import osd.util.relation.ManyToManyRelation;

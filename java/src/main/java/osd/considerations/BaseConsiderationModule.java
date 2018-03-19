@@ -3,6 +3,7 @@ package osd.considerations;
 import dagger.Module;
 import dagger.Provides;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import osd.database.*;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -11,11 +12,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @Module
-public class ConsiderationModule {
+public class BaseConsiderationModule {
 
     private final Supplier<FastClasspathScanner> scannerFactory;
 
-    public ConsiderationModule(final Supplier<FastClasspathScanner> scannerFactory) {
+    public BaseConsiderationModule(final Supplier<FastClasspathScanner> scannerFactory) {
         this.scannerFactory = scannerFactory;
     }
 

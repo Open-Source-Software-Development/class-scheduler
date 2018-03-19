@@ -1,5 +1,6 @@
 package osd.input.placeholder;
 
+import osd.input.Sources;
 import osd.input.*;
 
 import javax.inject.Inject;

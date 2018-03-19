@@ -3,6 +3,7 @@ package osd.schedule;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import osd.input.Sources;
 import osd.input.*;
 import osd.output.Hunk;
 
