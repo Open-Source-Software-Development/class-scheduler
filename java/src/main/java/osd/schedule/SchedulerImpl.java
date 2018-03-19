@@ -1,6 +1,7 @@
 package osd.schedule;
 
 import osd.input.Section;
+import osd.output.Callbacks;
 import osd.output.Hunk;
 import osd.output.Results;
 
@@ -34,33 +35,41 @@ class SchedulerImpl implements Scheduler {
     }
 
     @Override
-    public Results getResults() {
-        // Stop condition: If this is a complete schedule, return our list.
-        if (isComplete()) {
-            return results;
+    public boolean run(final Callbacks callbacks) {
+        try {
+            run0(callbacks);
+        } catch(final ScheduleDoneSignal s) {
+            // If we catch this exception, we met the stop condition.
+            return true;
         }
+        // If we didn't catch any exception, we ran out of candidates first.
+        return false;
+    }
 
-        // Recurse: Visit every candidate in the next generation (depth-first),
-        // and ask it for its result. If any gives us a successful result, our
-        // result is its result. Otherwise, our result is also a failure
-        // result.
-        return streamNextGeneration()
-                .map(Scheduler::getResults)
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElse(null);
+    private void run0(final Callbacks callbacks) {
+        if (callbacks.stopCondition()) {
+            throw new ScheduleDoneSignal();
+        }
+        if (isComplete()) {
+            callbacks.onCompleteResult(results);
+        }
+        streamNextGeneration()
+                .forEach(s -> s.run0(callbacks));
     }
 
     private boolean isComplete() {
         return priority.getHighPrioritySection() == null;
     }
 
-    private Stream<Scheduler> streamNextGeneration() {
+    private Stream<SchedulerImpl> streamNextGeneration() {
+        if (isComplete()) {
+            return Stream.of(this);
+        }
         final Section section = priority.getHighPrioritySection();
         return streamCandidates(section);
     }
 
-    private Stream<Scheduler> streamCandidates(final Section section) {
+    private Stream<SchedulerImpl> streamCandidates(final Section section) {
         return priority.getCandidateHunks(section)
                 .sorted(preferences)
                 .map(h -> new SchedulerImpl(this, h));

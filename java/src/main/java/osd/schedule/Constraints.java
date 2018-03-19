@@ -2,11 +2,11 @@ package osd.schedule;
 
 import osd.considerations.BaseConstraint;
 import osd.considerations.Constraint;
+import osd.considerations.Lookups;
 import osd.input.Room;
 import osd.input.Section;
 import osd.input.Professor;
 import osd.output.Hunk;
-import osd.output.Results;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -48,9 +48,9 @@ class Constraints implements Predicate<Hunk> {
         return true;
     }
 
-    Predicate<Hunk> bindBaseConstraints(final Results results) {
+    Predicate<Hunk> bindBaseConstraints(final Lookups lookups) {
         return h -> baseConstraints.stream()
-                .map(b -> b.bind(results))
+                .map(b -> b.bind(lookups))
                 .allMatch(p -> p.test(h));
     }
 

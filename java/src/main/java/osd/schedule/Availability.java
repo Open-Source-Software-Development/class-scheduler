@@ -1,5 +1,6 @@
 package osd.schedule;
 
+import osd.considerations.Lookups;
 import osd.input.Sources;
 import osd.input.*;
 import osd.output.Hunk;
@@ -24,14 +25,14 @@ class Availability {
     final ManyToManyRelation<Section, Room> rooms;
     private final BlockAvailability blockAvailability;
     private final Constraints constraints;
-    private final Results results;
+    private final Lookups lookups;
 
     Availability(final Sources sources, final Constraints constraints) {
         this.professors = new ManyToManyRelation<>();
         this.rooms = new ManyToManyRelation<>();
         this.blockAvailability = new BlockAvailability(sources.getBlocks().collect(Collectors.toList()));
         this.constraints = constraints;
-        this.results = SchedulerResults.empty();
+        this.lookups = SchedulerResults.empty();
 
         // For each section, find all the professors and rooms that are
         // compatible with it.
@@ -45,12 +46,12 @@ class Availability {
         });
     }
 
-    Availability(final Availability rebind, final Results results) {
+    Availability(final Availability rebind, final Lookups lookups) {
         this.professors = new ManyToManyRelation<>(rebind.professors);
         this.rooms = new ManyToManyRelation<>(rebind.rooms);
         this.blockAvailability = new BlockAvailability(rebind.blockAvailability);
         this.constraints = rebind.constraints;
-        this.results = results;
+        this.lookups = lookups;
     }
 
     /**
@@ -115,7 +116,7 @@ class Availability {
                                 getBlocks(p, r).map(b ->
                                         new Hunk(section, p, r, b))))
                 .distinct()
-                .filter(constraints.bindBaseConstraints(results));
+                .filter(constraints.bindBaseConstraints(lookups));
     }
 
 }

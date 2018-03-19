@@ -9,7 +9,9 @@ import osd.input.Block;
 import osd.input.Professor;
 import osd.input.Room;
 import osd.input.Section;
+import osd.output.Callbacks;
 import osd.output.Hunk;
+import osd.output.Results;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,8 +19,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 class SchedulerTest {
 
@@ -44,6 +45,8 @@ class SchedulerTest {
     @Mock private Room mockRoomNotPreferred;
     @Mock private Preference mockPreference;
 
+    @Mock private Callbacks mockCallbacks;
+    private Results results;
     private Scheduler instance;
 
     @BeforeEach
@@ -59,16 +62,23 @@ class SchedulerTest {
 
         when(mockPreference.evaluate(any())).then(i -> preferenceImpl(i.getArgument(0)));
         Preferences preferences = new Preferences(Collections.singleton(mockPreference));
+
+        when(mockCallbacks.stopCondition()).then(i -> results != null);
+        doAnswer(i -> results = i.getArgument(0)).when(mockCallbacks).onCompleteResult(any());
         instance = new SchedulerImpl(mockPriorityGen1, preferences);
     }
 
     @Test
-    void getResult() {
+    void run() {
         final List<Hunk> expected = Arrays.asList(
                 new Hunk(mockSection1, mockProfessor, mockRoomPreferred, mockBlock),
                 new Hunk(mockSection2, mockProfessor, mockRoomPreferred, mockBlock)
         );
-        final List<Hunk> result = instance.getResults().allHunks().collect(Collectors.toList());
+        instance.run(mockCallbacks);
+        assertNotNull(results);
+        verify(mockCallbacks, atLeastOnce()).stopCondition();
+        verify(mockCallbacks).onCompleteResult(results);
+        final List<Hunk> result = results.getHunks();
         assertEquals(expected, result);
     }
 

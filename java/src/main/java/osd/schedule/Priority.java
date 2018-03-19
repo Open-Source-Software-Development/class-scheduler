@@ -1,5 +1,6 @@
 package osd.schedule;
 
+import osd.considerations.Lookups;
 import osd.input.Professor;
 import osd.input.Room;
 import osd.input.Section;
@@ -24,7 +25,7 @@ class Priority extends Availability {
         sources.getSections().forEach(this::initSection);
     }
 
-    private Priority(final Priority rebind, final Results bindTo) {
+    private Priority(final Priority rebind, final Lookups bindTo) {
         super(rebind, bindTo);
         this.data = new PriorityTracker(rebind.data);
     }
@@ -68,8 +69,8 @@ class Priority extends Availability {
         return data.getHighPrioritySections().iterator().next();
     }
 
-    Priority rebind(final Results results) {
-        return new Priority(this, results);
+    Priority rebind(final Lookups lookups) {
+        return new Priority(this, lookups);
     }
 
     @Override
