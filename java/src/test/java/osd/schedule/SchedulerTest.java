@@ -12,6 +12,7 @@ import osd.input.Section;
 import osd.output.Hunk;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,7 +68,7 @@ class SchedulerTest {
                 new Hunk(mockSection1, mockProfessor, mockRoomPreferred, mockBlock),
                 new Hunk(mockSection2, mockProfessor, mockRoomPreferred, mockBlock)
         );
-        final List<Hunk> result = instance.getResult();
+        final List<Hunk> result = instance.getResults().allHunks().collect(Collectors.toList());
         assertEquals(expected, result);
     }
 

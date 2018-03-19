@@ -5,6 +5,7 @@ import osd.output.Hunk;
 
 import javax.inject.Inject;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -14,30 +15,29 @@ import java.util.stream.Stream;
  */
 class SchedulerImpl implements Scheduler {
 
-    private final List<Hunk> result;
+    private final Results results;
     private final Priority priority;
     private final Preferences preferences;
 
     @Inject
     SchedulerImpl(final Priority priority, final Preferences preferences) {
-        this.result = new ArrayList<>();
+        this.results = Results.empty();
         this.priority = priority;
         this.preferences = preferences;
     }
 
     private SchedulerImpl(final SchedulerImpl copyOf, final Hunk withHunk) {
-        this.result = new ArrayList<>(copyOf.result);
+        this.results = copyOf.results.extend(withHunk);
         this.priority = copyOf.priority.copy();
         this.preferences = copyOf.preferences;
-        this.result.add(withHunk);
         this.priority.onHunkAdded(withHunk);
     }
 
     @Override
-    public List<Hunk> getResult() {
+    public Results getResults() {
         // Stop condition: If this is a complete schedule, return our list.
         if (isComplete()) {
-            return Collections.unmodifiableList(result);
+            return results;
         }
 
         // Recurse: Visit every candidate in the next generation (depth-first),
@@ -45,7 +45,7 @@ class SchedulerImpl implements Scheduler {
         // result is its result. Otherwise, our result is also a failure
         // result.
         return streamNextGeneration()
-                .map(Scheduler::getResult)
+                .map(Scheduler::getResults)
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElse(null);

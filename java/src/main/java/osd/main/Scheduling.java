@@ -6,6 +6,8 @@ import osd.input.placeholder.PlaceholderModule;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
 
+import java.util.stream.Collectors;
+
 @Component(modules={ScheduleModule.class, FlagModule.class, PlaceholderModule.class})
 public interface Scheduling {
 
@@ -15,7 +17,7 @@ public interface Scheduling {
         Scheduling scheduling = DaggerScheduling.builder()
                 .flagModule(new FlagModule(args))
                 .build();
-        System.out.println(scheduling.schedulingAttempt().getResult());
+        System.out.println(scheduling.schedulingAttempt().getResults().allHunks().collect(Collectors.toList()));
     }
 
 }

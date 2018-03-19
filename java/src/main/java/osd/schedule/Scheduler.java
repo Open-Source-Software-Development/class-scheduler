@@ -3,6 +3,7 @@ package osd.schedule;
 import osd.output.Hunk;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * An attempt to create a schedule.
@@ -15,6 +16,6 @@ public interface Scheduler {
      * instead. Except this to change to something more useful very soon.
      * @return generated hunks or {@code null}
      */
-    List<Hunk> getResult();
+    Results getResults();
 
 }

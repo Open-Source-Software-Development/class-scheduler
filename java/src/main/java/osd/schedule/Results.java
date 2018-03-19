@@ -1,0 +1,70 @@
+package osd.schedule;
+
+import osd.input.Block;
+import osd.input.Professor;
+import osd.input.Section;
+import osd.output.Hunk;
+
+import java.util.*;
+import java.util.stream.Stream;
+
+public class Results {
+
+    // These containers are a little bit kludgey. The primary consideration
+    // was obtaining a decent tradeoff between lookup performance and
+    // memory usage.
+    private final Map<Professor, List<Hunk>> hunksByProfessor = new HashMap<>();
+    private final Map<Block, List<Hunk>> hunksByBlock = new HashMap<>();
+    private final Map<Section, Professor> sectionToProfessor = new HashMap<>();
+
+    static Results empty() {
+        return new Results();
+    }
+
+    private Results() {}
+
+    private Results(final Stream<Hunk> hunks) {
+        hunks.forEach(h -> {
+            hunksByProfessor.computeIfAbsent(h.getProfessor(), z -> new ArrayList<>()).add(h);
+            hunksByBlock.computeIfAbsent(h.getBlock(), z -> new ArrayList<>()).add(h);
+            sectionToProfessor.put(h.getSection(), h.getProfessor());
+        });
+    }
+
+    public Stream<Hunk> allHunks() {
+        return hunksByBlock.values().stream()
+                .map(List::stream)
+                .reduce(Stream.empty(), Stream::concat);
+    }
+
+    public Stream<Hunk> lookup(final Professor professor) {
+        if (hunksByProfessor.containsKey(professor)) {
+            return hunksByProfessor.get(professor).stream();
+        }
+        return Stream.empty();
+    }
+
+    public Stream<Hunk> lookup(final Block block) {
+        if (hunksByBlock.containsKey(block)) {
+            return hunksByBlock.get(block).stream();
+        }
+        return Stream.empty();
+    }
+
+    public Hunk lookup(final Section section) {
+        final Professor intermediate = sectionToProfessor.get(section);
+        if (intermediate == null) {
+            return null;
+        }
+        return lookup(intermediate)
+                .filter(h -> section.equals(h.getSection()))
+                .findAny()
+                .orElse(null);
+    }
+
+    Results extend(final Hunk newHunk) {
+        final Stream<Hunk> hunks = Stream.concat(allHunks(), Stream.of(newHunk));
+        return new Results(hunks);
+    }
+
+}
