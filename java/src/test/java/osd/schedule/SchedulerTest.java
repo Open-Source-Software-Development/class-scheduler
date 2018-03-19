@@ -14,7 +14,6 @@ import osd.output.Hunk;
 import osd.output.Results;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +27,9 @@ class SchedulerTest {
     // has been added, but the algorithm hasn't yet returned. Normally, these
     // would be generated automatically, but since we're mocking, we've got to
     // do it manually.
-    @Mock private Priority mockPriorityGen1;
-    @Mock private Priority mockPriorityGen2;
-    @Mock private Priority mockPriorityEmpty;
+    @Mock private CandidateHunkPrioritizer mockCandidateHunkPrioritizerGen1;
+    @Mock private CandidateHunkPrioritizer mockCandidateHunkPrioritizerGen2;
+    @Mock private CandidateHunkPrioritizer mockCandidateHunkPrioritizerEmpty;
 
     // The two sections mentioned above.
     @Mock private Section mockSection1;
@@ -52,20 +51,20 @@ class SchedulerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(mockPriorityGen1.rebind(any())).thenReturn(mockPriorityGen2);
-        when(mockPriorityGen1.getHighPrioritySection()).thenReturn(mockSection1);
-        when(mockPriorityGen1.getCandidateHunks(any())).then(i -> getCandidateHunkImpl(i.getArgument(0)));
+        when(mockCandidateHunkPrioritizerGen1.rebind(any())).thenReturn(mockCandidateHunkPrioritizerGen2);
+        when(mockCandidateHunkPrioritizerGen1.getHighPrioritySection()).thenReturn(mockSection1);
+        when(mockCandidateHunkPrioritizerGen1.getCandidateHunks(any())).then(i -> getCandidateHunkImpl(i.getArgument(0)));
 
-        when(mockPriorityGen2.rebind(any())).thenReturn(mockPriorityEmpty);
-        when(mockPriorityGen2.getHighPrioritySection()).thenReturn(mockSection2);
-        when(mockPriorityGen2.getCandidateHunks(any())).then(i -> getCandidateHunkImpl(i.getArgument(0)));
+        when(mockCandidateHunkPrioritizerGen2.rebind(any())).thenReturn(mockCandidateHunkPrioritizerEmpty);
+        when(mockCandidateHunkPrioritizerGen2.getHighPrioritySection()).thenReturn(mockSection2);
+        when(mockCandidateHunkPrioritizerGen2.getCandidateHunks(any())).then(i -> getCandidateHunkImpl(i.getArgument(0)));
 
         when(mockPreference.evaluate(any())).then(i -> preferenceImpl(i.getArgument(0)));
         Preferences preferences = new Preferences(Collections.singleton(mockPreference));
 
         when(mockCallbacks.stopCondition()).then(i -> results != null);
         doAnswer(i -> results = i.getArgument(0)).when(mockCallbacks).onCompleteResult(any());
-        instance = new SchedulerImpl(mockPriorityGen1, preferences);
+        instance = new SchedulerImpl(mockCandidateHunkPrioritizerGen1, preferences);
     }
 
     @Test

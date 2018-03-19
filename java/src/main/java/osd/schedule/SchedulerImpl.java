@@ -15,27 +15,27 @@ import java.util.stream.Stream;
 class SchedulerImpl implements Scheduler {
 
     private final SchedulerLookups data;
-    private final Priority priority;
+    private final CandidateHunkPrioritizer candidateHunkPrioritizer;
     private final Preferences preferences;
 
     /**
-     * DI constructor. Input data comes in through the {@link Priority}
+     * DI constructor. Input data comes in through the {@link CandidateHunkPrioritizer}
      * dependency.
-     * @param priority a Priority instance giving input data
+     * @param candidateHunkPrioritizer a CandidateHunkPrioritizer instance giving input data
      * @param preferences preferences to sort candidates with
      */
     @Inject
-    SchedulerImpl(final Priority priority, final Preferences preferences) {
+    SchedulerImpl(final CandidateHunkPrioritizer candidateHunkPrioritizer, final Preferences preferences) {
         this.data = SchedulerLookups.empty();
-        this.priority = priority;
+        this.candidateHunkPrioritizer = candidateHunkPrioritizer;
         this.preferences = preferences;
     }
 
     private SchedulerImpl(final SchedulerImpl copyOf, final Hunk withHunk) {
         this.data = copyOf.data.extend(withHunk);
-        this.priority = copyOf.priority.rebind(this.data);
+        this.candidateHunkPrioritizer = copyOf.candidateHunkPrioritizer.rebind(this.data);
         this.preferences = copyOf.preferences;
-        this.priority.onHunkAdded(withHunk);
+        this.candidateHunkPrioritizer.onHunkAdded(withHunk);
     }
 
     @Override
@@ -52,7 +52,7 @@ class SchedulerImpl implements Scheduler {
 
     private void run0(final Callbacks callbacks) {
         if (isComplete()) {
-            final SchedulerResults results = new SchedulerResults(priority.getExpectedHunks(), data);
+            final SchedulerResults results = new SchedulerResults(candidateHunkPrioritizer.getExpectedHunks(), data);
             callbacks.onCompleteResult(results);
         }
         if (callbacks.stopCondition()) {
@@ -71,22 +71,22 @@ class SchedulerImpl implements Scheduler {
                 .reduce(null, (a, b) -> b);
         if (lastChild == null && !callbacks.stopCondition()) {
             System.err.println("Backtracking");
-            final SchedulerResults results = new SchedulerResults(priority.getExpectedHunks(), data);
+            final SchedulerResults results = new SchedulerResults(candidateHunkPrioritizer.getExpectedHunks(), data);
             callbacks.onBacktrack(results);
         }
     }
 
     private boolean isComplete() {
-        return priority.getHighPrioritySection() == null;
+        return candidateHunkPrioritizer.getHighPrioritySection() == null;
     }
 
     private Stream<SchedulerImpl> streamNextGeneration() {
-        final Section section = priority.getHighPrioritySection();
+        final Section section = candidateHunkPrioritizer.getHighPrioritySection();
         return streamCandidates(section);
     }
 
     private Stream<SchedulerImpl> streamCandidates(final Section section) {
-        return priority.getCandidateHunks(section)
+        return candidateHunkPrioritizer.getCandidateHunks(section)
                 .sorted(preferences)
                 .map(h -> new SchedulerImpl(this, h));
     }

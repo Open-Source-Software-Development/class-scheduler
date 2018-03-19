@@ -11,27 +11,29 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Trackers for professor, room, and block availability. An {@code Availability}
- * instance initially knows (by checking {@linkplain Constraints constraints})
- * what professors and rooms are compatible for a section. As hunks are added
- * to the schedule, combinations that are no longer possible are removed from
- * further consideration. This allows the algorithms to efficiently generate
- * candidate hunks.
+ * Generates candidate hunks for sections. A {@code CandidateHunkSource}
+ * instance initially knows (by checking the provided {@link Sources} and
+ * {@link Constraints} what professors and rooms are available for each
+ * section. As hunks are added to the schedule, combinations that are no longer
+ * possible are removed from further consideration. This allows the algorithm
+ * to efficiently generate candidate hunks.
  */
-class Availability {
+class CandidateHunkSource {
 
     final ManyToManyRelation<Section, Professor> professors;
     final ManyToManyRelation<Section, Room> rooms;
     private final BlockAvailability blockAvailability;
     private final Constraints constraints;
     private final Lookups lookups;
+    private final int expectedHunks;
 
-    Availability(final Sources sources, final Constraints constraints) {
+    CandidateHunkSource(final Sources sources, final Constraints constraints) {
         this.professors = new ManyToManyRelation<>();
         this.rooms = new ManyToManyRelation<>();
         this.blockAvailability = new BlockAvailability(sources.getBlocks().collect(Collectors.toList()));
         this.constraints = constraints;
         this.lookups = SchedulerLookups.empty();
+        this.expectedHunks = (int)sources.getSections().count();
 
         // For each section, find all the professors and rooms that are
         // compatible with it.
@@ -45,12 +47,14 @@ class Availability {
         });
     }
 
-    Availability(final Availability rebind, final Lookups lookups) {
+    // TODO: this could be encapsulated away
+    CandidateHunkSource(final CandidateHunkSource rebind, final Lookups lookups) {
         this.professors = new ManyToManyRelation<>(rebind.professors);
         this.rooms = new ManyToManyRelation<>(rebind.rooms);
         this.blockAvailability = new BlockAvailability(rebind.blockAvailability);
         this.constraints = rebind.constraints;
         this.lookups = lookups;
+        this.expectedHunks = rebind.expectedHunks;
     }
 
     /**
@@ -68,6 +72,10 @@ class Availability {
         blockAvailability.setUnavailable(block, professor);
         professors.remove(section);
         rooms.remove(section);
+    }
+
+    int getExpectedHunks() {
+        return expectedHunks;
     }
 
     /**

@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class AvailabilityTest {
+class CandidateHunkSourceTest {
 
     // Some bullshit test data.
     // We'll use the following rules for our mock constraints:
@@ -41,7 +41,7 @@ class AvailabilityTest {
     @Mock private Predicate<Hunk> mockBaseConstraints;
 
     private Hunk hunkForSection1;
-    private Availability instance;
+    private CandidateHunkSource instance;
 
     @BeforeEach
     void setUp() {
@@ -83,7 +83,7 @@ class AvailabilityTest {
             });
         when(mockConstraints.bindBaseConstraints(any())).thenReturn(mockBaseConstraints);
         when(mockBaseConstraints.test(any())).thenReturn(true);
-        instance = new Availability(mockSources, mockConstraints);
+        instance = new CandidateHunkSource(mockSources, mockConstraints);
         hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2);
     }
 
@@ -171,7 +171,7 @@ class AvailabilityTest {
     @Test
     void rebindConstructor_SameData() {
         final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        final Availability copy = new Availability(instance, SchedulerLookups.empty());
+        final CandidateHunkSource copy = new CandidateHunkSource(instance, SchedulerLookups.empty());
         final Set<Hunk> result = copy.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);
     }
@@ -179,7 +179,7 @@ class AvailabilityTest {
     @Test
     void rebindConstructor_ChangingCopyDoesntChangeOriginal() {
         final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        final Availability copy = new Availability(instance, SchedulerLookups.empty());
+        final CandidateHunkSource copy = new CandidateHunkSource(instance, SchedulerLookups.empty());
         copy.onHunkAdded(hunkForSection1);
         final Set<Hunk> result = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);

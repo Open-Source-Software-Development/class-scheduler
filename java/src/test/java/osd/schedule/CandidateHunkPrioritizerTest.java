@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class PriorityTest {
+class CandidateHunkPrioritizerTest {
 
     @Mock private Sources mockSources;
     @Mock private Constraints mockConstraints;
@@ -39,7 +39,7 @@ class PriorityTest {
     private Hunk hunkForSection2;
     private Hunk hunkForSection3;
 
-    private Priority instance;
+    private CandidateHunkPrioritizer instance;
 
     @BeforeEach
     void setUp() {
@@ -55,7 +55,7 @@ class PriorityTest {
         when(mockConstraints.bindBaseConstraints(any())).thenReturn(mockBaseConstraints);
         when(mockBaseConstraints.test(any())).thenReturn(true);
 
-        instance = new Priority(mockSources, mockConstraints);
+        instance = new CandidateHunkPrioritizer(mockSources, mockConstraints);
         hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlock);
         hunkForSection2 = new Hunk(mockSection2, mockProfessor2, mockRoom2, mockBlock);
         hunkForSection3 = new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlock);
@@ -96,7 +96,7 @@ class PriorityTest {
     @Test
     void rebind_SameData() {
         final Section expected = instance.getHighPrioritySection();
-        final Priority copy = instance.rebind(SchedulerLookups.empty());
+        final CandidateHunkPrioritizer copy = instance.rebind(SchedulerLookups.empty());
         final Section result = copy.getHighPrioritySection();
         assertEquals(expected, result);
     }
@@ -104,7 +104,7 @@ class PriorityTest {
     @Test
     void rebind_ChangingCopyDoesntChangeOriginal() {
         final Section expected = instance.getHighPrioritySection();
-        final Priority copy = instance.rebind(SchedulerLookups.empty());
+        final CandidateHunkPrioritizer copy = instance.rebind(SchedulerLookups.empty());
         copy.onHunkAdded(hunkForSection1);
         final Section result = instance.getHighPrioritySection();
         assertEquals(expected, result);

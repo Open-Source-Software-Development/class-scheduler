@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 /**
- * Assists an {@link Availability} instance in tracking block availability.
+ * Assists an {@link CandidateHunkSource} instance in tracking block availability.
  */
 class BlockAvailability {
 

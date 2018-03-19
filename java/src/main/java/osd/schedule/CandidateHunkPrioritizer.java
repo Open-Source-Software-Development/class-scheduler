@@ -13,23 +13,25 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class Priority extends Availability {
+/**
+ * A {@link CandidateHunkSource} that tracks what sections are most difficult.
+ * This allows the algorithm to not only generate candidate hunks efficiently,
+ * but generate them in a way that minimizes backtracking.
+ */
+class CandidateHunkPrioritizer extends CandidateHunkSource {
 
     private final PriorityTracker data;
-    private final int expectedHunks;
 
     @Inject
-    Priority(final Sources sources, final Constraints constraints) {
+    CandidateHunkPrioritizer(final Sources sources, final Constraints constraints) {
         super(sources, constraints);
         this.data = new PriorityTracker();
         sources.getSections().forEach(this::initSection);
-        this.expectedHunks = (int)sources.getSections().count();
     }
 
-    private Priority(final Priority rebind, final Lookups bindTo) {
+    private CandidateHunkPrioritizer(final CandidateHunkPrioritizer rebind, final Lookups bindTo) {
         super(rebind, bindTo);
         this.data = new PriorityTracker(rebind.data);
-        this.expectedHunks = rebind.expectedHunks;
     }
 
     @Override
@@ -71,12 +73,9 @@ class Priority extends Availability {
         return data.getHighPrioritySections().iterator().next();
     }
 
-    Priority rebind(final Lookups lookups) {
-        return new Priority(this, lookups);
-    }
-
-    int getExpectedHunks() {
-        return expectedHunks;
+    // TODO: this could be encapsulated better
+    CandidateHunkPrioritizer rebind(final Lookups lookups) {
+        return new CandidateHunkPrioritizer(this, lookups);
     }
 
     @Override
