@@ -1,7 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
+from django import template
+
+def course_review(request):
+	return render(request, 'PDcoursesReview.html')
+
+def course_selection(request):
+	return render(request, 'PDcoursesSelector.html')
 
 def simple_upload(request):
 	return render(request, 'import_data.html')
@@ -20,6 +27,9 @@ def history(request):
 
 def view_history(request):
 	return render(request, 'view_history.html')
+	
+def file_upload(request):
+	return render(request, 'file_upload.html')
 
 
 ## TODO: Documentation

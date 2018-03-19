@@ -1,0 +1,217 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+
+  <title>Champlain Scheduler</title>
+
+  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+  <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
+
+  <style>
+    .dual-list .list-group {
+      margin-top: 8px;
+    }
+
+    .list-left li,
+    .list-right li {
+      cursor: pointer;
+    }
+
+    .list-arrows {
+      padding-top: 100px;
+    }
+
+    .list-arrows button {
+      margin-bottom: 20px;
+    }
+
+    .list-group-item.active,
+    .list-group-item.active:focus,
+    .list-group-item.active:hover {
+      z-index: 2;
+      color: #fff;
+      background-color: #1f1e3a;
+      border-color: #444444;
+    }
+
+    .well {
+      min-height: 20px;
+      padding: 19px;
+      margin-bottom: 20px;
+      background-color: #1f1e3a0a;
+      border: 1px solid #e3e3e3;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div id="wrapper">
+    {% include 'blank.html' %}
+	
+    <div id="page-wrapper">
+	
+		<br><br>
+	
+		<!-- professor selection menu -->
+		<div class="btn-group" id="dropdownMenu">
+			<button class="btn btn-primary" data-toggle="dropdown">Program Directors <i class="fa fa-chevron-down"></i></button>
+			<ul class="dropdown-menu">
+				<li><a tabindex="-1" href="#">Program Director 1</a></li>
+				<li><a tabindex="-1" href="#">Program Director 2</a></li>
+				<li><a tabindex="-1" href="#">Program Director 3</a></li>
+			</ul>
+		</div>
+	
+      <div></div>
+      <br/>
+      <div class="dual-list list-left col-md-5">
+        <div class="well text-left">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="btn-group">
+                <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="input-group">
+                <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." />
+                <span class="input-group-addon glyphicon glyphicon-search"></span>
+              </div>
+            </div>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">Computer & Net Security</li>
+            <li class="list-group-item">Discrete Mathematics</li>
+            <li class="list-group-item">Global IT & Ethics</li>
+            <li class="list-group-item">Intro to Programming</li>
+            <li class="list-group-item">Linux/Unix Programming</li>
+            <li class="list-group-item">Programming for Mobile Devices</li>
+            <li class="list-group-item">Python Programming</li>
+            <li class="list-group-item">Web Development</li>
+            <li class="list-group-item">System Sofware</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="list-arrows col-md-1 text-center" style="padding-left: 0px; padding-right: 0px; width: 50px;">
+        <button class="btn btn-default btn-sm move-left">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <br/>
+        <button class="btn btn-default btn-sm move-right">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
+      </div>
+
+      <div class="dual-list list-right col-md-5">
+        <div class="well">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="btn-group">
+                <a class="btn btn-default selector" title="select all">
+                  <i class="glyphicon glyphicon-unchecked"></i>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="input-group">
+                <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." />
+                <span class="input-group-addon glyphicon glyphicon-search"></span>
+              </div>
+            </div>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">The Global Condition</li>
+            <li class="list-group-item">Intro 3D Modeling & Texturing</li>
+            <li class="list-group-item">Graphic Design/Objects & Spaces</li>
+            <li class="list-group-item">Game Technology II</li>
+            <li class="list-group-item">Web Design II</li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-outline-primary">Submit</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Start Dual Box list JS-->
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <script>
+    $(function() {
+      $('body').on('click', '.list-group .list-group-item', function() {
+        $(this).toggleClass('active');
+      });
+      $('.list-arrows button').click(function() {
+        var $button = $(this),
+          actives = '';
+        if ($button.hasClass('move-left')) {
+          actives = $('.list-right ul li.active');
+          actives.clone().appendTo('.list-left ul');
+          actives.remove();
+        } else if ($button.hasClass('move-right')) {
+          actives = $('.list-left ul li.active');
+          actives.clone().appendTo('.list-right ul');
+          actives.remove();
+        }
+      });
+      $('.dual-list .selector').click(function() {
+        var $checkBox = $(this);
+        if (!$checkBox.hasClass('selected')) {
+          $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
+          $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+        } else {
+          $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+          $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+        }
+      });
+      $('[name="SearchDualList"]').keyup(function(e) {
+        var code = e.keyCode || e.which;
+        if (code == '9') return;
+        if (code == '27') $(this).val(null);
+        var $rows = $(this).closest('.dual-list').find('.list-group li');
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        $rows.show().filter(function() {
+          var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+          return !~text.indexOf(val);
+        }).hide();
+      });
+    });
+  </script>
+  <!-- End Dual Box list JS-->
+
+  <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+  <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+  <script src="{% static 'js/professorSettings.js' %}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+      });
+
+      $('#sidebarCollapse').on('click', function() {
+        $('#sidebar, #content').toggleClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+
+</html>

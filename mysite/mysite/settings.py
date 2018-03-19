@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'scheduler',
     'faculty_data',
     'room_data',
+	'polls',
 ]
 
 MIDDLEWARE = [
