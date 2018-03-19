@@ -5,11 +5,13 @@ import osd.input.Block;
 import osd.input.Professor;
 import osd.input.Section;
 import osd.output.Hunk;
+import osd.output.Results;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Results implements Lookups {
+class SchedulerResults implements Results, Lookups {
 
     // These containers are a little bit kludgey. The primary consideration
     // was obtaining a decent tradeoff between lookup performance and
@@ -18,13 +20,13 @@ public class Results implements Lookups {
     private final Map<Block, List<Hunk>> hunksByBlock = new HashMap<>();
     private final Map<Section, Professor> sectionToProfessor = new HashMap<>();
 
-    static Results empty() {
-        return new Results();
+    static SchedulerResults empty() {
+        return new SchedulerResults();
     }
 
-    private Results() {}
+    private SchedulerResults() {}
 
-    private Results(final Stream<Hunk> hunks) {
+    private SchedulerResults(final Stream<Hunk> hunks) {
         hunks.forEach(h -> {
             hunksByProfessor.computeIfAbsent(h.getProfessor(), z -> new ArrayList<>()).add(h);
             hunksByBlock.computeIfAbsent(h.getBlock(), z -> new ArrayList<>()).add(h);
@@ -32,10 +34,16 @@ public class Results implements Lookups {
         });
     }
 
-    public Stream<Hunk> allHunks() {
+    @Override
+    public Stream<Hunk> lookupAllHunks() {
         return hunksByBlock.values().stream()
                 .map(List::stream)
                 .reduce(Stream.empty(), Stream::concat);
+    }
+
+    @Override
+    public List<Hunk> getHunks() {
+        return lookupAllHunks().collect(Collectors.toList());
     }
 
     @Override
@@ -66,9 +74,9 @@ public class Results implements Lookups {
                 .orElse(null);
     }
 
-    Results extend(final Hunk newHunk) {
-        final Stream<Hunk> hunks = Stream.concat(allHunks(), Stream.of(newHunk));
-        return new Results(hunks);
+    SchedulerResults extend(final Hunk newHunk) {
+        final Stream<Hunk> hunks = Stream.concat(lookupAllHunks(), Stream.of(newHunk));
+        return new SchedulerResults(hunks);
     }
 
 }

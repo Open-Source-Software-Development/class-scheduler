@@ -2,6 +2,7 @@ package osd.schedule;
 
 import osd.input.Section;
 import osd.output.Hunk;
+import osd.output.Results;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -14,13 +15,13 @@ import java.util.stream.Stream;
  */
 class SchedulerImpl implements Scheduler {
 
-    private final Results results;
+    private final SchedulerResults results;
     private final Priority priority;
     private final Preferences preferences;
 
     @Inject
     SchedulerImpl(final Priority priority, final Preferences preferences) {
-        this.results = Results.empty();
+        this.results = SchedulerResults.empty();
         this.priority = priority;
         this.preferences = preferences;
     }

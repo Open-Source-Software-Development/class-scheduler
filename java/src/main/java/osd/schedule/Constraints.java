@@ -6,11 +6,11 @@ import osd.input.Room;
 import osd.input.Section;
 import osd.input.Professor;
 import osd.output.Hunk;
+import osd.output.Results;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.function.Predicate;
 
 /**

@@ -1,9 +1,6 @@
 package osd.schedule;
 
-import osd.output.Hunk;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import osd.output.Results;
 
 /**
  * An attempt to create a schedule.

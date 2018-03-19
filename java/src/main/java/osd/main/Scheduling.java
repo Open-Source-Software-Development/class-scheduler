@@ -18,7 +18,7 @@ public interface Scheduling {
                 .flagModule(new FlagModule(args))
                 .baseConsiderationModule(new BaseConsiderationModule(FastClasspathScanner::new))
                 .build();
-        scheduling.schedulingAttempt().getResults().allHunks().forEach(System.out::println);
+        scheduling.schedulingAttempt().getResults().getHunks().forEach(System.out::println);
     }
 
 }

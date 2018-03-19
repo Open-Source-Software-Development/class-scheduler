@@ -5,6 +5,7 @@ import osd.input.Room;
 import osd.input.Section;
 import osd.input.Sources;
 import osd.output.Hunk;
+import osd.output.Results;
 
 import javax.inject.Inject;
 import java.util.Collection;

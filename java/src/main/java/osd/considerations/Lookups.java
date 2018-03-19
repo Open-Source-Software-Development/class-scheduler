@@ -12,6 +12,8 @@ import java.util.stream.Stream;
  */
 public interface Lookups {
 
+    Stream<Hunk> lookupAllHunks();
+
     /**
      * Get all the hunks for which a professor is scheduled. If the professor
      * has not yet been scheduled anywhere, return an empty stream.
