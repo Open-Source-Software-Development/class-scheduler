@@ -16,11 +16,8 @@ public class Hunk {
     private final Room room;
     private final Block block;
 
-    Hunk(final Section section, final Professor professor, final Room room, final Block block) {
+    public Hunk(final Section section, final Professor professor, final Room room, final Block block) {
         Objects.requireNonNull(section);
-        Objects.requireNonNull(professor);
-        Objects.requireNonNull(room);
-        Objects.requireNonNull(block);
         this.section = section;
         this.professor = professor;
         this.room = room;
@@ -58,6 +55,23 @@ public class Hunk {
      */
     public Block getBlock() {
         return block;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || o.getClass() != getClass()) {
+            return false;
+        }
+        final Hunk other = (Hunk)o;
+        return Objects.equals(section, other.section)
+                && Objects.equals(block, other.block)
+                && Objects.equals(room, other.room)
+                && Objects.equals(professor, other.professor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(section, block, room, professor);
     }
 
     @Override

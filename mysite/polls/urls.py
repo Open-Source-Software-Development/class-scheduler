@@ -25,7 +25,7 @@ urlpatterns = [
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
     url(r'^course_selection/', polls.views.course_selection, name='course_selection'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
-
+	url(r'^course_selection/', polls.views.course_selection, name='course_selection'),
 ]
 
 if settings.DEBUG:

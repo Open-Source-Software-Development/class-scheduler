@@ -125,6 +125,12 @@ body {
 	margin: 20px 0px;
 }
 
+#logo2 {
+	height: 5%;
+	width: 20%;
+	margin: 20px 0px;
+}
+
 #forgotPass {
 	margin:auto 1% auto auto;
 	float: right;
