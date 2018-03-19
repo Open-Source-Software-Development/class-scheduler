@@ -96,7 +96,7 @@ class PriorityTest {
     @Test
     void rebind_SameData() {
         final Section expected = instance.getHighPrioritySection();
-        final Priority copy = instance.rebind(SchedulerResults.empty());
+        final Priority copy = instance.rebind(SchedulerLookups.empty());
         final Section result = copy.getHighPrioritySection();
         assertEquals(expected, result);
     }
@@ -104,7 +104,7 @@ class PriorityTest {
     @Test
     void rebind_ChangingCopyDoesntChangeOriginal() {
         final Section expected = instance.getHighPrioritySection();
-        final Priority copy = instance.rebind(SchedulerResults.empty());
+        final Priority copy = instance.rebind(SchedulerLookups.empty());
         copy.onHunkAdded(hunkForSection1);
         final Section result = instance.getHighPrioritySection();
         assertEquals(expected, result);

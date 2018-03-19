@@ -4,7 +4,6 @@ import osd.considerations.Lookups;
 import osd.input.Sources;
 import osd.input.*;
 import osd.output.Hunk;
-import osd.output.Results;
 import osd.util.relation.ManyToManyRelation;
 
 import java.util.Collections;
@@ -32,7 +31,7 @@ class Availability {
         this.rooms = new ManyToManyRelation<>();
         this.blockAvailability = new BlockAvailability(sources.getBlocks().collect(Collectors.toList()));
         this.constraints = constraints;
-        this.lookups = SchedulerResults.empty();
+        this.lookups = SchedulerLookups.empty();
 
         // For each section, find all the professors and rooms that are
         // compatible with it.

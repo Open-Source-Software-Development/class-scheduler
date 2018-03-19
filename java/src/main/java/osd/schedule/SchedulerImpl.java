@@ -3,10 +3,8 @@ package osd.schedule;
 import osd.input.Section;
 import osd.output.Callbacks;
 import osd.output.Hunk;
-import osd.output.Results;
 
 import javax.inject.Inject;
-import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -16,20 +14,20 @@ import java.util.stream.Stream;
  */
 class SchedulerImpl implements Scheduler {
 
-    private final SchedulerResults results;
+    private final SchedulerLookups data;
     private final Priority priority;
     private final Preferences preferences;
 
     @Inject
     SchedulerImpl(final Priority priority, final Preferences preferences) {
-        this.results = SchedulerResults.empty();
+        this.data = SchedulerLookups.empty();
         this.priority = priority;
         this.preferences = preferences;
     }
 
     private SchedulerImpl(final SchedulerImpl copyOf, final Hunk withHunk) {
-        this.results = copyOf.results.extend(withHunk);
-        this.priority = copyOf.priority.rebind(this.results);
+        this.data = copyOf.data.extend(withHunk);
+        this.priority = copyOf.priority.rebind(this.data);
         this.preferences = copyOf.preferences;
         this.priority.onHunkAdded(withHunk);
     }
@@ -52,6 +50,7 @@ class SchedulerImpl implements Scheduler {
             throw new ScheduleDoneSignal();
         }
         if (isComplete()) {
+            final SchedulerResults results = new SchedulerResults(priority.getExpectedHunks(), data);
             callbacks.onCompleteResult(results);
         }
         final Scheduler lastChild = streamNextGeneration()
@@ -66,6 +65,7 @@ class SchedulerImpl implements Scheduler {
                 .reduce(null, (a, b) -> b);
         if (lastChild == null && !callbacks.stopCondition()) {
             System.err.println("Backtracking");
+            final SchedulerResults results = new SchedulerResults(priority.getExpectedHunks(), data);
             callbacks.onBacktrack(results);
         }
     }

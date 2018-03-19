@@ -6,7 +6,6 @@ import osd.input.Room;
 import osd.input.Section;
 import osd.input.Sources;
 import osd.output.Hunk;
-import osd.output.Results;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -17,17 +16,20 @@ import java.util.stream.Stream;
 class Priority extends Availability {
 
     private final PriorityTracker data;
+    private final int expectedHunks;
 
     @Inject
     Priority(final Sources sources, final Constraints constraints) {
         super(sources, constraints);
         this.data = new PriorityTracker();
         sources.getSections().forEach(this::initSection);
+        this.expectedHunks = (int)sources.getSections().count();
     }
 
     private Priority(final Priority rebind, final Lookups bindTo) {
         super(rebind, bindTo);
         this.data = new PriorityTracker(rebind.data);
+        this.expectedHunks = rebind.expectedHunks;
     }
 
     @Override
@@ -71,6 +73,10 @@ class Priority extends Availability {
 
     Priority rebind(final Lookups lookups) {
         return new Priority(this, lookups);
+    }
+
+    int getExpectedHunks() {
+        return expectedHunks;
     }
 
     @Override

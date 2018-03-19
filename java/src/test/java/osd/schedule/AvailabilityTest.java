@@ -171,7 +171,7 @@ class AvailabilityTest {
     @Test
     void rebindConstructor_SameData() {
         final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        final Availability copy = new Availability(instance, SchedulerResults.empty());
+        final Availability copy = new Availability(instance, SchedulerLookups.empty());
         final Set<Hunk> result = copy.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);
     }
@@ -179,7 +179,7 @@ class AvailabilityTest {
     @Test
     void rebindConstructor_ChangingCopyDoesntChangeOriginal() {
         final Set<Hunk> expected = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
-        final Availability copy = new Availability(instance, SchedulerResults.empty());
+        final Availability copy = new Availability(instance, SchedulerLookups.empty());
         copy.onHunkAdded(hunkForSection1);
         final Set<Hunk> result = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);

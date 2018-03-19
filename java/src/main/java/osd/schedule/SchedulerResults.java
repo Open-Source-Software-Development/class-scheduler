@@ -1,82 +1,29 @@
 package osd.schedule;
 
-import osd.considerations.Lookups;
-import osd.input.Block;
-import osd.input.Professor;
-import osd.input.Section;
 import osd.output.Hunk;
 import osd.output.Results;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-class SchedulerResults implements Results, Lookups {
+class SchedulerResults implements Results {
 
-    // These containers are a little bit kludgey. The primary consideration
-    // was obtaining a decent tradeoff between lookup performance and
-    // memory usage.
-    private final Map<Professor, List<Hunk>> hunksByProfessor = new HashMap<>();
-    private final Map<Block, List<Hunk>> hunksByBlock = new HashMap<>();
-    private final Map<Section, Professor> sectionToProfessor = new HashMap<>();
+    private final SchedulerLookups lookups;
+    private final int expectedCount;
 
-    static SchedulerResults empty() {
-        return new SchedulerResults();
-    }
-
-    private SchedulerResults() {}
-
-    private SchedulerResults(final Stream<Hunk> hunks) {
-        hunks.forEach(h -> {
-            hunksByProfessor.computeIfAbsent(h.getProfessor(), z -> new ArrayList<>()).add(h);
-            hunksByBlock.computeIfAbsent(h.getBlock(), z -> new ArrayList<>()).add(h);
-            sectionToProfessor.put(h.getSection(), h.getProfessor());
-        });
-    }
-
-    @Override
-    public Stream<Hunk> lookupAllHunks() {
-        return hunksByBlock.values().stream()
-                .map(List::stream)
-                .reduce(Stream.empty(), Stream::concat);
+    SchedulerResults(final int expectedCount, final SchedulerLookups lookups) {
+        this.lookups = lookups;
+        this.expectedCount = expectedCount;
     }
 
     @Override
     public List<Hunk> getHunks() {
-        return lookupAllHunks().collect(Collectors.toList());
+        return new ArrayList<>(lookups.lookupAllHunks().collect(Collectors.toList()));
     }
 
     @Override
-    public Stream<Hunk> lookup(final Professor professor) {
-        if (hunksByProfessor.containsKey(professor)) {
-            return hunksByProfessor.get(professor).stream();
-        }
-        return Stream.empty();
+    public int getExpectedHunkCount() {
+        return expectedCount;
     }
-
-    @Override
-    public Stream<Hunk> lookup(final Block block) {
-        if (hunksByBlock.containsKey(block)) {
-            return hunksByBlock.get(block).stream();
-        }
-        return Stream.empty();
-    }
-
-    @Override
-    public Hunk lookup(final Section section) {
-        final Professor intermediate = sectionToProfessor.get(section);
-        if (intermediate == null) {
-            return null;
-        }
-        return lookup(intermediate)
-                .filter(h -> section.equals(h.getSection()))
-                .findAny()
-                .orElse(null);
-    }
-
-    SchedulerResults extend(final Hunk newHunk) {
-        final Stream<Hunk> hunks = Stream.concat(lookupAllHunks(), Stream.of(newHunk));
-        return new SchedulerResults(hunks);
-    }
-
 }

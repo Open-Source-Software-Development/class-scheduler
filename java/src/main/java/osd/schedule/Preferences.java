@@ -33,7 +33,7 @@ class Preferences implements Comparator<Hunk> {
         return score(hunk2) - score(hunk1);
     }
 
-    private int score(final Hunk hunk) {
+    int score(final Hunk hunk) {
         return preferences.stream()
                 .mapToInt(p -> p.evaluate(hunk))
                 .sum();
