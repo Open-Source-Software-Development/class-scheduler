@@ -60,7 +60,7 @@ class SchedulerImplTest {
         when(mockCandidateHunkPrioritizerGen2.getCandidateHunks(any())).then(i -> getCandidateHunkImpl(i.getArgument(0)));
 
         when(mockPreference.evaluate(any())).then(i -> preferenceImpl(i.getArgument(0)));
-        Preferences preferences = new Preferences(Collections.singleton(mockPreference));
+        Preferences preferences = new Preferences(Collections.singleton(mockPreference), Collections.emptySet());
 
         when(mockCallbacks.stopCondition()).then(i -> results != null);
         doAnswer(i -> results = i.getArgument(0)).when(mockCallbacks).onCompleteResult(any());
