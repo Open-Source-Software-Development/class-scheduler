@@ -2,8 +2,6 @@ package osd.considerations;
 
 import osd.output.Hunk;
 
-import java.util.Objects;
-
 /**
  * User constraints use their element pairs as white- or blacklists. See
  * {@linkplain UserConsideration the parent class documentation} for what an
@@ -29,7 +27,7 @@ public class UserConstraint extends UserConsideration implements Constraint {
     @Override
     public boolean test(final Hunk hunk) {
         final Match match = getMatch(hunk);
-        if (match == Match.NULL) {
+        if (match == Match.NULL || match == Match.NEITHER) {
             return true;
         }
         if (blacklist) {

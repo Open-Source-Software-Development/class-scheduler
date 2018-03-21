@@ -1,5 +1,6 @@
 package osd.considerations;
 
+import osd.input.Block;
 import osd.input.Professor;
 import osd.input.Section;
 import osd.output.Hunk;

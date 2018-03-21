@@ -94,6 +94,9 @@ public abstract class UserConsideration implements Consideration {
         if (clazz == Room.class) {
             return Hunk::getRoom;
         }
+        if (clazz == Block.class) {
+            return Hunk::getBlock;
+        }
         if (clazz == RoomType.class) {
             return h -> h.getRoom().getRoomType();
         }

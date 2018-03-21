@@ -58,25 +58,23 @@ public class Hunk {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (o == null || o.getClass() != getClass()) {
-            return false;
-        }
-        final Hunk other = (Hunk)o;
-        return Objects.equals(section, other.section)
-                && Objects.equals(block, other.block)
-                && Objects.equals(room, other.room)
-                && Objects.equals(professor, other.professor);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(section, block, room, professor);
-    }
-
-    @Override
     public String toString() {
         return "Hunk(" + section + ", " + professor + ", " + room + ", " + block + ")";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hunk hunk = (Hunk) o;
+        return Objects.equals(section, hunk.section) &&
+                Objects.equals(professor, hunk.professor) &&
+                Objects.equals(room, hunk.room) &&
+                Objects.equals(block, hunk.block);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(section, professor, room, block);
+    }
 }

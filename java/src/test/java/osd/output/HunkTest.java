@@ -1,0 +1,97 @@
+package osd.output;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import osd.input.Block;
+import osd.input.Professor;
+import osd.input.Room;
+import osd.input.Section;
+
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+
+class HunkTest {
+
+    @Mock private Section mockSection;
+    @Mock private Block mockBlock;
+    @Mock private Room mockRoom;
+    @Mock private Professor mockProfessor;
+    private Hunk instance;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+        instance = new Hunk(mockSection, mockProfessor, mockRoom, mockBlock);
+    }
+
+    @Test
+    void getSection() {
+        assertEquals(mockSection, instance.getSection());
+    }
+
+    @Test
+    void getProfessor() {
+        assertEquals(mockProfessor, instance.getProfessor());
+    }
+
+    @Test
+    void getRoom() {
+        assertEquals(mockRoom, instance.getRoom());
+    }
+
+    @Test
+    void getBlock() {
+        assertEquals(mockBlock, instance.getBlock());
+    }
+
+    @Test
+    void testToString() {
+        final String expected = "Hunk(" + mockSection
+                + ", " + mockProfessor
+                + ", " + mockRoom + ", "
+                + mockBlock + ")";
+        final String result = instance.toString();
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void equals() {
+        final Hunk equalInstance = new Hunk(mockSection, mockProfessor, mockRoom, mockBlock);
+        assertTrue(instance.equals(equalInstance));
+    }
+
+    @Test
+    void equals_UnequalWhenSectionDifferent() {
+        final Hunk unequalInstance = new Hunk(mock(Section.class), mockProfessor, mockRoom, mockBlock);
+        assertFalse(instance.equals(unequalInstance));
+    }
+
+    @Test
+    void equals_UnequalWhenProfessorDifferent() {
+        final Hunk unequalInstance = new Hunk(mockSection, mock(Professor.class), mockRoom, mockBlock);
+        assertFalse(instance.equals(unequalInstance));
+    }
+
+    @Test
+    void equals_UnequalWhenRoomDifferent() {
+        final Hunk unequalInstance = new Hunk(mockSection, mockProfessor, mock(Room.class), mockBlock);
+        assertFalse(instance.equals(unequalInstance));
+    }
+
+    @Test
+    void equals_UnequalWhenBlockDifferent() {
+        final Hunk unequalInstance = new Hunk(mockSection, mockProfessor, mockRoom, mock(Block.class));
+        assertFalse(instance.equals(unequalInstance));
+    }
+    @Test
+    void testHashCode() {
+        final int expected = Objects.hash(mockSection, mockProfessor, mockRoom, mockBlock);
+        final int result = instance.hashCode();
+        assertEquals(expected, result);
+    }
+
+}

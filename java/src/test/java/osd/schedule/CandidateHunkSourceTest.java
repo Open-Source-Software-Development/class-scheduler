@@ -88,6 +88,13 @@ class CandidateHunkSourceTest {
     }
 
     @Test
+    void getExpectedHunks() {
+        final int expected = (int)mockSources.getSections().count();
+        final int result = instance.getExpectedHunks();
+        assertEquals(expected, result);
+    }
+
+    @Test
     void getProfessors() {
         final Set<Professor> expected = Collections.singleton(mockProfessor1);
         final Set<Professor> result = instance.getProfessors(mockSection1)

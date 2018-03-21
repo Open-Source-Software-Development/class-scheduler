@@ -83,20 +83,18 @@ class BlockAvailability {
         }
 
         @Override
-        public boolean equals(final Object o) {
-            if (getClass() == o.getClass()) {
-                final Key other = (Key)o;
-                return Objects.equals(block, other.block)
-                        && Objects.equals(roomOrProfessor, other.roomOrProfessor);
-            }
-            return false;
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Key key = (Key) o;
+            return Objects.equals(block, key.block) &&
+                    Objects.equals(roomOrProfessor, key.roomOrProfessor);
         }
 
         @Override
         public int hashCode() {
             return Objects.hash(block, roomOrProfessor);
         }
-
     }
 
 }

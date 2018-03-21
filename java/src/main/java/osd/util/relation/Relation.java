@@ -2,6 +2,7 @@ package osd.util.relation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -157,6 +158,19 @@ public abstract class Relation<K, L, V, W> {
      * @return a reversed view of this relation
      */
     public abstract Relation<V, W, K, L> reversed();
+
+    @Override
+    public int hashCode() {
+        return forward.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Relation<?, ?, ?, ?> relation = (Relation<?, ?, ?, ?>) o;
+        return Objects.equals(forward, relation.forward);
+    }
 
     @Override
     public String toString() {

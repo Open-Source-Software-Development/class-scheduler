@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class SchedulerTest {
+class SchedulerImplTest {
 
     // For our dummy schedule, we have two sections. Therefore, there are three
     // generations: the last being the liminal space after the final section
@@ -79,6 +79,16 @@ class SchedulerTest {
         verify(mockCallbacks).onCompleteResult(results);
         final List<Hunk> result = results.getHunks();
         assertEquals(expected, result);
+    }
+
+    @Test
+    void run_FalseOnFailure() {
+        // A stop condition that can never be satisfied ensures the scheduler
+        // will fail.
+        when(mockCallbacks.stopCondition()).then(i -> false);
+        assertFalse(instance.run(mockCallbacks));
+        verify(mockCallbacks, atLeastOnce()).onBacktrack(any());
+        verify(mockCallbacks, atLeastOnce()).onCompleteResult(any());
     }
 
     private int preferenceImpl(final Hunk hunk) {
