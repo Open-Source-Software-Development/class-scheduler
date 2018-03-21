@@ -4,6 +4,15 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
 
+## TODO: Documentation
+#
+def professor_settings(request):
+	if request.method == 'POST':
+		message = request.POST['t1']
+		return HttpResponse(message)
+	else:
+		return render(request, 'profSettings.html')
+
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
 
@@ -67,11 +76,6 @@ def userSettings(request):
 
 	else:
 		return render(request, 'userSettings.html')
-
-## TODO: Documentation
-#
-def professor_settings(request):
-	return render(request, 'profSettings.html')
 
 ## TODO: Documentation
 #
