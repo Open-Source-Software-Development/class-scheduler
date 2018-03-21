@@ -1,6 +1,5 @@
 package osd.considerations;
 
-import osd.input.Block;
 import osd.input.Professor;
 import osd.input.Section;
 import osd.output.Hunk;
@@ -21,14 +20,6 @@ public interface Lookups {
      * @return a (possibly empty, non-null) hunk stream for that professor
      */
     Stream<Hunk> lookup(Professor professor);
-
-    /**
-     * Get all the hunks during a certain block. If no hunks have yet been
-     * scheduled at that block, return and empty stream.
-     * @param block the block to look up hunks for
-     * @return a (possibly empty, non-null) hunk stream for that professor
-     */
-    Stream<Hunk> lookup(Block block);
 
     /**
      * Find the hunk for a section. If the section has not been scheduled yet,

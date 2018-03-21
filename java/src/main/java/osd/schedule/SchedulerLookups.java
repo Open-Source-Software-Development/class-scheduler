@@ -1,14 +1,11 @@
 package osd.schedule;
 
 import osd.considerations.Lookups;
-import osd.input.Block;
 import osd.input.Professor;
 import osd.input.Section;
 import osd.output.Hunk;
-import osd.output.Results;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class SchedulerLookups implements Lookups {
@@ -17,7 +14,6 @@ class SchedulerLookups implements Lookups {
     // was obtaining a decent tradeoff between lookup performance and
     // memory usage.
     private final Map<Professor, List<Hunk>> hunksByProfessor = new HashMap<>();
-    private final Map<Block, List<Hunk>> hunksByBlock = new HashMap<>();
     private final Map<Section, Professor> sectionToProfessor = new HashMap<>();
 
     static SchedulerLookups empty() {
@@ -29,30 +25,20 @@ class SchedulerLookups implements Lookups {
     private SchedulerLookups(final Stream<Hunk> hunks) {
         hunks.forEach(h -> {
             hunksByProfessor.computeIfAbsent(h.getProfessor(), z -> new ArrayList<>()).add(h);
-            hunksByBlock.computeIfAbsent(h.getBlock(), z -> new ArrayList<>()).add(h);
             sectionToProfessor.put(h.getSection(), h.getProfessor());
         });
     }
 
     @Override
     public Stream<Hunk> lookupAllHunks() {
-        return hunksByBlock.values().stream()
-                .map(List::stream)
-                .reduce(Stream.empty(), Stream::concat);
+        return hunksByProfessor.values().stream()
+                .flatMap(List::stream);
     }
 
     @Override
     public Stream<Hunk> lookup(final Professor professor) {
         if (hunksByProfessor.containsKey(professor)) {
             return hunksByProfessor.get(professor).stream();
-        }
-        return Stream.empty();
-    }
-
-    @Override
-    public Stream<Hunk> lookup(final Block block) {
-        if (hunksByBlock.containsKey(block)) {
-            return hunksByBlock.get(block).stream();
         }
         return Stream.empty();
     }
