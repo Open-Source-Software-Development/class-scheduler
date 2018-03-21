@@ -12,8 +12,6 @@
 	</div>
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">contact</a></li>
-			<li><a href="#">OSD Support</a></li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					<i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -51,9 +49,6 @@
 					</li>
 				</ul>
 			</li>
-			<button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-				<i class="glyphicon glyphicon-menu-hamburger"></i>
-			</button>
 		</ul>
 	</div>
 </nav>
@@ -77,8 +72,6 @@
 				<li>
 					<a href="{% url 'PDProfSettings' %}"><i class="fa fa-files-o fa-fw"></i> Review Schedule Data</a>
 				</li>
-				{% endif %}
-				{% if request.user|has_group:"Program director" %}
 				<li>
 					<a href="{% url 'course_selection' %}"><i class="fa fa-tasks fa-fw"></i> Input Course Data</a>
 				</li>
@@ -92,33 +85,17 @@
 				<li>
 					<a href="{% url 'upload' %}"><i class="fa fa-tasks fa-fw"></i> Upload Data</a>
 				</li>
-				{% endif %}
-				{% if request.user|has_group:"Registrar" %}
 				<li>
 					<a href="{% url 'run' %}"><i class="fa fa-tasks fa-fw"></i> Run Scheduler</a>
-				</li>
-				{% endif %}
-				{% if request.user|has_group:"Registrar" %}
-				<li>
-					<a href="{% url 'history' %}"><i class="fa fa-table fa-fw"></i> View Season History</a>
-				</li>  
+				</li> 
 				{% endif %}
 
 				<!-- TODO: Role Protection -->
+				
+				<!-- I dont think viewing season history is constricted to certain roles -->
 				<li>
-					<a href="#"><i class="fa fa-download"></i> Download Schedule</a>
+					<a href="{% url 'history' %}"><i class="fa fa-table fa-fw"></i> View Season History</a>
 				</li>
-				<li>
-					<a href="{% url 'history' %}"><i class="fa fa-table fa-fw"></i> View Past Courses</a>
-				</li>
-				<li>
-					<ul class="list-unstyled CTAs">
-						<li><a href="{% url 'run' %}" class="download_algorithm"> Start Algorithm</a></li>
-						<br/>
-						<li><a href="#" class="output"> Download outputs</a></li>
-					</ul>
-				</li>
-
 			</ul>
 		</div>
 	</div>
