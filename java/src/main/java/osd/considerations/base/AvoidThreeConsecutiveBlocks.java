@@ -6,9 +6,12 @@ import osd.input.Block;
 import osd.input.Professor;
 import osd.output.Hunk;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,36 +36,40 @@ class AvoidThreeConsecutiveBlocks implements BasePreference {
 
     private static boolean test(final Hunk hunk, final Lookups lookups) {
         final Professor professor = hunk.getProfessor();
-        return hunk.getBlocks().stream()
-                .anyMatch(b -> test(professor, b, lookups));
-    }
-
-    private static boolean test(final Professor professor, final Block block, final Lookups lookups) {
-        // Get the set of all blocks this professor is teaching,
-        // including the new one (remember that this is called
-        // *before* the new hunk gets written into the schedule).
-        // Why Stream.concat() instead of just making a set and
-        // adding to it? Because Collectors.toSet() doesn't guarantee
-        // mutation operations will be supported!
-        final Set<Block> blocks = Stream.concat(
-                lookups.lookup(professor).flatMap(h -> h.getBlocks().stream()),
-                Stream.of(block))
+        final Set<Block> alreadyWorkingAt = lookups.lookup(professor)
+                .flatMap(h -> h.getBlocks().stream())
                 .collect(Collectors.toSet());
-        // Look at the new block and both adjacent blocks. For any
-        // of them, does our set contain all three? If so, we meet
-        // the predicate (and *deduct* points from the score).
-        return streamAdjacentBlocks(block)
-                .filter(Objects::nonNull)
-                .anyMatch(b -> containsBothAdjacentBlocks(blocks, b));
+        return hunk.getBlocks().stream()
+                .allMatch(newBlock -> test(alreadyWorkingAt, newBlock));
     }
 
-    private static Stream<Block> streamAdjacentBlocks(final Block block) {
-        return Stream.of(block, block.getNext(), block.getPrevious());
+    private static boolean test(final Set<Block> blocks, final Block newBlock) {
+        return containsBothAdjacent(blocks, newBlock)
+                || containsTwoAfter(blocks, newBlock)
+                || containsTwoBefore(blocks, newBlock);
     }
 
-    private static boolean containsBothAdjacentBlocks(final Set<Block> blocks, final Block block) {
-        return blocks.contains(block.getNext())
-                && blocks.contains(block.getPrevious());
+    private static boolean containsBothAdjacent(final Set<Block> blocks, final Block anchor) {
+        return blocks.contains(anchor.getPrevious()) && blocks.contains(anchor.getNext());
+    }
+
+    private static boolean containsTwoBefore(final Set<Block> blocks, final Block anchor) {
+        return containsTwoInDirection(blocks, anchor, Block::getPrevious);
+    }
+
+    private static boolean containsTwoAfter(final Set<Block> blocks, final Block anchor) {
+        return containsTwoInDirection(blocks, anchor, Block::getNext);
+    }
+
+    // Convenience so we don't need to think too hard about blocks
+    // with null previous/next blocks.
+    private static boolean containsTwoInDirection(final Set<Block> blocks, final Block anchor, final UnaryOperator<Block> operator) {
+        final Block offset1 = operator.apply(anchor);
+        if (offset1 == null) {
+            return false;
+        }
+        final Block offset2 = operator.apply(offset1);
+        return offset2 != null && blocks.contains(offset1) && blocks.contains(offset2);
     }
 
 }

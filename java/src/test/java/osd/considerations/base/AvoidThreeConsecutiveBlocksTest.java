@@ -78,8 +78,17 @@ class AvoidThreeConsecutiveBlocksTest {
         assertTrue(evaluatePredicate(2));
     }
 
+    @Test
+    // Regression test for a bug which caused hunks *adjacent to*
+    // blocks that should be penalized to also be penalized.
+    void bindPredicate_FalseWhenOnlyAdjacent() {
+        addMockBlockToLookups(0);
+        addMockBlockToLookups(1);
+        assertFalse(evaluatePredicate(3));
+    }
+
     private boolean evaluatePredicate(final int forWhichBlock) {
-        final Set<Block> blocks = new HashSet<>(Arrays.asList(mockBlocks[forWhichBlock]));
+        final Set<Block> blocks = Collections.singleton(mockBlocks[forWhichBlock]);
         when(mockHunk.getBlocks()).thenReturn(blocks);
         return instance.bindPredicate(mockLookups).test(mockHunk);
     }
