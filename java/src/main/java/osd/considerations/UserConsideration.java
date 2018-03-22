@@ -7,12 +7,8 @@ import static osd.considerations.HunkExtractor.Extraction;
 
 /**
  * Abstract base class for user preferences and constraints. User preferences
- * and constraints are both defined as pairs of scheduling elements. For
- * example, a constraint indicating Professor Brown can't teach block 7A would
- * have one of its members be Professor Brown and the other be block 7A.
- * <p>What exactly this pair <em>means</em> is up to the specific implementation,
- * however. The purpose of this class is to provide an easy way to check how
- * many members match, not to interpret that result.</p>
+ * and constraints are both represented in the database as pairs of scheduling
+ * elements. This class exists as a convenience to help read them in.
  * @see #getMatch(Hunk)
  */
 abstract class UserConsideration implements Consideration {
@@ -54,11 +50,12 @@ abstract class UserConsideration implements Consideration {
     }
 
     /**
-     * Determines whether both scheduling elements are present in the hunk. If
-     * looking up either element returns {@code null}, then the result is
-     * {@link Match#INCONCLUSIVE}. Otherwise, the result is {@link Match#BOTH}
-     * if both members are the ones defined here, {@link Match#ONE}
-     * if one is, and {@link Match#NEITHER} if neither are.
+     * Compare a hunk to this consideration's element pair. If the hunk is
+     * incomplete and the presence of either element is inconclusive, return
+     * {@link Match#INCONCLUSIVE}. Otherwise, return {@link Match#BOTH} if both
+     * elements of this consideration's element pair are present, {@link Match#ONE}
+     * if only one is, and {@link Match#NEITHER} if neither are.
+     * @see HunkExtractor for notes on what it means for a hunk to contain something
      * @param hunk a hunk
      * @return whether both scheduling elements are present
      */

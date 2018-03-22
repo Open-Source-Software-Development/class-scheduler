@@ -27,6 +27,7 @@ public interface UserConsiderationModule {
     @Provides
     static Collection<Constraint> providesUserConstraints(final Collection<UserConstraintRecord> records,
                                                           final UserConstraintFactory factory) {
+        // TODO: we still need to break whitelist constraints into subgroups
         return records.stream()
                 .map(factory)
                 // Break the list up into blacklist and whitelist constraints.

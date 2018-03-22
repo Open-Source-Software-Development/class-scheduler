@@ -11,6 +11,11 @@ import java.util.stream.Stream;
  */
 public interface Lookups {
 
+    /**
+     * Gets all the hunks that have been scheduled thus far. If no hunks have
+     * been scheduled, returns an empty stream.
+     * @return all the hunks that have been scheduled thus far
+     */
     Stream<Hunk> lookupAllHunks();
 
     /**
