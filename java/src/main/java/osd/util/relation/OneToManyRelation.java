@@ -72,7 +72,7 @@ public class OneToManyRelation<K, V> extends Relation<K, K, V, Set<V>> {
     }
 
     @Override
-    public Relation<V, Set<V>, K, K> reversed() {
+    public ManyToOneRelation<V, K> reversed() {
         return new ManyToOneRelation<>(this.reverse, this.forward);
     }
 
