@@ -3,7 +3,7 @@ package osd.considerations;
 import osd.output.Hunk;
 
 import java.util.function.Function;
-import static osd.considerations.HunkExtractor.Extraction;
+import static osd.considerations.HunkField.Extraction;
 
 /**
  * Abstract base class for user preferences and constraints. User preferences
@@ -21,8 +21,8 @@ abstract class UserConsideration implements Consideration {
      * @param right the second element of the pair
      */
     UserConsideration(final Object left, final Object right) {
-        this.extractLeft = HunkExtractor.of(left);
-        this.extractRight = HunkExtractor.of(right);
+        this.extractLeft = HunkField.get(left).getExtractor(left);
+        this.extractRight = HunkField.get(right).getExtractor(right);
     }
 
     enum Match {
@@ -55,7 +55,7 @@ abstract class UserConsideration implements Consideration {
      * {@link Match#INCONCLUSIVE}. Otherwise, return {@link Match#BOTH} if both
      * elements of this consideration's element pair are present, {@link Match#ONE}
      * if only one is, and {@link Match#NEITHER} if neither are.
-     * @see HunkExtractor for notes on what it means for a hunk to contain something
+     * @see HunkField for notes on what it means for a hunk to contain something
      * @param hunk a hunk
      * @return whether both scheduling elements are present
      */

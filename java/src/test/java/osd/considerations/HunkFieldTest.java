@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class HunkExtractorTest {
+class HunkFieldTest {
 
     @Mock private Course mockCourse;
     @Mock private Section mockSection;
@@ -39,86 +39,85 @@ class HunkExtractorTest {
 
     @Test
     void extractSection_Inconclusive() {
-        test(HunkExtractor.Extraction.INCONCLUSIVE, mockSection, null, Hunk::getSection);
+        test(HunkField.Extraction.INCONCLUSIVE, mockSection, null, Hunk::getSection);
     }
 
     @Test
     void extractSection_Match() {
-        test(HunkExtractor.Extraction.MATCH, mockSection, mockSection, Hunk::getSection);
+        test(HunkField.Extraction.MATCH, mockSection, mockSection, Hunk::getSection);
     }
 
     @Test
     void extractSection_No_Match() {
-        test(HunkExtractor.Extraction.NO_MATCH, mockSection, mock(Section.class), Hunk::getSection);
+        test(HunkField.Extraction.NO_MATCH, mockSection, mock(Section.class), Hunk::getSection);
     }
 
     @Test
     void extractProfessor_Inconclusive() {
-        test(HunkExtractor.Extraction.INCONCLUSIVE, mockProfessor, null, Hunk::getProfessor);
+        test(HunkField.Extraction.INCONCLUSIVE, mockProfessor, null, Hunk::getProfessor);
     }
 
     @Test
     void extractProfessor_Match() {
-        test(HunkExtractor.Extraction.MATCH, mockProfessor, mockProfessor, Hunk::getProfessor);
+        test(HunkField.Extraction.MATCH, mockProfessor, mockProfessor, Hunk::getProfessor);
     }
 
     @Test
     void extractProfessor_No_Match() {
-        test(HunkExtractor.Extraction.NO_MATCH, mockProfessor, mock(Professor.class), Hunk::getProfessor);
+        test(HunkField.Extraction.NO_MATCH, mockProfessor, mock(Professor.class), Hunk::getProfessor);
     }
 
     @Test
     void extractRoom_Inconclusive() {
-        test(HunkExtractor.Extraction.INCONCLUSIVE, mockRoom,null, Hunk::getRoom);
+        test(HunkField.Extraction.INCONCLUSIVE, mockRoom,null, Hunk::getRoom);
     }
 
     @Test
     void extractRoom_Match() {
-        test(HunkExtractor.Extraction.MATCH, mockRoom, mockRoom, Hunk::getRoom);
+        test(HunkField.Extraction.MATCH, mockRoom, mockRoom, Hunk::getRoom);
     }
 
     @Test
     void extractRoom_No_Match() {
-        test(HunkExtractor.Extraction.NO_MATCH, mockRoom, mock(Room.class), Hunk::getRoom);
+        test(HunkField.Extraction.NO_MATCH, mockRoom, mock(Room.class), Hunk::getRoom);
     }
 
     @Test
     void extractCourse_Inconclusive() {
-        test(HunkExtractor.Extraction.INCONCLUSIVE, mockCourse, null, Hunk::getSection);
+        test(HunkField.Extraction.INCONCLUSIVE, mockCourse, null, Hunk::getSection);
     }
 
     @Test
     void extractCourse_Match() {
-        test(HunkExtractor.Extraction.MATCH, mockCourse, mockSection, Hunk::getSection);
+        test(HunkField.Extraction.MATCH, mockCourse, mockSection, Hunk::getSection);
     }
 
     @Test
     void extractCourse_No_Match() {
-        test(HunkExtractor.Extraction.NO_MATCH, mockCourse,
+        test(HunkField.Extraction.NO_MATCH, mockCourse,
                 another(Section.class, Course.class, Section::getCourse), Hunk::getSection);
     }
 
     @Test
     void extractRoomType_Inconclusive() {
-        test(HunkExtractor.Extraction.INCONCLUSIVE, mockRoomType, null, Hunk::getRoom);
+        test(HunkField.Extraction.INCONCLUSIVE, mockRoomType, null, Hunk::getRoom);
     }
 
     @Test
     void extractRoomType_Match() {
-        test(HunkExtractor.Extraction.MATCH, mockRoomType, mockRoom, Hunk::getRoom);
+        test(HunkField.Extraction.MATCH, mockRoomType, mockRoom, Hunk::getRoom);
     }
 
     @Test
     void extractRoomType_No_Match() {
-        test(HunkExtractor.Extraction.NO_MATCH, mockRoomType,
+        test(HunkField.Extraction.NO_MATCH, mockRoomType,
                 another(Room.class, RoomType.class, Room::getRoomType), Hunk::getRoom);
     }
 
     @Test
     void illegalArgumentException_OnUnknownClass() {
-        final Object objectOfUnknownClass = this; // If there's an extractor for HunkExtractorTest, Cthulhu did it.
-        assertThrows(IllegalArgumentException.class, () ->
-                HunkExtractor.of(objectOfUnknownClass));
+        final Object objectOfUnknownClass = this; // If there's an extractor for HunkFieldTest, Cthulhu did it.
+        assertThrows(IllegalArgumentException.class, () -> HunkField.get(objectOfUnknownClass).getExtractor(objectOfUnknownClass));
     }
 
     private <T, U> T another(final Class<T> clazz, final Class<U> remote, final Function<T, U> getter) {
@@ -128,10 +127,10 @@ class HunkExtractorTest {
         return t;
     }
 
-    private <T, U> void test(final HunkExtractor.Extraction expected, final T lookFor,
+    private <T, U> void test(final HunkField.Extraction expected, final T lookFor,
                              final U value, final Function<Hunk, U> getter) {
         when(getter.apply(mockHunk)).thenReturn(value);
-        final HunkExtractor.Extraction result = HunkExtractor.of(lookFor).apply(mockHunk);
+        final HunkField.Extraction result = HunkField.get(lookFor).getExtractor(lookFor).apply(mockHunk);
         assertEquals(expected, result);
     }
 

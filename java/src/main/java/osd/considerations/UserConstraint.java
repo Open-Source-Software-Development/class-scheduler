@@ -1,6 +1,8 @@
 package osd.considerations;
 
 import osd.output.Hunk;
+import osd.util.ImmutablePair;
+import osd.util.Pair;
 
 /**
  * User constraints whitelist or blacklist pairs of scheduling elements. For
@@ -11,7 +13,7 @@ import osd.output.Hunk;
  * The first element of a whitelist constraint's pair is taken as a "whitelist
  * key", and all user constraints with the same whitelist key are grouped
  * together. Within those groupings, they are further grouped by the type of
- * their second element, using the same algorithm as {@link HunkExtractor#of(Object)}.
+ * their second element, using the same algorithm as {@link HunkField#get(Object)}.
  * Groups of whitelist constraints are only considered if the hunk contains the
  * group's whitelist key. Within the grouping, at least one member of each
  * subgroup must pass.</p>
@@ -27,13 +29,15 @@ import osd.output.Hunk;
  */
 public class UserConstraint extends UserConsideration implements Constraint {
 
-    private final boolean blacklist;
-    private final Object whitelistKey;
+    private final Pair<Object, HunkField<?>> whitelistKey;
 
     public UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
         super(left, right);
-        this.blacklist = isBlacklist;
-        this.whitelistKey = isBlacklist ? null : left;
+        if (isBlacklist) {
+            whitelistKey = ImmutablePair.of(null, null);
+        } else {
+            whitelistKey = ImmutablePair.of(left, HunkField.get(right));
+        }
     }
 
     @Override
@@ -42,19 +46,18 @@ public class UserConstraint extends UserConsideration implements Constraint {
         if (match == Match.INCONCLUSIVE || match == Match.NEITHER) {
             return true;
         }
-        if (blacklist) {
+        // Blacklists reject any hunk containing both
+        // of their elements. Whitelists reject hunks
+        // containing only one, but not both.
+        if (whitelistKey.isEmpty()) {
             return match != Match.BOTH;
         } else {
             return match != Match.ONE;
         }
     }
 
-    Object getWhitelistKey() {
+    Pair<Object, HunkField<?>> getWhitelistKey() {
         return whitelistKey;
-    }
-
-    boolean isBlacklist() {
-        return blacklist;
     }
 
 }

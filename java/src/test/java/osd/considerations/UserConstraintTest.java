@@ -7,6 +7,8 @@ import org.mockito.MockitoAnnotations;
 import osd.input.Professor;
 import osd.input.Section;
 import osd.output.Hunk;
+import osd.util.ImmutablePair;
+import osd.util.Pair;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -87,22 +89,16 @@ class UserConstraintTest {
 
     @Test
     void getWhitelistKey() {
-        assertEquals(mockSection, whitelist.getWhitelistKey());
+        assertEquals(mockWhitelistKey(mockSection, mockProfessor), whitelist.getWhitelistKey());
     }
 
     @Test
     void getWhitelistKey_NullOnBlacklist() {
-        assertNull(blacklist.getWhitelistKey());
+        assertEquals(ImmutablePair.of(null, null), blacklist.getWhitelistKey());
     }
 
-    @Test
-    void isBlacklist_True() {
-        assertFalse(whitelist.isBlacklist());
-    }
-
-    @Test
-    void isBlacklist_False() {
-        assertTrue(blacklist.isBlacklist());
+    private static Pair<Object, HunkField<?>> mockWhitelistKey(final Object left, final Object right) {
+        return ImmutablePair.of(left, HunkField.get(right));
     }
 
 }

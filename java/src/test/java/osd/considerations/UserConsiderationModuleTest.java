@@ -10,6 +10,8 @@ import osd.database.UserPreferenceFactory;
 import osd.database.UserPreferenceRecord;
 import osd.input.Section;
 import osd.output.Hunk;
+import osd.util.ImmutablePair;
+import osd.util.Pair;
 
 import java.util.*;
 
@@ -50,44 +52,40 @@ class UserConsiderationModuleTest {
         MockitoAnnotations.initMocks(this);
         when(mockUserConstraintFactory.apply(any())).thenCallRealMethod();
 
-        when(mockConstraintWhitelistA1.isBlacklist()).thenReturn(false);
         when(mockConstraintWhitelistA1.or(any())).thenCallRealMethod();
         when(mockConstraintWhitelistA1.and(any())).thenCallRealMethod();
         when(mockConstraintWhitelistA1.test(any())).thenReturn(true);
-        when(mockConstraintWhitelistA1.getWhitelistKey()).thenReturn(mockSectionA);
+        when(mockConstraintWhitelistA1.getWhitelistKey()).thenReturn(mockWhitelistKey(mockSectionA));
         when(mockUserConstraintFactory.create(mockRecordWhitelistA1)).thenReturn(mockConstraintWhitelistA1);
 
-        when(mockConstraintWhitelistA2.isBlacklist()).thenReturn(false);
         when(mockConstraintWhitelistA2.or(any())).thenCallRealMethod();
         when(mockConstraintWhitelistA2.and(any())).thenCallRealMethod();
         when(mockConstraintWhitelistA2.test(any())).thenReturn(true);
-        when(mockConstraintWhitelistA2.getWhitelistKey()).thenReturn(mockSectionA);
+        when(mockConstraintWhitelistA2.getWhitelistKey()).thenReturn(mockWhitelistKey(mockSectionA));
         when(mockUserConstraintFactory.create(mockRecordWhitelistA2)).thenReturn(mockConstraintWhitelistA2);
 
-        when(mockConstraintWhitelistB1.isBlacklist()).thenReturn(false);
         when(mockConstraintWhitelistB1.or(any())).thenCallRealMethod();
         when(mockConstraintWhitelistB1.and(any())).thenCallRealMethod();
         when(mockConstraintWhitelistB1.test(any())).thenReturn(true);
-        when(mockConstraintWhitelistB1.getWhitelistKey()).thenReturn(mockSectionB);
+        when(mockConstraintWhitelistB1.getWhitelistKey()).thenReturn(mockWhitelistKey(mockSectionB));
         when(mockUserConstraintFactory.create(mockRecordWhitelistB1)).thenReturn(mockConstraintWhitelistB1);
 
-        when(mockConstraintWhitelistB2.isBlacklist()).thenReturn(false);
         when(mockConstraintWhitelistB2.or(any())).thenCallRealMethod();
         when(mockConstraintWhitelistB2.and(any())).thenCallRealMethod();
         when(mockConstraintWhitelistB2.test(any())).thenReturn(true);
-        when(mockConstraintWhitelistB2.getWhitelistKey()).thenReturn(mockSectionB);
+        when(mockConstraintWhitelistB2.getWhitelistKey()).thenReturn(mockWhitelistKey(mockSectionB));
         when(mockUserConstraintFactory.create(mockRecordWhitelistB2)).thenReturn(mockConstraintWhitelistB2);
 
-        when(mockConstraintBlacklist1.isBlacklist()).thenReturn(true);
         when(mockConstraintBlacklist1.or(any())).thenCallRealMethod();
         when(mockConstraintBlacklist1.and(any())).thenCallRealMethod();
         when(mockConstraintBlacklist1.test(any())).thenReturn(true);
+        when(mockConstraintBlacklist1.getWhitelistKey()).thenReturn(ImmutablePair.of(null, null));
         when(mockUserConstraintFactory.create(mockRecordBlacklist1)).thenReturn(mockConstraintBlacklist1);
 
-        when(mockConstraintBlacklist2.isBlacklist()).thenReturn(true);
         when(mockConstraintBlacklist2.or(any())).thenCallRealMethod();
         when(mockConstraintBlacklist2.and(any())).thenCallRealMethod();
         when(mockConstraintBlacklist2.test(any())).thenReturn(true);
+        when(mockConstraintBlacklist2.getWhitelistKey()).thenReturn(ImmutablePair.of(null, null));
         when(mockUserConstraintFactory.create(mockRecordBlacklist2)).thenReturn(mockConstraintBlacklist2);
 
         records = Arrays.asList(
@@ -155,6 +153,10 @@ class UserConsiderationModuleTest {
                 UserConsiderationModule.providesUserConstraints(records, mockUserConstraintFactory)
                         .stream().allMatch(c -> c.test(mockHunkA));
         assertFalse(result);
+    }
+
+    private static Pair<Object, HunkField<?>> mockWhitelistKey(final Section section) {
+        return ImmutablePair.of(section, HunkField.get(section));
     }
 
 }
