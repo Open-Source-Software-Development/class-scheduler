@@ -31,7 +31,7 @@ class SchedulerLookupsTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        hunk = new Hunk(mockSection, mockProfessor, mockRoom, mockBlock);
+        hunk = new Hunk(mockSection, mockProfessor, mockRoom, Collections.singletonList(mockBlock));
         instance = instance.extend(hunk);
     }
 

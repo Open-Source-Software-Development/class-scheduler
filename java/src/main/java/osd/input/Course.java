@@ -1,5 +1,8 @@
 package osd.input;
 
+import java.util.function.Function;
+import java.util.stream.Stream;
+
 /**
  * Represents a specific course. The most important element of a course is its
  * sections, so that's what this focuses on.
@@ -13,5 +16,9 @@ public interface Course extends Named {
      * @return an iterable representing this course's sections
      */
     Iterable<Section> getSections();
+
+    default Function<Block, Stream<Block>> getBlockingStrategy() {
+        return BlockingStrategy.PAIR;
+    }
 
 }

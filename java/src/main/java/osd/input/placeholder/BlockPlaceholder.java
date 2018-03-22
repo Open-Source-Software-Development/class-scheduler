@@ -46,7 +46,7 @@ class BlockPlaceholder extends Placeholder implements Block {
 
     @Override
     public Block getPairedWith() {
-        return new BlockPlaceholder(id, isA);
+        return new BlockPlaceholder(id, !isA);
     }
 
     @Override

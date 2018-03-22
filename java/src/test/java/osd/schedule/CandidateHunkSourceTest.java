@@ -60,31 +60,33 @@ class CandidateHunkSourceTest {
                 Stream.of(mockRoom1, mockRoom2));
         when(mockSources.getSections()).thenAnswer((z) ->
                 Stream.of(mockSection1, mockSection2, mockSection3));
+        mockSources.getSections().forEach(section ->
+                when(section.getBlockingStrategy()).thenReturn(this::mockBlockingStrategy));
         when(mockConstraints.test(any())).thenAnswer(a -> {
                 final Hunk hunk = a.getArgument(0);
                 final Section section = hunk.getSection();
                 final Professor professor = hunk.getProfessor();
                 final Room room = hunk.getRoom();
-                final Block block = hunk.getBlock();
+                final Set<Block> blocks = hunk.getBlocks();
                 if (section.equals(mockSection3)) {
                     return (room == mockRoom1 || room == null);
                 }
                 if (section == mockSection1) {
                     return (professor == mockProfessor1 || professor == null)
                             && (room == mockRoom1 || room == null)
-                            && (block == mockBlockA1 || block == mockBlockB1 || block == null);
+                            && (setEqualsSingletonOrNull(blocks, mockBlockA1, mockBlockB1));
                 }
                 if (section == mockSection2) {
                     return (professor == mockProfessor2 || professor == null)
                             && (room == mockRoom2 || room == null)
-                            && (block == mockBlockA2 || block == mockBlockB2 || block == null);
+                            && (setEqualsSingletonOrNull(blocks, mockBlockA2, mockBlockB2));
                 }
                 throw new AssertionError();
             });
         when(mockConstraints.bindBaseConstraints(any())).thenReturn(mockBaseConstraints);
         when(mockBaseConstraints.test(any())).thenReturn(true);
         instance = new CandidateHunkSource(mockSources, mockConstraints);
-        hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2);
+        hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockB2));
     }
 
     @Test
@@ -145,10 +147,10 @@ class CandidateHunkSourceTest {
     @Test
     void candidates() {
         final Set<Hunk> expected = new HashSet<>(Arrays.asList(
-                new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockA1),
-                new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockA2),
-                new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB1),
-                new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlockB2)
+                new Hunk(mockSection1, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockA1)),
+                new Hunk(mockSection1, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockA2)),
+                new Hunk(mockSection1, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockB1)),
+                new Hunk(mockSection1, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockB2))
         ));
         final Set<Hunk> result = instance.getCandidateHunks(mockSection1).collect(Collectors.toSet());
         assertEquals(expected, result);
@@ -162,14 +164,14 @@ class CandidateHunkSourceTest {
         instance.onHunkAdded(hunkForSection1);
         final Set<Hunk> expected = new HashSet<>(Arrays.asList(
                 // Professor 1 isn't available at block B2.
-                new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlockA1),
-                new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlockA2),
-                new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlockB1),
+                new Hunk(mockSection3, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockA1)),
+                new Hunk(mockSection3, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockA2)),
+                new Hunk(mockSection3, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockB1)),
                 // Professor 2 is available at every block, but room 2 isn't
                 // available block B2, so we get the same possibilities.
-                new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockA1),
-                new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockA2),
-                new Hunk(mockSection3, mockProfessor2, mockRoom1, mockBlockB1)
+                new Hunk(mockSection3, mockProfessor2, mockRoom1, Collections.singletonList(mockBlockA1)),
+                new Hunk(mockSection3, mockProfessor2, mockRoom1, Collections.singletonList(mockBlockA2)),
+                new Hunk(mockSection3, mockProfessor2, mockRoom1, Collections.singletonList(mockBlockB1))
         ));
         final Set<Hunk> result = instance.getCandidateHunks(mockSection3).collect(Collectors.toSet());
         assertEquals(expected, result);
@@ -190,6 +192,22 @@ class CandidateHunkSourceTest {
         copy.onHunkAdded(hunkForSection1);
         final Set<Hunk> result = instance.getCandidateHunks(mockSection2).collect(Collectors.toSet());
         assertEquals(expected, result);
+    }
+
+    private Stream<Block> mockBlockingStrategy(final Block block) {
+        return Stream.of(block);
+    }
+
+    private static boolean setEqualsSingletonOrNull(final Set<Block> set, final Block... candidates) {
+        if (set == null) {
+            return true;
+        }
+        for (final Block candidate: candidates) {
+            if (set.equals(Collections.singleton(candidate))) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

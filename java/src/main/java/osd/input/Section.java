@@ -1,6 +1,8 @@
 package osd.input;
 
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Represents a specific section of some course.
@@ -8,6 +10,10 @@ import java.util.Objects;
 public interface Section extends Named {
 
     Course getCourse();
+
+    default Function<Block, Stream<Block>> getBlockingStrategy() {
+        return getCourse().getBlockingStrategy();
+    }
 
     static Section of(final Course course, final String suffix) {
         return new Section() {

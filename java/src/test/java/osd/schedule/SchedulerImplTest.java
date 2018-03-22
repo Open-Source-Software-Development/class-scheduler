@@ -70,8 +70,8 @@ class SchedulerImplTest {
     @Test
     void run() {
         final List<Hunk> expected = Arrays.asList(
-                new Hunk(mockSection1, mockProfessor, mockRoomPreferred, mockBlock),
-                new Hunk(mockSection2, mockProfessor, mockRoomPreferred, mockBlock)
+                new Hunk(mockSection1, mockProfessor, mockRoomPreferred, Collections.singletonList(mockBlock)),
+                new Hunk(mockSection2, mockProfessor, mockRoomPreferred, Collections.singletonList(mockBlock))
         );
         instance.run(mockCallbacks);
         assertNotNull(results);
@@ -97,8 +97,8 @@ class SchedulerImplTest {
 
     private Stream<Hunk> getCandidateHunkImpl(final Section section) {
         return Stream.of(
-                new Hunk(section, mockProfessor, mockRoomPreferred, mockBlock),
-                new Hunk(section, mockProfessor, mockRoomNotPreferred, mockBlock)
+                new Hunk(section, mockProfessor, mockRoomPreferred, Collections.singletonList(mockBlock)),
+                new Hunk(section, mockProfessor, mockRoomNotPreferred, Collections.singletonList(mockBlock))
         );
     }
 

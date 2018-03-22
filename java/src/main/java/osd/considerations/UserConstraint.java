@@ -16,18 +16,16 @@ public class UserConstraint extends UserConsideration implements Constraint {
     private final boolean blacklist;
     private final Object whitelistKey;
 
-    public <L, R> UserConstraint(final Class<L> leftClass, final L left,
-                                 final Class<R> rightClass, final R right,
-                                 final boolean blacklist) {
-        super(leftClass, left, rightClass, right);
-        this.blacklist = blacklist;
-        this.whitelistKey = blacklist ? null : left;
+    public UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
+        super(left, right);
+        this.blacklist = isBlacklist;
+        this.whitelistKey = isBlacklist ? null : left;
     }
 
     @Override
     public boolean test(final Hunk hunk) {
         final Match match = getMatch(hunk);
-        if (match == Match.NULL || match == Match.NEITHER) {
+        if (match == Match.INCONCLUSIVE || match == Match.NEITHER) {
             return true;
         }
         if (blacklist) {

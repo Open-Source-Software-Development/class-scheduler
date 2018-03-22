@@ -36,6 +36,7 @@ class PlaceholderConfig {
     }
 
     private <T> PlaceholderParser<T> getParser(final Class<T> clazz, final Function<String[], T> constructor) throws IOException {
+        System.out.println("Reading placeholder " + clazz.getSimpleName().toLowerCase() + "s");
         return new PlaceholderParser<>(getPath(clazz), constructor);
     }
 

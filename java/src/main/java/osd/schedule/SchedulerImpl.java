@@ -88,6 +88,7 @@ class SchedulerImpl implements Scheduler {
     private Stream<SchedulerImpl> streamCandidates(final Section section) {
         return candidateHunkPrioritizer.getCandidateHunks(section)
                 .sorted(preferences.bind(data))
+                .peek(System.out::println)
                 .map(h -> new SchedulerImpl(this, h));
     }
 

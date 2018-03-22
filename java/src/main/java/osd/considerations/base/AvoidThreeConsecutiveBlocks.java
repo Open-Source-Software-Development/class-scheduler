@@ -28,26 +28,32 @@ class AvoidThreeConsecutiveBlocks implements BasePreference {
 
     @Override
     public Predicate<Hunk> bindPredicate(final Lookups lookups) {
-        return h -> {
-            final Professor professor = h.getProfessor();
-            final Block block = h.getBlock();
-            // Get the set of all blocks this professor is teaching,
-            // including the new one (remember that this is called
-            // *before* the new hunk gets written into the schedule).
-            // Why Stream.concat() instead of just making a set and
-            // adding to it? Because Collectors.toSet() doesn't guarantee
-            // mutation operations will be supported!
-            final Set<Block> blocks = Stream.concat(
-                        lookups.lookup(professor).map(Hunk::getBlock),
-                        Stream.of(block))
-                    .collect(Collectors.toSet());
-            // Look at the new block and both adjacent blocks. For any
-            // of them, does our set contain all three? If so, we meet
-            // the predicate (and *deduct* points from the score).
-            return streamAdjacentBlocks(h.getBlock())
-                    .filter(Objects::nonNull)
-                    .anyMatch(b -> containsBothAdjacentBlocks(blocks, b));
-        };
+        return h -> test(h, lookups);
+    }
+
+    private static boolean test(final Hunk hunk, final Lookups lookups) {
+        final Professor professor = hunk.getProfessor();
+        return hunk.getBlocks().stream()
+                .anyMatch(b -> test(professor, b, lookups));
+    }
+
+    private static boolean test(final Professor professor, final Block block, final Lookups lookups) {
+        // Get the set of all blocks this professor is teaching,
+        // including the new one (remember that this is called
+        // *before* the new hunk gets written into the schedule).
+        // Why Stream.concat() instead of just making a set and
+        // adding to it? Because Collectors.toSet() doesn't guarantee
+        // mutation operations will be supported!
+        final Set<Block> blocks = Stream.concat(
+                lookups.lookup(professor).flatMap(h -> h.getBlocks().stream()),
+                Stream.of(block))
+                .collect(Collectors.toSet());
+        // Look at the new block and both adjacent blocks. For any
+        // of them, does our set contain all three? If so, we meet
+        // the predicate (and *deduct* points from the score).
+        return streamAdjacentBlocks(block)
+                .filter(Objects::nonNull)
+                .anyMatch(b -> containsBothAdjacentBlocks(blocks, b));
     }
 
     private static Stream<Block> streamAdjacentBlocks(final Block block) {

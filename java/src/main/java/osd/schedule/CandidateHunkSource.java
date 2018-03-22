@@ -7,6 +7,7 @@ import osd.output.Hunk;
 import osd.util.relation.ManyToManyRelation;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -67,9 +68,10 @@ class CandidateHunkSource {
         final Section section = hunk.getSection();
         final Professor professor = hunk.getProfessor();
         final Room room = hunk.getRoom();
-        final Block block = hunk.getBlock();
-        blockAvailability.setUnavailable(block, room);
-        blockAvailability.setUnavailable(block, professor);
+        hunk.getBlocks().forEach(block -> {
+            blockAvailability.setUnavailable(block, room);
+            blockAvailability.setUnavailable(block, professor);
+        });
         professors.remove(section);
         rooms.remove(section);
     }
@@ -121,9 +123,18 @@ class CandidateHunkSource {
                 .flatMap(p ->
                         getRooms(section).flatMap(r ->
                                 getBlocks(p, r).map(b ->
-                                        new Hunk(section, p, r, b))))
+                                        getHunk(section, p, r, b))))
+                .filter(Hunk::validateBlocks)
                 .distinct()
                 .filter(constraints.bindBaseConstraints(lookups));
+    }
+
+    private static Hunk getHunk(final Section section, final Professor professor,
+                                final Room room, final Block block) {
+        final List<Block> blocks = section.getBlockingStrategy()
+                .apply(block)
+                .collect(Collectors.toList());
+        return new Hunk(section, professor, room, blocks);
     }
 
 }

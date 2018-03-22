@@ -26,7 +26,7 @@ class UserPreferenceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new UserPreference(Section.class, mockSection, Section.class, mockSection, worth) {
+        instance = new UserPreference(mockSection, mockSection, worth) {
             @Override
             Match getMatch(final Hunk hunk) {
                 return Objects.requireNonNull(matchResult, "set matchResult before running tests");
@@ -59,7 +59,7 @@ class UserPreferenceTest {
 
     @Test
     void test_MatchIsNull() {
-        matchResult = UserConsideration.Match.NULL;
+        matchResult = UserConsideration.Match.INCONCLUSIVE;
         assertFalse(instance.test(mockHunk));
     }
 

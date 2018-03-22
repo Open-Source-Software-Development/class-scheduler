@@ -2,7 +2,7 @@ package osd.output;
 
 import osd.input.*;
 
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Represents a single scheduler output. A hunk is defined by a
@@ -14,14 +14,15 @@ public class Hunk {
     private final Section section;
     private final Professor professor;
     private final Room room;
-    private final Block block;
+    private final Set<Block> blocks;
 
-    public Hunk(final Section section, final Professor professor, final Room room, final Block block) {
+    public Hunk(final Section section, final Professor professor, final Room room, final Collection<Block> blocks) {
         Objects.requireNonNull(section);
         this.section = section;
         this.professor = professor;
         this.room = room;
-        this.block = block;
+        this.blocks = blocks == null ? null : Collections.unmodifiableSet(new HashSet<>(blocks));
+        assert blocks == null || this.blocks.size() == blocks.size() : "hunk created with duplicate block";
     }
 
     /**
@@ -53,13 +54,17 @@ public class Hunk {
      * Gets the time block the {@linkplain #getSection() section} is scheduled at.
      * @return the time block the section is scheduled at
      */
-    public Block getBlock() {
-        return block;
+    public Set<Block> getBlocks() {
+        return blocks;
+    }
+
+    public boolean validateBlocks() {
+        return blocks == null || blocks.stream().allMatch(Objects::nonNull);
     }
 
     @Override
     public String toString() {
-        return "Hunk(" + section + ", " + professor + ", " + room + ", " + block + ")";
+        return "Hunk(" + section + ", " + professor + ", " + room + ", " + blocks + ")";
     }
 
     @Override
@@ -70,11 +75,11 @@ public class Hunk {
         return Objects.equals(section, hunk.section) &&
                 Objects.equals(professor, hunk.professor) &&
                 Objects.equals(room, hunk.room) &&
-                Objects.equals(block, hunk.block);
+                Objects.equals(blocks, hunk.blocks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(section, professor, room, block);
+        return Objects.hash(section, professor, room, blocks);
     }
 }

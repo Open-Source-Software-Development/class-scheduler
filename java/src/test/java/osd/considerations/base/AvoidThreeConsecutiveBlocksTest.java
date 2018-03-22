@@ -10,6 +10,7 @@ import osd.input.Professor;
 import osd.input.Section;
 import osd.output.Hunk;
 
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +36,7 @@ class AvoidThreeConsecutiveBlocksTest {
                 IntStream.range(0, 5)
                         .filter(i -> isInLookup[i])
                         .mapToObj(i -> mockBlocks[i])
-                        .map(b -> new Hunk(mockSection, mockProfessor, null, b)));
+                        .map(b -> new Hunk(mockSection, mockProfessor, null, Collections.singletonList(b))));
     }
 
     @Test
@@ -78,7 +79,8 @@ class AvoidThreeConsecutiveBlocksTest {
     }
 
     private boolean evaluatePredicate(final int forWhichBlock) {
-        when(mockHunk.getBlock()).thenReturn(mockBlocks[forWhichBlock]);
+        final Set<Block> blocks = new HashSet<>(Arrays.asList(mockBlocks[forWhichBlock]));
+        when(mockHunk.getBlocks()).thenReturn(blocks);
         return instance.bindPredicate(mockLookups).test(mockHunk);
     }
 
