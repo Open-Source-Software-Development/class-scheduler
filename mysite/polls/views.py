@@ -8,8 +8,12 @@ from django import template
 #
 def professor_settings(request):
 	if request.method == 'POST':
-		message = request.POST['t1']
-		return HttpResponse(message)
+		
+		schedule_info = request.POST.copy()
+		schedule_info['first'] = request.user.first_name
+		schedule_info['last'] = request.user.last_name
+		
+		return render(request, 'profSettings.html')
 	else:
 		return render(request, 'profSettings.html')
 
