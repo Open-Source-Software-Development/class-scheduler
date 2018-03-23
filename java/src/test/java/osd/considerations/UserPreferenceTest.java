@@ -46,8 +46,14 @@ class UserPreferenceTest {
     }
 
     @Test
-    void test_MatchIsOne() {
-        matchResult = UserConsideration.Match.ONE;
+    void test_MatchIsLeft() {
+        matchResult = UserConsideration.Match.LEFT;
+        assertFalse(instance.test(mockHunk));
+    }
+
+    @Test
+    void test_MatchIsRight() {
+        matchResult = UserConsideration.Match.RIGHT;
         assertFalse(instance.test(mockHunk));
     }
 

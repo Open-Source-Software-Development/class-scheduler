@@ -38,13 +38,13 @@ class CandidateHunkSource {
 
         // For each section, find all the professors and rooms that are
         // compatible with it.
-        sources.getSections().distinct().forEach(s -> {
+        sources.getSections().distinct().forEach(section -> {
             sources.getProfessors().distinct()
-                    .filter(Constraints.professorPredicate(constraints, s))
-                    .forEach(p -> professors.add(s, p));
+                    .filter(Constraints.professorPredicate(constraints, section))
+                    .forEach(professor -> professors.add(section, professor));
             sources.getRooms().distinct()
-                    .filter(Constraints.roomPredicate(constraints, s))
-                    .forEach(r -> rooms.add(s, r));
+                    .filter(Constraints.roomPredicate(constraints, section))
+                    .forEach(room -> rooms.add(section, room));
         });
     }
 

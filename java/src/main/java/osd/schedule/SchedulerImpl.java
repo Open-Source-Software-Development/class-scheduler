@@ -60,7 +60,6 @@ class SchedulerImpl implements Scheduler {
             throw new ScheduleDoneSignal();
         }
         final Scheduler lastChild = streamNextGeneration()
-                .peek(s -> System.err.println("Descending"))
                 .peek(s -> s.run0(callbacks))
                 // This is a somewhat hacky reduction to ensure we
                 // a) consider every child (unless we exit early), and
@@ -88,8 +87,8 @@ class SchedulerImpl implements Scheduler {
     private Stream<SchedulerImpl> streamCandidates(final Section section) {
         return candidateHunkPrioritizer.getCandidateHunks(section)
                 .sorted(preferences.bind(data))
-                .peek(System.out::println)
-                .map(h -> new SchedulerImpl(this, h));
+                .peek(hunk -> System.err.println("Descending with " + hunk))
+                .map(hunk -> new SchedulerImpl(this, hunk));
     }
 
 }

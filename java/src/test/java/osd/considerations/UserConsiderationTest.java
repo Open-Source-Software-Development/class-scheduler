@@ -47,10 +47,19 @@ class UserConsiderationTest {
     }
 
     @Test
-    void getMatch_One() {
+    void getMatch_Left() {
         when(mockHunk.getSection()).thenReturn(mockSection);
         when(mockHunk.getRoom()).thenReturn(anotherMockRoom);
-        final UserConsideration.Match expected = UserConsideration.Match.ONE;
+        final UserConsideration.Match expected = UserConsideration.Match.LEFT;
+        final UserConsideration.Match result = instance.getMatch(mockHunk);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void getMatch_Right() {
+        when(mockHunk.getSection()).thenReturn(anotherMockSection);
+        when(mockHunk.getRoom()).thenReturn(mockRoom);
+        final UserConsideration.Match expected = UserConsideration.Match.RIGHT;
         final UserConsideration.Match result = instance.getMatch(mockHunk);
         assertEquals(expected, result);
     }
@@ -84,11 +93,9 @@ class UserConsiderationTest {
 
     @Test
     void extract_IllegalArgumentExceptionOnUnknownField() {
-        final Class<?> unknownField = UserConsiderationTest.class;
-        final IllegalArgumentException e =
-                assertThrows(IllegalArgumentException.class, () ->
-                        new UserConsiderationTestImpl(null, null)
-                                .test(mockHunk));
+        assertThrows(IllegalArgumentException.class, () ->
+                new UserConsiderationTestImpl(null, null)
+                        .test(mockHunk));
     }
 
 }

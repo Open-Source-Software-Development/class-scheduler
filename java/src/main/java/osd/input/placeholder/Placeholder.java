@@ -9,9 +9,15 @@ import java.util.Arrays;
 
 class Placeholder {
 
-    private final String[] row;
+    private String[] row;
+
+    Placeholder() {}
 
     Placeholder(final String[] row) {
+        parse(row);
+    }
+
+    void parse(final String[] row) {
         this.row = row;
         for (Class<?> clazz = getClass(); Placeholder.class.isAssignableFrom(clazz); clazz = clazz.getSuperclass()) {
             try {

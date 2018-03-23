@@ -32,7 +32,7 @@ import java.util.function.Function;
  * @see #get(Object) API entry point
  * @see #getExtractor(Object) check if fields contain values
  */
-class HunkField<T> {
+public class HunkField<T> {
 
     private static Map<Class<?>, HunkField<?>> INSTANCES = new HashMap<>();
 

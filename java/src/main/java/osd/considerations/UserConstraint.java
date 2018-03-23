@@ -29,6 +29,7 @@ import osd.util.Pair;
  */
 public class UserConstraint extends UserConsideration implements Constraint {
 
+    private final Pair<Object, Object> debug;
     private final Pair<Object, HunkField<?>> whitelistKey;
 
     public UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
@@ -38,6 +39,7 @@ public class UserConstraint extends UserConsideration implements Constraint {
         } else {
             whitelistKey = ImmutablePair.of(left, HunkField.get(right));
         }
+        debug = ImmutablePair.of(left, right);
     }
 
     @Override
@@ -52,11 +54,17 @@ public class UserConstraint extends UserConsideration implements Constraint {
         if (whitelistKey.isEmpty()) {
             return match != Match.BOTH;
         } else {
-            return match != Match.ONE;
+            return match != Match.LEFT;
         }
     }
 
-    Pair<Object, HunkField<?>> getWhitelistKey() {
+    @Override
+    public String toString() {
+        return (whitelistKey.isEmpty() ? "Blacklist" : "Whitelist") + debug;
+    }
+
+    // TODO: put this back to package-visible when placeholders are removed
+    public Pair<Object, HunkField<?>> getWhitelistKey() {
         return whitelistKey;
     }
 

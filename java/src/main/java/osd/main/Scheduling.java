@@ -10,6 +10,9 @@ import osd.output.Results;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
 
+import javax.inject.Singleton;
+
+@Singleton
 @Component(modules={ScheduleModule.class, FlagModule.class, PlaceholderModule.class})
 public interface Scheduling {
 

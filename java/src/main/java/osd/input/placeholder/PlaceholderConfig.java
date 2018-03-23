@@ -1,42 +1,76 @@
 package osd.input.placeholder;
 
+import osd.considerations.UserConstraint;
 import osd.input.*;
 import osd.main.Flags;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
+@Singleton
 class PlaceholderConfig {
 
     private final String prefix;
+    private final PlaceholderParser<Block> blockParser;
+    private final PlaceholderParser<Course> courseParser;
+    private final PlaceholderParser<Professor> professorParser;
+    private final PlaceholderParser<Room> roomParser;
+    private final PlaceholderParser<UserConstraint> userConstraintParser;
 
     @Inject
     PlaceholderConfig(final Flags flags) {
         // Using these flags more for example's sake than anything...
         prefix = flags.getDatabaseHost() + File.separator + flags.getDatabaseName();
+        try {
+            this.blockParser = getParser(Block.class, BlockPlaceholder::new);
+            this.courseParser = getParser(Course.class, CoursePlaceholder::new);
+            this.roomParser = getParser(Room.class, RoomPlaceholder::new);
+            this.professorParser = getParser(Professor.class, ProfessorPlaceholder::new);
+            this.userConstraintParser = getParser(UserConstraint.class,
+                    row -> new UserConstraintPlaceholder(row, this).get());
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    PlaceholderParser<Block> getBlockParser() throws IOException {
-        return getParser(Block.class, BlockPlaceholder::new);
+    Supplier<Stream<Block>> getBlockParser() {
+        return blockParser::stream;
     }
 
-    PlaceholderParser<Course> getCourseParser() throws IOException {
-        return getParser(Course.class, CoursePlaceholder::new);
+    Supplier<Stream<Course>> getCourseParser() {
+        return courseParser::stream;
     }
 
-    PlaceholderParser<Room> getRoomParser() throws IOException {
-        return getParser(Room.class, RoomPlaceholder::new);
+    Supplier<Stream<Room>> getRoomParser() {
+        return roomParser::stream;
     }
 
-    PlaceholderParser<Professor> getProfessorParser() throws IOException {
-        return getParser(Professor.class, ProfessorPlaceholder::new);
+    Supplier<Stream<Professor>> getProfessorParser() {
+        return professorParser::stream;
     }
 
-    private <T> PlaceholderParser<T> getParser(final Class<T> clazz, final Function<String[], T> constructor) throws IOException {
-        System.out.println("Reading placeholder " + clazz.getSimpleName().toLowerCase() + "s");
+    Supplier<Stream<UserConstraint>> getUserConstraints() {
+        return userConstraintParser::stream;
+    }
+
+    Object lookup(final String key) {
+        return Stream.of(blockParser, courseParser, roomParser, professorParser)
+                .map(parser -> parser.lookup(key))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException(key));
+    }
+
+    private <T> PlaceholderParser<T> getParser(final Class<T> clazz,
+                                               final Function<String[], T> constructor) throws IOException {
         return new PlaceholderParser<>(getPath(clazz), constructor);
     }
 

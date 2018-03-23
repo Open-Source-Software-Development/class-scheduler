@@ -33,9 +33,14 @@ abstract class UserConsideration implements Consideration {
         NEITHER,
 
         /**
-         * Only one member is present, but neither are {@code null}.
+         * Only the left-hand member is present, but neither are {@code null}.
          */
-        ONE,
+        LEFT,
+
+        /**
+         * Only the right-hand member is present, but neither are {@code null}.
+         */
+        RIGHT,
 
         /**
          * Both members are present.
@@ -53,8 +58,9 @@ abstract class UserConsideration implements Consideration {
      * Compare a hunk to this consideration's element pair. If the hunk is
      * incomplete and the presence of either element is inconclusive, return
      * {@link Match#INCONCLUSIVE}. Otherwise, return {@link Match#BOTH} if both
-     * elements of this consideration's element pair are present, {@link Match#ONE}
-     * if only one is, and {@link Match#NEITHER} if neither are.
+     * elements of this consideration's element pair are present,
+     * {@link Match#LEFT} or {@link Match#RIGHT}if only one is, and
+     * {@link Match#NEITHER} if neither are.
      * @see HunkField for notes on what it means for a hunk to contain something
      * @param hunk a hunk
      * @return whether both scheduling elements are present
@@ -65,9 +71,13 @@ abstract class UserConsideration implements Consideration {
         if (left == Extraction.INCONCLUSIVE || right == Extraction.INCONCLUSIVE) {
             return Match.INCONCLUSIVE;
         }
-        final int score = ((left == Extraction.MATCH) ? 1 : 0)
-                        + ((right == Extraction.MATCH) ? 1 : 0);
-        return Match.values()[score];
+        if (left == Extraction.MATCH && right == Extraction.MATCH) {
+            return Match.BOTH;
+        }
+        if (left == Extraction.NO_MATCH && right == Extraction.NO_MATCH) {
+            return Match.NEITHER;
+        }
+        return (left == Extraction.MATCH) ? Match.LEFT : Match.RIGHT;
     }
 
 }

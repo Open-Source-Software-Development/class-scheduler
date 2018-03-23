@@ -46,8 +46,8 @@ public interface UserConsiderationModule {
                                 // Widening cast to make the next operation happy.
                                 .map(c -> (Constraint)c)
                                 .reduce(Constraint.DUMMY, Constraint::or);
-                    }
-                }).collect(Collectors.toList());
+                    }})
+                .collect(Collectors.toList());
     }
 
 }

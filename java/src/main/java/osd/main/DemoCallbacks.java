@@ -20,6 +20,7 @@ class DemoCallbacks implements Callbacks {
 
     @Override
     public void onCompleteResult(final Results results) {
+        System.out.println("Received candidate schedule:");
         results.getHunks().forEach(System.out::println);
         resultCount++;
         if (stopCondition()) {
