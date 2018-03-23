@@ -1,0 +1,111 @@
+\hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode}{\section{scheduler.\-csv\-\_\-parser.\-Parse\-Mode Class Reference}
+\label{classscheduler_1_1csv__parser_1_1_parse_mode}\index{scheduler.\-csv\-\_\-parser.\-Parse\-Mode@{scheduler.\-csv\-\_\-parser.\-Parse\-Mode}}
+}
+Inheritance diagram for scheduler.\-csv\-\_\-parser.\-Parse\-Mode\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classscheduler_1_1csv__parser_1_1_parse_mode}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classscheduler_1_1csv__parser_1_1_parse_mode_a3bc8ae2168d14c9f956528bf32023a3a}{register}
+\item 
+\hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_ad8e4121ce73986f2a07f939c666a2ad4}{def {\bfseries \-\_\-\-\_\-init\-\_\-\-\_\-}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_ad8e4121ce73986f2a07f939c666a2ad4}
+
+\item 
+def \hyperlink{classscheduler_1_1csv__parser_1_1_parse_mode_a0feea2cd6393529d3606b348565bb58d}{can\-\_\-parse}
+\item 
+def \hyperlink{classscheduler_1_1csv__parser_1_1_parse_mode_a85b23beeadbaf1d1ed4046948928db9a}{for\-\_\-header}
+\item 
+def \hyperlink{classscheduler_1_1csv__parser_1_1_parse_mode_ab0e0daafe895143ae2c0042b1d77b1bb}{add\-\_\-row}
+\item 
+def \hyperlink{classscheduler_1_1csv__parser_1_1_parse_mode_af96a04e247153f76b58d7963b1721c4c}{get\-\_\-models}
+\item 
+def \hyperlink{classscheduler_1_1csv__parser_1_1_parse_mode_a4ee02dc3d582a3b222fe84db69731c91}{add\-\_\-row\-\_\-impl}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_a13cc81cc8f8e63d9aca98934beda8c67}{{\bfseries header}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_a13cc81cc8f8e63d9aca98934beda8c67}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_a649baaf5bb93b19ddf00ace72debf871}{list {\bfseries modes} = \mbox{[}$\,$\mbox{]}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_a649baaf5bb93b19ddf00ace72debf871}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}A CSV schema. Schemas should be created by extending this class
+and decorating them with @ParseMode.register. Such subclasses MUST
+declare the columns they care about with a static tuple named
+'columns'.
+
+Args:
+    header (list str): The CSV's header.
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_ab0e0daafe895143ae2c0042b1d77b1bb}{\index{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}!add\-\_\-row@{add\-\_\-row}}
+\index{add\-\_\-row@{add\-\_\-row}!scheduler::csv_parser::ParseMode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}}
+\subsubsection[{add\-\_\-row}]{\setlength{\rightskip}{0pt plus 5cm}def scheduler.\-csv\-\_\-parser.\-Parse\-Mode.\-add\-\_\-row (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{row}
+\end{DoxyParamCaption}
+)}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_ab0e0daafe895143ae2c0042b1d77b1bb}
+\begin{DoxyVerb}Parse a single CSV row and store it.\end{DoxyVerb}
+ \hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_a4ee02dc3d582a3b222fe84db69731c91}{\index{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}!add\-\_\-row\-\_\-impl@{add\-\_\-row\-\_\-impl}}
+\index{add\-\_\-row\-\_\-impl@{add\-\_\-row\-\_\-impl}!scheduler::csv_parser::ParseMode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}}
+\subsubsection[{add\-\_\-row\-\_\-impl}]{\setlength{\rightskip}{0pt plus 5cm}def scheduler.\-csv\-\_\-parser.\-Parse\-Mode.\-add\-\_\-row\-\_\-impl (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{row}
+\end{DoxyParamCaption}
+)}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_a4ee02dc3d582a3b222fe84db69731c91}
+\begin{DoxyVerb}Hook to define parse logic.\end{DoxyVerb}
+ \hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_a0feea2cd6393529d3606b348565bb58d}{\index{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}!can\-\_\-parse@{can\-\_\-parse}}
+\index{can\-\_\-parse@{can\-\_\-parse}!scheduler::csv_parser::ParseMode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}}
+\subsubsection[{can\-\_\-parse}]{\setlength{\rightskip}{0pt plus 5cm}def scheduler.\-csv\-\_\-parser.\-Parse\-Mode.\-can\-\_\-parse (
+\begin{DoxyParamCaption}
+\item[{}]{cls, }
+\item[{}]{header}
+\end{DoxyParamCaption}
+)}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_a0feea2cd6393529d3606b348565bb58d}
+\begin{DoxyVerb}Checks if all this mode's columns are in the header.\end{DoxyVerb}
+ \hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_a85b23beeadbaf1d1ed4046948928db9a}{\index{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}!for\-\_\-header@{for\-\_\-header}}
+\index{for\-\_\-header@{for\-\_\-header}!scheduler::csv_parser::ParseMode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}}
+\subsubsection[{for\-\_\-header}]{\setlength{\rightskip}{0pt plus 5cm}def scheduler.\-csv\-\_\-parser.\-Parse\-Mode.\-for\-\_\-header (
+\begin{DoxyParamCaption}
+\item[{}]{cls, }
+\item[{}]{header}
+\end{DoxyParamCaption}
+)}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_a85b23beeadbaf1d1ed4046948928db9a}
+\begin{DoxyVerb}Gets a parse mode for a header or fails with an IndexError.\end{DoxyVerb}
+ \hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_af96a04e247153f76b58d7963b1721c4c}{\index{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}!get\-\_\-models@{get\-\_\-models}}
+\index{get\-\_\-models@{get\-\_\-models}!scheduler::csv_parser::ParseMode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}}
+\subsubsection[{get\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}def scheduler.\-csv\-\_\-parser.\-Parse\-Mode.\-get\-\_\-models (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_af96a04e247153f76b58d7963b1721c4c}
+\begin{DoxyVerb}Gets the models corresponding to our CSV rows.\end{DoxyVerb}
+ \hypertarget{classscheduler_1_1csv__parser_1_1_parse_mode_a3bc8ae2168d14c9f956528bf32023a3a}{\index{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}!register@{register}}
+\index{register@{register}!scheduler::csv_parser::ParseMode@{scheduler\-::csv\-\_\-parser\-::\-Parse\-Mode}}
+\subsubsection[{register}]{\setlength{\rightskip}{0pt plus 5cm}def scheduler.\-csv\-\_\-parser.\-Parse\-Mode.\-register (
+\begin{DoxyParamCaption}
+\item[{}]{cls, }
+\item[{}]{mode}
+\end{DoxyParamCaption}
+)}}\label{classscheduler_1_1csv__parser_1_1_parse_mode_a3bc8ae2168d14c9f956528bf32023a3a}
+\begin{DoxyVerb}Automatically registers this parse mode.\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/travis/build/\-Open-\/\-Source-\/\-Software-\/\-Development/class-\/scheduler/mysite/scheduler/csv\-\_\-parser.\-py\end{DoxyCompactItemize}

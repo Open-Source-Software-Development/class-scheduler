@@ -7,11 +7,11 @@
 
 var indexSectionsWithContent =
 {
-  0: "fprt",
-  1: "f",
-  2: "p",
-  3: "t",
-  4: "t",
+  0: "abcdfghilmnoprstuw",
+  1: "bcdfhilmnoprstuw",
+  2: "ims",
+  3: "acfghilmorstw",
+  4: "fr",
   5: "r"
 };
 
@@ -20,8 +20,8 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "namespaces",
-  3: "files",
-  4: "functions",
+  3: "functions",
+  4: "variables",
   5: "pages"
 };
 

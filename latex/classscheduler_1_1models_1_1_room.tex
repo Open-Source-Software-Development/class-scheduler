@@ -1,0 +1,59 @@
+\hypertarget{classscheduler_1_1models_1_1_room}{\section{scheduler.\-models.\-Room Class Reference}
+\label{classscheduler_1_1models_1_1_room}\index{scheduler.\-models.\-Room@{scheduler.\-models.\-Room}}
+}
+Inheritance diagram for scheduler.\-models.\-Room\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classscheduler_1_1models_1_1_room}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classscheduler_1_1models_1_1_room_a63cb85d7e2c2d61c6aa0dc6032c8082c}{def {\bfseries \-\_\-\-\_\-str\-\_\-\-\_\-}}\label{classscheduler_1_1models_1_1_room_a63cb85d7e2c2d61c6aa0dc6032c8082c}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classscheduler_1_1models_1_1_room_a660ac23615eb31108ba671bf7d9f9c42}{tuple {\bfseries room\-\_\-number} = models.\-Positive\-Integer\-Field()}\label{classscheduler_1_1models_1_1_room_a660ac23615eb31108ba671bf7d9f9c42}
+
+\item 
+\hypertarget{classscheduler_1_1models_1_1_room_ab0915771c9f821e436bddbd1ea6fca6c}{tuple {\bfseries building} = models.\-Char\-Field(max\-\_\-length=20)}\label{classscheduler_1_1models_1_1_room_ab0915771c9f821e436bddbd1ea6fca6c}
+
+\item 
+\hypertarget{classscheduler_1_1models_1_1_room_ae20a236603dca32bdaaad8e39c56f7ea}{tuple {\bfseries division} = models.\-Foreign\-Key(\hyperlink{classscheduler_1_1models_1_1_division}{Division}, on\-\_\-delete=models.\-C\-A\-S\-C\-A\-D\-E)}\label{classscheduler_1_1models_1_1_room_ae20a236603dca32bdaaad8e39c56f7ea}
+
+\item 
+\hypertarget{classscheduler_1_1models_1_1_room_a2d22ce39edfab7df4a4ddb50a7f15b7f}{tuple {\bfseries subject} = models.\-Char\-Field(max\-\_\-length=10, null=True, blank=True)}\label{classscheduler_1_1models_1_1_room_a2d22ce39edfab7df4a4ddb50a7f15b7f}
+
+\item 
+\hypertarget{classscheduler_1_1models_1_1_room_a8c295adc95a6f79e9a205576a76aba10}{tuple {\bfseries style} = models.\-Char\-Field(max\-\_\-length=10, null=True, blank=True)}\label{classscheduler_1_1models_1_1_room_a8c295adc95a6f79e9a205576a76aba10}
+
+\item 
+\hypertarget{classscheduler_1_1models_1_1_room_ac160d40e28f0ce48c1b2843b225981ab}{tuple {\bfseries room\-\_\-type} = models.\-Foreign\-Key(\hyperlink{classscheduler_1_1models_1_1_room_type}{Room\-Type}, on\-\_\-delete=models.\-C\-A\-S\-C\-A\-D\-E)}\label{classscheduler_1_1models_1_1_room_ac160d40e28f0ce48c1b2843b225981ab}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}    Table: Room
+    PrimaryKey: Composite (building, room_number)
+    Columns: 
+        room_number: PositiveInteger
+            - The number label for a room (ex. 220)
+        building: CharField(Max Lenghth: 20)
+            - The name of the building the room is in (ex. Joyce)
+        division: Foreign Key (Division)
+        subject: CharField(Max Lenghth: 20)
+            - The subject taught in the room (ex. EGP)
+            - This field constrains the classes taught down to the programs listed.
+        style: CharField(Max Lenghth: 20)
+            - The style of course taught in a room (ex. Studio)
+        room_type: Foreign Key (Room Type)
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/travis/build/\-Open-\/\-Source-\/\-Software-\/\-Development/class-\/scheduler/mysite/scheduler/models.\-py\end{DoxyCompactItemize}

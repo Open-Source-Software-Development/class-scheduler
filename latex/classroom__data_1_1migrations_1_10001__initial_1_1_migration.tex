@@ -1,0 +1,57 @@
+\hypertarget{classroom__data_1_1migrations_1_10001__initial_1_1_migration}{\section{room\-\_\-data.\-migrations.0001\-\_\-initial.Migration Class Reference}
+\label{classroom__data_1_1migrations_1_10001__initial_1_1_migration}\index{room\-\_\-data.\-migrations.\-0001\-\_\-initial.\-Migration@{room\-\_\-data.\-migrations.\-0001\-\_\-initial.\-Migration}}
+}
+Inheritance diagram for room\-\_\-data.\-migrations.0001\-\_\-initial.Migration\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classroom__data_1_1migrations_1_10001__initial_1_1_migration}
+\end{center}
+\end{figure}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classroom__data_1_1migrations_1_10001__initial_1_1_migration_a381ac13c35311727d04e86e257323e0e}{{\bfseries initial} = True}\label{classroom__data_1_1migrations_1_10001__initial_1_1_migration_a381ac13c35311727d04e86e257323e0e}
+
+\item 
+list {\bfseries dependencies}
+\item 
+list {\bfseries operations}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classroom__data_1_1migrations_1_10001__initial_1_1_migration_ad77b7bcddcbd5643b43e97daf5f789c3}{\index{room\-\_\-data\-::migrations\-::0001\-\_\-initial\-::\-Migration@{room\-\_\-data\-::migrations\-::0001\-\_\-initial\-::\-Migration}!dependencies@{dependencies}}
+\index{dependencies@{dependencies}!room_data::migrations::0001_initial::Migration@{room\-\_\-data\-::migrations\-::0001\-\_\-initial\-::\-Migration}}
+\subsubsection[{dependencies}]{\setlength{\rightskip}{0pt plus 5cm}list room\-\_\-data.\-migrations.\-0001\-\_\-initial.\-Migration.\-dependencies\hspace{0.3cm}{\ttfamily [static]}}}\label{classroom__data_1_1migrations_1_10001__initial_1_1_migration_ad77b7bcddcbd5643b43e97daf5f789c3}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = [
+2     ]
+\end{DoxyCode}
+\hypertarget{classroom__data_1_1migrations_1_10001__initial_1_1_migration_a30b36d46b2f4310cc0392eae634aa2bc}{\index{room\-\_\-data\-::migrations\-::0001\-\_\-initial\-::\-Migration@{room\-\_\-data\-::migrations\-::0001\-\_\-initial\-::\-Migration}!operations@{operations}}
+\index{operations@{operations}!room_data::migrations::0001_initial::Migration@{room\-\_\-data\-::migrations\-::0001\-\_\-initial\-::\-Migration}}
+\subsubsection[{operations}]{\setlength{\rightskip}{0pt plus 5cm}list room\-\_\-data.\-migrations.\-0001\-\_\-initial.\-Migration.\-operations\hspace{0.3cm}{\ttfamily [static]}}}\label{classroom__data_1_1migrations_1_10001__initial_1_1_migration_a30b36d46b2f4310cc0392eae634aa2bc}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = [
+2         migrations.CreateModel(
+3             name=\textcolor{stringliteral}{'Room'},
+4             fields=[
+5                 (\textcolor{stringliteral}{'id'}, models.AutoField(auto\_created=\textcolor{keyword}{True}, primary\_key=\textcolor{keyword}{True}, serialize=\textcolor{keyword}{False}, verbose\_name=\textcolor{stringliteral}{
+      'ID'})),
+6                 (\textcolor{stringliteral}{'building'}, models.CharField(max\_length=20)),
+7                 (\textcolor{stringliteral}{'room'}, models.IntegerField()),
+8                 (\textcolor{stringliteral}{'capacity'}, models.IntegerField()),
+9                 (\textcolor{stringliteral}{'type\_room'}, models.CharField(max\_length=100)),
+10                 (\textcolor{stringliteral}{'division'}, models.CharField(max\_length=100)),
+11                 (\textcolor{stringliteral}{'subject'}, models.CharField(max\_length=100)),
+12                 (\textcolor{stringliteral}{'course\_style'}, models.CharField(max\_length=100)),
+13             ],
+14         ),
+15     ]
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/travis/build/\-Open-\/\-Source-\/\-Software-\/\-Development/class-\/scheduler/mysite/room\-\_\-data/migrations/0001\-\_\-initial.\-py\end{DoxyCompactItemize}

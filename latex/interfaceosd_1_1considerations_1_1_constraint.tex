@@ -1,0 +1,87 @@
+\hypertarget{interfaceosd_1_1considerations_1_1_constraint}{\section{osd.\-considerations.\-Constraint Interface Reference}
+\label{interfaceosd_1_1considerations_1_1_constraint}\index{osd.\-considerations.\-Constraint@{osd.\-considerations.\-Constraint}}
+}
+Inheritance diagram for osd.\-considerations.\-Constraint\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.685851cm]{interfaceosd_1_1considerations_1_1_constraint}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+interface \hyperlink{interfaceosd_1_1considerations_1_1_constraint_1_1_blacklist}{Blacklist}
+\item 
+enum {\bfseries Type}
+\item 
+interface \hyperlink{interfaceosd_1_1considerations_1_1_constraint_1_1_whitelist}{Whitelist}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \hyperlink{interfaceosd_1_1considerations_1_1_constraint_a50c53a0c89a4cfb8b58deae081ca3787}{test} (final \hyperlink{classosd_1_1output_1_1_hunk}{Hunk} hunk)
+\item 
+\hypertarget{interfaceosd_1_1considerations_1_1_constraint_ac20b9d39e2b0e9fca84c71603af9ad46}{Type {\bfseries get\-Type} ()}\label{interfaceosd_1_1considerations_1_1_constraint_ac20b9d39e2b0e9fca84c71603af9ad46}
+
+\item 
+\hypertarget{interfaceosd_1_1considerations_1_1_constraint_a36bc96efdaadd6f5bcf64198ccf97cd6}{default boolean {\bfseries test} (final \hyperlink{classosd_1_1output_1_1_hunk}{Hunk} hunk)}\label{interfaceosd_1_1considerations_1_1_constraint_a36bc96efdaadd6f5bcf64198ccf97cd6}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interfaceosd_1_1considerations_1_1_constraint_aa9c71385c629e7bc5d9361f707d39622}{static \hyperlink{interfaceosd_1_1considerations_1_1_constraint}{Constraint} {\bfseries of} (final Predicate$<$ Boolean $>$ predicate, final Type type)}\label{interfaceosd_1_1considerations_1_1_constraint_aa9c71385c629e7bc5d9361f707d39622}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A predicate over hunks. 
+
+Since hunks are used as both output and internally during scheduling, it is possible that some members of a hunk may be
+\begin{DoxyCode}
+null 
+\end{DoxyCode}
+ . If a constraint attempts to refer to some member of a hunk for which that member is
+\begin{DoxyCode}
+null 
+\end{DoxyCode}
+ , the constraint msut return
+\begin{DoxyCode}
+\textcolor{keyword}{true} 
+\end{DoxyCode}
+ .
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceosd_1_1considerations_1_1_constraint_a50c53a0c89a4cfb8b58deae081ca3787}{\index{osd\-::considerations\-::\-Constraint@{osd\-::considerations\-::\-Constraint}!test@{test}}
+\index{test@{test}!osd::considerations::Constraint@{osd\-::considerations\-::\-Constraint}}
+\subsubsection[{test}]{\setlength{\rightskip}{0pt plus 5cm}boolean osd.\-considerations.\-Constraint.\-test (
+\begin{DoxyParamCaption}
+\item[{final {\bf Hunk}}]{hunk}
+\end{DoxyParamCaption}
+)}}\label{interfaceosd_1_1considerations_1_1_constraint_a50c53a0c89a4cfb8b58deae081ca3787}
+Determines whether some hunk satisfies this consideration. If the consideration is indeterminate because the hunk contains
+\begin{DoxyCode}
+null 
+\end{DoxyCode}
+ s, the result must be
+\begin{DoxyCode}
+\textcolor{keyword}{true} 
+\end{DoxyCode}
+ . 
+\begin{DoxyParams}{Parameters}
+{\em hunk} & a hunk \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the hunk passes or is indeterminate, false if it fails 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classosd_1_1considerations_1_1_user_constraint_a9378d413848106a42ede0782730c0408}{osd.\-considerations.\-User\-Constraint}.
+
+
+
+The documentation for this interface was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/travis/build/\-Open-\/\-Source-\/\-Software-\/\-Development/class-\/scheduler/java/src/main/java/osd/considerations/Constraint.\-java\end{DoxyCompactItemize}

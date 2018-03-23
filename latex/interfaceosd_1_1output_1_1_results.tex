@@ -1,0 +1,54 @@
+\hypertarget{interfaceosd_1_1output_1_1_results}{\section{osd.\-output.\-Results Interface Reference}
+\label{interfaceosd_1_1output_1_1_results}\index{osd.\-output.\-Results@{osd.\-output.\-Results}}
+}
+
+
+Inherited by osd.\-schedule.\-Scheduler\-Results.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \hyperlink{classosd_1_1output_1_1_hunk}{Hunk} $>$ \hyperlink{interfaceosd_1_1output_1_1_results_ab3ba5d6fbb97e579c73f065a39eeba94}{get\-Hunks} ()
+\item 
+int \hyperlink{interfaceosd_1_1output_1_1_results_a6c75f1e38400b3b8c6173e8868a27c8f}{get\-Expected\-Hunk\-Count} ()
+\item 
+default double \hyperlink{interfaceosd_1_1output_1_1_results_a8d94342ed8cf15db06ad480a4be65732}{get\-Hunk\-Percentage} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceosd_1_1output_1_1_results_a6c75f1e38400b3b8c6173e8868a27c8f}{\index{osd\-::output\-::\-Results@{osd\-::output\-::\-Results}!get\-Expected\-Hunk\-Count@{get\-Expected\-Hunk\-Count}}
+\index{get\-Expected\-Hunk\-Count@{get\-Expected\-Hunk\-Count}!osd::output::Results@{osd\-::output\-::\-Results}}
+\subsubsection[{get\-Expected\-Hunk\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int osd.\-output.\-Results.\-get\-Expected\-Hunk\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interfaceosd_1_1output_1_1_results_a6c75f1e38400b3b8c6173e8868a27c8f}
+Get the count of how many hunks we expect to have. \begin{DoxyReturn}{Returns}
+the count of how many hunks we expect to have 
+\end{DoxyReturn}
+\hypertarget{interfaceosd_1_1output_1_1_results_a8d94342ed8cf15db06ad480a4be65732}{\index{osd\-::output\-::\-Results@{osd\-::output\-::\-Results}!get\-Hunk\-Percentage@{get\-Hunk\-Percentage}}
+\index{get\-Hunk\-Percentage@{get\-Hunk\-Percentage}!osd::output::Results@{osd\-::output\-::\-Results}}
+\subsubsection[{get\-Hunk\-Percentage}]{\setlength{\rightskip}{0pt plus 5cm}default double osd.\-output.\-Results.\-get\-Hunk\-Percentage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{interfaceosd_1_1output_1_1_results_a8d94342ed8cf15db06ad480a4be65732}
+Compute the percentage of hunks generated successfully. \begin{DoxyReturn}{Returns}
+the percentage of hunks generated successfully 
+\end{DoxyReturn}
+\hypertarget{interfaceosd_1_1output_1_1_results_ab3ba5d6fbb97e579c73f065a39eeba94}{\index{osd\-::output\-::\-Results@{osd\-::output\-::\-Results}!get\-Hunks@{get\-Hunks}}
+\index{get\-Hunks@{get\-Hunks}!osd::output::Results@{osd\-::output\-::\-Results}}
+\subsubsection[{get\-Hunks}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Hunk}$>$ osd.\-output.\-Results.\-get\-Hunks (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interfaceosd_1_1output_1_1_results_ab3ba5d6fbb97e579c73f065a39eeba94}
+Get the list of all hunks generated so far. This list may be safely modified; modifications will not be reflected in the scheduler nor future calls to this method. \begin{DoxyReturn}{Returns}
+the list of all hunks generated so far 
+\end{DoxyReturn}
+
+
+The documentation for this interface was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/travis/build/\-Open-\/\-Source-\/\-Software-\/\-Development/class-\/scheduler/java/src/main/java/osd/output/Results.\-java\end{DoxyCompactItemize}

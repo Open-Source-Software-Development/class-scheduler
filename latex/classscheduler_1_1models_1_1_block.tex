@@ -1,0 +1,42 @@
+\hypertarget{classscheduler_1_1models_1_1_block}{\section{scheduler.\-models.\-Block Class Reference}
+\label{classscheduler_1_1models_1_1_block}\index{scheduler.\-models.\-Block@{scheduler.\-models.\-Block}}
+}
+Inheritance diagram for scheduler.\-models.\-Block\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classscheduler_1_1models_1_1_block}
+\end{center}
+\end{figure}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classscheduler_1_1models_1_1_block_a74bca3976000aa8a38e295d6c824e4e7}{tuple {\bfseries day} = models.\-Char\-Field(max\-\_\-length=15)}\label{classscheduler_1_1models_1_1_block_a74bca3976000aa8a38e295d6c824e4e7}
+
+\item 
+\hypertarget{classscheduler_1_1models_1_1_block_ad67c2a879438a7ae068c1bc98a9c3da8}{tuple {\bfseries start\-\_\-time} = models.\-Time\-Field(auto\-\_\-now=False, auto\-\_\-now\-\_\-add=False)}\label{classscheduler_1_1models_1_1_block_ad67c2a879438a7ae068c1bc98a9c3da8}
+
+\item 
+\hypertarget{classscheduler_1_1models_1_1_block_a6df5a07bc90a852842bdd830fefe1459}{tuple {\bfseries end\-\_\-time} = models.\-Time\-Field(auto\-\_\-now=False, auto\-\_\-now\-\_\-add=False)}\label{classscheduler_1_1models_1_1_block_a6df5a07bc90a852842bdd830fefe1459}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}    Table: Block
+    Primary Key: Composite (Block_id, day)
+    Columns:
+        block_id: Positive Ineger
+            - There should be two of each block id in the database with different days.
+        day: CharField (max length 15)
+            - The day of the week a block happens on
+        start_time: TimeField (input in HH:MM)
+            - The start time of the block (ex: 8:00)
+        end_time: TimeField (input in HH:MM) 
+            - The end time of the block (ex: 9:30)
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/travis/build/\-Open-\/\-Source-\/\-Software-\/\-Development/class-\/scheduler/mysite/scheduler/models.\-py\end{DoxyCompactItemize}
