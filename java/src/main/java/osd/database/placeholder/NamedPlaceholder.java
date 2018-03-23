@@ -1,6 +1,6 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
-import osd.input.Named;
+import osd.database.Named;
 
 class NamedPlaceholder extends Placeholder implements Named {
 

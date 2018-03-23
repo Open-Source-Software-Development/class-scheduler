@@ -1,7 +1,7 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
-import osd.input.Course;
-import osd.input.Section;
+import osd.database.Course;
+import osd.database.Section;
 
 import java.util.Collections;
 

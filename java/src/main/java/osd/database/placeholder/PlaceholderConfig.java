@@ -1,7 +1,6 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
-import osd.considerations.UserConstraint;
-import osd.input.*;
+import osd.database.*;
 import osd.main.Flags;
 
 import javax.inject.Inject;
@@ -23,7 +22,7 @@ class PlaceholderConfig {
     private final PlaceholderParser<Course> courseParser;
     private final PlaceholderParser<Professor> professorParser;
     private final PlaceholderParser<Room> roomParser;
-    private final PlaceholderParser<UserConstraint> userConstraintParser;
+    private final PlaceholderParser<UserConstraintRecord> userConstraintParser;
 
     @Inject
     PlaceholderConfig(final Flags flags) {
@@ -34,8 +33,8 @@ class PlaceholderConfig {
             this.courseParser = getParser(Course.class, CoursePlaceholder::new);
             this.roomParser = getParser(Room.class, RoomPlaceholder::new);
             this.professorParser = getParser(Professor.class, ProfessorPlaceholder::new);
-            this.userConstraintParser = getParser(UserConstraint.class,
-                    row -> new UserConstraintPlaceholder(row, this).get());
+            this.userConstraintParser = getParser(UserConstraintRecord.class,
+                    row -> new UserConstraintPlaceholder(row, this));
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,8 +56,8 @@ class PlaceholderConfig {
         return professorParser::stream;
     }
 
-    Supplier<Stream<UserConstraint>> getUserConstraints() {
-        return userConstraintParser::stream;
+    Stream<UserConstraintRecord> getUserConstraints() {
+        return userConstraintParser.stream();
     }
 
     Object lookup(final String key) {
@@ -75,7 +74,9 @@ class PlaceholderConfig {
     }
 
     private Path getPath(final Class<?> clazz) {
-        return new File(prefix + File.separator + clazz.getSimpleName().toLowerCase() + ".csv").toPath();
+        final String className = clazz.getSimpleName().toLowerCase();
+        final String fileName = className.replace("record", "");
+        return new File(prefix + File.separator + fileName + ".csv").toPath();
     }
 
 }

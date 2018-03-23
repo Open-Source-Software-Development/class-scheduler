@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.input.*;
+import osd.database.*;
 import osd.output.Hunk;
 
 import java.util.Arrays;

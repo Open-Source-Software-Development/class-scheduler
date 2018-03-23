@@ -1,6 +1,6 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
-import osd.input.Professor;
+import osd.database.Professor;
 
 class ProfessorPlaceholder extends NamedPlaceholder implements Professor {
 

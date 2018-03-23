@@ -4,10 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.input.Block;
-import osd.input.Professor;
-import osd.input.Room;
-import osd.input.Section;
+import osd.database.Block;
+import osd.database.Professor;
+import osd.database.Room;
+import osd.database.Section;
 import osd.output.Hunk;
 
 import java.util.Collections;

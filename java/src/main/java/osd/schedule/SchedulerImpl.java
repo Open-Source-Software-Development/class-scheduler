@@ -1,6 +1,6 @@
 package osd.schedule;
 
-import osd.input.Section;
+import osd.database.Section;
 import osd.output.Callbacks;
 import osd.output.Hunk;
 

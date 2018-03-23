@@ -9,7 +9,9 @@ import java.util.Collection;
 public class DatabaseModule {
 
     public DatabaseModule(/* Add arguments here, if needed. */) {
-        // ...
+        // You might want to use FlagModule as an argument.
+        // It gives you an API for finding the database hostname,
+        // username, etc...
     }
 
     @Provides

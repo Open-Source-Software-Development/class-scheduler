@@ -1,4 +1,4 @@
-package osd.input;
+package osd.database;
 
 /**
  * Represents osd.input types which have a name in their database table.

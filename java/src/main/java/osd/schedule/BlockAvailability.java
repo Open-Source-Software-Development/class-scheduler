@@ -1,8 +1,8 @@
 package osd.schedule;
 
-import osd.input.Block;
-import osd.input.Professor;
-import osd.input.Room;
+import osd.database.Block;
+import osd.database.Professor;
+import osd.database.Room;
 
 import java.util.*;
 import java.util.stream.Stream;

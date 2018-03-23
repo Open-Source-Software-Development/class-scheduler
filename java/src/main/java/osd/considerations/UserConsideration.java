@@ -9,6 +9,7 @@ import static osd.considerations.HunkField.Extraction;
  * Abstract base class for user preferences and constraints. User preferences
  * and constraints are both represented in the database as pairs of scheduling
  * elements. This class exists as a convenience to help read them in.
+ * Interpretation of those element pairs is up to the specific implementation.
  * @see #getMatch(Hunk)
  */
 abstract class UserConsideration implements Consideration {

@@ -1,4 +1,4 @@
-package osd.input;
+package osd.database;
 
 /**
  * Represents a specific room.

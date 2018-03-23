@@ -2,18 +2,14 @@ package osd.considerations.base;
 
 import osd.considerations.BasePreference;
 import osd.considerations.Lookups;
-import osd.input.Block;
-import osd.input.Professor;
+import osd.database.Block;
+import osd.database.Professor;
 import osd.output.Hunk;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A base preference that discourages back-to-back-to-back courses.

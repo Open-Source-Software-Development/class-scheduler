@@ -1,13 +1,11 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class PlaceholderParser<T> {

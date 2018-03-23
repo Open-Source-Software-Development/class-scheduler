@@ -2,33 +2,26 @@ package osd.considerations;
 
 import dagger.Module;
 import dagger.Provides;
-import osd.database.UserConstraintFactory;
 import osd.database.UserConstraintRecord;
-import osd.database.UserPreferenceFactory;
 import osd.database.UserPreferenceRecord;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@Module(
-        // TODO: uncomment this when that class is ready
-        //includes = DatabaseModule.class
-)
+@Module
 public interface UserConsiderationModule {
 
     @Provides
-    static Collection<Preference> providesUserPreferences(final Collection<UserPreferenceRecord> records,
-                                                          final UserPreferenceFactory factory) {
+    static Collection<Preference> providesUserPreferences(final Collection<UserPreferenceRecord> records) {
         return records.stream()
-                .map(factory)
+                .map(UserPreferenceRecord::toUserPreference)
                 .collect(Collectors.toList());
     }
 
     @Provides
-    static Collection<Constraint> providesUserConstraints(final Collection<UserConstraintRecord> records,
-                                                          final UserConstraintFactory factory) {
+    static Collection<Constraint> providesUserConstraints(final Collection<UserConstraintRecord> records) {
         return records.stream()
-                .map(factory)
+                .map(UserConstraintRecord::toUserConstraint)
                 // Break the list up into blacklist and whitelist constraints.
                 .collect(Collectors.groupingBy(UserConstraint::getWhitelistKey))
                 .entrySet().stream()

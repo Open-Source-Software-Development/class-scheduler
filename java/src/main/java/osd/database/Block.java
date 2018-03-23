@@ -1,4 +1,4 @@
-package osd.input;
+package osd.database;
 
 /**
  * A specific time block, as specified in the sandbox. A block represents a

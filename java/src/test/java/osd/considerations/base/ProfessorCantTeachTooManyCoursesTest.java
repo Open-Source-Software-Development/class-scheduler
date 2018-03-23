@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.considerations.Lookups;
-import osd.input.Professor;
+import osd.database.Professor;
 import osd.output.Hunk;
 
 import java.util.stream.Stream;

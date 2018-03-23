@@ -1,6 +1,6 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
-import osd.input.Block;
+import osd.database.Block;
 
 class BlockPlaceholder extends Placeholder implements Block {
 

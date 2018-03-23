@@ -27,19 +27,7 @@ public interface Constraint extends Consideration {
      * @return the "AND" of both constraints
      */
     default Constraint and(final Constraint other) {
-        final Constraint that = this;
-        return new Constraint() {
-
-            @Override
-            public boolean test(final Hunk hunk) {
-                return that.test(hunk) && other.test(hunk);
-            }
-
-            @Override
-            public String toString() {
-                return that + " && " + other;
-            }
-        };
+        return hunk -> test(hunk) && other.test(hunk);
     }
 
     /**
@@ -48,19 +36,7 @@ public interface Constraint extends Consideration {
      * @return the "OR" of both constraints
      */
     default Constraint or(final Constraint other) {
-        final Constraint that = this;
-        return new Constraint() {
-
-            @Override
-            public boolean test(final Hunk hunk) {
-                return that.test(hunk) || other.test(hunk);
-            }
-
-            @Override
-            public String toString() {
-                return that + " || " + other;
-            }
-        };
+        return hunk -> test(hunk) || other.test(hunk);
     }
 
     /**

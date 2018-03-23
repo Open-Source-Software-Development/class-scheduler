@@ -1,7 +1,7 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
-import osd.input.Room;
-import osd.input.RoomType;
+import osd.database.Room;
+import osd.database.RoomType;
 
 import java.util.Objects;
 

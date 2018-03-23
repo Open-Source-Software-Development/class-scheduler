@@ -58,13 +58,7 @@ public class UserConstraint extends UserConsideration implements Constraint {
         }
     }
 
-    @Override
-    public String toString() {
-        return (whitelistKey.isEmpty() ? "Blacklist" : "Whitelist") + debug;
-    }
-
-    // TODO: put this back to package-visible when placeholders are removed
-    public Pair<Object, HunkField<?>> getWhitelistKey() {
+    Pair<Object, HunkField<?>> getWhitelistKey() {
         return whitelistKey;
     }
 

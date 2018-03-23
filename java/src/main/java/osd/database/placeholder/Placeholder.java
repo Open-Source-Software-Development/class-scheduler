@@ -1,4 +1,4 @@
-package osd.input.placeholder;
+package osd.database.placeholder;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,21 +11,19 @@ class Placeholder {
 
     private String[] row;
 
-    Placeholder() {}
-
     Placeholder(final String[] row) {
-        parse(row);
+        this.row = row;
+        parse(this, row);
     }
 
-    void parse(final String[] row) {
-        this.row = row;
-        for (Class<?> clazz = getClass(); Placeholder.class.isAssignableFrom(clazz); clazz = clazz.getSuperclass()) {
+    static void parse(final Object placeholder, final String[] row) {
+        for (Class<?> clazz = placeholder.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
             try {
                 for (final Method method : clazz.getDeclaredMethods()) {
                     final FromCSV data = method.getAnnotation(FromCSV.class);
                     if (data != null) {
                         final String arg = row[data.value()];
-                        method.invoke(this, arg);
+                        method.invoke(placeholder, arg);
                     }
                 }
             } catch (final ReflectiveOperationException e) {

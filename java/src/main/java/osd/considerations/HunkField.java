@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.input.*;
+import osd.database.*;
 import osd.output.Hunk;
 
 import java.util.*;
@@ -32,7 +32,7 @@ import java.util.function.Function;
  * @see #get(Object) API entry point
  * @see #getExtractor(Object) check if fields contain values
  */
-public class HunkField<T> {
+class HunkField<T> {
 
     private static Map<Class<?>, HunkField<?>> INSTANCES = new HashMap<>();
 

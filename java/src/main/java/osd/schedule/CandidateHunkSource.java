@@ -1,8 +1,7 @@
 package osd.schedule;
 
 import osd.considerations.Lookups;
-import osd.input.Sources;
-import osd.input.*;
+import osd.database.*;
 import osd.output.Hunk;
 import osd.util.relation.ManyToManyRelation;
 

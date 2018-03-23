@@ -3,9 +3,9 @@ package osd.schedule;
 import osd.considerations.BaseConstraint;
 import osd.considerations.Constraint;
 import osd.considerations.Lookups;
-import osd.input.Room;
-import osd.input.Section;
-import osd.input.Professor;
+import osd.database.Room;
+import osd.database.Section;
+import osd.database.Professor;
 import osd.output.Hunk;
 
 import javax.inject.Inject;

@@ -1,6 +1,9 @@
 package osd.output;
 
-import osd.input.*;
+import osd.database.Block;
+import osd.database.Professor;
+import osd.database.Room;
+import osd.database.Section;
 
 import java.util.*;
 

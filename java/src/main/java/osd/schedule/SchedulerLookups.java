@@ -1,8 +1,8 @@
 package osd.schedule;
 
 import osd.considerations.Lookups;
-import osd.input.Professor;
-import osd.input.Section;
+import osd.database.Professor;
+import osd.database.Section;
 import osd.output.Hunk;
 
 import java.util.*;

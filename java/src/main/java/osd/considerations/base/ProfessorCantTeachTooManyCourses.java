@@ -2,7 +2,7 @@ package osd.considerations.base;
 
 import osd.considerations.BaseConstraint;
 import osd.considerations.Lookups;
-import osd.input.Professor;
+import osd.database.Professor;
 import osd.output.Hunk;
 
 import java.util.function.Predicate;
