@@ -7,10 +7,22 @@
 
 var indexSectionsWithContent =
 {
+  0: "fprt",
+  1: "f",
+  2: "p",
+  3: "t",
+  4: "t",
+  5: "r"
 };
 
 var indexSectionNames =
 {
+  0: "all",
+  1: "classes",
+  2: "namespaces",
+  3: "files",
+  4: "functions",
+  5: "pages"
 };
 
 function convertToId(search)
