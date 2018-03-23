@@ -2,20 +2,27 @@ package osd.database.placeholder;
 
 import osd.database.Block;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class BlockPlaceholder extends Placeholder implements Block {
 
     private int id;
     private boolean isA;
 
-    private static int LOWEST_ID = 1;
-    private static int HIGHEST_ID = 18;
+    private static final Map<String, Map<Integer, Block>> CALENDAR = new HashMap<>();
+    private String dayOfWeek;
+    private int hour;
 
     BlockPlaceholder(final String[] row) {
-        super(row);
+        this(row, true);
     }
 
-    private BlockPlaceholder(final Object id, final boolean isA) {
-        super(new String[] {id.toString(), isA ? "A" : "B"});
+    private BlockPlaceholder(final String[] row, final boolean write) {
+        super(row);
+        if (write) {
+            CALENDAR.computeIfAbsent(dayOfWeek, unused -> new HashMap<>()).put(this.hour, this);
+        }
     }
 
     @FromCSV(0)
@@ -28,25 +35,29 @@ class BlockPlaceholder extends Placeholder implements Block {
         this.isA = "A".equals(suffix);
     }
 
+    @FromCSV(2)
+    void setDayOfWeek(final String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    @FromCSV(3)
+    void setHour(final String hour) {
+        this.hour = Integer.valueOf(hour);
+    }
+
     @Override
     public Block getNext() {
-        if (id < HIGHEST_ID) {
-            return new BlockPlaceholder(id + 1, isA);
-        }
-        return null;
+        return CALENDAR.get(dayOfWeek).get(hour + 1);
     }
 
     @Override
     public Block getPrevious() {
-        if (id > LOWEST_ID) {
-            return new BlockPlaceholder(id - 1, isA);
-        }
-        return null;
+        return CALENDAR.get(dayOfWeek).get(hour + 1);
     }
 
     @Override
     public Block getPairedWith() {
-        return new BlockPlaceholder(id, !isA);
+        return new BlockPlaceholder(new String[] {id + "", isA ? "B" : "A", dayOfWeek, hour + ""}, false);
     }
 
     @Override

@@ -29,7 +29,6 @@ import osd.util.Pair;
  */
 public class UserConstraint extends UserConsideration implements Constraint {
 
-    private final Pair<Object, Object> debug;
     private final Pair<Object, HunkField<?>> whitelistKey;
 
     public UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
@@ -39,7 +38,6 @@ public class UserConstraint extends UserConsideration implements Constraint {
         } else {
             whitelistKey = ImmutablePair.of(left, HunkField.get(right));
         }
-        debug = ImmutablePair.of(left, right);
     }
 
     @Override
