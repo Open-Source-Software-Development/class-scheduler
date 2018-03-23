@@ -9,13 +9,13 @@ class DataAPI() :
     
     """
     
-    def get_blocks():
+    def get_blocks(self):
         """
             returns the block table
         """
         return Block.objects.all()
         
-    def insert_professor_avalible(prof_name, timeblock):
+    def insert_professor_avalible(self, prof_name, timeblock):
         """
             Insert professor constriants into the proper location. 
         """
