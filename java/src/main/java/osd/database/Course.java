@@ -10,13 +10,18 @@ import java.util.stream.Stream;
 public interface Course extends Named {
 
     /**
-     * Returns all the sections for this course. This should consider both
+     * Return all the sections for this course. This should consider both
      * "pregenerated" sections specified in the database, and "additional"
      * sections specified in the course's "sections" column.
      * @return an iterable representing this course's sections
      */
     Iterable<Section> getSections();
 
+    /**
+     * Indicate how to generate block pairs for this course.
+     * @return how to generate block pairs for this course
+     * @see BlockingStrategy
+     */
     default Function<Block, Stream<Block>> getBlockingStrategy() {
         return BlockingStrategy.PAIR;
     }
