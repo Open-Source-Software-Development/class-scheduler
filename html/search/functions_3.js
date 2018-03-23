@@ -7,7 +7,7 @@ var searchData=
   ['getexpectedhunkcount',['getExpectedHunkCount',['../interfaceosd_1_1output_1_1_results.html#a6c75f1e38400b3b8c6173e8868a27c8f',1,'osd::output::Results']]],
   ['gethunkpercentage',['getHunkPercentage',['../interfaceosd_1_1output_1_1_results.html#a8d94342ed8cf15db06ad480a4be65732',1,'osd::output::Results']]],
   ['gethunks',['getHunks',['../interfaceosd_1_1output_1_1_results.html#ab3ba5d6fbb97e579c73f065a39eeba94',1,'osd::output::Results']]],
-  ['getname',['getName',['../interfaceosd_1_1input_1_1_named.html#afde419887ef61b2a2c84328891f1a1ed',1,'osd.input.Named.getName()'],['../interfaceosd_1_1input_1_1_professor.html#a2abdc30a0e45099e3d0dedf7ae303a58',1,'osd.input.Professor.getName()']]],
+  ['getname',['getName',['../interfaceosd_1_1input_1_1_named.html#afde419887ef61b2a2c84328891f1a1ed',1,'osd::input::Named']]],
   ['getnext',['getNext',['../interfaceosd_1_1input_1_1_block.html#a20c360683729107e2ffe8b2e207448c6',1,'osd::input::Block']]],
   ['getordefault',['getOrDefault',['../classosd_1_1util_1_1relation_1_1_relation_3_01_k_00_01_l_00_01_v_00_01_w_01_4.html#a432a888f2e80c5ad876bbb52d2b726f3',1,'osd::util::relation::Relation&lt; K, L, V, W &gt;']]],
   ['getpairedwith',['getPairedWith',['../interfaceosd_1_1input_1_1_block.html#ab5109873863db50f175e6a41693a1e0e',1,'osd::input::Block']]],

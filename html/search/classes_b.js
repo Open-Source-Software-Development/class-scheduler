@@ -10,6 +10,5 @@ var searchData=
   ['roomparser',['RoomParser',['../classscheduler_1_1csv__parser_1_1_room_parser.html',1,'scheduler::csv_parser']]],
   ['roomrecord',['RoomRecord',['../classosd_1_1database_1_1_room_record.html',1,'osd::database']]],
   ['roomtype',['RoomType',['../classscheduler_1_1models_1_1_room_type.html',1,'scheduler::models']]],
-  ['roomtype',['RoomType',['../interfaceosd_1_1input_1_1_room_type.html',1,'osd::input']]],
-  ['runtables',['RunTables',['../classhibernate1_1_1_run_tables.html',1,'hibernate1']]]
+  ['roomtype',['RoomType',['../interfaceosd_1_1input_1_1_room_type.html',1,'osd::input']]]
 ];
