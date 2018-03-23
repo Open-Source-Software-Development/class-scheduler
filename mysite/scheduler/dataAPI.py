@@ -1,4 +1,4 @@
-from polls.models import ProfessorConstraint, Professor, Block
+from scheduler.models import *
 
 class DataAPI() :
     """

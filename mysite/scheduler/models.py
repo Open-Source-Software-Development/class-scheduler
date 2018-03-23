@@ -63,17 +63,17 @@ class Block(Named):
     start_time = models.TimeField(auto_now=False, auto_now_add=False)
     end_time = models.TimeField(auto_now=False, auto_now_add=False)
 
-class ThreeHour(Named):
-    """
-        TODO: Documentation
-    """
-    
-    
-    block_one = models.ForeignKey(Block, on_delete=models.CASCADE)
-    block_two = models.ForeignKey(Block, on_delete=models.CASCADE)
-    
-    class Meta:
-        unique_together = (("block_one", "block_two"))
+#class ThreeHour(Named):
+#    """
+#        TODO: Documentation
+#    """
+#    
+#    
+#    block_one = models.ForeignKey(Block, on_delete=models.CASCADE)
+#    block_two = models.ForeignKey(Block, on_delete=models.CASCADE)
+#    
+#    class Meta:
+#        unique_together = (("block_one", "block_two"))
     
 class Course(Named):
     """
