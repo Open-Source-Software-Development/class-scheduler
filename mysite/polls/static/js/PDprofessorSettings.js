@@ -11,7 +11,7 @@ function setup() {
 function AvailabilityButton(blockID, element) {
 	this.blockID = blockID;
 	this.element = element;
-	this.state = 0; // set block as whatever it is in database for whoever is logged in
+	this.state = 0; // set block as whatever it is in database for whoever is selected from list
 }
 
 AvailabilityButton.prototype.setup = function() {

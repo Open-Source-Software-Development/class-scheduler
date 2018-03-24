@@ -65,7 +65,7 @@
 				{% endif %}
 				{% if request.user|has_group:"Program director" %}
 				<li>
-					<a href="{% url 'PDProfSettings' %}"><i class="fa fa-files-o fa-fw"></i> Review Schedule Data</a>
+					<a href="{% url 'PD_professor_settings' %}"><i class="fa fa-files-o fa-fw"></i> Review Schedule Data</a>
 				</li>
 				{% endif %}
 				{% if request.user|has_group:"Program director" %}
