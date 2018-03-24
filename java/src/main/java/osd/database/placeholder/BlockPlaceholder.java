@@ -11,17 +11,20 @@ class BlockPlaceholder extends Placeholder implements Block {
     private boolean isA;
 
     private static final Map<String, Map<Integer, Block>> CALENDAR = new HashMap<>();
+    private static final Map<Integer, BlockPlaceholder> PAIR_HELPER = new HashMap<>();
+
     private String dayOfWeek;
     private int hour;
+    private BlockPlaceholder pairedWith;
 
     BlockPlaceholder(final String[] row) {
-        this(row, true);
-    }
-
-    private BlockPlaceholder(final String[] row, final boolean write) {
         super(row);
-        if (write) {
-            CALENDAR.computeIfAbsent(dayOfWeek, unused -> new HashMap<>()).put(this.hour, this);
+        CALENDAR.computeIfAbsent(dayOfWeek, unused -> new HashMap<>()).put(this.hour, this);
+        this.pairedWith = PAIR_HELPER.remove(id);
+        if (this.pairedWith == null) {
+            PAIR_HELPER.put(id, this);
+        } else {
+            this.pairedWith.pairedWith = this;
         }
     }
 
@@ -57,7 +60,7 @@ class BlockPlaceholder extends Placeholder implements Block {
 
     @Override
     public Block getPairedWith() {
-        return new BlockPlaceholder(new String[] {id + "", isA ? "B" : "A", dayOfWeek, hour + ""}, false);
+        return pairedWith;
     }
 
     @Override
