@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
-import osd.input.Sources;
-import osd.input.*;
+import osd.database.*;
 import osd.output.Hunk;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -50,15 +51,17 @@ class CandidateHunkPrioritizerTest {
                 Stream.of(mockProfessor1, mockProfessor2));
         when(mockSources.getRooms()).thenAnswer(a ->
                 Stream.of(mockRoom1, mockRoom2));
+        mockSources.getSections().forEach(mockSection ->
+                when(mockSection.getBlockingStrategy()).thenReturn(this::mockBlockingStrategy));
         when(mockSources.getBlocks()).thenAnswer(a -> Stream.of(mockBlock));
         when(mockConstraints.test(any())).then(this::mockConstraintsImpl);
         when(mockConstraints.bindBaseConstraints(any())).thenReturn(mockBaseConstraints);
         when(mockBaseConstraints.test(any())).thenReturn(true);
 
         instance = new CandidateHunkPrioritizer(mockSources, mockConstraints);
-        hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, mockBlock);
-        hunkForSection2 = new Hunk(mockSection2, mockProfessor2, mockRoom2, mockBlock);
-        hunkForSection3 = new Hunk(mockSection3, mockProfessor1, mockRoom1, mockBlock);
+        hunkForSection1 = new Hunk(mockSection1, mockProfessor1, mockRoom1, Collections.singletonList(mockBlock));
+        hunkForSection2 = new Hunk(mockSection2, mockProfessor2, mockRoom2, Collections.singletonList(mockBlock));
+        hunkForSection3 = new Hunk(mockSection3, mockProfessor1, mockRoom1, Collections.singletonList(mockBlock));
     }
 
     @Test
@@ -89,7 +92,7 @@ class CandidateHunkPrioritizerTest {
     @Test
     void onHunkAdded_FailsOnUnexpectedSection() {
         final Section unexpectedMockSection = mock(Section.class);
-        final Hunk hunkWithUnexpectedSection = new Hunk(unexpectedMockSection, null, null, null);
+        final Hunk hunkWithUnexpectedSection = new Hunk(unexpectedMockSection, null, null, Collections.emptyList());
         assertThrows(NoSuchElementException.class, () -> instance.onHunkAdded(hunkWithUnexpectedSection));
     }
 
@@ -124,20 +127,20 @@ class CandidateHunkPrioritizerTest {
         }
         final Professor professor = hunk.getProfessor();
         final Room room = hunk.getRoom();
-        final Block block = hunk.getBlock();
+        final Set<Block> blocks = hunk.getBlocks();
         // Most specific constraints: mockSection1 needs exactly one
         // specific combination.
         if (mockSection1.equals(section)) {
             return equalsOrNull(professor, mockProfessor1)
                     && equalsOrNull(room, mockRoom1)
-                    && equalsOrNull(block, mockBlock);
+                    && equalsOrNull(blocks, Collections.singleton(mockBlock));
         }
         // Less specific constraints: mockSection2 needs one of
         // two combinations.
         if (mockSection2.equals(section)){
             return equalsOrNull(professor, mockProfessor1)
                     && equalsOrNull(room, mockRoom1, mockRoom2)
-                    && equalsOrNull(block, mockBlock);
+                    && equalsOrNull(blocks, Collections.singleton(mockBlock));
         }
         // Least specific: Anything goes!
         return true;
@@ -146,6 +149,10 @@ class CandidateHunkPrioritizerTest {
     @SafeVarargs
     private static <T> boolean equalsOrNull(final T t, final T... options) {
         return t == null || Arrays.stream(options).anyMatch(t::equals);
+    }
+
+    private Stream<Block> mockBlockingStrategy(final Block block) {
+        return Stream.of(block);
     }
 
 }

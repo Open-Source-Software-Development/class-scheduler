@@ -1,10 +1,10 @@
 package osd.schedule;
 
 import osd.considerations.Lookups;
-import osd.input.Professor;
-import osd.input.Room;
-import osd.input.Section;
-import osd.input.Sources;
+import osd.database.Professor;
+import osd.database.Room;
+import osd.database.Section;
+import osd.database.Sources;
 import osd.output.Hunk;
 
 import javax.inject.Inject;
@@ -76,11 +76,6 @@ class CandidateHunkPrioritizer extends CandidateHunkSource {
     // TODO: this could be encapsulated better
     CandidateHunkPrioritizer rebind(final Lookups lookups) {
         return new CandidateHunkPrioritizer(this, lookups);
-    }
-
-    @Override
-    public String toString() {
-        return data.reversed().toString();
     }
 
     // Finds all the sections whose priority would be impacted by adding

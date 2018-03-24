@@ -14,6 +14,12 @@ public interface Callbacks {
      */
     void onCompleteResult(final Results results);
 
+    /**
+     * Called whenever the algorithm backtracks. Note that, in the event of a
+     * backtrack, the schedule is, by definition, incomplete. Nonetheless,
+     * logging such incomplete results may be useful.
+     * @param results the incomplete {@link Results results}
+     */
     void onBacktrack(final Results results);
 
 }

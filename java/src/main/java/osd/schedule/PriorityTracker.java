@@ -1,6 +1,6 @@
 package osd.schedule;
 
-import osd.input.Section;
+import osd.database.Section;
 import osd.util.relation.ManyToOneRelation;
 import osd.util.relation.OneToManyRelation;
 

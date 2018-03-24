@@ -3,9 +3,9 @@ package osd.schedule;
 import osd.considerations.BaseConstraint;
 import osd.considerations.Constraint;
 import osd.considerations.Lookups;
-import osd.input.Room;
-import osd.input.Section;
-import osd.input.Professor;
+import osd.database.Room;
+import osd.database.Section;
+import osd.database.Professor;
 import osd.output.Hunk;
 
 import javax.inject.Inject;
@@ -49,9 +49,9 @@ class Constraints implements Predicate<Hunk> {
     }
 
     Predicate<Hunk> bindBaseConstraints(final Lookups lookups) {
-        return h -> baseConstraints.stream()
+        return hunk -> baseConstraints.stream()
                 .map(b -> b.bind(lookups))
-                .allMatch(p -> p.test(h));
+                .allMatch(p -> p.test(hunk));
     }
 
     /**
@@ -64,7 +64,7 @@ class Constraints implements Predicate<Hunk> {
      * @return a predicate testing professors against that section
      */
     static Predicate<Professor> professorPredicate(final Constraints constraints, final Section section) {
-        return p -> constraints.test(new Hunk(section, p, null, null));
+        return professor -> constraints.test(new Hunk(section, professor, null, null));
     }
 
     /**

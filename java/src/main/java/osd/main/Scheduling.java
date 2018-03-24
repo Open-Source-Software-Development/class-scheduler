@@ -4,13 +4,16 @@ import dagger.Component;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import org.apache.commons.cli.ParseException;
 import osd.considerations.BaseConsiderationModule;
-import osd.input.placeholder.PlaceholderModule;
 import osd.output.Callbacks;
-import osd.output.Results;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
 
-@Component(modules={ScheduleModule.class, FlagModule.class, PlaceholderModule.class})
+import javax.inject.Singleton;
+
+@Singleton
+@Component(
+        modules=ScheduleModule.class
+)
 public interface Scheduling {
 
     Scheduler schedulingAttempt();

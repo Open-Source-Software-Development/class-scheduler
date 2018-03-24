@@ -6,10 +6,8 @@ public class UserPreference extends UserConsideration implements Preference {
 
     private final int worth;
 
-    public <L, R> UserPreference(final Class<L> leftClass, final L left,
-                                 final Class<R> rightClass, final R right,
-                                 final int worth) {
-        super(leftClass, left, rightClass, right);
+    public UserPreference(final Object left, final Object right, final int worth) {
+        super(left, right);
         this.worth = worth;
     }
 

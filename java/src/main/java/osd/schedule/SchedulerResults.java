@@ -19,7 +19,8 @@ class SchedulerResults implements Results {
 
     @Override
     public List<Hunk> getHunks() {
-        return new ArrayList<>(lookups.lookupAllHunks().collect(Collectors.toList()));
+        final List<Hunk> result = lookups.lookupAllHunks().collect(Collectors.toList());
+        return new ArrayList<>(result);
     }
 
     @Override

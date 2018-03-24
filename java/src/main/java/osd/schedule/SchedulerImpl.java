@@ -1,6 +1,6 @@
 package osd.schedule;
 
-import osd.input.Section;
+import osd.database.Section;
 import osd.output.Callbacks;
 import osd.output.Hunk;
 
@@ -60,7 +60,6 @@ class SchedulerImpl implements Scheduler {
             throw new ScheduleDoneSignal();
         }
         final Scheduler lastChild = streamNextGeneration()
-                .peek(s -> System.err.println("Descending"))
                 .peek(s -> s.run0(callbacks))
                 // This is a somewhat hacky reduction to ensure we
                 // a) consider every child (unless we exit early), and
@@ -87,8 +86,9 @@ class SchedulerImpl implements Scheduler {
 
     private Stream<SchedulerImpl> streamCandidates(final Section section) {
         return candidateHunkPrioritizer.getCandidateHunks(section)
-                .sorted(preferences)
-                .map(h -> new SchedulerImpl(this, h));
+                .sorted(preferences.bind(data))
+                .peek(hunk -> System.err.println("Descending with " + hunk))
+                .map(hunk -> new SchedulerImpl(this, hunk));
     }
 
 }

@@ -1,8 +1,11 @@
 package osd.schedule;
 
-import osd.input.Block;
-import osd.input.Professor;
-import osd.input.Room;
+import osd.database.Block;
+import osd.database.Professor;
+import osd.database.Room;
+import osd.output.Hunk;
+import osd.util.ImmutablePair;
+import osd.util.Pair;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -13,7 +16,7 @@ import java.util.stream.Stream;
 class BlockAvailability {
 
     private final List<Block> blocks;
-    private final Set<Key> unavailable;
+    private final Set<Pair<Block, Object>> unavailable;
 
     /**
      * DI constructor.
@@ -44,59 +47,17 @@ class BlockAvailability {
         return blocks.stream()
                 .filter(b -> isAvailable(b, professor))
                 .filter(b -> isAvailable(b, room));
-
     }
 
-    /**
-     * Indicates that a room is in use during some block.
-     * @param block the block
-     * @param room the room
-     */
-    void setUnavailable(final Block block, final Room room) {
-        setUnavailable0(block, room);
-    }
-
-    /**
-     * Indicates that a professor is unavailable at some block.
-     * @param block the block
-     * @param professor the professor
-     */
-    void setUnavailable(final Block block, final Professor professor) {
-        setUnavailable0(block, professor);
-    }
-
-    private void setUnavailable0(final Block block, final Object o) {
-        unavailable.add(new Key(block, o));
+    void setUnavailable(final Hunk hunk) {
+        hunk.getBlocks().forEach(block -> {
+            unavailable.add(ImmutablePair.of(block, hunk.getProfessor()));
+            unavailable.add(ImmutablePair.of(block, hunk.getRoom()));
+        });
     }
 
     private boolean isAvailable(final Block block, final Object o) {
-        return !unavailable.contains(new Key(block, o));
-    }
-
-    private final class Key {
-        private final Block block;
-        private final Object roomOrProfessor;
-
-        Key(final Block block, final Object roomOrProfessor) {
-            this.block = block;
-            this.roomOrProfessor = roomOrProfessor;
-        }
-
-        @Override
-        public boolean equals(final Object o) {
-            if (getClass() == o.getClass()) {
-                final Key other = (Key)o;
-                return Objects.equals(block, other.block)
-                        && Objects.equals(roomOrProfessor, other.roomOrProfessor);
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(block, roomOrProfessor);
-        }
-
+        return !unavailable.contains(ImmutablePair.of(block, o));
     }
 
 }

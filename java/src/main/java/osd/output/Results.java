@@ -19,7 +19,8 @@ public interface Results {
     int getExpectedHunkCount();
 
     /**
-     * Compute the percentage of hunks generated successfully.
+     * Compute the percentage of hunks generated successfully. The percentage
+     * is normalized such that 1 represents 100%.
      * @return the percentage of hunks generated successfully
      */
     default double getHunkPercentage() {

@@ -1,51 +1,32 @@
 package osd.considerations;
 
-import osd.input.*;
 import osd.output.Hunk;
 
 import java.util.function.Function;
+import static osd.considerations.HunkField.Extraction;
 
 /**
  * Abstract base class for user preferences and constraints. User preferences
- * and constraints are both defined as pairs of scheduling elements. For
- * example, a constraint indicating Professor Brown can't teach block 7A would
- * have one of its members be Professor Brown and the other be block 7A.
- * <p>What exactly this pair <em>means</em> is up to the specific implementation,
- * however. The purpose of this class is to provide an easy way to check how
- * many members match, not to interpret that result.</p>
+ * and constraints are both represented in the database as pairs of scheduling
+ * elements. This class exists as a convenience to help read them in.
+ * Interpretation of those element pairs is up to the specific implementation.
  * @see #getMatch(Hunk)
  */
-public abstract class UserConsideration implements Consideration {
+abstract class UserConsideration implements Consideration {
 
-    private final Object left, right;
-    private final Function<Hunk, ?> extractLeft, extractRight;
+    private final Function<Hunk, Extraction> extractLeft, extractRight;
 
     /**
      * Construct a user consideration with some pair.
-     * @param leftClass the type of the first element
      * @param left the first element of the pair
-     * @param rightClass the type of the second element
      * @param right the second element of the pair
-     * @param <L> leftClass
-     * @param <R> rightClass
      */
-    <L, R> UserConsideration(final Class<L> leftClass, final L left, final Class<R> rightClass, final R right) {
-        this.left = left;
-        this.right = right;
-        this.extractLeft = getExtractor(leftClass);
-        this.extractRight = getExtractor(rightClass);
+    UserConsideration(final Object left, final Object right) {
+        this.extractLeft = HunkField.get(left).getExtractor(left);
+        this.extractRight = HunkField.get(right).getExtractor(right);
     }
 
     enum Match {
-        /**
-         * Both members are present.
-         */
-        BOTH,
-
-        /**
-         * Only one member is present, but neither are {@code null}.
-         */
-        ONE,
 
         /**
          * Neither member is present, but neither are {@code null}.
@@ -53,57 +34,51 @@ public abstract class UserConsideration implements Consideration {
         NEITHER,
 
         /**
+         * Only the left-hand member is present, but neither are {@code null}.
+         */
+        LEFT,
+
+        /**
+         * Only the right-hand member is present, but neither are {@code null}.
+         */
+        RIGHT,
+
+        /**
+         * Both members are present.
+         */
+        BOTH,
+
+        /**
          * At least one member is {@code null}.
          */
-        NULL,
+        INCONCLUSIVE,
+
     }
 
     /**
-     * Determines whether both scheduling elements are present in the hunk. If
-     * looking up either element returns {@code null}, then the result is
-     * {@link Match#NULL}. Otherwise, the result is {@link Match#BOTH}
-     * if both members are the ones defined here, {@link Match#ONE}
-     * if one is, and {@link Match#NEITHER} if neither are.
+     * Compare a hunk to this consideration's element pair. If the hunk is
+     * incomplete and the presence of either element is inconclusive, return
+     * {@link Match#INCONCLUSIVE}. Otherwise, return {@link Match#BOTH} if both
+     * elements of this consideration's element pair are present,
+     * {@link Match#LEFT} or {@link Match#RIGHT}if only one is, and
+     * {@link Match#NEITHER} if neither are.
+     * @see HunkField for notes on what it means for a hunk to contain something
      * @param hunk a hunk
      * @return whether both scheduling elements are present
      */
     Match getMatch(final Hunk hunk) {
-        final Object leftMatch = extractLeft.apply(hunk);
-        if (leftMatch == null) {
-            return Match.NULL;
+        final Extraction left = extractLeft.apply(hunk);
+        final Extraction right = extractRight.apply(hunk);
+        if (left == Extraction.INCONCLUSIVE || right == Extraction.INCONCLUSIVE) {
+            return Match.INCONCLUSIVE;
         }
-        final Object rightMatch = extractRight.apply(hunk);
-        if (rightMatch == null) {
-            return Match.NULL;
-        }
-        final int score = ((leftMatch.equals(left) ? 1 : 0)
-                        + (rightMatch.equals(right) ? 1 : 0));
-        if (score == 2) {
+        if (left == Extraction.MATCH && right == Extraction.MATCH) {
             return Match.BOTH;
         }
-        if (score == 1) {
-            return Match.ONE;
+        if (left == Extraction.NO_MATCH && right == Extraction.NO_MATCH) {
+            return Match.NEITHER;
         }
-        return Match.NEITHER;
-    }
-
-    private static Function<Hunk, ?> getExtractor(final Class<?> clazz) {
-        if (clazz == Professor.class) {
-            return Hunk::getProfessor;
-        }
-        if (clazz == Room.class) {
-            return Hunk::getRoom;
-        }
-        if (clazz == RoomType.class) {
-            return h -> h.getRoom().getRoomType();
-        }
-        if (clazz == Section.class) {
-            return Hunk::getSection;
-        }
-        if (clazz == Course.class) {
-            return h -> h.getSection().getCourse();
-        }
-        throw new IllegalArgumentException("no extractor defined for " + clazz);
+        return (left == Extraction.MATCH) ? Match.LEFT : Match.RIGHT;
     }
 
 }

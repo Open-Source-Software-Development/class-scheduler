@@ -4,9 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.input.Section;
+import osd.database.Section;
 
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,12 +53,19 @@ class PriorityTrackerTest {
         assertEquals(Collections.singleton(mockSectionPriority2), instance.getHighPrioritySections());
     }
 
-
     @Test
     void getLowest_AfterReversedRemoval() {
         instance.add(2L, mockSectionPriority2);
         instance.add(1L, mockSectionPriority1);
         instance.reversed().remove(mockSectionPriority1);
+        assertEquals(Collections.singleton(mockSectionPriority2), instance.getHighPrioritySections());
+    }
+
+    @Test
+    void getLowest_AfterRemoval2() {
+        instance.add(2L, mockSectionPriority2);
+        instance.add(1L, mockSectionPriority1);
+        instance.remove(1L, mockSectionPriority1);
         assertEquals(Collections.singleton(mockSectionPriority2), instance.getHighPrioritySections());
     }
 
@@ -98,6 +106,29 @@ class PriorityTrackerTest {
         copy.remove(3L);
         final Set<Section> result = instance.getHighPrioritySections();
         assertEquals(expected, result);
+    }
+
+    @Test
+    void ensurePresent() {
+        assertThrows(NoSuchElementException.class,
+                () -> instance.ensurePresent(mockSectionPriority1));
+    }
+
+    @Test
+    void ensurePresent_NoSuperfluousExceptions() {
+        instance.add(1L, mockSectionPriority1);
+        instance.ensurePresent(mockSectionPriority1);
+    }
+
+    @Test
+    void reversed() {
+        instance.add(1L, mockSectionPriority1);
+        assertEquals(1L, (long)instance.reversed().get(mockSectionPriority1));
+    }
+
+    @Test
+    void doubleReversed() {
+        assertTrue(instance.equals(instance.reversed().reversed()));
     }
 
 }
