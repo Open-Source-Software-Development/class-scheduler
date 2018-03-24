@@ -65,12 +65,7 @@ class CandidateHunkSource {
      */
     void onHunkAdded(final Hunk hunk) {
         final Section section = hunk.getSection();
-        final Professor professor = hunk.getProfessor();
-        final Room room = hunk.getRoom();
-        hunk.getBlocks().forEach(block -> {
-            blockAvailability.setUnavailable(block, room);
-            blockAvailability.setUnavailable(block, professor);
-        });
+        blockAvailability.setUnavailable(hunk);
         professors.remove(section);
         rooms.remove(section);
     }
@@ -79,53 +74,31 @@ class CandidateHunkSource {
         return expectedHunks;
     }
 
-    /**
-     * Finds all the professors who can teach some section.
-     * @param section the section to get professors for
-     * @return a stream of professors who can teach that section
-     */
-    Stream<Professor> getProfessors(final Section section) {
-        return professors.getOrDefault(section, Collections::emptySet).stream();
-    }
-
-    /**
-     * Finds all the rooms where a section can be taught.
-     * @param section the section to get rooms for
-     * @return a stream of rooms where that section can be taught
-     */
-    Stream<Room> getRooms(final Section section) {
-        return rooms.getOrDefault(section, Collections::emptySet).stream();
-    }
-
-    /**
-     * Finds all the blocks where a professor and room are available.
-     * @param professor the professor
-     * @param room the room
-     * @return a stream of all blocks where both are available
-     */
-    Stream<Block> getBlocks(final Professor professor, final Room room) {
-        return blockAvailability.getAvailable(professor, room);
-    }
-
-    /**
-     * Gets all the candidate hunks for a section. This is does <em>not</em>
-     * consider preferences; the hunks are returned in an arbitrary order.
-     * @param section the section to get candidate hunks for
-     * @return a stream of candidate hunks for that section
-     */
     Stream<Hunk> getCandidateHunks(final Section section) {
         // This three-layered flatMap is less intimidating than it looks.
         // We start by getting the professors and rooms available for this
         // section, from which we can compute the blocks. That gives us the
         // four elements we need to write out our hunks.
         return getProfessors(section)
-                .flatMap(p ->
-                        getRooms(section).flatMap(r ->
-                                getBlocks(p, r).map(b ->
-                                        getHunk(section, p, r, b))))
+                .flatMap(professor ->
+                        getRooms(section).flatMap(room ->
+                                getBlocks(professor, room).map(blocks ->
+                                        getHunk(section, professor, room, blocks))))
                 .filter(Hunk::validateBlocks)
                 .distinct()
                 .filter(constraints.bindBaseConstraints(lookups));
+    }
+
+    private Stream<Professor> getProfessors(final Section section) {
+        return professors.getOrDefault(section, Collections::emptySet).stream();
+    }
+
+    private Stream<Room> getRooms(final Section section) {
+        return rooms.getOrDefault(section, Collections::emptySet).stream();
+    }
+
+    private Stream<Block> getBlocks(final Professor professor, final Room room) {
+        return blockAvailability.getAvailable(professor, room);
     }
 
     private static Hunk getHunk(final Section section, final Professor professor,

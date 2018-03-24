@@ -96,54 +96,6 @@ class CandidateHunkSourceTest {
     }
 
     @Test
-    void getProfessors() {
-        final Set<Professor> expected = Collections.singleton(mockProfessor1);
-        final Set<Professor> result = instance.getProfessors(mockSection1)
-                .collect(Collectors.toSet());
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void getRooms() {
-        final Set<Room> expected = Collections.singleton(mockRoom1);
-        final Set<Room> result = instance.getRooms(mockSection1)
-                .collect(Collectors.toSet());
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void getBlocks() {
-        final Set<Block> expected = new HashSet<>(Arrays.asList(
-                mockBlockA1, mockBlockA2,
-                mockBlockB1, mockBlockB2));
-        final Set<Block> result = instance.getBlocks(mockProfessor1, mockRoom1)
-                .collect(Collectors.toSet());
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void getBlocks_RespectsAddHunk_ForProfessor() {
-        instance.onHunkAdded(hunkForSection1);
-        final Set<Block> expected = new HashSet<>(Arrays.asList(
-                mockBlockA1, mockBlockA2,
-                mockBlockB1));
-        final Set<Block> result = instance.getBlocks(mockProfessor1, mockRoom2)
-                .collect(Collectors.toSet());
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void getBlocks_RespectsAddHunk_ForRoom() {
-        instance.onHunkAdded(hunkForSection1);
-        final Set<Block> expected = new HashSet<>(Arrays.asList(
-                mockBlockA1, mockBlockA2,
-                mockBlockB1));
-        final Set<Block> result = instance.getBlocks(mockProfessor2, mockRoom1)
-                .collect(Collectors.toSet());
-        assertEquals(expected, result);
-    }
-
-    @Test
     void candidates() {
         final Set<Hunk> expected = new HashSet<>(Arrays.asList(
                 new Hunk(mockSection1, mockProfessor1, mockRoom1, Collections.singletonList(mockBlockA1)),
