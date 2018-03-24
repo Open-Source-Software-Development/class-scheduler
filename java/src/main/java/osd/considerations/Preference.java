@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 /**
  * A guideline as to what hunks are preferable. During candidate hunk
@@ -14,7 +14,7 @@ import osd.output.Hunk;
  * to determine the maximum score a hunk can have.</p>
  * <p>Preferences may award negative scores.</p>
  */
-public interface Preference extends Consideration {
+interface Preference extends Consideration {
 
     /**
      * Awards (or deducts) points for some hunk. This should return either

@@ -1,15 +1,15 @@
 package osd.considerations;
 
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 /**
  * A predicate over hunks.
- * <p>Since hunks are used as both output and internally during scheduling,
+ * <p>Since hunks are used as both schedule and internally during scheduling,
  * it is possible that some members of a hunk may be {@code null}. If a
  * constraint attempts to refer to some member of a hunk for which that member
  * is {@code null}, the constraint must return {@code true}.</p>
  */
-public interface Constraint extends Consideration {
+interface Constraint extends Consideration {
 
     /**
      * Determines whether some hunk satisfies this consideration. If the

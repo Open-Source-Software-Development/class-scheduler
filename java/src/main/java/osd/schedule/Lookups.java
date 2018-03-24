@@ -1,8 +1,7 @@
-package osd.considerations;
+package osd.schedule;
 
 import osd.database.Professor;
 import osd.database.Section;
-import osd.output.Hunk;
 
 import java.util.stream.Stream;
 

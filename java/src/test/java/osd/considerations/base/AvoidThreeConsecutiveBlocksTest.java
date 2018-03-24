@@ -4,11 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.considerations.Lookups;
+import osd.schedule.Lookups;
 import osd.database.Block;
 import osd.database.Professor;
 import osd.database.Section;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 import java.util.*;
 import java.util.stream.IntStream;

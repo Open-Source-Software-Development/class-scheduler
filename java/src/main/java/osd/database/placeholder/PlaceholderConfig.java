@@ -1,7 +1,7 @@
 package osd.database.placeholder;
 
 import osd.database.*;
-import osd.main.Flags;
+import osd.flags.Flags;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

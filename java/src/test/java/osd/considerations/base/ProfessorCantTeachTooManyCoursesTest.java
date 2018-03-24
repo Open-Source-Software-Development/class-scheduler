@@ -4,9 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.considerations.Lookups;
+import osd.schedule.Lookups;
 import osd.database.Professor;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 import java.util.stream.Stream;
 
@@ -45,7 +45,7 @@ class ProfessorCantTeachTooManyCoursesTest {
     void bind_PermitsWhenBelowCapacity() {
         currentCourseLoad = capacity - 1;
         final boolean expected = true;
-        final boolean result = instance.bind(mockLookups).test(mockHunk);
+        final boolean result = instance.bindPredicate(mockLookups).test(mockHunk);
         assertEquals(expected, result);
     }
 
@@ -53,7 +53,7 @@ class ProfessorCantTeachTooManyCoursesTest {
     void bind_RejectsWhenAtCapacity() {
         currentCourseLoad = capacity;
         final boolean expected = false;
-        final boolean result = instance.bind(mockLookups).test(mockHunk);
+        final boolean result = instance.bindPredicate(mockLookups).test(mockHunk);
         assertEquals(expected, result);
     }
 
@@ -61,7 +61,7 @@ class ProfessorCantTeachTooManyCoursesTest {
     void bind_RejectsWhenAboveCapacity() {
         currentCourseLoad = capacity + 1;
         final boolean expected = false;
-        final boolean result = instance.bind(mockLookups).test(mockHunk);
+        final boolean result = instance.bindPredicate(mockLookups).test(mockHunk);
         assertEquals(expected, result);
     }
 

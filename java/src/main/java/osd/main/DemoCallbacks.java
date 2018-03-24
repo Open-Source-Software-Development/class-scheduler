@@ -1,36 +1,36 @@
 package osd.main;
 
-import osd.output.Callbacks;
-import osd.output.Results;
+import osd.schedule.Callbacks;
+import osd.schedule.Results;
+
+import javax.inject.Inject;
 
 class DemoCallbacks implements Callbacks {
 
-    private final int desiredResultCount;
-    private int resultCount = 0;
     private int backtracks = 0;
 
-    DemoCallbacks(final int desiredResultCount) {
-        this.desiredResultCount = desiredResultCount;
+    @Inject
+    DemoCallbacks() {
     }
 
     @Override
-    public boolean stopCondition() {
-        return resultCount >= desiredResultCount;
-    }
-
-    @Override
-    public void onCompleteResult(final Results results) {
+    public boolean onCompleteResult(final Results results) {
+        System.err.flush();
         System.out.println("Received candidate schedule:");
         results.getHunks().forEach(System.out::println);
-        resultCount++;
-        if (stopCondition()) {
-            System.out.println("Completed with " + backtracks + " backtracks");
-        }
+        System.out.println("Completed with " + backtracks + " backtracks");
+        return true;
     }
 
     @Override
-    public void onBacktrack(final Results results) {
+    public boolean onBacktrack(final Results results) {
         backtracks++;
+        return false;
+    }
+
+    @Override
+    public void onSchedulingFailed() {
+        System.out.println("Out of candidates with " + backtracks + " backtracks");
     }
 
 }

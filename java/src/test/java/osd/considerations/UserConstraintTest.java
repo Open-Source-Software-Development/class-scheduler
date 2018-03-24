@@ -6,7 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.database.Professor;
 import osd.database.Section;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 import osd.util.ImmutablePair;
 import osd.util.Pair;
 

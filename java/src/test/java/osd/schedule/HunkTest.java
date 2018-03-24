@@ -1,4 +1,4 @@
-package osd.output;
+package osd.schedule;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +53,7 @@ class HunkTest {
         final String expected = "Hunk(" + mockSection
                 + ", " + mockProfessor
                 + ", " + mockRoom + ", "
-                + new HashSet<>(Arrays.asList(mockBlock)) + ")";
+                + Collections.singleton(mockBlock) + ")";
         final String result = instance.toString();
         assertEquals(expected, result);
     }
@@ -89,9 +89,19 @@ class HunkTest {
     }
     @Test
     void testHashCode() {
-        final int expected = Objects.hash(mockSection, mockProfessor, mockRoom, new HashSet<>(Arrays.asList(mockBlock)));
+        final int expected = Objects.hash(mockSection, mockProfessor, mockRoom, Collections.singleton(mockBlock));
         final int result = instance.hashCode();
         assertEquals(expected, result);
     }
 
+    @Test
+    void validateBlocks_TrueWhenNoneNull() {
+        assertTrue(instance.validateBlocks());
+    }
+
+    @Test
+    void validateBlocks_FalseWhenAtLeastOneNull() {
+        instance = new Hunk(mockSection, mockProfessor, mockRoom, Arrays.asList(mockBlock, null));
+        assertFalse(instance.validateBlocks());
+    }
 }

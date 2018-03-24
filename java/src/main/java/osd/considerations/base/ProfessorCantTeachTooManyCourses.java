@@ -1,9 +1,9 @@
 package osd.considerations.base;
 
 import osd.considerations.BaseConstraint;
-import osd.considerations.Lookups;
+import osd.schedule.Lookups;
 import osd.database.Professor;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 import java.util.function.Predicate;
 

@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 import java.util.function.Predicate;
 

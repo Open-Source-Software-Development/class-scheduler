@@ -1,4 +1,4 @@
-package osd.output;
+package osd.schedule;
 
 import java.util.List;
 

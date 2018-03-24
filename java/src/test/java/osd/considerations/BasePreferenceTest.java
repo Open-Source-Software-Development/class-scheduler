@@ -4,7 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
+import osd.schedule.Lookups;
 
 import java.util.function.Predicate;
 

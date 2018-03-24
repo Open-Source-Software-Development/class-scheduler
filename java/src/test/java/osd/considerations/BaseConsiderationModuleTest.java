@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
+import osd.schedule.Lookups;
 
 import java.util.Collection;
 import java.util.function.Predicate;
@@ -42,14 +43,14 @@ class BaseConsiderationModuleTest<T> {
 
     @Test
     void providesBaseConstraints() {
-        final Collection<BaseConstraint> result = instance.providesBaseConstraints();
+        final Collection<BaseConstraint> result = instance.providesRawBaseConstraints();
         assertTrue(result.size() == 1);
         assertTrue(result.iterator().next() instanceof FakeBaseConstraint);
     }
 
     @Test
     void providesBasePreferences() {
-        final Collection<BasePreference> result = instance.providesBasePreferences();
+        final Collection<BasePreference> result = instance.providesRawBasePreferences();
         assertTrue(result.size() == 1);
         assertTrue(result.iterator().next() instanceof FakeBasePreference);
     }

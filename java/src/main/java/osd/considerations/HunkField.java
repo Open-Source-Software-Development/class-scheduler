@@ -1,7 +1,7 @@
 package osd.considerations;
 
 import osd.database.*;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 import java.util.*;
 import java.util.function.BiPredicate;

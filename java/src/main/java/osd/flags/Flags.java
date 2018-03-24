@@ -1,4 +1,4 @@
-package osd.main;
+package osd.flags;
 
 import org.apache.commons.cli.*;
 

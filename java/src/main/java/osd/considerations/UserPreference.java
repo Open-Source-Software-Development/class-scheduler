@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 public class UserPreference extends UserConsideration implements Preference {
 

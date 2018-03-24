@@ -2,6 +2,8 @@ package osd.database;
 
 import dagger.Module;
 import dagger.Provides;
+import osd.considerations.UserConstraint;
+import osd.considerations.UserPreference;
 
 import java.util.Collection;
 
@@ -39,14 +41,16 @@ public class DatabaseModule {
     }
 
     @Provides
-    Collection<UserConstraintRecord> providesUserConstraintRecords() {
+    Collection<UserConstraint> providesUserConstraintRecords() {
         // TODO: implement this
+        // See UserConstraintRecord
         throw new UnsupportedOperationException();
     }
 
     @Provides
-    Collection<UserPreferenceRecord> providesUserPreferenceRecords() {
+    Collection<UserPreference> providesUserPreferenceRecords() {
         // TODO: implement this
+        // See UserConstraintRecord
         throw new UnsupportedOperationException();
     }
 

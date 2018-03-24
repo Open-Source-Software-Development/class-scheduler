@@ -1,10 +1,10 @@
 package osd.considerations.base;
 
 import osd.considerations.BasePreference;
-import osd.considerations.Lookups;
+import osd.schedule.Lookups;
 import osd.database.Block;
 import osd.database.Professor;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 import java.util.Set;
 import java.util.function.Predicate;

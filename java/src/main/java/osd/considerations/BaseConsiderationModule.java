@@ -20,12 +20,12 @@ public class BaseConsiderationModule {
     }
 
     @Provides
-    Collection<BaseConstraint> providesBaseConstraints() {
+    Collection<BaseConstraint> providesRawBaseConstraints() {
         return scan(BaseConstraint.class);
     }
 
     @Provides
-    Collection<BasePreference> providesBasePreferences() {
+    Collection<BasePreference> providesRawBasePreferences() {
         return scan(BasePreference.class);
     }
 

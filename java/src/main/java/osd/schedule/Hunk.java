@@ -1,4 +1,4 @@
-package osd.output;
+package osd.schedule;
 
 import osd.database.Block;
 import osd.database.Professor;
@@ -8,7 +8,7 @@ import osd.database.Section;
 import java.util.*;
 
 /**
- * Represents a single scheduler output. A hunk is defined by a
+ * Represents a single scheduler schedule. A hunk is defined by a
  * {@code (Section, Professor, Room, Block}) 4-tuple. This is sufficient to
  * provide all scheduling data needed for the specified section.
  */
@@ -61,7 +61,7 @@ public class Hunk {
         return blocks;
     }
 
-    public boolean validateBlocks() {
+    boolean validateBlocks() {
         return blocks == null || blocks.stream().allMatch(Objects::nonNull);
     }
 

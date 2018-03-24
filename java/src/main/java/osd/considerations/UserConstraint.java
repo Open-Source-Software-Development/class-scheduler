@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 import osd.util.ImmutablePair;
 import osd.util.Pair;
 
@@ -24,8 +24,8 @@ import osd.util.Pair;
  * However, the first three have second elements of type Professor, while the
  * latter two are of type Room. Therefore, we have two subgroups, and any hunk
  * for a section of that class must meet one constraint from both subgroups. Of
- * course, a hunk for a section of another class would automatically pass these
- * constraints, since it's for a different class.</p>
+ * course, a hunk for a section of another course would automatically pass these
+ * constraints, since it's for a different course with its own constraints.</p>
  */
 public class UserConstraint extends UserConsideration implements Constraint {
 

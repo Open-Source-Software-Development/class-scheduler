@@ -6,7 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.database.Room;
 import osd.database.Section;
-import osd.output.Hunk;
+import osd.schedule.Hunk;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

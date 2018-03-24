@@ -1,6 +1,7 @@
 package osd.considerations;
 
-import osd.output.Hunk;
+import osd.schedule.Hunk;
+import osd.schedule.Lookups;
 
 import java.util.function.Predicate;
 

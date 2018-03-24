@@ -1,4 +1,4 @@
-package osd.main;
+package osd.flags;
 
 import dagger.Module;
 import dagger.Provides;

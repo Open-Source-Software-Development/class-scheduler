@@ -2,8 +2,10 @@ package osd.database.placeholder;
 
 import dagger.Module;
 import dagger.Provides;
+import osd.considerations.UserConstraint;
+import osd.considerations.UserPreference;
 import osd.database.*;
-import osd.main.FlagModule;
+import osd.flags.FlagModule;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -39,12 +41,14 @@ public abstract class PlaceholderModule {
     }
 
     @Provides
-    static Collection<UserPreferenceRecord> providesUserPreferenceRecords() {
+    static Collection<UserPreference> providesUserPreferenceRecords() {
         return Collections.emptyList();
     }
 
     @Provides
-    static Collection<UserConstraintRecord> providesUserConstraintRecords(final PlaceholderConfig config) {
-        return config.getUserConstraints().collect(Collectors.toList());
+    static Collection<UserConstraint> providesUserConstraintRecords(final PlaceholderConfig config) {
+        return config.getUserConstraints()
+                .map(UserConstraintRecord::toUserConstraint)
+                .collect(Collectors.toList());
     }
 }
