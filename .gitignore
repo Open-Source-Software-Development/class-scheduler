@@ -55,7 +55,7 @@ coverage.xml
 .static_storage/
 .media/
 local_settings.py
-db.sqlite3
+*/db.sqlite3
 mysite/scheduler/migrations
 
 # Flask stuff:

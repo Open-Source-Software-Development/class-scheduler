@@ -20,14 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f#sa^zkf(p3)uyu9t1d6hbq1fuc%*u&5ojlpk22#_6gu0pzirg'
+SECRET_KEY = '$i44!a1km-n&ebj=-n@qpf)@y%76az=g#^!mj%s68desbu9)=i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.38', '127.0.0.1', '172.19.3.99', 'localhost']
+ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = 'index.html'
 
 # Application definition
 
@@ -38,10 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'scheduler',
-    'faculty_data',
-    'room_data',
-	'polls',
 ]
 
 MIDDLEWARE = [
@@ -55,15 +50,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(os.getcwd(), 'polls/templates/startbootstrap-sb-admin-2-gh-pages/pages'),
-            os.path.join(os.getcwd(), 'polls/templates/includes/'),
-            os.path.join(os.getcwd(), 'polls/templates/pages/')
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,8 +76,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
     }
 }
 
@@ -122,17 +116,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-TIME_INPUT_FORMAT= ['%H:%M']
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-	os.path.join(BASE_DIR, 'polls/static'),
-)
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, ',media')

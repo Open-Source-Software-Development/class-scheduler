@@ -24,7 +24,7 @@ urlpatterns = [
 	url(r'^upload/', polls.views.simple_upload, name='upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
-
+	url(r'^course_selection/', polls.views.course_selection, name='course_selection'),
 ]
 
 if settings.DEBUG:
