@@ -1,61 +1,115 @@
 package osd.util.relation;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ManyToManyTest {
 
-    private final ManyToManyRelation<Character, String> instance
-            = new ManyToManyRelation<>();
-    private final String[] values = {"spam", "eggs", "foo", "bar"};
-
-    @BeforeEach
-    void setUp() {
-        for (final String value: values) {
-            for (final Character key: value.toCharArray()) {
-                instance.add(key, value);
-            }
-        }
-    }
-
-    @Test
-    void get() {
-        final Set<String> expected = new HashSet<>(Arrays.asList("spam", "eggs"));
-        final Set<String> result = instance.get('s');
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void get_RespectsRemoval() {
-        instance.remove('s', "spam");
-        final Set<String> expected = Collections.singleton("eggs");
-        final Set<String> result = instance.get('s');
-        assertEquals(expected, result);
-    }
+    private final ManyToManyRelation<Integer, String> instance = new ManyToManyRelation<>();
 
     @Test
     void get_NullOnMissingKey() {
-        assertNull(instance.get('z'));
+        assertNull(instance.get(7));
     }
 
     @Test
-    void get_NullAfterEverythingRemoved() {
-        instance.remove('s');
-        assertNull(instance.get('s'));
+    void add() {
+        instance.add(3, "foo");
+        final Set<String> expected = Collections.singleton("foo");
+        final Set<String> result = instance.get(3);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void add_Multiple() {
+        instance.add(3, "foo");
+        instance.add(3, "bar");
+        final Set<String> expected = new HashSet<>(Arrays.asList("foo", "bar"));
+        final Set<String> result = instance.get(3);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void remove() {
+        instance.add(4, "spam");
+        instance.add(4, "eggs");
+        instance.remove(4, "spam");
+        final Set<String> expected = Collections.singleton("eggs");
+        final Set<String> result = instance.get(4);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void remove_Batch() {
+        instance.add(4, "spam");
+        instance.add(4, "eggs");
+        instance.remove(4);
+        assertNull(instance.get(4));
     }
 
     @Test
     void get_NullAfterEverythingRemoved_NonBatch() {
-        instance.remove('s', "spam");
-        instance.remove('s', "eggs");
-        assertNull(instance.get('s'));
+        instance.add(4, "spam");
+        instance.add(4, "eggs");
+        instance.remove(4, "spam");
+        instance.remove(4, "eggs");
+        assertNull(instance.get(4));
+    }
+
+    @Test
+    void copyConstructor_SameData() {
+        RelationTest.testCopyConstructor_SameData(instance, ManyToManyRelation::new, 3, "foo");
+    }
+
+    @Test
+    void copyConstructor_Separate() {
+        RelationTest.testCopyConstructor_Separate(instance, ManyToManyRelation::new, 3, "foo");
+    }
+
+    @Test
+    void viewConstructor_ReadsThrough() {
+        final Map<Integer, Set<String>> forward = new HashMap<>();
+        final Map<String, Set<Integer>> reverse = new HashMap<>();
+        forward.computeIfAbsent(3, i -> new HashSet<>()).add("foo");
+        reverse.computeIfAbsent("foo", i -> new HashSet<>()).add(3);
+        final ManyToManyRelation<Integer, String> view
+                = new ManyToManyRelation<>(forward, reverse);
+        final Set<String> expected = Collections.singleton("foo");
+        final Set<String> result = view.get(3);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void viewConstructor_WritesThrough() {
+        final Map<Integer, Set<String>> forward = new HashMap<>();
+        final Map<String, Set<Integer>> reverse = new HashMap<>();
+        final ManyToManyRelation<Integer, String> view
+                = new ManyToManyRelation<>(forward, reverse);
+        view.add(3, "foo");
+        final Set<String> expected = Collections.singleton("foo");
+        final Set<String> result = forward.get(3);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void reversed_ReadsThrough() {
+        instance.add(3, "foo");
+        final ManyToManyRelation<String, Integer> reversed = instance.reversed();
+        final Set<Integer> expected = Collections.singleton(3);
+        final Set<Integer> result = reversed.get("foo");
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void reversed_WritesThrough() {
+        final ManyToManyRelation<String, Integer> reversed = instance.reversed();
+        reversed.add("foo", 3);
+        final Set<String> expected = Collections.singleton("foo");
+        final Set<String> result = instance.get(3);
+        assertEquals(expected, result);
     }
 
 }
