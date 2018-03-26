@@ -86,50 +86,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="interfaceosd_1_1schedule_1_1_scheduler-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">osd.schedule.Scheduler Interface Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Inherited by osd.schedule.SchedulerImpl.</p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a129884a57f2bf02c446b18c88c3582a2"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceosd_1_1schedule_1_1_scheduler.html#a129884a57f2bf02c446b18c88c3582a2">run</a> (final <a class="el" href="interfaceosd_1_1output_1_1_callbacks.html">Callbacks</a> callbacks)</td></tr>
-<tr class="separator:a129884a57f2bf02c446b18c88c3582a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+<div class="dynheader">
+Inheritance diagram for osd.schedule.Scheduler:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="interfaceosd_1_1schedule_1_1_scheduler.png" usemap="#osd.schedule.Scheduler_map" alt=""/>
+  <map id="osd.schedule.Scheduler_map" name="osd.schedule.Scheduler_map">
+</map>
+ </div></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Schedule algorithm entry point. Runs the algorithm itself, accepting  Callbacks callbacks} to handle successful and failed results. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a129884a57f2bf02c446b18c88c3582a2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">boolean osd.schedule.Scheduler.run </td>
-          <td>(</td>
-          <td class="paramtype">final <a class="el" href="interfaceosd_1_1output_1_1_callbacks.html">Callbacks</a>&#160;</td>
-          <td class="paramname"><em>callbacks</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Runs the scheduler algorithm. The <a class="el" href="">Callbacks</a> argument customizes the scheduling behavior by providing a <em>stop condition</em> (eg. "run
-until 5 schedules have been generated") and output callbacks. The return value indicates whether the stop condition was actually met, or whether we ran out of candidates first. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">callbacks</td><td>callbacks for handling results </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>whether we met the stop condition before running out of candidates </dd></dl>
-
-</div>
-</div>
-<hr/>The documentation for this interface was generated from the following file:<ul>
+<div class="textblock"><p>Schedule algorithm entry point. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classosd_1_1schedule_1_1_schedule_module.html">ScheduleModule</a> </dd></dl>
+</div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li>/home/travis/build/Open-Source-Software-Development/class-scheduler/java/src/main/java/osd/schedule/Scheduler.java</li>
 </ul>
 </div><!-- contents -->

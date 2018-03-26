@@ -93,66 +93,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">osd.considerations.UserConstraint Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for osd.considerations.UserConstraint:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classosd_1_1considerations_1_1_user_constraint.png" usemap="#osd.considerations.UserConstraint_map" alt=""/>
-  <map id="osd.considerations.UserConstraint_map" name="osd.considerations.UserConstraint_map">
-<area href="classosd_1_1considerations_1_1_user_consideration.html" alt="osd.considerations.UserConsideration" shape="rect" coords="0,112,226,136"/>
-<area href="interfaceosd_1_1considerations_1_1_constraint.html" alt="osd.considerations.Constraint" shape="rect" coords="236,112,462,136"/>
-<area href="interfaceosd_1_1considerations_1_1_consideration.html" alt="osd.considerations.Consideration" shape="rect" coords="0,56,226,80"/>
-<area href="interfaceosd_1_1considerations_1_1_consideration.html" alt="osd.considerations.Consideration" shape="rect" coords="236,56,462,80"/>
-</map>
- </div></div>
+
+<p>Inherits osd.considerations.UserConsideration, and osd.considerations.Constraint.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9378d413848106a42ede0782730c0408"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classosd_1_1considerations_1_1_user_constraint.html#a9378d413848106a42ede0782730c0408">test</a> (final <a class="el" href="classosd_1_1output_1_1_hunk.html">Hunk</a> hunk)</td></tr>
+<tr class="memitem:adaeec2f96800fa5ff2f4b40daa665f38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adaeec2f96800fa5ff2f4b40daa665f38"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>UserConstraint</b> (final Object left, final Object right, final boolean isBlacklist)</td></tr>
+<tr class="separator:adaeec2f96800fa5ff2f4b40daa665f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9378d413848106a42ede0782730c0408"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9378d413848106a42ede0782730c0408"></a>
+boolean&#160;</td><td class="memItemRight" valign="bottom"><b>test</b> (final <a class="el" href="classosd_1_1schedule_1_1_hunk.html">Hunk</a> hunk)</td></tr>
 <tr class="separator:a9378d413848106a42ede0782730c0408"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>User constraints use their element pairs as white- or blacklists. See  <a class="el" href="classosd_1_1considerations_1_1_user_consideration.html">UserConsideration</a> the parent class documentation} for what an "element pair" is. Blacklist constraints are satisfied if at least one member doesn't match. Whitelist constraints are satisfied if either both members match or neither does. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a9378d413848106a42ede0782730c0408"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">boolean osd.considerations.UserConstraint.test </td>
-          <td>(</td>
-          <td class="paramtype">final <a class="el" href="classosd_1_1output_1_1_hunk.html">Hunk</a>&#160;</td>
-          <td class="paramname"><em>hunk</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Determines whether some hunk satisfies this consideration. If the consideration is indeterminate because the hunk contains</p>
-<div class="fragment"><div class="line">null </div>
-</div><!-- fragment --><p> s, the result must be</p>
-<div class="fragment"><div class="line"><span class="keyword">true</span> </div>
-</div><!-- fragment --><p> . </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hunk</td><td>a hunk </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the hunk passes or is indeterminate, false if it fails </dd></dl>
-
-<p>Implements <a class="el" href="interfaceosd_1_1considerations_1_1_constraint.html#a50c53a0c89a4cfb8b58deae081ca3787">osd.considerations.Constraint</a>.</p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>User constraints whitelist or blacklist pairs of scheduling elements. For blacklist constraints, any hunk containing both elements of the pair violates the constraint. Whitelist constraints are more complicated. </p>
+<p>The behavior of whitelist constraints partially depends on the <em>types</em> of elements being evaluated, not just their values. The first element of a whitelist constraint's pair is taken as a "whitelist
+key", and all user constraints with the same whitelist key are grouped together. Within those groupings, they are further grouped by the type of their second element, using the same algorithm as <a class="el" href="">HunkField#get(Object)</a>. Groups of whitelist constraints are only considered if the hunk contains the group's whitelist key. Within the grouping, at least one member of each subgroup must pass.</p>
+<p>As an extended example, suppose that CSI-666 must be taught by Professor Mephistopheles, Beelzebub, or Cthulhu. It must also be taught in either Hell or a Mac lab (zing!). This would give us five whitelist user constraints. Since they all have CSI-666 as their first element, they're grouped by that. However, the first three have second elements of type Professor, while the latter two are of type Room. Therefore, we have two subgroups, and any hunk for a section of that class must meet one constraint from both subgroups. Of course, a hunk for a section of another course would automatically pass these constraints, since it's for a different course with its own constraints.</p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/travis/build/Open-Source-Software-Development/class-scheduler/java/src/main/java/osd/considerations/UserConstraint.java</li>
 </ul>
 </div><!-- contents -->
