@@ -3,35 +3,65 @@
 
 <head>
 
-  <title>Champlain Scheduler</title>
+    <title>Champlain Scheduler</title>
 
-  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
-  <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
-  <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
-  <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
+    <!-- bootstrap css -->
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- SB admin 2 css -->
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<!-- custom css -->
+    <link href="{% static 'css/cssLocal.css' %}" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
 
-  <div id="wrapper">
-    {% include 'blank.html' %}
+	<!-- page content -->
+    <div id="wrapper">
+	
+        {% include 'blank.html' %}
 
-    <div id="page-wrapper">
-      <div></div>
-      <br/>
-		Choose a Season:
+		<!-- page content -->
+        <div id="page-wrapper">
+            
+			<!-- PD review panel -->
+			<div id="profSettingsHead">
+			
+				<!-- PD welcome panel -->
+				<div class="panel panel-primary">
+				
+					<!-- welcome panel top -->
+					<div class="panel-heading">
+					
+						<H1 id="titleScreen"> Review Previous Schedules</H1>
+						
+					</div>
+					
+					<!-- welcome panel bottom -->
+					<div class="panel-footer">
+					
+						<h4> Hello, {{request.user.username}}</h4>
+						<h6>Choose a semester and a division to view that schedule</h6>
+					
+					<form action="{% url 'view_history' %}" method="post">
+					{% csrf_token %}
+
+    <div class="spacing wrapper">
+		Choose a Semester:
+		
+		Choose a Division:
 		<br>
 		<select>
 		<option value="none">Select...</option>
 		<option value="F2017">Fall 2017</option>
 		</select>
 		
-		<br>
-		Choose a Division:
-		<br>
 		<select>
 		<option value="none">Select...</option>
 		<option value="ITS">ITS</option>
@@ -41,8 +71,8 @@
 		<option value="BUS">Business</option>
 		</select>
 		<br>
-		<input type="submit" value="Submit">
-    </div>
+		<input type="submit" value="Submit" id="loginButton">
+	</div>
 
     <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
