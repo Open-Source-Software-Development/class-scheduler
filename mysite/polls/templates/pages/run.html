@@ -3,14 +3,20 @@
 
 <head>
 
-  <title>Champlain Scheduler</title>
+    <title>Champlain Scheduler</title>
 
-  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
-  <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
-  <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
-  <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
+    <!-- bootstrap css -->
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- SB admin 2 css -->
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
 
 </head>
 
@@ -20,15 +26,8 @@
     {% include 'blank.html' %}
 
     <div id="page-wrapper">
-      <div></div>
-      <br/>
-      <input type="checkbox" name="division" value="Business">Business Division Schedule<br>
-      <input type="checkbox" name="division" value="CCM">Communication & Creative Media Division Schedule<br>
-      <input type="checkbox" name="division" value="EHS">Education & Human Studies Division Schedule<br>
-      <input type="checkbox" name="division" value="ITS">Information Technology & Sciences Division Schedule<br>
-      <input type="checkbox" name="division" value="Core">Core Division Schedule<br>
-      <input type="checkbox" name="division" value="Cont">Continuing Professional Studies Division Schedule<br>
-      <button type="button" id="loginButton">Run Scheduler</button> <button type="button">Cancel Scheduler</button>
+      <button type="button" id="loginButton">Run Scheduler</button> 
+	  <button type="button" id="loginButton">Cancel Scheduler</button>
     </div>
 
   </div>
