@@ -22,15 +22,37 @@
 
 <body>
 
-  <div id="wrapper">
-    {% include 'blank.html' %}
+	<!-- page content -->
+    <div id="wrapper">
+	
+        {% include 'blank.html' %}
 
-    <div id="page-wrapper">
-      <button type="button" id="loginButton">Run Scheduler</button> 
-	  <button type="button" id="loginButton">Cancel Scheduler</button>
-    </div>
+		<!-- page content -->
+        <div id="page-wrapper">
+            
+			<!-- PD review panel -->
+			<div id="profSettingsHead">
+			
+				<!-- PD welcome panel -->
+				<div class="panel panel-primary">
+				
+					<!-- welcome panel top -->
+					<div class="panel-heading">
+					
+						<H1 id="titleScreen"> Run Scheduler</H1>
+						
+					</div>
+					
+				<!-- welcome panel bottom -->
+				<div class="panel-footer">
+					
+						<h4> Hello, {{request.user.username}}</h4>
+						<h6>Begin running the scheduler algorithm or cancel an algorithm that is currently running</h6>
 
-  </div>
+						<button type="button" id="loginButton">Run Scheduler</button> 
+						<button type="button" id="loginButton">Cancel Scheduler</button>
+			</div>
+	</div>
 
   <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
