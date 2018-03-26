@@ -14,7 +14,7 @@ import six
 
 class Named(models.Model):
     """
-        Gives better naming to things added manually
+        Gives better naming to models that inherit it.
     """
     name = models.CharField(max_length=200, null=True)
 
@@ -62,6 +62,18 @@ class Block(Named):
     day = models.CharField(max_length=15)
     start_time = models.TimeField(auto_now=False, auto_now_add=False)
     end_time = models.TimeField(auto_now=False, auto_now_add=False)
+
+#class ThreeHour(Named):
+#    """
+#        TODO: Documentation
+#    """
+#    
+#    
+#    block_one = models.ForeignKey(Block, on_delete=models.CASCADE)
+#    block_two = models.ForeignKey(Block, on_delete=models.CASCADE)
+#    
+#    class Meta:
+#        unique_together = (("block_one", "block_two"))
     
 class Course(Named):
     """
@@ -155,8 +167,17 @@ class Room(models.Model):
     def __str__(self):
         return "{}-{}".format(self.building, self.room_number)
 
-
-
+#class ConstraintType(models.Model):
+#     """
+#        TODO Documentation
+#    """
+class ProfessorConstraint(models.Model):
+    """
+        TODO Documentation
+    """
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    block = models.ForeignKey(Block, on_delete=models.CASCADE)
+    # block = models.ForeignKey(Block, on_delete=models.CASCADE)
 
 # Input : User preferences/constraints
 
