@@ -1,14 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
 import logging
 from scheduler.dataAPI import *
+from django.urls import reverse
+from .models import Block
+
 
 def blank(request):
 	return render(request, 'blank.html')
-	
+
 def index(request):
 	return render(request, 'index.html')
 
@@ -19,7 +22,7 @@ def professor_settings(request):
 
         schedule_info = (request.POST.copy()).dict()
         del schedule_info['csrfmiddlewaretoken']
-		
+
         first = request.user.first_name
         last = request.user.last_name
 
@@ -34,30 +37,30 @@ def professor_settings(request):
         return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info})
     else:
         return render(request, 'profSettings.html')
-		
+
 def PD_professor_settings(request):
 	professor_names = [li['first_name'] + ' ' + li['last_name'] for li in list(User.objects.filter(groups__name='Professor').values('first_name', 'last_name'))]
-	
+
 	if request.GET.get('prof'):
 		selected = request.GET.get('prof')
 	else:
 		selected = 'None Selected'
-	
-	if request.method == 'POST':	
+
+	if request.method == 'POST':
 		if selected == 'None Selected':
-			return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected, 'error': 'Please Select a Professor'})			
+			return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected, 'error': 'Please Select a Professor'})
 		else:
 			schedule_info = request.POST.copy()
 			schedule_info['first'] = selected.split()[0]
 			schedule_info['last'] = selected.split()[1]
-			
+
 			return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected, 'message': 'Settings Applied', 'data': schedule_info})
 	else:
 		return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected})
 
 def course_selection(request):
 	return render(request, 'PDcoursesSelector.html')
-		
+
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
 
@@ -148,3 +151,45 @@ def loginUser(request):
 				return render(request, 'Login.html', content)
 		else:
 			return render(request, 'Login.html')
+
+## TODO: Documentation
+def upload_csv(request):
+	data = {}
+	if "GET" == request.method:
+		return render(request, "import_data.html", data)
+    # if not GET, then proceed
+	try:
+		csv_file = request.FILES["csv_file"]
+		if not csv_file.name.endswith('.csv'):
+			messages.error(request,'File is not CSV type')
+			return HttpResponseRedirect(reverse("upload"))
+
+		file_data = csv_file.read().decode("utf-8")
+
+		lines = file_data.split("\n")
+		#loop over the lines and save them in db. If error , store as string and then display
+		for line in lines:
+			fields = line.split(",")
+			data_dict = {}
+			day = fields[0]
+			start_time = fields[1]
+			end_time = fields[2]
+			try:
+				block, created = Block.objects.get_or_create(
+					day = day,
+					start_time = start_time,
+					end_time = end_time,
+				)
+				if created:
+					block.save()
+				else:
+					logging.getLogger("error_logger").error(form.errors.as_json())
+			except Exception as e:
+				logging.getLogger("error_logger").error(repr(e))
+				pass
+
+	except Exception as e:
+		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+		messages.error(request,"Unable to upload file. "+repr(e))
+
+	return HttpResponseRedirect(reverse("upload"))
