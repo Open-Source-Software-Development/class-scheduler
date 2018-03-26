@@ -29,11 +29,14 @@ class Block(Named):
                 - The start time of the block (ex: 8:00)
             end_time: TimeField (input in HH:MM)
                 - The end time of the block (ex: 9:30)
+
+
     """
 
+    ids = models.CharField(max_length=15)
+    block = models.CharField(max_length=15)
     day = models.CharField(max_length=15)
-    start_time = models.TimeField(auto_now=False, auto_now_add=False)
-    end_time = models.TimeField(auto_now=False, auto_now_add=False)
+    block_id = models.CharField(max_length=15)
 
     def __str__(self):
         return self.day

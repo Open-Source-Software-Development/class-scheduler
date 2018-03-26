@@ -153,7 +153,7 @@ def loginUser(request):
 			return render(request, 'Login.html')
 
 ## TODO: Documentation
-def upload_csv(request):
+def upload_csv_time_block(request):
 	data = {}
 	if "GET" == request.method:
 		return render(request, "import_data.html", data)
@@ -171,14 +171,16 @@ def upload_csv(request):
 		for line in lines:
 			fields = line.split(",")
 			data_dict = {}
-			day = fields[0]
-			start_time = fields[1]
-			end_time = fields[2]
+			ids = fields[0]
+			block = fields[1]
+			day = fields[2]
+			block_id = fields[3]
 			try:
 				block, created = Block.objects.get_or_create(
+					ids = id,
+					block = block,
 					day = day,
-					start_time = start_time,
-					end_time = end_time,
+					block_id = block_id,
 				)
 				if created:
 					block.save()
@@ -190,6 +192,5 @@ def upload_csv(request):
 
 	except Exception as e:
 		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-		messages.error(request,"Unable to upload file. "+repr(e))
 
 	return HttpResponseRedirect(reverse("upload"))
