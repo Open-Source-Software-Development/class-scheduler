@@ -20,6 +20,9 @@ class DataAPI() :
             Insert professor constriants into the proper location. 
         """
         
-        prof = Professor.object.get(name=prof_name)
-        block = Block.object.get(name=timeblock)
-        constraint = ProfessorConstraint.objects.create(professor=prof, block=block)
+        prof = Professor.objects.get(first = prof_name)
+        block = Block.objects.get(name = timeblock)
+        
+        nc = ProfessorConstraint(professor=prof, block=block)
+        nc.save()
+        

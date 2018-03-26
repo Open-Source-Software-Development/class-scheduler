@@ -167,13 +167,17 @@ class Room(models.Model):
     def __str__(self):
         return "{}-{}".format(self.building, self.room_number)
 
+#class ConstraintType(models.Model):
+#     """
+#        TODO Documentation
+#    """
 class ProfessorConstraint(models.Model):
     """
         TODO Documentation
     """
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
-
+    # block = models.ForeignKey(Block, on_delete=models.CASCADE)
 
 # Input : User preferences/constraints
 
