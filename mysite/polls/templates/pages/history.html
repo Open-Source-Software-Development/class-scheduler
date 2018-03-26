@@ -49,7 +49,7 @@
 						<h4> Hello, {{request.user.username}}</h4>
 						<h6>Choose a semester and a division to view that schedule</h6>
 						
-						<form action="{% url 'view_history' %}" method="post">
+						<form method="post">
 						{% csrf_token %}
 							<div class="col-lg-6">
 								<div class="spacing wrapper">
