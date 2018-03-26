@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
+import logging
+from scheduler.dataAPI import *
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -13,15 +15,25 @@ def index(request):
 ## TODO: Documentation
 #
 def professor_settings(request):
-	if request.method == 'POST':
+    if request.method == 'POST':
+
+        schedule_info = (request.POST.copy()).dict()
+        del schedule_info['csrfmiddlewaretoken']
 		
-		schedule_info = request.POST.copy()
-		schedule_info['first'] = request.user.first_name
-		schedule_info['last'] = request.user.last_name
-		
-		return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info})
-	else:
-		return render(request, 'profSettings.html')
+        first = request.user.first_name
+        last = request.user.last_name
+
+        D = DataAPI()
+
+        for key, value in schedule_info.items():
+            if value == '1':
+                D.insert_professor_avalible(first, key, value)
+            if value == '2':
+                D.insert_professor_avalible(first, key, value)
+
+        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info})
+    else:
+        return render(request, 'profSettings.html')
 		
 def PD_professor_settings(request):
 	professor_names = [li['first_name'] + ' ' + li['last_name'] for li in list(User.objects.filter(groups__name='Professor').values('first_name', 'last_name'))]

@@ -15,7 +15,7 @@ class DataAPI() :
         """
         return Block.objects.all()
         
-    def insert_professor_avalible(self, prof_name, timeblock):
+    def insert_professor_avalible(self, prof_name, timeblock, value):
         """
             Insert professor constriants into the proper location. 
         """
