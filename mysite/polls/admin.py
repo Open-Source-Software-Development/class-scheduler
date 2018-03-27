@@ -1,4 +1,4 @@
 from django.contrib import admin
 from polls.models import *
 
-admin.site.register(Block)
+#admin.site.register(Block)

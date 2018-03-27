@@ -33,10 +33,7 @@ class Block(Named):
 
     """
 
-    ids = models.CharField(max_length=15)
-    block = models.CharField(max_length=15)
-    day = models.CharField(max_length=15)
-    block_id = models.CharField(max_length=15)
+    pass
 
     def __str__(self):
         return self.day
