@@ -191,6 +191,7 @@ class ProfessorConstraint(models.Model):
     """
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
+    value = models.PositiveIntegerField()
     # block = models.ForeignKey(Block, on_delete=models.CASCADE)
 
 # Input : User preferences/constraints

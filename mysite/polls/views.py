@@ -20,6 +20,19 @@ def index(request):
 ## TODO: Documentation
 #
 def professor_settings(request):
+    D = DataAPI()
+    
+    #Get current user's name
+    first = request.user.first_name
+    last = request.user.last_name
+    
+    #Get list of current professors constraints
+    restraints = list(D.get_professor_avalible(first, last))
+    constraints = {}
+    for i in restraints:
+        constraints[i['block']] = i['value']
+        #BLOCK IDS NOT CORRECT
+
     #Get all time block data from database
     block_data = list(Block.objects.filter().values('start_time', 'end_time', 'day', 'block_id'))
     #Create list to hold unique time blocks during each day
@@ -55,20 +68,15 @@ def professor_settings(request):
         schedule_info = (request.POST.copy()).dict()
         del schedule_info['csrfmiddlewaretoken']
 
-        first = request.user.first_name
-        last = request.user.last_name
-
-        D = DataAPI()
-
         for key, value in schedule_info.items():
             if value == '1':
-                D.insert_professor_avalible(first, key, value)
+                D.insert_professor_avalible(first, last, key, value)
             if value == '2':
-                D.insert_professor_avalible(first, key, value)
+                D.insert_professor_avalible(first, last, key, value)
 
         return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info, 'block_ids': block_ids, 'block_times': block_times})
     else:
-        return render(request, 'profSettings.html', {'block_ids': block_ids, 'block_times': block_times})
+        return render(request, 'profSettings.html', {'data': constraints, 'block_ids': block_ids, 'block_times': block_times})
 
 def PD_professor_settings(request):
     professors = Professor.objects.filter()

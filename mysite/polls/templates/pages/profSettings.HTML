@@ -93,7 +93,8 @@
                                                 {% for j in block_ids %}
                                                     {% for k in block_ids|get_item:j %}
                                                         {% if k == i %}
-                                                        <th width="120px" class="ClickableTimeBlock" id="{{ block_ids|get_item:j|get_item:k }}">{{ block_ids|get_item:j|get_item:k }}</th>
+                                                        <!-- TITLE SHOULD EQUAL WHAT BLOCK VALUE IS -->
+                                                        <th width="120px" title=0 class="ClickableTimeBlock" id="{{ block_ids|get_item:j|get_item:k }}">{{ block_ids|get_item:j|get_item:k }}</th>
                                                         {% endif %}
                                                     {% endfor %}
                                                 {% endfor %}

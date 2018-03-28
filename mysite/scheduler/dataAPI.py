@@ -29,7 +29,7 @@ class DataAPI() :
       
     def get_blocks_by_day(self, day):
         """
-            get blocks that occor on day.
+            get blocks that occur on day.
         """
         return Block.objects.filter(day=day).values("block_id", "day", "start_time")
     def get_unique_times(self, day):
@@ -66,16 +66,17 @@ class DataAPI() :
             Insert professor constriants into the proper location. 
         """
         
-        prof = Professor.objects.get(first = prof_name)
+        prof = Professor.objects.get(first = prof_first, last = prof_last)
         block = Block.objects.get(name = timeblock)
         
-        nc = ProfessorConstraint(professor=prof, block=block)
+        nc = ProfessorConstraint(professor=prof, block=block, value=value)
         nc.save()
         
-    def get_professor_avalible(self, prof_first prof_last):
+    def get_professor_avalible(self, prof_first, prof_last):
         """
             Insert professor constriants into the proper location. 
         """
-        ProfessorConstraint.objects.filter(first = prof_first, prof_last)
+        prof = Professor.objects.get(first = prof_first, last = prof_last)
+        return ProfessorConstraint.objects.filter(professor = prof).values("block", "value").distinct()
         
         
