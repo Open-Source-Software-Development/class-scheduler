@@ -69,9 +69,15 @@ def simple_upload(request):
 
 def run(request):
 	return render(request, 'run.html')
+	
+def results(request):
+	return render(request, 'results.html')
 
 def history(request):
 	return render(request, 'history.html')
+
+def view_history(request):
+	return render(request, 'view_history.html')
 
 
 ## TODO: Documentation
