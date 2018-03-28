@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load poll_extras %}
 <html lang="en">
 
 <head>
@@ -80,84 +81,29 @@
 
 										<tr>
 											<th></th>
-											<th>Monday</th>
-											<th>Tuesday</th>
-											<th>Wednesday</th>
-											<th>Thursday</th>
-											<th>Friday</th>
+                                            {% for i in block_ids %}
+											<th>{{ i }}</th>
+                                            {% endfor %}	
 										</tr>
 									</thead>
-
 									<tbody>
-										<tr>
-											<th width="120px" >8:00 - 9:15</th>
-											<th width="120px" class="ClickableTimeBlock" name="t1"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t2"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t3"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t4"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t5"></th>
-										</tr>
-										<tr>
-											<th width="120px" >9:30 - 10:45</th>
-											<th width="120px" class="ClickableTimeBlock" name="t6"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t7"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t8"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t9"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t10"></th>
-										</tr>
-										<tr>
-											<th width="120px" >11:00 - 12:15</th>
-											<th width="120px" class="ClickableTimeBlock" name="t11"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t12"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t13"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t14"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t15"></th>
-										</tr>
-										<tr>
-											<th width="120px" >12:30 - 1:45</th>
-											<th width="120px" class="ClickableTimeBlock" name="t16"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t17"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t18"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t19"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t20"></th>
-										</tr>
-										<tr>
-											<th width="120px" >2:00 - 3:15</th>
-											<th width="120px" class="ClickableTimeBlock" name="t21"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t22"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t23"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t24"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t25"></th>
-										</tr>
-										<tr>
-											<th width="120px" >3:30 - 4:15</th>
-											<th width="120px" class="ClickableTimeBlock" name="t26"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t27"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t28"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t29"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t30"></th>
-										</tr>
-										<tr>
-											<th width="120px" >8:00 - 9:15</th>
-											<th width="120px" class="ClickableTimeBlock" name="t31"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t32"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t33"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t34"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t35"></th>
-										</tr>
-										<tr>
-											<th width="120px" >8:00 - 9:15</th>
-											<th width="120px" class="ClickableTimeBlock" name="t36"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t37"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t38"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t39"></th>
-											<th width="120px" class="ClickableTimeBlock" name="t40"></th>
-										</tr>
+										{% for i in block_times %}
+                                            <tr>
+                                                <th width="120px" >{{ i }}</th>
+                                                {% for j in block_ids %}
+                                                    {% for k in block_ids|get_item:j %}
+                                                        {% if k == i %}
+                                                        <th width="120px" class="ClickableTimeBlock" id="{{ block_ids|get_item:j|get_item:k }}">{{ block_ids|get_item:j|get_item:k }}</th>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </tr>
+										{% endfor %}
 									</tbody>
 								</table>
-					
-								{{ data }}
 								
+                                {{ data }}
+                                
 								<!-- success message -->
 								{% if message %}
 									<span id="goodMsg" onclick='this.remove(this); return false;'>
