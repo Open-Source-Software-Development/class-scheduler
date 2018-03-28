@@ -128,7 +128,7 @@ def upload_csv_professor(request):
         last: CharField(max_length=20)
             -Professor Last Name (ex: Wilson)
 
-    """
+u    """
     try:
         csv_file = request.FILES["csv_file"]
         if not csv_file.name.endswith('.csv'):
@@ -184,42 +184,36 @@ def upload_csv_room(request):
             - The style of course taught in a room (ex. Studio)
         room_type: Foreign Key (Room Type)
     """
-    try:
-        csv_file = request.FILES["csv_file"]
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request,'File is not CSV type')
-            return HttpResponseRedirect(reverse("upload"))
-        file_data = csv_file.read().decode("utf-8")
-        lines = file_data.split("\n")
-        #loop over the lines and save them in db. If error , store as string and then display
-        for line in lines:
-            fields = line.split(",")
-            building = fields[0]
-            room_number = fields[1]
-            room_capacity = fields[2]
-            room_type = fields[3]
-            division = fields[4]
-            subject = fields[5]
-            course_number = fields[6]
-            try:
-                room, created = Room.objects.get_or_create(
-                    building = building,
-                    room_number = room_number,
-                    room_capacity = room_capacity,
-                    room_type = room_type,
-                    division = division,
-                    subject = subject,
-                    course_number = course_number,
-                )
-                if created:
-                    room.save()
-                else:
-                    logging.getLogger("error_logger").error(form.errors.as_json())
-            except Exception as e:
-                #logging.getLogger("error_logger").error(repr(e))
-                pass
-    except Exception as e:
-        logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+    csv_file = request.FILES["csv_file"]
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request,'File is not CSV type')
+        return HttpResponseRedirect(reverse("upload"))
+    file_data = csv_file.read().decode("utf-8")
+    lines = [line for line in file_data.split("\n") if len(line) > 0]
+    #loop over the lines and save them in db. If error , store as string and then display
+    for line in lines:
+        print(line)
+        fields = line.split(",")
+        building = fields[0]
+        room_number = fields[1]
+        room_capacity = fields[2]
+        room_type = RoomType.objects.get(name=fields[3])
+        division = Division.objects.get(name=fields[4])
+        subject = fields[5]
+        course_number = fields[6]
+        room, created = Room.objects.get_or_create(
+            building = building,
+            room_number = room_number,
+            room_capacity = room_capacity,
+            room_type = room_type,
+            division = division,
+            subject = subject,
+            course_number = course_number,
+        )
+        if created:
+            room.save()
+        else:
+            logging.getLogger("error_logger").error(form.errors.as_json())
     return HttpResponseRedirect(reverse("upload"))
 
 ## TODO: Division Data
