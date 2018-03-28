@@ -1,5 +1,6 @@
 import csv
 from .models import *
+from django.core.exceptions import *
 
 
 def parse(csv_file, filetype):
@@ -100,6 +101,28 @@ class Courses(Parser):
 class DivisionParser(Parser):
     def convert(self, index, value):
         return value
+
+
+@Parser.register(Qualification, "qualifications", "course", "professor")
+class QualificationParser(Parser):
+    def convert(self, index, value):
+        if index == 0:
+            program, number = value.split("-")
+            try:
+                return Course.objects.get(program = program, style = number)
+            except Course.DoesNotExist:
+                raise ParseError("No course named {}".format(value))
+        if index == 1:
+            names = value.split()
+            first = " ".join(names[0:len(names) - 1])
+            last = names[-1]
+            try:
+                return Professor.objects.get(first = first, last = last)
+            except Professor.DoesNotExist:
+                raise ParseError("No professor named {}".format(value))
+        return value #future-proofing
+
+
 
 @Parser.register(Block, "blocks", "block_id", "day", "start_time", "end_time")
 class BlockParser(Parser):

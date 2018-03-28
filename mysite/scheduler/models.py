@@ -65,17 +65,6 @@ class Block(Named):
     def __str__(self):
         return self.day
 
-#class ThreeHour(Named):
-#    """
-#        TODO: Documentation
-#    """
-#
-#
-#    block_one = models.ForeignKey(Block, on_delete=models.CASCADE)
-#    block_two = models.ForeignKey(Block, on_delete=models.CASCADE)
-#
-#    class Meta:
-#        unique_together = (("block_one", "block_two"))
 
 class Course(Named):
     """
@@ -172,17 +161,24 @@ class Room(models.Model):
     def __str__(self):
         return "{}-{}".format(self.building, self.room_number)
 
-#class ConstraintType(models.Model):
-#     """
-#        TODO Documentation
-#    """
+
+class Qualification(models.Model):
+    """Semantic constraint that whitelists class/professor combinations.
+    nb. when turning this into a constraint, *make sure to use the
+    course as the first element*."""
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} can teach {}".format(self.professor, self.course)
+
+
 class ProfessorConstraint(models.Model):
     """
         TODO Documentation
     """
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
-    # block = models.ForeignKey(Block, on_delete=models.CASCADE)
 
 # Input : User preferences/constraints
 
