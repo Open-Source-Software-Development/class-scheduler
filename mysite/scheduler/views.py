@@ -141,7 +141,7 @@ def upload_csv_professor(request):
         #loop over the lines and save them in db. If error , store as string and then display
         for line in lines:
             fields = line.split(",")
-            division = Division.objects.get(division=fields[0])
+            division = Division.objects.get(name=fields[0])
             first = fields[1]
             last = fields[2]
             try:
@@ -234,10 +234,10 @@ def upload_csv_division(request):
         #loop over the lines and save them in db. If error , store as string and then display
         for line in lines:
             fields = line.split(",")
-            division = fields[0]
+            name = fields[0]
             try:
                 divis, created = Division.objects.get_or_create(
-                    division = division,
+                    name = name,
                 )
                 if created:
                     divis.save()
