@@ -77,40 +77,33 @@ def upload_csv_course(request):
         style: Charfield (Max Length 20)
             - The style of the course (ex: studio)
     """
-    try:
-        csv_file = request.FILES["csv_file"]
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request,'File is not CSV type')
-            return HttpResponseRedirect(reverse("upload"))
-        file_data = csv_file.read().decode("utf-8")
-        lines = file_data.split("\n")
-        #loop over the lines and save them in db. If error , store as string and then display
-        for line in lines:
-            fields = line.split(",")
-            division = fields[0]
-            program = fields[1]
-            style = fields[2]
-            title = fields[3]
-            ins_method = fields[4]
-            section_capacity = fields[5]
-            try:
-                course, created = Course.objects.get_or_create(
-                    division = division,
-                    program = program,
-                    style = style,
-                    title = title,
-                    ins_method = ins_method,
-                    section_capacity = section_capacity,
-                )
-                if created:
-                    course.save()
-                else:
-                    logging.getLogger("error_logger").error(form.errors.as_json())
-            except Exception as e:
-                #logging.getLogger("error_logger").error(repr(e))
-                pass
-    except Exception as e:
-        logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+    csv_file = request.FILES["csv_file"]
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request,'File is not CSV type')
+        return HttpResponseRedirect(reverse("upload"))
+    file_data = csv_file.read().decode("utf-8")
+    lines = [line for line in file_data.split("\n") if len(line) != 0]
+    #loop over the lines and save them in db. If error , store as string and then display
+    for line in lines:
+        fields = line.split(",")
+        division = Division.objects.get(name=fields[0])
+        program = fields[1]
+        style = fields[2]
+        title = fields[3]
+        ins_method = fields[4]
+        section_capacity = fields[5]
+        course, created = Course.objects.get_or_create(
+            division = division,
+            program = program,
+            style = style,
+            title = title,
+            ins_method = ins_method,
+            section_capacity = section_capacity,
+        )
+        if created:
+            course.save()
+        else:
+            logging.getLogger("error_logger").error(form.errors.as_json())
     return HttpResponseRedirect(reverse("upload"))
 
 ## TODO: Professor Data
@@ -192,7 +185,6 @@ def upload_csv_room(request):
     lines = [line for line in file_data.split("\n") if len(line) > 0]
     #loop over the lines and save them in db. If error , store as string and then display
     for line in lines:
-        print(line)
         fields = line.split(",")
         building = fields[0]
         room_number = fields[1]
