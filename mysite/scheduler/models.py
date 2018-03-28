@@ -128,7 +128,6 @@ class Professor(Named):
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     first = models.CharField(max_length=20, null=True, blank=True)
     last = models.CharField(max_length=20, null=True, blank=True)
-    qualifications = models.ManyToManyField(Course)
 
 class PregenSection(models.Model):
     """

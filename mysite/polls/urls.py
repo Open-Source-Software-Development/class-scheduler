@@ -21,9 +21,11 @@ urlpatterns = [
 	url(r'^history/', polls.views.history, name='history'),
 	url(r'^PD_professor_settings/', polls.views.PD_professor_settings, name='PD_professor_settings'),
 	url(r'^course_review/', polls.views.course_review, name='course_review'),
+
 	#url(r'^upload/', scheduler.views.upload_csv_time_block, name='upload'),
     #url(r'^upload/', scheduler.views.upload_csv_division, name='upload'),
-    url(r'^upload/', scheduler.views.upload_csv_course, name='upload'),
+    url(r'^upload/', scheduler.views.upload_csv, name='upload'),
+    
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
 	url(r'^course_selection/', polls.views.course_selection, name='course_selection'),

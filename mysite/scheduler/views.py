@@ -8,12 +8,20 @@ from scheduler.dataAPI import *
 from django.urls import reverse
 from .models import *
 
-## TODO: Time Block Data
-def upload_csv_time_block(request):
+def upload_csv(request):
 	data = {}
 	if "GET" == request.method:
 		return render(request, "import_data.html", data)
-    # if not GET, then proceed
+	csv_type = request.POST['css-tabs']
+	return {"courses": upload_csv_course,
+		"blocks": upload_csv_time_block,
+		"professors": upload_csv_professor,
+		"rooms": upload_csv_room,
+		"divisions": upload_csv_division
+	}[csv_type](request)
+
+## TODO: Time Block Data
+def upload_csv_time_block(request):
 	try:
 		csv_file = request.FILES["csv_file"]
 		if not csv_file.name.endswith('.csv'):
@@ -69,10 +77,6 @@ def upload_csv_course(request):
 		style: Charfield (Max Length 20)
 			- The style of the course (ex: studio)
     """
-	data = {}
-	if "GET" == request.method:
-		return render(request, "import_data.html", data)
-    # if not GET, then proceed
 	try:
 		csv_file = request.FILES["csv_file"]
 		if not csv_file.name.endswith('.csv'):
@@ -123,14 +127,8 @@ def upload_csv_professor(request):
 			- Professors First Name (ex: James)
 		last: CharField(max_length=20)
 			-Professor Last Name (ex: Wilson)
-		qualifications: ManyToManyField with Course
-			-Each professor teaches multiple courses
 
     """
-	data = {}
-	if "GET" == request.method:
-		return render(request, "import_data.html", data)
-    # if not GET, then proceed
 	try:
 		csv_file = request.FILES["csv_file"]
 		if not csv_file.name.endswith('.csv'):
@@ -143,16 +141,14 @@ def upload_csv_professor(request):
 		#loop over the lines and save them in db. If error , store as string and then display
 		for line in lines:
 			fields = line.split(",")
-			division = fields[0]
+			division = Division.objects.get(division=fields[0])
 			first = fields[1]
 			last = fields[2]
-			qualifications = fields[3]
 			try:
 				professor, created = Professor.objects.get_or_create(
 					division = division,
 					first = first,
 					last = last,
-					qualifications = qualifications,
 				)
 				if created:
 					professor.save()
@@ -188,10 +184,6 @@ def upload_csv_room(request):
 			- The style of course taught in a room (ex. Studio)
 		room_type: Foreign Key (Room Type)
     """
-	data = {}
-	if "GET" == request.method:
-		return render(request, "import_data.html", data)
-    # if not GET, then proceed
 	try:
 		csv_file = request.FILES["csv_file"]
 		if not csv_file.name.endswith('.csv'):
@@ -232,10 +224,6 @@ def upload_csv_room(request):
 
 ## TODO: Division Data
 def upload_csv_division(request):
-	data = {}
-	if "GET" == request.method:
-		return render(request, "import_data.html", data)
-    # if not GET, then proceed
 	try:
 		csv_file = request.FILES["csv_file"]
 		if not csv_file.name.endswith('.csv'):
@@ -245,7 +233,7 @@ def upload_csv_division(request):
 		lines = file_data.split("\n")
 		#loop over the lines and save them in db. If error , store as string and then display
 		for line in lines:
-			fields = line.split("\n")
+			fields = line.split(",")
 			division = fields[0]
 			try:
 				divis, created = Division.objects.get_or_create(
