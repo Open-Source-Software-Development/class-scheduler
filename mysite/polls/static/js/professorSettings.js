@@ -4,13 +4,14 @@ function setup() {
 		if (!blocks.hasOwnProperty(key)) {
 			continue;
 		}
-		(new AvailabilityButton(blocks[key])).setup();
+		(new AvailabilityButton(key, blocks[key])).setup();
 	}
 }
 
-function AvailabilityButton(element) {
+function AvailabilityButton(blockID, element) {
+	this.blockID = blockID;
 	this.element = element;
-	this.state = 0;
+	this.state = 0; // set block as whatever it is in database for whoever is logged in
 }
 
 AvailabilityButton.prototype.setup = function() {
@@ -23,13 +24,18 @@ AvailabilityButton.prototype.setup = function() {
 
 AvailabilityButton.prototype.update = function() {
 	var currentCell = this.element;
-	currentCell.innerHTML = this.stateList[this.state].label;
+	currentCell.innerHTML = this.stateList[this.state].label
+			+ this.getInputTag();
 	currentCell.style.backgroundColor = this.stateList[this.state].color;	
 	this.state = (this.state + 1) % this.stateList.length;
 }
 
 AvailabilityButton.prototype.stateList = [
 	{label : "Available", color : "#57b712"},
-	{label : "Unavailable", color : "#e24e34"},
-	{label : "Prefer Against", color : "#f6ff00"}	
+	{label : "Dislike", color : "#f6ff00"},
+	{label : "Unavailable", color : "#e24e34"}
 ];
+
+AvailabilityButton.prototype.getInputTag = function() {
+	return "<input type=\"hidden\" name=\"t" + this.blockID + "\" value=\"" + this.state + "\">";
+}
