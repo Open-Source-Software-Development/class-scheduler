@@ -62,14 +62,14 @@ class Block(models.Model):
             end_time: TimeField (input in HH:MM)
                 - The end time of the block (ex: 9:30)
     """
-    name = models.CharField(max_length=10, null=True)
+    
     block_id = models.CharField(max_length=10, null=True, blank=True, unique=True)
     day = models.CharField(max_length=15)
     start_time = models.TimeField(auto_now=False, auto_now_add=False)
     end_time = models.TimeField(auto_now=False, auto_now_add=False)
 
     def __str__(self):
-        return self.name
+        return self.block_id
 
 #class ThreeHour(Named):
 #    """
