@@ -117,6 +117,84 @@
     }
   </style>
 
+  <style>
+
+    .tabs {
+      position: relative;
+      margin: 3rem 0;
+    }
+
+    .tabs::before,
+    .tabs::after {
+      content: "";
+      display: table;
+    }
+
+    .tabs::after {
+      clear: both;
+    }
+
+    .tab {
+      float: left;
+    }
+
+    .tab-switch {
+      display: none;
+    }
+
+    .tab-label {
+      position: relative;
+      display: block;
+      line-height: 2.75em;
+      height: 3em;
+      padding: 0 1.618em;
+      background: #444;
+      color: #fff;
+      cursor: pointer;
+      top: 0;
+      transition: all 0.25s;
+    }
+
+    .tab-label:hover {
+      top: -0.25rem;
+      transition: all 0.25s;
+    }
+
+    .tab-content {
+      padding: 1.618rem;
+      background: #fff;
+      color: #2c3e50;
+      border-bottom: 0.25rem solid #bdc3c7;
+      position: absolute;
+      z-index: 1;
+      top: 2.75em;
+      left: 0;
+      opacity: 0;
+      transition: all 0.35s;
+      width: 100%;
+      align-content: left;
+    }
+
+    .tab-switch:checked+.tab-label {
+      background: #fff;
+      color: #2c3e50;
+      border-bottom: 0;
+      border-right: 0.0625rem solid #fff;
+      transition: all 0.35s;
+      z-index: 2;
+      top: -0.0625rem;
+    }
+
+    .tab-switch:checked+.tab-label:hover {
+      top: -0.0625rem;
+    }
+
+    .tab-switch:checked+.tab-label+.tab-content {
+      opacity: 1;
+      transition: all 0.35s;
+      z-index: 3;
+    }
+  </style>
   <link href="http://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
 </head>
 

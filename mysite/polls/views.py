@@ -151,3 +151,46 @@ def loginUser(request):
 				return render(request, 'Login.html', content)
 		else:
 			return render(request, 'Login.html')
+
+## TODO: Documentation
+def upload_csv_time_block(request):
+	data = {}
+	if "GET" == request.method:
+		return render(request, "import_data.html", data)
+    # if not GET, then proceed
+	try:
+		csv_file = request.FILES["csv_file"]
+		if not csv_file.name.endswith('.csv'):
+			messages.error(request,'File is not CSV type')
+			return HttpResponseRedirect(reverse("upload"))
+
+		file_data = csv_file.read().decode("utf-8")
+
+		lines = file_data.split("\n")
+		#loop over the lines and save them in db. If error , store as string and then display
+		for line in lines:
+			fields = line.split(",")
+			data_dict = {}
+			ids = fields[0]
+			block = fields[1]
+			day = fields[2]
+			block_id = fields[3]
+			try:
+				block, created = Block.objects.get_or_create(
+					ids = id,
+					block = block,
+					day = day,
+					block_id = block_id,
+				)
+				if created:
+					block.save()
+				else:
+					logging.getLogger("error_logger").error(form.errors.as_json())
+			except Exception as e:
+				logging.getLogger("error_logger").error(repr(e))
+				pass
+
+	except Exception as e:
+		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+
+	return HttpResponseRedirect(reverse("upload"))

@@ -33,9 +33,7 @@ class Division(Named):
             division: CharField (Max Length: 20)
                 - This should be all of the division identifiers (ex: ITS)
     """
-    division = models.CharField(max_length=20)
-    def __str__(self):
-        return self.division
+    pass
 
 
 class RoomType(Named):
@@ -100,8 +98,7 @@ class Course(Named):
                 - The style of the course (ex: studio)
 
     """
-    #division = models.ForeignKey(Division, on_delete=models.CASCADE)
-    division = models.CharField(max_length=10)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE)
     program = models.CharField(max_length=10)
     style = models.CharField(max_length=20, null=True, blank=True)
     title = models.CharField(max_length=30, null=True, blank=True)
