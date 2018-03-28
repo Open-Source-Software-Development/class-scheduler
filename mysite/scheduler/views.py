@@ -10,6 +10,16 @@ from .models import *
 from .csv_parser import parse
 
 def upload_csv(request):
+    """Parses models from a CSV and saves them.
+
+    Args:
+        request: a request with the CSV file attached.
+
+    Returns:
+        an HTTP redirect response sending the user back to the upload
+        page.
+    """
+    # TODO: show the user meaningful feedback on success/failure
     data = {}
     if "GET" == request.method:
         return render(request, "import_data.html", data)
@@ -17,7 +27,7 @@ def upload_csv(request):
     if not csv_file.name.endswith('.csv'):
         raise ParseError("File should have .csv extension")
     csv_type = request.POST['css-tabs']
-    models = parse(csv_file, csv_type)
-    for model in models:
+    result = parse(csv_file, csv_type)
+    for model in result:
         model.save()
     return HttpResponseRedirect(reverse("upload"))

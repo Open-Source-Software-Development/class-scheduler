@@ -3,6 +3,7 @@ from .models import *
 
 
 def parse(csv_file, filetype):
+    """Gets an appropriate CSV parser and has it parse this file."""
     parser = Parser.for_name(filetype)
     reader = csv.reader([line.decode("utf-8") for line in csv_file])
     for row in reader:
@@ -11,6 +12,13 @@ def parse(csv_file, filetype):
     return parser.get_models()
 
 def get_named(model, name):
+    """Gets a model with a given name field. Raises a ParseError if no
+    such model can be found.
+
+    Args:
+        model: the model class to search for an instance of.
+        name: the desired name.
+    """
     try:
         return model.objects.get(name = name)
     except model.DoesNotExist:
@@ -18,18 +26,19 @@ def get_named(model, name):
 
 
 class ParseError(Exception):
-
     def __init__(self, message):
         super(ParseError, self).__init__(message)
 
 
 class Parser:
 
+    # All the parsers that have been registered.
     parsers = {}
 
     @classmethod
     def register(cls, modelcls, name, *args):
-        """Automatically registers this parser."""
+        """Automatically registers this parser. Decorate Parser
+        subclasses with this so parse() can find them."""
         def callback(parsecls):
             def callback2():
                 return parsecls(modelcls, args)
@@ -48,6 +57,8 @@ class Parser:
         self.models = []
 
     def parse(self, row):
+        """Parse a row into a model. That model will be included when
+        get_models() is called."""
         model_arguments = {}
         for i in range(len(self.fields)):
             v = self.convert(i, row[i])
@@ -58,11 +69,11 @@ class Parser:
         self.models.append(model)
 
     def get_models(self):
-        return models
+        """Return all the models this parser has parsed."""
+        return self.models
 
 @Parser.register(Professor, "professors", "division", "first", "last")
 class ProfessorParser(Parser):
-
     def convert(self, index, value):
         if index == 0:
             return get_named(Division, value)
@@ -71,7 +82,6 @@ class ProfessorParser(Parser):
 
 @Parser.register(Room, "rooms", "building", "room_number", "room_capacity", "room_type", "division", "subject", "course_number")
 class RoomParser(Parser):
-
     def convert(self, index, value):
         if index == 3: #room type
             return get_named(RoomType, value)
@@ -81,7 +91,6 @@ class RoomParser(Parser):
 
 @Parser.register(Course, "courses", "division", "program", "style", "title", "ins_method", "section_capacity")
 class Courses(Parser):
-
     def convert(self, index, value):
         if index == 0:
             return get_named(Division, value)
@@ -89,12 +98,10 @@ class Courses(Parser):
 
 @Parser.register(Division, "divisions", "name")
 class DivisionParser(Parser):
-
     def convert(self, index, value):
         return value
 
 @Parser.register(Block, "blocks", "block_id", "day", "start_time", "end_time")
 class BlockParser(Parser):
-
     def convert(self, index, value):
         return value
