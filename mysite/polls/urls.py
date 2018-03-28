@@ -6,6 +6,7 @@ import polls.views
 from django.contrib import admin
 import faculty_data.views
 import room_data.views
+import scheduler.views
 
 ## TODO: Documentation
 #
@@ -18,12 +19,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^run/', polls.views.run, name='run'),
 	url(r'^history/', polls.views.history, name='history'),
-	url(r'^view_history/', polls.views.view_history, name='view_history'),
-	url(r'^PDProfSettings/', polls.views.PDProfSettings, name='PDProfSettings'),
+	url(r'^PD_professor_settings/', polls.views.PD_professor_settings, name='PD_professor_settings'),
 	url(r'^course_review/', polls.views.course_review, name='course_review'),
-	url(r'^upload/', polls.views.simple_upload, name='upload'),
+	#url(r'^upload/', scheduler.views.upload_csv_time_block, name='upload'),
+    #url(r'^upload/', scheduler.views.upload_csv_division, name='upload'),
+    url(r'^upload/', scheduler.views.upload_csv_course, name='upload'),
 	url(r'^userSettings/', polls.views.userSettings, name='userSettings'),
-    url(r'^course_selection/', polls.views.course_selection, name='course_selection'),
     url(r'^logout/', polls.views.logout_view, name='logout'),
 	url(r'^course_selection/', polls.views.course_selection, name='course_selection'),
 ]

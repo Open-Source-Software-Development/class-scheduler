@@ -10,7 +10,6 @@
   <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
   <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
   <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
 
   <style>
     .dual-list .list-group {
@@ -58,9 +57,7 @@
   <div id="wrapper">
     {% include 'blank.html' %}
 
-    <div id="page-wrapper">
-      <div></div>
-      <br/>
+    <div class="spacing wrapper" id="page-wrapper">
       <div class="dual-list list-left col-md-5">
         <div class="well text-left">
           <div class="row">
@@ -86,6 +83,11 @@
             <li class="list-group-item">Python Programming</li>
             <li class="list-group-item">Web Development</li>
             <li class="list-group-item">System Sofware</li>
+			<li class="list-group-item">The Global Condition</li>
+            <li class="list-group-item">Intro 3D Modeling & Texturing</li>
+            <li class="list-group-item">Graphic Design/Objects & Spaces</li>
+            <li class="list-group-item">Game Technology II</li>
+            <li class="list-group-item">Web Design II</li>
           </ul>
         </div>
       </div>
@@ -118,11 +120,6 @@
             </div>
           </div>
           <ul class="list-group">
-            <li class="list-group-item">The Global Condition</li>
-            <li class="list-group-item">Intro 3D Modeling & Texturing</li>
-            <li class="list-group-item">Graphic Design/Objects & Spaces</li>
-            <li class="list-group-item">Game Technology II</li>
-            <li class="list-group-item">Web Design II</li>
           </ul>
         </div>
         <button type="button" class="btn btn-outline-primary">Submit</button>

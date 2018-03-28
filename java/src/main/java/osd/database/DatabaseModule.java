@@ -2,6 +2,8 @@ package osd.database;
 
 import dagger.Module;
 import dagger.Provides;
+import osd.considerations.UserConstraint;
+import osd.considerations.UserPreference;
 
 import java.util.Collection;
 
@@ -9,7 +11,9 @@ import java.util.Collection;
 public class DatabaseModule {
 
     public DatabaseModule(/* Add arguments here, if needed. */) {
-        // ...
+        // You might want to use FlagModule as an argument.
+        // It gives you an API for finding the database hostname,
+        // username, etc...
     }
 
     @Provides
@@ -37,14 +41,16 @@ public class DatabaseModule {
     }
 
     @Provides
-    Collection<UserConstraintRecord> providesUserConstraintRecords() {
+    Collection<UserConstraint> providesUserConstraintRecords() {
         // TODO: implement this
+        // See UserConstraintRecord
         throw new UnsupportedOperationException();
     }
 
     @Provides
-    Collection<UserPreferenceRecord> providesUserPreferenceRecords() {
+    Collection<UserPreference> providesUserPreferenceRecords() {
         // TODO: implement this
+        // See UserConstraintRecord
         throw new UnsupportedOperationException();
     }
 

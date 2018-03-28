@@ -1,38 +1,77 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
+import logging
+from scheduler.dataAPI import *
+from django.urls import reverse
+from .models import Block
+
+
+def blank(request):
+	return render(request, 'blank.html')
+
+def index(request):
+	return render(request, 'index.html')
+
+## TODO: Documentation
+#
+def professor_settings(request):
+    if request.method == 'POST':
+
+        schedule_info = (request.POST.copy()).dict()
+        del schedule_info['csrfmiddlewaretoken']
+
+        first = request.user.first_name
+        last = request.user.last_name
+
+        D = DataAPI()
+
+        for key, value in schedule_info.items():
+            if value == '1':
+                D.insert_professor_avalible(first, key, value)
+            if value == '2':
+                D.insert_professor_avalible(first, key, value)
+
+        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info})
+    else:
+        return render(request, 'profSettings.html')
+
+def PD_professor_settings(request):
+	professor_names = [li['first_name'] + ' ' + li['last_name'] for li in list(User.objects.filter(groups__name='Professor').values('first_name', 'last_name'))]
+
+	if request.GET.get('prof'):
+		selected = request.GET.get('prof')
+	else:
+		selected = 'None Selected'
+
+	if request.method == 'POST':
+		if selected == 'None Selected':
+			return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected, 'error': 'Please Select a Professor'})
+		else:
+			schedule_info = request.POST.copy()
+			schedule_info['first'] = selected.split()[0]
+			schedule_info['last'] = selected.split()[1]
+
+			return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected, 'message': 'Settings Applied', 'data': schedule_info})
+	else:
+		return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected})
+
+def course_selection(request):
+	return render(request, 'PDcoursesSelector.html')
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
 
-def course_selection(request):
-	return render(request, 'PDcoursesSelector.html')
-
 def simple_upload(request):
 	return render(request, 'import_data.html')
-
-def course_review(request):
-	return render(request, 'course_review.html')
-
-def course_selection(request):
-	return render(request, 'PDcoursesSelector.html')
-
-def PDProfSettings(request):
-	return render(request, 'PDProfSettings.html')
 
 def run(request):
 	return render(request, 'run.html')
 
 def history(request):
 	return render(request, 'history.html')
-
-def view_history(request):
-	return render(request, 'view_history.html')
-	
-def file_upload(request):
-	return render(request, 'file_upload.html')
 
 
 ## TODO: Documentation
@@ -70,21 +109,6 @@ def userSettings(request):
 
 	else:
 		return render(request, 'userSettings.html')
-
-## TODO: Documentation
-#
-def professor_settings(request):
-	return render(request, 'profSettings.html')
-
-## TODO: Documentation
-#
-def index(request):
-	return render(request, 'index.html')
-
-## TODO: Documentation
-#
-def blank(request):
-	return render(request, 'blank.html')
 
 ## TODO: Documentation
 #

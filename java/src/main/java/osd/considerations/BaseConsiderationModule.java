@@ -3,7 +3,6 @@ package osd.considerations;
 import dagger.Module;
 import dagger.Provides;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import osd.database.*;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -21,12 +20,12 @@ public class BaseConsiderationModule {
     }
 
     @Provides
-    Collection<BaseConstraint> providesBaseConstraints() {
+    Collection<BaseConstraint> providesRawBaseConstraints() {
         return scan(BaseConstraint.class);
     }
 
     @Provides
-    Collection<BasePreference> providesBasePreferences() {
+    Collection<BasePreference> providesRawBasePreferences() {
         return scan(BasePreference.class);
     }
 
