@@ -65,7 +65,7 @@ class ConsiderationsTest {
 
     @Test
     void getBaseConstraintPredicate() {
-        final Predicate<Hunk> predicate = instance.getBaseConstraintPredicate(mockLookups);
+        final Predicate<Hunk> predicate = instance.getBaseConstraints(mockLookups);
         final boolean result1 = predicate.test(mockHunk);
         assertTrue(result1);
         verify(mockBaseConstraints).test(mockLookups, mockHunk);

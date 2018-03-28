@@ -87,7 +87,7 @@ class SchedulerCandidateTest {
         );
 
         // No base constraints.
-        when(mockConsiderations.getBaseConstraintPredicate(any())).thenReturn(hunk -> true);
+        when(mockConsiderations.getBaseConstraints(any())).thenReturn(hunk -> true);
 
         when(mockCourse1.getBlockingStrategy()).thenReturn(Stream::of);
         when(mockCourse2.getBlockingStrategy()).thenReturn(Stream::of);
