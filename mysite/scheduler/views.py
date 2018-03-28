@@ -8,7 +8,7 @@ from scheduler.dataAPI import *
 from django.urls import reverse
 from .models import *
 
-## TODO: Time Block
+## TODO: Time Block Data
 def upload_csv_time_block(request):
 	data = {}
 	if "GET" == request.method:
@@ -19,14 +19,11 @@ def upload_csv_time_block(request):
 		if not csv_file.name.endswith('.csv'):
 			messages.error(request,'File is not CSV type')
 			return HttpResponseRedirect(reverse("upload"))
-
 		file_data = csv_file.read().decode("utf-8")
-
 		lines = file_data.split("\n")
 		#loop over the lines and save them in db. If error , store as string and then display
 		for line in lines:
 			fields = line.split(",")
-			data_dict = {}
 			block_id = fields[0]
 			day = fields[1]
 			start_time = fields[2]
@@ -45,10 +42,8 @@ def upload_csv_time_block(request):
 			except Exception as e:
 				#logging.getLogger("error_logger").error(repr(e))
 				pass
-
 	except Exception as e:
 		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-
 	return HttpResponseRedirect(reverse("upload"))
 
 ## TODO: Course Data
@@ -83,14 +78,11 @@ def upload_csv_course(request):
 		if not csv_file.name.endswith('.csv'):
 			messages.error(request,'File is not CSV type')
 			return HttpResponseRedirect(reverse("upload"))
-
 		file_data = csv_file.read().decode("utf-8")
-
 		lines = file_data.split("\n")
 		#loop over the lines and save them in db. If error , store as string and then display
 		for line in lines:
 			fields = line.split(",")
-			data_dict = {}
 			division = fields[0]
 			program = fields[1]
 			style = fields[2]
@@ -113,10 +105,8 @@ def upload_csv_course(request):
 			except Exception as e:
 				#logging.getLogger("error_logger").error(repr(e))
 				pass
-
 	except Exception as e:
 		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-
 	return HttpResponseRedirect(reverse("upload"))
 
 ## TODO: Professor Data
@@ -251,14 +241,11 @@ def upload_csv_division(request):
 		if not csv_file.name.endswith('.csv'):
 			messages.error(request,'File is not CSV type')
 			return HttpResponseRedirect(reverse("upload"))
-
 		file_data = csv_file.read().decode("utf-8")
-
 		lines = file_data.split("\n")
 		#loop over the lines and save them in db. If error , store as string and then display
 		for line in lines:
 			fields = line.split("\n")
-			data_dict = {}
 			division = fields[0]
 			try:
 				divis, created = Division.objects.get_or_create(
@@ -271,8 +258,6 @@ def upload_csv_division(request):
 			except Exception as e:
 				#logging.getLogger("error_logger").error(repr(e))
 				pass
-
 	except Exception as e:
 		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-
 	return HttpResponseRedirect(reverse("upload"))
