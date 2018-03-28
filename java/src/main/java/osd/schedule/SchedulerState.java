@@ -80,6 +80,7 @@ class SchedulerState implements Lookups {
      */
     Stream<SchedulerState> childStatesForSection(final Section forSection) {
         return candidates(forSection)
+                .sorted(considerations.getPreferenceComparator(this))
                 .map(hunk -> new SchedulerState(this, hunk));
     }
 
@@ -92,7 +93,7 @@ class SchedulerState implements Lookups {
      * @return how many candidates there are for that section
      */
     long countCandidates(final Section forSection) {
-        return candidates0(forSection).count();
+        return candidates(forSection).count();
     }
 
     /**
@@ -115,21 +116,16 @@ class SchedulerState implements Lookups {
                 .flatMap(Set::stream);
     }
 
-    private Stream<Hunk> candidates(final Section forSection) {
-        return candidates0(forSection)
-                .distinct()
-                .sorted(considerations.getPreferenceComparator(this));
-    }
-
-    private Stream<Hunk> candidates0(final Section section) {
+    private Stream<Hunk> candidates(final Section section) {
         final Course course = section.getCourse();
         return getProfessors(course).flatMap(professor ->
                 getRooms(course).flatMap(room ->
                         getBlocks(professor, room).map(block ->
                                 getHunk(section, professor, room, block))))
                 .filter(Hunk::validateBlocks)
+                .distinct()
                 .filter(considerations.getUserConstraints())
-                .filter(considerations.getBaseConstraintPredicate(this));
+                .filter(considerations.getBaseConstraints(this));
     }
 
     private static Hunk getHunk(final Section section, final Professor professor,

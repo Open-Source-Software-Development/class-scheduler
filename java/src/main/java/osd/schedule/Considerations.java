@@ -52,7 +52,7 @@ class Considerations {
      * @param lookups a {@link Lookups} instance representing the schedule so far
      * @return a predicate representing the base constraints for this schedule
      */
-    Predicate<Hunk> getBaseConstraintPredicate(final Lookups lookups) {
+    Predicate<Hunk> getBaseConstraints(final Lookups lookups) {
         return hunk -> baseConstraints.test(lookups, hunk);
     }
 
