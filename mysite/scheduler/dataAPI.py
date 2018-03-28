@@ -32,6 +32,13 @@ class DataAPI() :
             get blocks that occor on day.
         """
         return Block.objects.filter(day=day).values("block_id", "day", "start_time")
+    def get_unique_times(self, day):
+        """
+            get blocks that occor on day.
+        """
+        
+        return Block.objects.filter().values("start_time", "end_time").distinct()
+    
     
     def make_dict_for_block_display(self):
         """
@@ -52,8 +59,9 @@ class DataAPI() :
                 timedict[str(item["start_time"])[0:5]] =item["block_id"]
             masterdict [item["day"]] = timedict
         return masterdict 
-            
-    def insert_professor_avalible(self, prof_name, timeblock, value):
+    
+    
+    def insert_professor_avalible(self, prof_first, prof_last, timeblock, value):
         """
             Insert professor constriants into the proper location. 
         """
@@ -63,4 +71,11 @@ class DataAPI() :
         
         nc = ProfessorConstraint(professor=prof, block=block)
         nc.save()
+        
+    def get_professor_avalible(self, prof_first prof_last):
+        """
+            Insert professor constriants into the proper location. 
+        """
+        ProfessorConstraint.objects.filter(first = prof_first, prof_last)
+        
         
