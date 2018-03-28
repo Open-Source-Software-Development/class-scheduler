@@ -129,6 +129,9 @@ class Professor(Named):
     first = models.CharField(max_length=20, null=True, blank=True)
     last = models.CharField(max_length=20, null=True, blank=True)
 
+    def __str__(self):
+        return self.first + " " + self.last
+
 class PregenSection(models.Model):
     """
         TODO: Finish Table

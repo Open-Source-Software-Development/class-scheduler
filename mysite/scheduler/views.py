@@ -141,7 +141,6 @@ def upload_csv_professor(request):
         #loop over the lines and save them in db. If error , store as string and then display
         for line in lines:
             fields = line.split(",")
-                        print("division name is {}".format(fields[0]))
             division = Division.objects.get(division=fields[0])
             first = fields[1]
             last = fields[2]
