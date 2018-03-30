@@ -64,13 +64,13 @@ def professor_settings(request):
         schedule_info = (request.POST.copy()).dict()
         del schedule_info['csrfmiddlewaretoken']
 
+        D.clear_professor(first, last)
         for key, value in schedule_info.items():
-            if value == '1':
-                D.insert_professor_avalible(first, last, key, value)
-            if value == '2':
+            constraints[key] = value
+            if value != '0':
                 D.insert_professor_avalible(first, last, key, value)
 
-        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info, 'block_ids': block_ids, 'block_times': block_times, 'data': constraints})
+        return render(request, 'profSettings.html', {'block_ids': block_ids, 'block_times': block_times, 'data': constraints, 'message': 'Settings Applied'})
     else:
         return render(request, 'profSettings.html', {'data': constraints, 'block_ids': block_ids, 'block_times': block_times})
 

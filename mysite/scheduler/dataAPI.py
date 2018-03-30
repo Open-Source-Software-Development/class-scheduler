@@ -60,17 +60,21 @@ class DataAPI() :
             masterdict [item["day"]] = timedict
         return masterdict 
     
+    def clear_professor(self, prof_first, prof_last):
+        prof = Professor.objects.get(first = prof_first, last = prof_last)
+        ProfessorConstraint.objects.filter(professor=prof).delete()
     
     def insert_professor_avalible(self, prof_first, prof_last, timeblock, value):
         """
             Insert professor constriants into the proper location. 
         """
-        
         prof = Professor.objects.get(first = prof_first, last = prof_last)
-        block = Block.objects.get(block_id = timeblock)
-        
-        nc = ProfessorConstraint(professor=prof, block=block, value=value)
-        nc.save()
+        try:
+            block = Block.objects.get(block_id = timeblock)
+            nc = ProfessorConstraint(professor=prof, block=block, value=value)
+            nc.save()
+        except Block.DoesNotExist:
+            pass
         
     def get_professor_avalible(self, prof_first, prof_last):
         """
