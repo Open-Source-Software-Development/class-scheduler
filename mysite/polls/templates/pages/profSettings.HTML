@@ -93,9 +93,12 @@
                                                 {% for j in block_ids %}
                                                     {% for k in block_ids|get_item:j %}
                                                         {% if k == i %}
-                                                        <!-- TITLE SHOULD EQUAL WHAT BLOCK VALUE IS -->
-                                                        <th width="120px" title=0 class="ClickableTimeBlock" id="{{ block_ids|get_item:j|get_item:k }}">{{ block_ids|get_item:j|get_item:k }}</th>
-                                                        {% endif %}
+                                                            {% with id=block_ids|get_item:j|get_item:k %}
+                                                                {% with state=data|get_item:id %}
+                                                                    <th width="120px" data-block-state="{{ data|get_item:id }}" class="ClickableTimeBlock" id="{{ id }}">{{ id }}</th>
+                                                                {% endwith %}
+                                                            {% endwith %}
+                                                       {% endif %}
                                                     {% endfor %}
                                                 {% endfor %}
                                             </tr>

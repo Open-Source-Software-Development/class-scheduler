@@ -4,14 +4,15 @@ function setup() {
 		if (!blocks.hasOwnProperty(key)) {
 			continue;
 		}
-		(new AvailabilityButton(key, blocks[key])).setup();
+		(new AvailabilityButton(blocks[key])).setup();
 	}
 }
 
-function AvailabilityButton(blockID, element) {
+function AvailabilityButton(element) {
 	this.blockID = element.id;
 	this.element = element;
-	this.state = element.title; // set block as whatever it is in database for whoever is logged in
+    var state = element.dataset.blockState;
+	this.state = state === "None" ? 0 : state;
 }
 
 AvailabilityButton.prototype.setup = function() {

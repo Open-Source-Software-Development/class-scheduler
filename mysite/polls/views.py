@@ -9,6 +9,7 @@ from .models import Block
 from scheduler.models import Course
 from scheduler.models import Professor
 from scheduler.models import Block
+from scheduler.models import ProfessorConstraint
 from polls.templatetags.poll_extras import register
 
 def blank(request):
@@ -27,11 +28,7 @@ def professor_settings(request):
     last = request.user.last_name
     
     #Get list of current professors constraints
-    restraints = list(D.get_professor_avalible(first, last))
-    constraints = {}
-    for i in restraints:
-        constraints[i['block']] = i['value']
-        #BLOCK IDS NOT CORRECT
+    constraints = D.get_professor_avalible(first, last)
 
     #Get all time block data from database
     block_data = list(Block.objects.filter().values('start_time', 'end_time', 'day', 'block_id'))
@@ -44,7 +41,7 @@ def professor_settings(request):
             block_times.append(str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3])	
 		
     #Create a dictionary of dictionaries, holding time blocks for each day of the week
-    block_ids = {'Monday': {}, 'Tuesday': {}, 'Wednesday': {}, 'Thursday': {}, 'Friday': {}}
+    block_ids = {'MONDAY': {}, 'TUESDAY': {}, 'WEDNESDAY': {}, 'THURSDAY': {}, 'FRIDAY': {}}
     for day in block_ids:
         for time in block_times:
             block_ids[day][time] = 'N/A'
@@ -64,7 +61,6 @@ def professor_settings(request):
                         block_ids[day][time] = data['block_id']
 	
     if request.method == 'POST':
-
         schedule_info = (request.POST.copy()).dict()
         del schedule_info['csrfmiddlewaretoken']
 
@@ -74,7 +70,7 @@ def professor_settings(request):
             if value == '2':
                 D.insert_professor_avalible(first, last, key, value)
 
-        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info, 'block_ids': block_ids, 'block_times': block_times})
+        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info, 'block_ids': block_ids, 'block_times': block_times, 'data': constraints})
     else:
         return render(request, 'profSettings.html', {'data': constraints, 'block_ids': block_ids, 'block_times': block_times})
 

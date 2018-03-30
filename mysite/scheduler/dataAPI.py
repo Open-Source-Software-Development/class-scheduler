@@ -67,7 +67,7 @@ class DataAPI() :
         """
         
         prof = Professor.objects.get(first = prof_first, last = prof_last)
-        block = Block.objects.get(name = timeblock)
+        block = Block.objects.get(block_id = timeblock)
         
         nc = ProfessorConstraint(professor=prof, block=block, value=value)
         nc.save()
@@ -77,6 +77,6 @@ class DataAPI() :
             Insert professor constriants into the proper location. 
         """
         prof = Professor.objects.get(first = prof_first, last = prof_last)
-        return ProfessorConstraint.objects.filter(professor = prof).values("block", "value").distinct()
-        
+        constraints = ProfessorConstraint.objects.filter(professor = prof).select_related("block").distinct()
+        return {constraint.block.block_id: constraint.value for constraint in constraints}
         
