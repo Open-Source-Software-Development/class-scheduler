@@ -27,29 +27,27 @@ def professor_settings(request):
     first = request.user.first_name
     last = request.user.last_name
     professor = Professor.objects.get(first=first, last=last)
-
-    if request.method == 'POST':
-        return render(request, 'profSettings.html', update_professor_constraints(professor, request.POST))
-    else:
-        return render(request, 'profSettings.html', get_professor_constraints(professor))
+    return render(request, 'profSettings.html', professor_settings_helper(professor, request))
 
 def PD_professor_settings(request):
     selected = request.GET.get('prof')
     template_args = None
     if not selected:
         template_args = {'error': 'Please select a professor'}
-    elif request.method == 'POST':
-        names = selected.split()
-        professor = Professor.objects.get(first=names[0], last=names[1])
-        template_args = update_professor_constraints(professor, request.POST)
     else:
         names = selected.split()
         professor = Professor.objects.get(first=names[0], last=names[1])
-        template_args = get_professor_constraints(professor)
-
+        template_args = professor_settings_helper(professor, request)
     template_args['profs'] = Professor.objects.all()
     template_args['selected'] = selected
-    return render(request, 'PDProfSettings.html', template_args)
+    template_args['pd'] = True
+    return render(request, 'profSettings.html', template_args)
+
+def professor_settings_helper(professor, request):
+    if request.method == 'POST':
+        return update_professor_constraints(professor, request.POST)
+    else:
+        return get_professor_constraints(professor)
 
 def get_professor_constraints(professor):
     #Get list of current professors constraints
