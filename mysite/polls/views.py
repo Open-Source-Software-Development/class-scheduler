@@ -18,63 +18,42 @@ def blank(request):
 def index(request):
 	return render(request, 'index.html')
 
+DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"]
+
 ## TODO: Documentation
 #
 def professor_settings(request):
-    #Get current user's name
+    #Get the Professor instance representing the current user
     first = request.user.first_name
     last = request.user.last_name
     professor = Professor.objects.get(first=first, last=last)
-    calendar = BlockCalendar(professor)
     
     #Get list of current professors constraints
+    calendar = BlockCalendar(professor)
     constraints = calendar.get_professor_available()
 
     #Get all time block data from database
-    block_data = list(Block.objects.filter().values('start_time', 'end_time', 'day', 'block_id'))
-    #Create list to hold unique time blocks during each day
-    block_times = []
-    #Encapsulate string concatination wihtin method
-    def s_e_time(i):
-        return str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3]
-    #Get all unique time blocks classes are held on days
-    for i in block_data:
-        if s_e_time(i) not in block_times: #Pull i['start_time'])[:-3] into new method 
-            block_times.append(s_e_time(i))	
-		
-    #Create a dictionary of dictionaries, holding time blocks for each day of the week
-    block_ids = {'MONDAY': {}, 'TUESDAY': {}, 'WEDNESDAY': {}, 'THURSDAY': {}, 'FRIDAY': {}}
-    for day in block_ids:
-        for time in block_times:
-            block_ids[day][time] = 'N/A'
-    
-    #Populate each time block, for each day of the week, with the ID of each block
-    #GO THROUGH EACH DAY
-    for day in block_ids:
-        #GO THROUGH EACH TIME BLOCK
-        for time in block_times:
-            #GO THROUGH EACH BLOCK
-            for data in block_data:
-                #IF THE DAY OF BLOCK IS EQUAL TO DAY
-                if data['day'] == day:
-                    #IF THE TIME BLOCK OF BLOCK IS EQUAL TO TIME BLOCK
-                    if s_e_time(i) == time:
-                        #ADD BLOCK ID TO THAT TIME ON THAT DAY
-                        block_ids[day][time] = data['block_id']
-	
-    if request.method == 'POST':
-        schedule_info = request.POST.copy().dict()
-        del schedule_info['csrfmiddlewaretoken']
+    blocks = Block.objects.all().values('start_time', 'end_time', 'day', 'block_id')
 
-        calendar.clear_professor()
-        for key, value in schedule_info.items():
-            constraints[key] = value
-            if value != '0':
-                calendar.insert_professor_available(key, value)
+    blocks_by_time = {}
+    for block in blocks:
+        day = block['day']
+        time = block['start_time']
+        if not time in blocks_by_time:
+            blocks_by_time[time] = {}
+        blocks_by_time[time][day] = block
 
-        return render(request, 'profSettings.html', {'block_ids': block_ids, 'block_times': block_times, 'data': constraints, 'message': 'Settings Applied'})
-    else:
-        return render(request, 'profSettings.html', {'data': constraints, 'block_ids': block_ids, 'block_times': block_times})
+    if request.method != 'POST':
+        return render(request, 'profSettings.html', {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS})
+
+    schedule_info = request.POST.copy().dict()
+    del schedule_info['csrfmiddlewaretoken']
+    calendar.clear_professor()
+    for key, value in schedule_info.items():
+        constraints[key] = value
+        if value != '0':
+            calendar.insert_professor_available(key, value)
+    return render(request, 'profSettings.html', {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS, 'message': 'Settings applied'})
 
 def PD_professor_settings(request):
     professors = Professor.objects.all()
