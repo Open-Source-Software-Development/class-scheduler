@@ -34,11 +34,13 @@ def professor_settings(request):
     block_data = list(Block.objects.filter().values('start_time', 'end_time', 'day', 'block_id'))
     #Create list to hold unique time blocks during each day
     block_times = []
-	
+    #Encapsulate string concatination wihtin method
+    def s_e_time(i):
+        return str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3]
     #Get all unique time blocks classes are held on days
     for i in block_data:
-        if str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3] not in block_times:
-            block_times.append(str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3])	
+        if s_e_time(i) not in block_times: #Pull i['start_time'])[:-3] into new method 
+            block_times.append(s_e_time(i))	
 		
     #Create a dictionary of dictionaries, holding time blocks for each day of the week
     block_ids = {'MONDAY': {}, 'TUESDAY': {}, 'WEDNESDAY': {}, 'THURSDAY': {}, 'FRIDAY': {}}
@@ -56,7 +58,7 @@ def professor_settings(request):
                 #IF THE DAY OF BLOCK IS EQUAL TO DAY
                 if data['day'] == day:
                     #IF THE TIME BLOCK OF BLOCK IS EQUAL TO TIME BLOCK
-                    if str(data['start_time'])[:-3] + ' - ' + str(data['end_time'])[:-3] == time:
+                    if s_e_time(i) == time:
                         #ADD BLOCK ID TO THAT TIME ON THAT DAY
                         block_ids[day][time] = data['block_id']
 	
