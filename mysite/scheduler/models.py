@@ -2,14 +2,9 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 import six
+from datetime import time
 
 # Input
-
-#This is not in first normal form,  it probably should be, will require some refactoring but mostly copy paste edits
-#Plan: Fill out as we have it, refactor as problems arise or desire to improve performance increases.
-
-
-#Also need to be wary of duplicating data.
 
 
 class Named(models.Model):
@@ -38,6 +33,7 @@ class Division(models.Model):
     def __str__(self):
         return self.name
 
+
 class RoomType(models.Model):
     """
         Table: Room_Type
@@ -48,40 +44,74 @@ class RoomType(models.Model):
     def __str__(self):
         return self.name
 
+
 class Block(models.Model):
     """
         Table: Block
-        Primary Key: Composite (Block_id, day)
+        Primary Key: Block_id
         Columns:
-            block_id: Positive Ineger
-                - There should be two of each block id in the database with different days.
+            block_id: CharField (max length 10)
+                - Blocks should be entered in pairs, labeled <n>A and <n>B, where n is a positive int
             day: CharField (max length 15)
                 - The day of the week a block happens on
             start_time: TimeField (input in HH:MM)
                 - The start time of the block (ex: 8:00)
             end_time: TimeField (input in HH:MM)
                 - The end time of the block (ex: 9:30)
+            next: Nullable Foreign Key (Block)
+                - The next block in the same day
     """
-    name = models.CharField(max_length=10, null=True)
-    block_id = models.CharField(max_length=10, null=True, blank=True, unique=True)
+    block_id = models.CharField(max_length=10, blank=True, unique=True)
     day = models.CharField(max_length=15)
     start_time = models.TimeField(auto_now=False, auto_now_add=False)
     end_time = models.TimeField(auto_now=False, auto_now_add=False)
 
     def __str__(self):
-        return self.name
+        return self.block_id
 
-#class ThreeHour(Named):
-#    """
-#        TODO: Documentation
-#    """
-#
-#
-#    block_one = models.ForeignKey(Block, on_delete=models.CASCADE)
-#    block_two = models.ForeignKey(Block, on_delete=models.CASCADE)
-#
-#    class Meta:
-#        unique_together = (("block_one", "block_two"))
+    @classmethod
+    def calendar(cls):
+        result = {}
+        for block in cls.objects.all():
+            day = block.day
+            hour = block.start_time.hour
+            if not day in result:
+                result[day] = result
+            result[day][hour] = block
+        return result
+
+    def paired_with(self):
+        label = self.block_id[0:-1]
+        suffix = self.block_id[-1]
+        other_suffix = 'B' if suffix == 'A' else 'A'
+        return Block.objects.get(block_id = label + other_suffix)
+
+    def next_block(self):
+        m = self.end_time.minute + 15
+        h = self.end_time.hour
+        if m >= 60:
+            m -= 60
+            h += 1
+        if h >= 24:
+            h -= 24
+        next_block_start_time = time(h, m, 0)
+        try:
+            return Block.objects.get(day = self.day, start_time = next_block_start_time)
+        except Block.DoesNotExist:
+            return None
+
+    def next(self):
+        block = self.next_block()
+        if block == None:
+            raise StopIteration
+        return block
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return self.next()
+
 
 class Course(models.Model):
     """
@@ -95,7 +125,7 @@ class Course(models.Model):
             title: CharFierld (Max Length 30)
                 - The course title (ex: "intro to computer science" )
             section_capacity: Positive Integer
-                - The maximum amout of registerable students in this course
+                - The maximum number of registerable students in this course
                 - Used to generate number of sections needed
             ins_method (instructional Method): CharField (Max Lenght 20)
                 - The courses instructional method (ex STN)
@@ -103,17 +133,16 @@ class Course(models.Model):
                 - The style of the course (ex: studio)
 
     """
-
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, null=True)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     program = models.CharField(max_length=10)
-    title = models.CharField(max_length=30, null=True, blank=True)
+    style = models.CharField(max_length=20, blank=True)
+    title = models.CharField(max_length=30, blank=True)
     ins_method = models.CharField(max_length=20, null=True, blank=True)
     section_capacity = models.PositiveIntegerField()
-    style = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Professor(models.Model):
@@ -133,10 +162,10 @@ class Professor(models.Model):
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     first = models.CharField(max_length=20, null=True, blank=True)
     last = models.CharField(max_length=20, null=True, blank=True)
-    qualifications = models.ManyToManyField(Course)
-    
+
     def __str__(self):
-        return self.first + self.last
+        return self.first + " " + self.last
+
 
 class PregenSection(models.Model):
     """
@@ -171,27 +200,35 @@ class Room(models.Model):
             room_type: Foreign Key (Room Type)
     """
 
-    room_number = models.PositiveIntegerField()
     building = models.CharField(max_length=20)
+    room_number = models.PositiveIntegerField()
+    room_capacity = models.PositiveIntegerField()
+    room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     subject = models.CharField(max_length=10, null=True, blank=True)
-    style = models.CharField(max_length=10, null=True, blank=True)
-    room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
+    course_number = models.CharField(max_length=10, null=True, blank=True)
 
     def __str__(self):
         return "{}-{}".format(self.building, self.room_number)
 
-#class ConstraintType(models.Model):
-#     """
-#        TODO Documentation
-#    """
+
+class Qualification(models.Model):
+    """Semantic constraint that whitelists class/professor combinations.
+    nb. when turning this into a constraint, *make sure to use the
+    course as the first element*."""
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} can teach {}".format(self.professor, self.course)
+
+
 class ProfessorConstraint(models.Model):
     """
         TODO Documentation
     """
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
-    # block = models.ForeignKey(Block, on_delete=models.CASCADE)
 
 # Input : User preferences/constraints
 
