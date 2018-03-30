@@ -32,6 +32,20 @@ class ParseError(Exception):
 
 
 class Parser:
+    """Abstract parser base class. Conceptually, a parser accepts CSV
+    rows, converts each field as needed, and hands them off to an
+    appropritate model.
+
+    To make this process easier, there exists a decorator,
+    Parser.register, which can decorate parser implementations. The
+    decorated subclass's `__init__` method should accept two arguments:
+    a reference to a model class, and a list of field names. (The base
+    Parser constructor has this signature, so that shouldn't be
+    difficult.) Such a subclass need only override the `convert`
+    method, which is called for every field in order to perform any
+    needed conversions (such as using a string representing a division
+    name to look up an actual Division instance).
+    """
 
     # All the parsers that have been registered.
     parsers = {}
@@ -73,6 +87,29 @@ class Parser:
         """Return all the models this parser has parsed."""
         return self.models
 
+    def convert(self, index, value):
+        """Handle a CSV field, possibly converting it to a new type.
+        For example, if a model wants a foreign key into a second
+        table, this method could do a lookup into the other table using
+        some string-valued field. If no conversion is desired, return
+        the `value` argument unmodified.
+
+        If the value is invalid, raise a ParseError with a descriptive
+        message.
+
+        Args:
+            index (int): which field this is
+            value (string): the value from the CSV
+
+        Return:
+            the original value, possibly converted to another type
+
+        Throws:
+            ParseError if anything goes wrong
+        """
+        raise NotImplementedError("{} should override convert()".format(type(self)))
+
+
 @Parser.register(Professor, "professors", "division", "first", "last")
 class ProfessorParser(Parser):
     def convert(self, index, value):
@@ -90,12 +127,20 @@ class RoomParser(Parser):
             return get_named(Division, value)
         return value
 
+
+@Parser.register(RoomType, "roomtypes", "name")
+class RoomTypeParser(Parser):
+    def convert(self, index, value):
+        return value
+
+
 @Parser.register(Course, "courses", "division", "program", "style", "title", "ins_method", "section_capacity")
-class Courses(Parser):
+class CourseParser(Parser):
     def convert(self, index, value):
         if index == 0:
             return get_named(Division, value)
         return value
+
 
 @Parser.register(Division, "divisions", "name")
 class DivisionParser(Parser):
@@ -121,7 +166,6 @@ class QualificationParser(Parser):
             except Professor.DoesNotExist:
                 raise ParseError("No professor named {}".format(value))
         return value #future-proofing
-
 
 
 @Parser.register(Block, "blocks", "block_id", "day", "start_time", "end_time")
