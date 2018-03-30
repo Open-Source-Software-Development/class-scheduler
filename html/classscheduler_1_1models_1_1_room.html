@@ -111,29 +111,32 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__str__</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a660ac23615eb31108ba671bf7d9f9c42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a660ac23615eb31108ba671bf7d9f9c42"></a>
-tuple&#160;</td><td class="memItemRight" valign="bottom"><b>room_number</b> = models.PositiveIntegerField()</td></tr>
-<tr class="separator:a660ac23615eb31108ba671bf7d9f9c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0915771c9f821e436bddbd1ea6fca6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0915771c9f821e436bddbd1ea6fca6c"></a>
 tuple&#160;</td><td class="memItemRight" valign="bottom"><b>building</b> = models.CharField(max_length=20)</td></tr>
 <tr class="separator:ab0915771c9f821e436bddbd1ea6fca6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660ac23615eb31108ba671bf7d9f9c42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a660ac23615eb31108ba671bf7d9f9c42"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>room_number</b> = models.PositiveIntegerField()</td></tr>
+<tr class="separator:a660ac23615eb31108ba671bf7d9f9c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac30d0d9a2bd357c4b3bbdfb5cdc90d6d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac30d0d9a2bd357c4b3bbdfb5cdc90d6d"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>room_capacity</b> = models.PositiveIntegerField()</td></tr>
+<tr class="separator:ac30d0d9a2bd357c4b3bbdfb5cdc90d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac160d40e28f0ce48c1b2843b225981ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac160d40e28f0ce48c1b2843b225981ab"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>room_type</b> = models.ForeignKey(<a class="el" href="classscheduler_1_1models_1_1_room_type.html">RoomType</a>, on_delete=models.CASCADE)</td></tr>
+<tr class="separator:ac160d40e28f0ce48c1b2843b225981ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae20a236603dca32bdaaad8e39c56f7ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae20a236603dca32bdaaad8e39c56f7ea"></a>
 tuple&#160;</td><td class="memItemRight" valign="bottom"><b>division</b> = models.ForeignKey(<a class="el" href="classscheduler_1_1models_1_1_division.html">Division</a>, on_delete=models.CASCADE)</td></tr>
 <tr class="separator:ae20a236603dca32bdaaad8e39c56f7ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d22ce39edfab7df4a4ddb50a7f15b7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d22ce39edfab7df4a4ddb50a7f15b7f"></a>
 tuple&#160;</td><td class="memItemRight" valign="bottom"><b>subject</b> = models.CharField(max_length=10, null=True, blank=True)</td></tr>
 <tr class="separator:a2d22ce39edfab7df4a4ddb50a7f15b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c295adc95a6f79e9a205576a76aba10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c295adc95a6f79e9a205576a76aba10"></a>
-tuple&#160;</td><td class="memItemRight" valign="bottom"><b>style</b> = models.CharField(max_length=10, null=True, blank=True)</td></tr>
-<tr class="separator:a8c295adc95a6f79e9a205576a76aba10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac160d40e28f0ce48c1b2843b225981ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac160d40e28f0ce48c1b2843b225981ab"></a>
-tuple&#160;</td><td class="memItemRight" valign="bottom"><b>room_type</b> = models.ForeignKey(<a class="el" href="classscheduler_1_1models_1_1_room_type.html">RoomType</a>, on_delete=models.CASCADE)</td></tr>
-<tr class="separator:ac160d40e28f0ce48c1b2843b225981ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4035b309ae631b0448a6b39df4a4cf07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4035b309ae631b0448a6b39df4a4cf07"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>course_number</b> = models.CharField(max_length=10, null=True, blank=True)</td></tr>
+<tr class="separator:a4035b309ae631b0448a6b39df4a4cf07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">    Table: Room
     PrimaryKey: Composite (building, room_number)
-    Columns: 
+    Columns:
         room_number: PositiveInteger
             - The number label for a room (ex. 220)
         building: CharField(Max Lenghth: 20)

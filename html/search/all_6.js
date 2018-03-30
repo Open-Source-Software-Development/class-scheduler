@@ -2,7 +2,10 @@ var searchData=
 [
   ['get',['get',['../classosd_1_1util_1_1relation_1_1_relation_3_01_k_00_01_l_00_01_v_00_01_w_01_4.html#aacda8aa86e25b21488c4f2b4f67f88fe',1,'osd::util::relation::Relation&lt; K, L, V, W &gt;']]],
   ['get_5fblocks',['get_blocks',['../classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#ac7eaa94f2ceb68862673ba00e76ccc81',1,'scheduler::dataAPI::DataAPI']]],
-  ['get_5fmodels',['get_models',['../classscheduler_1_1csv__parser_1_1_parse_mode.html#af96a04e247153f76b58d7963b1721c4c',1,'scheduler::csv_parser::ParseMode']]],
+  ['get_5fblocks_5fby_5fday',['get_blocks_by_day',['../classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#ae8b9d1d0db86b0451d1050124bd78126',1,'scheduler::dataAPI::DataAPI']]],
+  ['get_5fmodels',['get_models',['../classscheduler_1_1csv__parser_1_1_parser.html#aa027bee616fae829ff53a1591818f2d8',1,'scheduler::csv_parser::Parser']]],
+  ['get_5fprofessor_5favalible',['get_professor_avalible',['../classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#ad9949ebee5f0abd9573e8df3ca06a435',1,'scheduler::dataAPI::DataAPI']]],
+  ['get_5funique_5ftimes',['get_unique_times',['../classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#aed2388f9a83da4274139475a7692003c',1,'scheduler::dataAPI::DataAPI']]],
   ['getblockingstrategy',['getBlockingStrategy',['../interfaceosd_1_1database_1_1_course.html#ac70d24d2ac9cf27798172b2c4f929005',1,'osd::database::Course']]],
   ['getblocks',['getBlocks',['../classosd_1_1schedule_1_1_hunk.html#a541d7662d1e75a14fa5fecbbc7110ebd',1,'osd::schedule::Hunk']]],
   ['getcoursecapacity',['getCourseCapacity',['../interfaceosd_1_1database_1_1_professor.html#a69a7f32de8575b424d2400e33fd301f7',1,'osd::database::Professor']]],
