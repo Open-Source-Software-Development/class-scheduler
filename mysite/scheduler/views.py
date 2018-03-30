@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
 import logging
-from scheduler.dataAPI import *
+from scheduler.blockcalendar import *
 from django.urls import reverse
 from .models import *
 from .csv_parser import parse

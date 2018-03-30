@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
-from scheduler.dataAPI import *
+from scheduler.blockcalendar import *
 from django.urls import reverse
 from .models import Block
 from scheduler.models import Course
@@ -21,14 +21,14 @@ def index(request):
 ## TODO: Documentation
 #
 def professor_settings(request):
-    D = DataAPI()
-    
     #Get current user's name
     first = request.user.first_name
     last = request.user.last_name
+    professor = Professor.objects.get(first=first, last=last)
+    calendar = BlockCalendar(professor)
     
     #Get list of current professors constraints
-    constraints = D.get_professor_avalible(first, last)
+    constraints = calendar.get_professor_available()
 
     #Get all time block data from database
     block_data = list(Block.objects.filter().values('start_time', 'end_time', 'day', 'block_id'))
@@ -61,21 +61,21 @@ def professor_settings(request):
                         block_ids[day][time] = data['block_id']
 	
     if request.method == 'POST':
-        schedule_info = (request.POST.copy()).dict()
+        schedule_info = request.POST.copy().dict()
         del schedule_info['csrfmiddlewaretoken']
 
-        D.clear_professor(first, last)
+        calendar.clear_professor()
         for key, value in schedule_info.items():
             constraints[key] = value
             if value != '0':
-                D.insert_professor_avalible(first, last, key, value)
+                calendar.insert_professor_available(key, value)
 
         return render(request, 'profSettings.html', {'block_ids': block_ids, 'block_times': block_times, 'data': constraints, 'message': 'Settings Applied'})
     else:
         return render(request, 'profSettings.html', {'data': constraints, 'block_ids': block_ids, 'block_times': block_times})
 
 def PD_professor_settings(request):
-    professors = Professor.objects.filter()
+    professors = Professor.objects.all()
 
     if request.GET.get('prof'):
         selected = request.GET.get('prof')
@@ -86,19 +86,16 @@ def PD_professor_settings(request):
         if selected == 'None Selected':
             return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'error': 'Please Select a Professor'})
         else:
-            schedule_info = (request.POST.copy()).dict()
+            schedule_info = request.POST.copy().dict()
             del schedule_info['csrfmiddlewaretoken']
 
-            first = selected.split()[0]
-            last = selected.split()[1]
-
-            D = DataAPI()
+            names = selected.split()
+            professor = Professor.objects.get(first=names[0], last=names[1])
+            calendar = BlockCalendar(professor)
 
             for key, value in schedule_info.items():
-                if value == '1':
-                    D.insert_professor_avalible(first, key, value)
-                if value == '2':
-                    D.insert_professor_avalible(first, key, value)
+                if value != '0':
+                    calendar.insert_professor_available(key, value)
 
         return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'message': 'Settings Applied', 'data': schedule_info})
     else:
@@ -106,7 +103,6 @@ def PD_professor_settings(request):
 
 def course_selection(request):
 	classes = Course.objects.filter()	
-
 	return render(request, 'PDcoursesSelector.html', {'classes': classes})
 
 def course_review(request):
