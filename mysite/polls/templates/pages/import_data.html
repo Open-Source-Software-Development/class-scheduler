@@ -22,7 +22,6 @@
   <style>
     form {
       margin-top: 15px;
-      padding-right: 50%;
     }
 
     #step1,
@@ -39,6 +38,82 @@
       display: block;
       margin: 0 auto;
       text-align: center;
+    }
+
+    .tabs {
+      position: relative;
+      margin: 3rem 0;
+    }
+
+    .tabs::before,
+    .tabs::after {
+      content: "";
+      display: table;
+    }
+
+    .tabs::after {
+      clear: both;
+    }
+
+    .tab {
+      float: left;
+    }
+
+    .tab-switch {
+      display: none;
+    }
+
+    .tab-label {
+      position: relative;
+      display: block;
+      line-height: 2.75em;
+      height: 3em;
+      padding: 0 1.618em;
+      background: #444;
+      color: #fff;
+      cursor: pointer;
+      top: 0;
+      transition: all 0.25s;
+    }
+
+    .tab-label:hover {
+      top: -0.25rem;
+      transition: all 0.25s;
+    }
+
+    .tab-content {
+      padding: 1.618rem;
+      background: #fff;
+      color: #2c3e50;
+      border-bottom: 0.25rem solid #bdc3c7;
+      position: absolute;
+      z-index: 1;
+      top: 2.75em;
+      left: 0;
+      opacity: 0;
+      transition: all 0.35s;
+      width: 100%;
+      align-content: left;
+    }
+
+    .tab-switch:checked+.tab-label {
+      background: #fff;
+      color: #2c3e50;
+      border-bottom: 0;
+      border-right: 0.0625rem solid #fff;
+      transition: all 0.35s;
+      z-index: 2;
+      top: -0.0625rem;
+    }
+
+    .tab-switch:checked+.tab-label:hover {
+      top: -0.0625rem;
+    }
+
+    .tab-switch:checked+.tab-label+.tab-content {
+      opacity: 1;
+      transition: all 0.35s;
+      z-index: 3;
     }
   </style>
 
@@ -130,53 +205,75 @@
 
     <div id="page-wrapper">
       <!-- Start: Import CSV-->
-        {% block content %}
-        <div class="tabs">
-          <div class="tab">
-            <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
-            <label for="tab-1" class="tab-label">Time Block</label>
-            <div class="tab-content">
-              <p> Upload Time Block data: </p>
-              <hr>
-              <form action="{% url 'upload' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
-                  <div class="col-md-8">
-                    <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
-                    <button class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="tab">
-            <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
-            <label for="tab-2" class="tab-label">Professor Data</label>
-            <div class="tab-content">
-              <p> Professor Data </p>
-            </div>
-          </div>
-          <div class="tab">
-            <input type="radio" name="css-tabs" id="tab-3" class="tab-switch">
-            <label for="tab-3" class="tab-label">Course Data</label>
-            <div class="tab-content">
-              <p>Course Data</p>
-            </div>
-          </div>
-          <div class="tab">
-            <input type="radio" name="css-tabs" id="tab-4" class="tab-switch">
-            <label for="tab-4" class="tab-label">Room Data</label>
-            <div class="tab-content">
-              <p> Room Data </p>
-            </div>
+      {% block content %}
+      <form action="{% url 'upload' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+      <div class="tabs">
+        <div class="tab">
+          <input value="blocks" type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
+          <label for="tab-1" class="tab-label">Time Block</label>
+          <div class="tab-content">
+            <p> Time Block Data </p>
+            <hr>
+              {% include 'views_tabs.html' %}
           </div>
         </div>
-        {% endblock %}
+        <div class="tab">
+          <input value="professors" type="radio" name="css-tabs" id="tab-2" class="tab-switch">
+          <label for="tab-2" class="tab-label">Professor Data</label>
+          <div class="tab-content">
+            <p> Professor Data </p>
+            <hr>
+            {% include 'views_tabs.html' %}
+          </div>
+        </div>
+        <div class="tab">
+          <input value="courses" type="radio" name="css-tabs" id="tab-3" class="tab-switch">
+          <label for="tab-3" class="tab-label">Course Data</label>
+          <div class="tab-content">
+            <p> Course Data </p>
+            <hr>
+            {% include 'views_tabs.html' %}
+          </div>
+        </div>
+        <div class="tab">
+          <input value="rooms" type="radio" name="css-tabs" id="tab-4" class="tab-switch">
+          <label for="tab-4" class="tab-label">Room Data</label>
+          <div class="tab-content">
+            <p> Room Data </p>
+            <hr>
+            {% include 'views_tabs.html' %}
+          </div>
+        </div>
+        <div class="tab">
+          <input value="divisions" type="radio" name="css-tabs" id="tab-5" class="tab-switch">
+          <label for="tab-5" class="tab-label">Division Data</label>
+          <div class="tab-content">
+            <p> Division Data </p>
+            <hr>
+            {% include 'views_tabs.html' %}
+          </div>
+        </div>
+        <div class="tab">
+          <input value="qualifications" type="radio" name="css-tabs" id="tab-6" class="tab-switch">
+          <label for="tab-6" class="tab-label">Professor qualifications</label>
+          <div class="tab-content">
+            <p> Qualification Data </p>
+            <hr>
+            {% include 'views_tabs.html' %}
+          </div>
+        </div>
+        <div class="tab">
+          <input value="roomtypes" type="radio" name="css-tabs" id="tab-7" class="tab-switch">
+          <label for="tab-7" class="tab-label">Room types</label>
+          <div class="tab-content">
+            <p> Room Type Data </p>
+            <hr>
+            {% include 'views_tabs.html' %}
+          </div>
+        </div>
+      </form>
+      </div>
+      {% endblock %}
 
     </div>
     <script src="{% static 'js/course_review_jsbox.js' %}"></script>
