@@ -27,14 +27,36 @@ def professor_settings(request):
     first = request.user.first_name
     last = request.user.last_name
     professor = Professor.objects.get(first=first, last=last)
-    
+
+    if request.method == 'POST':
+        return render(request, 'profSettings.html', update_professor_constraints(professor, request.POST))
+    else:
+        return render(request, 'profSettings.html', get_professor_constraints(professor))
+
+def PD_professor_settings(request):
+    selected = request.GET.get('prof')
+    template_args = None
+    if not selected:
+        template_args = {'error': 'Please select a professor'}
+    elif request.method == 'POST':
+        names = selected.split()
+        professor = Professor.objects.get(first=names[0], last=names[1])
+        template_args = update_professor_constraints(professor, request.POST)
+    else:
+        names = selected.split()
+        professor = Professor.objects.get(first=names[0], last=names[1])
+        template_args = get_professor_constraints(professor)
+
+    template_args['profs'] = Professor.objects.all()
+    template_args['selected'] = selected
+    return render(request, 'PDProfSettings.html', template_args)
+
+def get_professor_constraints(professor):
     #Get list of current professors constraints
     calendar = BlockCalendar(professor)
     constraints = calendar.get_professor_available()
 
-    #Get all time block data from database
     blocks = Block.objects.all().values('start_time', 'end_time', 'day', 'block_id')
-
     blocks_by_time = {}
     for block in blocks:
         day = block['day']
@@ -42,45 +64,24 @@ def professor_settings(request):
         if not time in blocks_by_time:
             blocks_by_time[time] = {}
         blocks_by_time[time][day] = block
+    return {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS}
 
-    if request.method != 'POST':
-        return render(request, 'profSettings.html', {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS})
+def update_professor_constraints(professor, post_data):
+    result = get_professor_constraints(professor)
+    constraints = result['data']
 
-    schedule_info = request.POST.copy().dict()
+    schedule_info = post_data.copy().dict()
     del schedule_info['csrfmiddlewaretoken']
+
+    calendar = BlockCalendar(professor)
     calendar.clear_professor()
     for key, value in schedule_info.items():
         constraints[key] = value
         if value != '0':
             calendar.insert_professor_available(key, value)
-    return render(request, 'profSettings.html', {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS, 'message': 'Settings applied'})
 
-def PD_professor_settings(request):
-    professors = Professor.objects.all()
-
-    if request.GET.get('prof'):
-        selected = request.GET.get('prof')
-    else:
-        selected = 'None Selected'
-		
-    if request.method == 'POST':
-        if selected == 'None Selected':
-            return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'error': 'Please Select a Professor'})
-        else:
-            schedule_info = request.POST.copy().dict()
-            del schedule_info['csrfmiddlewaretoken']
-
-            names = selected.split()
-            professor = Professor.objects.get(first=names[0], last=names[1])
-            calendar = BlockCalendar(professor)
-
-            for key, value in schedule_info.items():
-                if value != '0':
-                    calendar.insert_professor_available(key, value)
-
-        return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'message': 'Settings Applied', 'data': schedule_info})
-    else:
-        return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected})
+    result['message'] = 'Settings applied'
+    return result
 
 def course_selection(request):
 	classes = Course.objects.filter()	
