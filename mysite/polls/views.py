@@ -11,6 +11,7 @@ from scheduler.models import Professor
 from scheduler.models import Block
 from scheduler.models import ProfessorConstraint
 from polls.templatetags.poll_extras import register
+from collections import OrderedDict
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -54,9 +55,9 @@ def get_professor_constraints(professor):
     calendar = BlockCalendar(professor)
     constraints = calendar.get_professor_available()
 
-    blocks = Block.objects.all().values('start_time', 'end_time', 'day', 'block_id')
-    blocks_by_time = {}
-    for block in blocks:
+    blocks = list(Block.objects.all().values('start_time', 'end_time', 'day', 'block_id'))
+    blocks_by_time = OrderedDict()
+    for block in sorted(blocks, key=lambda b: b['start_time']):
         day = block['day']
         time = block['start_time']
         if not time in blocks_by_time:
