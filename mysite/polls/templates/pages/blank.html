@@ -51,7 +51,7 @@
 				{% if request.user|has_group:"Professor" %}
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                   <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfessor" data-parent="#exampleAccordion">
-                    <span class="nav-link-text">Professor</span>
+                    <span class="nav-link-text">Professor&ensp;<i class="fa fa-caret-down"></i></span>
                   </a>
                   <ul class="nav sidenav-second-level collapse" id="collapseProfessor">
                     <li>
@@ -63,7 +63,7 @@
 				{% if request.user|has_group:"Program director" %}
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                   <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProgramDirector" data-parent="#exampleAccordion">
-                    <span class="nav-link-text">Program Director</span>
+                    <span class="nav-link-text">Program Director&ensp;<i class="fa fa-caret-down"></i></span>
                   </a>
                   <ul class="nav sidenav-second-level collapse" id="collapseProgramDirector">
                     <li>
@@ -78,11 +78,11 @@
 				{% if request.user|has_group:"Division head" %}
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                   <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDivisionHead" data-parent="#exampleAccordion">
-                    <span class="nav-link-text">Division Head</span>
+                    <span class="nav-link-text">Division Head&ensp;<i class="fa fa-caret-down"></i></span>
                   </a>
                   <ul class="nav sidenav-second-level collapse" id="collapseDivisionHead">
                     <li>
-                        <a href="{% url 'course_review' %}">&ensp;&ensp;&ensp;<i class="fa fa-sitemap fa-fw"></i> Review Course Data</a>
+                        <a href="{% url 'course_review' %}">&ensp;&ensp;&ensp;<i class="fa fa-tasks fa-fw"></i> Review Course Data</a>
                     </li>
                   </ul>
                 </li>
@@ -90,11 +90,11 @@
 				{% if request.user|has_group:"Registrar" %}
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                   <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseRegistrar" data-parent="#exampleAccordion">
-                    <span class="nav-link-text">Registrar</span>
+                    <span class="nav-link-text">Registrar&ensp;<i class="fa fa-caret-down"></i></span>
                   </a>
                   <ul class="nav sidenav-second-level collapse" id="collapseRegistrar">
                     <li>
-                        <a href="{% url 'upload' %}">&ensp;&ensp;&ensp;<i class="fa fa-tasks fa-fw"></i> Input Files</a>
+                        <a href="{% url 'upload' %}">&ensp;&ensp;&ensp;<i class="fa fa-sitemap fa-fw"></i>Input Files</a>
                     </li>
                     <li>
                         <a href="{% url 'run' %}">&ensp;&ensp;&ensp;<i class="fa fa-bar-chart-o fa-fw"></i> Run Scheduler</a>
