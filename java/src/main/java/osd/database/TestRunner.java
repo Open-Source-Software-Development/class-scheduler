@@ -30,7 +30,8 @@ public class TestRunner {
 	    System.out.println("Start");
 	    try {
 	    	tx = session.beginTransaction();
-	        List professors = session.createQuery("FROM scheduler_professor").list(); 
+	        List professors = session.createQuery("FROM scheduler_professor SELECT *").list();
+	        System.out.println(professors);
 	        for (Iterator iterator = professors.iterator(); iterator.hasNext();){
 	        	ProfessorRecord prof = (ProfessorRecord) iterator.next(); 
 	            System.out.print("First Name: " + prof.getFirstName()); 
