@@ -2,56 +2,24 @@ package osd.database;
 
 import dagger.Module;
 import dagger.Provides;
-import osd.considerations.UserConstraint;
-import osd.considerations.UserPreference;
-
-import java.util.Collection;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 @Module
 public class DatabaseModule {
 
-    public DatabaseModule(/* Add arguments here, if needed. */) {
-        // You might want to use FlagModule as an argument.
-        // It gives you an API for finding the database hostname,
-        // username, etc...
-    }
+    private static final Class<?>[] RECORD_TYPES = {
+            BlockRecord.class, RoomRecord.class, ProfessorRecord.class,
+            CourseRecord.class, UserConstraintRecord.class, UserPreferenceRecord.class
+    };
 
     @Provides
-    Collection<BlockRecord> providesBlockRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<ProfessorRecord> providesProfessorRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<RoomRecord> providesRoomRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<CourseRecord> providesCourseRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<UserConstraint> providesUserConstraintRecords() {
-        // TODO: implement this
-        // See UserConstraintRecord
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<UserPreference> providesUserPreferenceRecords() {
-        // TODO: implement this
-        // See UserConstraintRecord
-        throw new UnsupportedOperationException();
+    static SessionFactory providesSessionFactory() {
+        final Configuration configuration = new Configuration().configure();
+        for (final Class<?> recordType: RECORD_TYPES) {
+            configuration.addAnnotatedClass(recordType);
+        }
+        return configuration.buildSessionFactory();
     }
 
 }

@@ -1,40 +1,43 @@
 package osd.database;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class Sources {
 
-    private final Collection<Section> sections;
-    private final Collection<Professor> professors;
-    private final Collection<Block> blocks;
-    private final Collection<Room> rooms;
+    private final From from;
+    private final Map<Class<?>, List<?>> CACHE = new HashMap<>();
 
     @Inject
-    Sources(final Collection<Section> sections, final Collection<Professor> professors,
-            final Collection<Block> blocks, final Collection<Room> rooms) {
-        // Defensive-copy everything.
-        this.sections = new ArrayList<>(sections);
-        this.professors = new ArrayList<>(professors);
-        this.blocks = new ArrayList<>(blocks);
-        this.rooms = new ArrayList<>(rooms);
+    Sources(final From from) {
+        this.from = from;
     }
 
     public Stream<Section> getSections() {
-        return sections.stream();
+        // TODO: replace this with a getCourses
+        return lazy(Course.class).stream()
+                .map(Course::getSections)
+                .map(Iterable::spliterator)
+                .flatMap(spliterator -> StreamSupport.stream(spliterator, false));
     }
 
     public Stream<Professor> getProfessors() {
-        return professors.stream();
+        return lazy(Professor.class).stream();
     }
 
     public Stream<Block> getBlocks() {
-        return blocks.stream();
+        return lazy(Block.class).stream();
     }
 
     public Stream<Room> getRooms() {
-        return rooms.stream();
+        return lazy(Room.class).stream();
     }
+
+    @SuppressWarnings("unchecked")
+    private <T> List<T> lazy(final Class<T> clazz) {
+        return (List<T>)CACHE.computeIfAbsent(clazz, from::from);
+    }
+
 }
