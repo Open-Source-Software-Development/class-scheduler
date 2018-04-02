@@ -13,7 +13,7 @@
       </property>
       
       <property name = "hibernate.connection.url">
-         jdbc:sqlite:localhost:8000
+         jdbc:sqlite:C:/Users/3695S/Documents/sp18-osd-main-project/mysite/db.sqlite3
       </property>
       
       <property name = "hibernate.connection.username">
@@ -21,6 +21,8 @@
       
       <property name = "hibernate.connection.password">
       </property>
+	  
+	  <mapping resource = "ProfessorRecord.hbm.xml"/>
 	  
    </session-factory>
 </hibernate-configuration>
