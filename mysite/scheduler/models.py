@@ -142,7 +142,7 @@ class Course(models.Model):
     section_capacity = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Professor(models.Model):
