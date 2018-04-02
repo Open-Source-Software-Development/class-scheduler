@@ -4,6 +4,6 @@ var searchData=
   ['immutablepair_3c_20l_2c_20r_20_3e',['ImmutablePair&lt; L, R &gt;',['../interfaceosd_1_1util_1_1_immutable_pair_3_01_l_00_01_r_01_4.html',1,'osd::util']]],
   ['import_5ffaculty_5fdata',['import_faculty_data',['../namespaceimport__faculty__data.html',1,'']]],
   ['import_5froom_5fdata',['import_room_data',['../namespaceimport__room__data.html',1,'']]],
-  ['insert_5fprofessor_5favalible',['insert_professor_avalible',['../classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#aa404a6048a1d4c88fbcca415f4d228d0',1,'scheduler::dataAPI::DataAPI']]],
+  ['insert_5fprofessor_5favailable',['insert_professor_available',['../classscheduler_1_1blockcalendar_1_1_block_calendar.html#a189da25c54e36f795da43ae56fa2d074',1,'scheduler::blockcalendar::BlockCalendar']]],
   ['isempty',['isEmpty',['../classosd_1_1util_1_1relation_1_1_relation_3_01_k_00_01_l_00_01_v_00_01_w_01_4.html#a0fb60240f1e512b1a294d121369f2889',1,'osd::util::relation::Relation&lt; K, L, V, W &gt;']]]
 ];

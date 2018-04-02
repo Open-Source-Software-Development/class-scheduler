@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Class Scheduler: scheduler.dataAPI.DataAPI Class Reference</title>
+<title>Class Scheduler: scheduler.blockcalendar.BlockCalendar Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,43 +82,81 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>scheduler</b></li><li class="navelem"><b>dataAPI</b></li><li class="navelem"><a class="el" href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html">DataAPI</a></li>  </ul>
+<li class="navelem"><b>scheduler</b></li><li class="navelem"><b>blockcalendar</b></li><li class="navelem"><a class="el" href="classscheduler_1_1blockcalendar_1_1_block_calendar.html">BlockCalendar</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i-members.html">List of all members</a>  </div>
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classscheduler_1_1blockcalendar_1_1_block_calendar-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">scheduler.dataAPI.DataAPI Class Reference</div>  </div>
+<div class="title">scheduler.blockcalendar.BlockCalendar Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac7eaa94f2ceb68862673ba00e76ccc81"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#ac7eaa94f2ceb68862673ba00e76ccc81">get_blocks</a></td></tr>
-<tr class="separator:ac7eaa94f2ceb68862673ba00e76ccc81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8b9d1d0db86b0451d1050124bd78126"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#ae8b9d1d0db86b0451d1050124bd78126">get_blocks_by_day</a></td></tr>
-<tr class="separator:ae8b9d1d0db86b0451d1050124bd78126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed2388f9a83da4274139475a7692003c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#aed2388f9a83da4274139475a7692003c">get_unique_times</a></td></tr>
-<tr class="separator:aed2388f9a83da4274139475a7692003c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedc277163aca09d247ac787d6dd62c35"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#aedc277163aca09d247ac787d6dd62c35">make_dict_for_block_display</a></td></tr>
-<tr class="separator:aedc277163aca09d247ac787d6dd62c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa404a6048a1d4c88fbcca415f4d228d0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#aa404a6048a1d4c88fbcca415f4d228d0">insert_professor_avalible</a></td></tr>
-<tr class="separator:aa404a6048a1d4c88fbcca415f4d228d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9949ebee5f0abd9573e8df3ca06a435"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1data_a_p_i_1_1_data_a_p_i.html#ad9949ebee5f0abd9573e8df3ca06a435">get_professor_avalible</a></td></tr>
-<tr class="separator:ad9949ebee5f0abd9573e8df3ca06a435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5916f1ae0a7609464bed07a36ea9bd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5916f1ae0a7609464bed07a36ea9bd7"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
+<tr class="separator:ac5916f1ae0a7609464bed07a36ea9bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaaf19723c117a36cc8d4a800d6bc75f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaaaf19723c117a36cc8d4a800d6bc75f"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_blocks</b></td></tr>
+<tr class="separator:aaaaf19723c117a36cc8d4a800d6bc75f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb7ede3e4d28688562f256c1a7baeeea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb7ede3e4d28688562f256c1a7baeeea"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_days</b></td></tr>
+<tr class="separator:aeb7ede3e4d28688562f256c1a7baeeea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ae5b4451575209a8d94617805275636"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1blockcalendar_1_1_block_calendar.html#a6ae5b4451575209a8d94617805275636">get_blocks_by_day</a></td></tr>
+<tr class="separator:a6ae5b4451575209a8d94617805275636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac60efd8c37dc72880438b342eaf5317c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1blockcalendar_1_1_block_calendar.html#ac60efd8c37dc72880438b342eaf5317c">get_unique_times</a></td></tr>
+<tr class="separator:ac60efd8c37dc72880438b342eaf5317c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f0316bcfe122d3d8879d0774363bef6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f0316bcfe122d3d8879d0774363bef6"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>clear_professor</b></td></tr>
+<tr class="separator:a7f0316bcfe122d3d8879d0774363bef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a189da25c54e36f795da43ae56fa2d074"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1blockcalendar_1_1_block_calendar.html#a189da25c54e36f795da43ae56fa2d074">insert_professor_available</a></td></tr>
+<tr class="separator:a189da25c54e36f795da43ae56fa2d074"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f7b78525ebf51679cbdd336f57b156a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscheduler_1_1blockcalendar_1_1_block_calendar.html#a7f7b78525ebf51679cbdd336f57b156a">get_professor_available</a></td></tr>
+<tr class="separator:a7f7b78525ebf51679cbdd336f57b156a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a0da849981022f87af64fee50f1e60ee6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0da849981022f87af64fee50f1e60ee6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>professor</b></td></tr>
+<tr class="separator:a0da849981022f87af64fee50f1e60ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">    Interact with the database here:
-    
-    Functionality:</pre> </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac7eaa94f2ceb68862673ba00e76ccc81"></a>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6ae5b4451575209a8d94617805275636"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def scheduler.dataAPI.DataAPI.get_blocks </td>
+          <td class="memname">def scheduler.blockcalendar.BlockCalendar.get_blocks_by_day </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>day</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Get all the blocks that occur on a given day.</pre> 
+</div>
+</div>
+<a class="anchor" id="a7f7b78525ebf51679cbdd336f57b156a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def scheduler.blockcalendar.BlockCalendar.get_professor_available </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -126,118 +164,35 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">    returns the block table
-</pre> 
-</div>
-</div>
-<a class="anchor" id="ae8b9d1d0db86b0451d1050124bd78126"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def scheduler.dataAPI.DataAPI.get_blocks_by_day </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>day</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">    get blocks that occur on day.
-</pre> 
-</div>
-</div>
-<a class="anchor" id="ad9949ebee5f0abd9573e8df3ca06a435"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def scheduler.dataAPI.DataAPI.get_professor_avalible </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>prof_first</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>prof_last</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 <pre class="fragment">    Insert professor constriants into the proper location. 
 </pre> 
 </div>
 </div>
-<a class="anchor" id="aed2388f9a83da4274139475a7692003c"></a>
+<a class="anchor" id="ac60efd8c37dc72880438b342eaf5317c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def scheduler.dataAPI.DataAPI.get_unique_times </td>
+          <td class="memname">def scheduler.blockcalendar.BlockCalendar.get_unique_times </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>self</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>day</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">    get blocks that occor on day.
-</pre> 
+<pre class="fragment">Get all the unique (start_time, end_time) pairs.</pre> 
 </div>
 </div>
-<a class="anchor" id="aa404a6048a1d4c88fbcca415f4d228d0"></a>
+<a class="anchor" id="a189da25c54e36f795da43ae56fa2d074"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def scheduler.dataAPI.DataAPI.insert_professor_avalible </td>
+          <td class="memname">def scheduler.blockcalendar.BlockCalendar.insert_professor_available </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>prof_first</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>prof_last</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -262,25 +217,8 @@ Public Member Functions</h2></td></tr>
 </pre> 
 </div>
 </div>
-<a class="anchor" id="aedc277163aca09d247ac787d6dd62c35"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def scheduler.dataAPI.DataAPI.make_dict_for_block_display </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">    for tynan in views
-</pre> 
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/dataAPI.py</li>
+<li>/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/blockcalendar.py</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
