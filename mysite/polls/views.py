@@ -3,11 +3,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
-import logging
 from scheduler.dataAPI import *
 from django.urls import reverse
 from .models import Block
-
+from scheduler.models import Course
+from scheduler.models import Professor
+from scheduler.models import Block
+from polls.templatetags.poll_extras import register
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -18,48 +20,98 @@ def index(request):
 ## TODO: Documentation
 #
 def professor_settings(request):
+    D = DataAPI()
+    
+    #Get current user's name
+    first = request.user.first_name
+    last = request.user.last_name
+    
+    #Get list of current professors constraints
+    restraints = list(D.get_professor_avalible(first, last))
+    constraints = {}
+    for i in restraints:
+        constraints[i['block']] = i['value']
+        #BLOCK IDS NOT CORRECT
+
+    #Get all time block data from database
+    block_data = list(Block.objects.filter().values('start_time', 'end_time', 'day', 'block_id'))
+    #Create list to hold unique time blocks during each day
+    block_times = []
+	
+    #Get all unique time blocks classes are held on days
+    for i in block_data:
+        if str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3] not in block_times:
+            block_times.append(str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3])	
+		
+    #Create a dictionary of dictionaries, holding time blocks for each day of the week
+    block_ids = {'Monday': {}, 'Tuesday': {}, 'Wednesday': {}, 'Thursday': {}, 'Friday': {}}
+    for day in block_ids:
+        for time in block_times:
+            block_ids[day][time] = 'N/A'
+    
+    #Populate each time block, for each day of the week, with the ID of each block
+    #GO THROUGH EACH DAY
+    for day in block_ids:
+        #GO THROUGH EACH TIME BLOCK
+        for time in block_times:
+            #GO THROUGH EACH BLOCK
+            for data in block_data:
+                #IF THE DAY OF BLOCK IS EQUAL TO DAY
+                if data['day'] == day:
+                    #IF THE TIME BLOCK OF BLOCK IS EQUAL TO TIME BLOCK
+                    if str(data['start_time'])[:-3] + ' - ' + str(data['end_time'])[:-3] == time:
+                        #ADD BLOCK ID TO THAT TIME ON THAT DAY
+                        block_ids[day][time] = data['block_id']
+	
     if request.method == 'POST':
 
         schedule_info = (request.POST.copy()).dict()
         del schedule_info['csrfmiddlewaretoken']
 
-        first = request.user.first_name
-        last = request.user.last_name
-
-        D = DataAPI()
-
         for key, value in schedule_info.items():
             if value == '1':
-                D.insert_professor_avalible(first, key, value)
+                D.insert_professor_avalible(first, last, key, value)
             if value == '2':
-                D.insert_professor_avalible(first, key, value)
+                D.insert_professor_avalible(first, last, key, value)
 
-        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info})
+        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info, 'block_ids': block_ids, 'block_times': block_times})
     else:
-        return render(request, 'profSettings.html')
+        return render(request, 'profSettings.html', {'data': constraints, 'block_ids': block_ids, 'block_times': block_times})
 
 def PD_professor_settings(request):
-	professor_names = [li['first_name'] + ' ' + li['last_name'] for li in list(User.objects.filter(groups__name='Professor').values('first_name', 'last_name'))]
+    professors = Professor.objects.filter()
 
-	if request.GET.get('prof'):
-		selected = request.GET.get('prof')
-	else:
-		selected = 'None Selected'
+    if request.GET.get('prof'):
+        selected = request.GET.get('prof')
+    else:
+        selected = 'None Selected'
+		
+    if request.method == 'POST':
+        if selected == 'None Selected':
+            return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'error': 'Please Select a Professor'})
+        else:
+            schedule_info = (request.POST.copy()).dict()
+            del schedule_info['csrfmiddlewaretoken']
 
-	if request.method == 'POST':
-		if selected == 'None Selected':
-			return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected, 'error': 'Please Select a Professor'})
-		else:
-			schedule_info = request.POST.copy()
-			schedule_info['first'] = selected.split()[0]
-			schedule_info['last'] = selected.split()[1]
+            first = selected.split()[0]
+            last = selected.split()[1]
 
-			return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected, 'message': 'Settings Applied', 'data': schedule_info})
-	else:
-		return render(request, 'PDProfSettings.html', {'profs': professor_names, 'selected': selected})
+            D = DataAPI()
+
+            for key, value in schedule_info.items():
+                if value == '1':
+                    D.insert_professor_avalible(first, key, value)
+                if value == '2':
+                    D.insert_professor_avalible(first, key, value)
+
+        return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'message': 'Settings Applied', 'data': schedule_info})
+    else:
+        return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected})
 
 def course_selection(request):
-	return render(request, 'PDcoursesSelector.html')
+	classes = Course.objects.filter()	
+
+	return render(request, 'PDcoursesSelector.html', {'classes': classes})
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')

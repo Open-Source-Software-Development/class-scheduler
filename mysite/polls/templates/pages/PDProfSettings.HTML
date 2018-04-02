@@ -60,6 +60,7 @@
 			<div class="btn-group" id="dropdownMenu">
 				<button class="btn btn-primary" data-toggle="dropdown">Professors <i class="fa fa-chevron-down"></i></button>
 				<ul class="dropdown-menu">
+					<li><a tabindex="-1" href="{% url 'PD_professor_settings' %}?prof=None Selected">None</a></li>
 					{% for i in profs %}
 					<li><a tabindex="-1" href="{% url 'PD_professor_settings' %}?prof={{ i }}">{{ i }}</a></li>
 					{% endfor %}
@@ -143,7 +144,7 @@
 												<th width="120px" class="ClickableTimeBlock" name="t25"></th>
 											</tr>
 											<tr>
-												<th width="120px" >3:30 - 4:15</th>
+												<th width="120px" >3:30 - 4:45</th>
 												<th width="120px" class="ClickableTimeBlock" name="t26"></th>
 												<th width="120px" class="ClickableTimeBlock" name="t27"></th>
 												<th width="120px" class="ClickableTimeBlock" name="t28"></th>
@@ -151,7 +152,7 @@
 												<th width="120px" class="ClickableTimeBlock" name="t30"></th>
 											</tr>
 											<tr>
-												<th width="120px" >8:00 - 9:15</th>
+												<th width="120px" >5:30 - 6:15</th>
 												<th width="120px" class="ClickableTimeBlock" name="t31"></th>
 												<th width="120px" class="ClickableTimeBlock" name="t32"></th>
 												<th width="120px" class="ClickableTimeBlock" name="t33"></th>
@@ -159,7 +160,7 @@
 												<th width="120px" class="ClickableTimeBlock" name="t35"></th>
 											</tr>
 											<tr>
-												<th width="120px" >8:00 - 9:15</th>
+												<th width="120px" >7:00 - 8:15</th>
 												<th width="120px" class="ClickableTimeBlock" name="t36"></th>
 												<th width="120px" class="ClickableTimeBlock" name="t37"></th>
 												<th width="120px" class="ClickableTimeBlock" name="t38"></th>
@@ -168,9 +169,7 @@
 											</tr>
 										</tbody>
 									</table>
-						
-									{{ data }}
-									
+
 									<!-- success message -->
 									{% if message %}
 										<span id="goodMsg" onclick='this.remove(this); return false;'>

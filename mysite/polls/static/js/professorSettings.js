@@ -9,9 +9,9 @@ function setup() {
 }
 
 function AvailabilityButton(blockID, element) {
-	this.blockID = blockID;
+	this.blockID = element.id;
 	this.element = element;
-	this.state = 0; // set block as whatever it is in database for whoever is logged in
+	this.state = element.title; // set block as whatever it is in database for whoever is logged in
 }
 
 AvailabilityButton.prototype.setup = function() {
@@ -37,5 +37,5 @@ AvailabilityButton.prototype.stateList = [
 ];
 
 AvailabilityButton.prototype.getInputTag = function() {
-	return "<input type=\"hidden\" name=\"t" + this.blockID + "\" value=\"" + this.state + "\">";
+	return "<input type=\"hidden\" name=\"" + this.blockID + "\" value=\"" + this.state + "\">";
 }

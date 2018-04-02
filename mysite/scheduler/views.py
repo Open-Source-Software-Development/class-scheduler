@@ -6,47 +6,28 @@ from django import template
 import logging
 from scheduler.dataAPI import *
 from django.urls import reverse
-from .models import Block
+from .models import *
+from .csv_parser import parse
 
-## TODO: Documentation
-def upload_csv_time_block(request):
-	data = {}
-	if "GET" == request.method:
-		return render(request, "import_data.html", data)
-    # if not GET, then proceed
-	try:
-		csv_file = request.FILES["csv_file"]
-		if not csv_file.name.endswith('.csv'):
-			messages.error(request,'File is not CSV type')
-			return HttpResponseRedirect(reverse("upload"))
+def upload_csv(request):
+    """Parses models from a CSV and saves them.
 
-		file_data = csv_file.read().decode("utf-8")
+    Args:
+        request: a request with the CSV file attached.
 
-		lines = file_data.split("\n")
-		#loop over the lines and save them in db. If error , store as string and then display
-		for line in lines:
-			fields = line.split(",")
-			data_dict = {}
-			block_id = fields[0]
-			day = fields[1]
-			start_time = fields[2]
-			end_time = fields[3]
-			try:
-				block, created = Block.objects.get_or_create(
-					block_id = block_id,
-					day = day,
-					start_time = start_time,
-					end_time = end_time,
-				)
-				if created:
-					block.save()
-				else:
-					logging.getLogger("error_logger").error(form.errors.as_json())
-			except Exception as e:
-				#logging.getLogger("error_logger").error(repr(e))
-				pass
-
-	except Exception as e:
-		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-
-	return HttpResponseRedirect(reverse("upload"))
+    Returns:
+        an HTTP redirect response sending the user back to the upload
+        page.
+    """
+    # TODO: show the user meaningful feedback on success/failure
+    data = {}
+    if "GET" == request.method:
+        return render(request, "import_data.html", data)
+    csv_file = request.FILES["csv_file"]
+    if not csv_file.name.endswith('.csv'):
+        raise ParseError("File should have .csv extension")
+    csv_type = request.POST['css-tabs']
+    result = parse(csv_file, csv_type)
+    for model in result:
+        model.save()
+    return HttpResponseRedirect(reverse("upload"))
