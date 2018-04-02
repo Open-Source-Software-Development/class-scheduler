@@ -46,7 +46,18 @@
 					
 					<!-- welcome panel bottom -->
 					<div class="panel-footer">
-						
+						<table>
+							<tr>
+								<th>Field 1</th>
+								<th>Field N</th>
+							</tr>
+							{% for item in query_results %}
+							<tr> 
+								<td>{{ item.field1 }}</td>
+								<td>{{ item.fieldN }}</td>
+							</tr>
+							{% endfor %}
+						</table>	
 					</div>	
 				</div>
 			</div>

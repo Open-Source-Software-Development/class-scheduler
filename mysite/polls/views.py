@@ -119,19 +119,22 @@ def course_review(request):
 def simple_upload(request):
 	return render(request, 'import_data.html')
 
-def run(request):
-	return render(request, 'run.html')
-	
-def results(request):
-	return render(request, 'results.html')
-
 def history(request):
 	return render(request, 'history.html')
 
 def view_history(request):
 	return render(request, 'view_history.html')
 
+def run(request):
+	return render(request, 'run.html')
 
+## TODO: Documentation
+def results(request):
+	query_results = scheduler_hunk.objects.all()
+	
+	return render(request, 'results.html', {'query_results': query_results})
+	
+	
 ## TODO: Documentation
 #
 def userSettings(request):
