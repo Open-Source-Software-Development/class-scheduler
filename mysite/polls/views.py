@@ -123,14 +123,16 @@ def history(request):
 	return render(request, 'history.html')
 
 def view_history(request):
-	return render(request, 'view_history.html')
+	query_results = Hunk.objects.all()
+	
+	return render(request, 'view_history.html', {'query_results': query_results})
 
 def run(request):
 	return render(request, 'run.html')
 
 ## TODO: Documentation
 def results(request):
-	query_results = scheduler_hunk.objects.all()
+	query_results = Hunk.objects.all()
 	
 	return render(request, 'results.html', {'query_results': query_results})
 	
