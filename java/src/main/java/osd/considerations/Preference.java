@@ -2,6 +2,8 @@ package osd.considerations;
 
 import osd.schedule.Hunk;
 
+import java.util.function.Predicate;
+
 /**
  * A guideline as to what hunks are preferable. During candidate hunk
  * generation, all preferences have a chance to "score" the hunk. The
@@ -14,20 +16,16 @@ import osd.schedule.Hunk;
  * to determine the maximum score a hunk can have.</p>
  * <p>Preferences may award negative scores.</p>
  */
-interface Preference extends Consideration {
+public interface Preference {
 
     /**
      * Awards (or deducts) points for some hunk. This should return either
      * zero or any integer not greater than the value returned by {@link #worth()}.
      * The value may be negative.
-     * <p>The default implementation calls {@link #test(Object)} and returns
-     * {@link #worth()} if the hunk passes, zero otherwise.</p>
      * @param hunk the hunk to score
      * @return this preference's score for that hunk
      */
-    default int evaluate(final Hunk hunk) {
-        return test(hunk) ? worth() : 0;
-    }
+    int evaluate(Hunk hunk);
 
     /**
      * The upper limit of the score this preference may award. However,
@@ -36,5 +34,30 @@ interface Preference extends Consideration {
      * @return the upper limit of the score this preference awards
      */
     int worth();
+
+    /**
+     * Returns a preference governed by some predicate. If the predicate's
+     * {@link Predicate#test(Object)} method returns {@code true}, the hunk's
+     * score is adjusted by the {@code worth} parameter. Otherwise, the score
+     * is left unmodified. As always, the worth may be negative.
+     * @param predicate the predicate that defines the preference
+     * @param worth how much the preference is worth
+     * @return a preference defined by the above
+     */
+    static Preference of(final Predicate<Hunk> predicate, final int worth) {
+        return new Preference() {
+
+            @Override
+            public int evaluate(Hunk hunk) {
+                return predicate.test(hunk) ? worth : 0;
+            }
+
+            @Override
+            public int worth() {
+                return worth;
+            }
+
+        };
+    }
 
 }

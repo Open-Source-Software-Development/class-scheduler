@@ -12,7 +12,7 @@ import static osd.considerations.HunkField.Extraction;
  * Interpretation of those element pairs is up to the specific implementation.
  * @see #getMatch(Hunk)
  */
-abstract class UserConsideration implements Consideration {
+class UserConsideration {
 
     private final Function<Hunk, Extraction> extractLeft, extractRight;
 

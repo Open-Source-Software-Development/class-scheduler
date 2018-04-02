@@ -10,7 +10,6 @@ import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -24,8 +23,8 @@ class PreferenceTest {
     private final Preference instance = new Preference() {
 
         @Override
-        public boolean test(final Hunk hunk) {
-            return mockPredicate.test(hunk);
+        public int evaluate(final Hunk hunk) {
+            return mockPredicate.test(hunk) ? worth : 0;
         }
 
         @Override

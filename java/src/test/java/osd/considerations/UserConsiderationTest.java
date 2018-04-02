@@ -13,18 +13,6 @@ import static org.mockito.Mockito.*;
 
 class UserConsiderationTest {
 
-    private static final class UserConsiderationTestImpl extends UserConsideration {
-
-        UserConsiderationTestImpl(Object left, Object right) {
-            super(left, right);
-        }
-
-        @Override
-        public boolean test(final Hunk hunk) {
-            return true;
-        }
-    }
-
     @Mock private Hunk mockHunk;
     @Mock private Section mockSection;
     @Mock private Section anotherMockSection;
@@ -35,7 +23,7 @@ class UserConsiderationTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new UserConsiderationTestImpl(mockSection, mockRoom);
+        instance = new UserConsideration(mockSection, mockRoom);
     }
 
     @Test
@@ -95,8 +83,7 @@ class UserConsiderationTest {
     @Test
     void extract_IllegalArgumentExceptionOnUnknownField() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserConsiderationTestImpl(null, null)
-                        .test(mockHunk));
+                new UserConsideration(null, null));
     }
 
 }
