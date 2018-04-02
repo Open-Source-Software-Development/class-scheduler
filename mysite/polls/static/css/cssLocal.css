@@ -2,10 +2,6 @@ body {
 	background-color: #fff;
 }
 
-.col-md-2 {
-  outline: 2px solid #ccc;  
-}
-
 .col-md {
   height : 8em;
   margin-left: 40px;
