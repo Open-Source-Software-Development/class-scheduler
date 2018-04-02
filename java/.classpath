@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="target/generated-sources/annotations">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="m2e-apt" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/mysql-connector-java-5.1.46-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/envers/hibernate-envers-5.2.15.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/jpa-metamodel-generator/hibernate-jpamodelgen-5.2.15.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/osgi/byte-buddy-1.6.14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/osgi/hibernate-osgi-5.2.15.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/osgi/javax.interceptor-api-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/osgi/org.osgi.compendium-4.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/osgi/org.osgi.core-4.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/classmate-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/hibernate-commons-annotations-5.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/hibernate-core-5.2.15.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/jandex-2.0.3.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/javassist-3.22.0-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/jboss-logging-3.3.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/required/jboss-transaction-api_1.2_spec-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/geolatte-geom-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/hibernate-spatial-5.2.15.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/jts-1.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/postgresql-42.1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
