@@ -53,5 +53,15 @@
 	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/jts-1.13.jar"/>
 	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/postgresql-42.1.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/spatial/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/hibernate-commons-annotations-3.2.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/hibernate-core-3.6.8.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/sqlite-dialect-0.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/3695S/Documents/sp18-osd-main-project/src/reqs/sqlite/sqlite-jdbc-3.21.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

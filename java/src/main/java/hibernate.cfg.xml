@@ -5,23 +5,21 @@
    <session-factory>
    
       <property name = "hibernate.dialect">
-         org.hibernate.dialect.MySQLDialect
+         org.hibernate.dialect.SQLiteDialect
       </property>
       
       <property name = "hibernate.connection.driver_class">
-         com.mysql.jdbc.Driver
+         org.sqlite.JDBC
       </property>
       
       <property name = "hibernate.connection.url">
-         jdbc:mysql://localhost/8000
+         jdbc:sqlite:localhost:8000
       </property>
       
       <property name = "hibernate.connection.username">
-         root
       </property>
       
       <property name = "hibernate.connection.password">
-         pass
       </property>
 	  
    </session-factory>
