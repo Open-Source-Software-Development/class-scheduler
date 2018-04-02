@@ -84,7 +84,7 @@ def update_professor_constraints(professor, post_data):
 
 def course_selection(request):
 	courses = Course.objects.filter()	
-	return render(request, 'PDcoursesSelector.html', {'courses': classes})
+	return render(request, 'PDcoursesSelector.html', {'courses': courses})
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
