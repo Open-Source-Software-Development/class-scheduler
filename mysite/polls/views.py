@@ -92,13 +92,24 @@ def course_review(request):
 def simple_upload(request):
 	return render(request, 'import_data.html')
 
-def run(request):
-	return render(request, 'run.html')
-
 def history(request):
 	return render(request, 'history.html')
 
+def view_history(request):
+	query_results = Hunk.objects.all()
+	
+	return render(request, 'view_history.html', {'query_results': query_results})
 
+def run(request):
+	return render(request, 'run.html')
+
+## TODO: Documentation
+def results(request):
+	query_results = Hunk.objects.all()
+	
+	return render(request, 'results.html', {'query_results': query_results})
+	
+	
 ## TODO: Documentation
 #
 def userSettings(request):
