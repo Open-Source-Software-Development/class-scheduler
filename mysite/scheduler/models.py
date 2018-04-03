@@ -101,10 +101,10 @@ class Course(models.Model):
                 - The courses instructional method (ex STN)
             style: Charfield (Max Length 20)
                 - The style of the course (ex: studio)
+                - This somehow seems to actually be used for the course ID...?
 
     """
 
-    name = models.CharField(max_length=20)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     program = models.CharField(max_length=10)
     title = models.CharField(max_length=30, null=True, blank=True)
@@ -113,7 +113,7 @@ class Course(models.Model):
     style = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.program + "-" + self.style
 
 
 class Professor(models.Model):

@@ -25,7 +25,7 @@ class TestConsole {
             System.out.println("Things to check:");
             System.out.println("  Capitalization (Professor vs. professor)");
             System.out.println("  Don't include 'record' at the end");
-            System.exit(1);
+            System.exit(0);
             return null;
         }
     }

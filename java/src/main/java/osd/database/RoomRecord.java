@@ -10,6 +10,11 @@ import javax.persistence.Table;
 @Table(name = "scheduler_room")
 class RoomRecord implements Room {
 
+	/*
+
+
+	 */
+
     @Id @GeneratedValue
     @Column(name = "id")
     private int id;

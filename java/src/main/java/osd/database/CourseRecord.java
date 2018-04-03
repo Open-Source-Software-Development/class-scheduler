@@ -14,9 +14,6 @@ class CourseRecord implements Course {
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "name")
-	private String name;
-	
 	@Column(name = "program")
 	private String program;
 	
@@ -51,11 +48,7 @@ class CourseRecord implements Course {
 	}
 
 	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		return this.program + "-" + this.style;
 	}
 
 	public String getProgram() {

@@ -2,8 +2,6 @@ package osd.database;
 
 import javax.persistence.*;
 
-import java.sql.Time;
-
 @Entity
 @Table(name = "scheduler_block")
 class BlockRecord implements Block {
@@ -22,10 +20,10 @@ class BlockRecord implements Block {
 	private String day;
 	
 	@Column(name = "start_time")
-	private Time startTime;
+	private String startTime;
 	
 	@Column(name = "end_time")
-	private Time endTime;
+	private String endTime;
 
     @Override
     public Block getPrevious() {
@@ -77,27 +75,19 @@ class BlockRecord implements Block {
 		this.day = day;
 	}
 
-	public Time getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
 	public void setStartTime(Object startTime) {
-		if (startTime instanceof Time) {
-			this.startTime = (Time)startTime;
-		} else {
-			this.startTime = Time.valueOf(startTime.toString());
-		}
+        this.startTime = startTime.toString();
 	}
 
-	public Time getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
 	public void setEndTime(Object endTime) {
-        if (endTime instanceof Time) {
-			this.endTime = (Time)endTime;
-		} else {
-        	this.endTime = Time.valueOf(endTime.toString());
-		}
+    	this.endTime = endTime.toString();
 	}
 }

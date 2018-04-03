@@ -23,6 +23,9 @@
       </property>
 	  
 	  <mapping resource = "ProfessorRecord.hbm.xml"/>
-	  
+      <mapping resource = "BlockRecord.hbm.xml"/>
+      <mapping resource = "CourseRecord.hbm.xml"/>
+      <mapping resource = "RoomRecord.hbm.xml"/>
+
    </session-factory>
 </hibernate-configuration>
