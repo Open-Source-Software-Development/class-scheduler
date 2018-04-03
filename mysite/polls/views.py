@@ -42,7 +42,7 @@ def PD_professor_settings(request):
     template_args['profs'] = Professor.objects.all()
     template_args['selected'] = selected
     template_args['pd'] = True
-    return render(request, 'profSettings.html', template_args)
+    return render(request, 'profSettings.html', template_args, selected)
 
 def professor_settings_helper(professor, request):
     if request.method == 'POST':

@@ -75,6 +75,12 @@ body {
 	background-color: #0057A1;
 }
 
+.scrollableMenu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
 #profSettingsHead {
 	margin: 25px auto;
 	width: 100%;
@@ -217,4 +223,8 @@ body {
 
 #dropdownMenu:hover button{
 	background-color: #0057A1;
+}
+
+#ScrollMenuSearch {
+    margin: -5px auto 10px auto;
 }
