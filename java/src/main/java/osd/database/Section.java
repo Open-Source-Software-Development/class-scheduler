@@ -7,13 +7,15 @@ import java.util.stream.Stream;
 /**
  * Represents a specific section of some course.
  */
-public interface Section extends Named {
+public interface Section {
 
     Course getCourse();
 
     default Function<Block, Stream<Block>> getBlockingStrategy() {
         return getCourse().getBlockingStrategy();
     }
+
+    String getName();
 
     static Section of(final Course course, final String suffix) {
         return new Section() {
@@ -23,7 +25,6 @@ public interface Section extends Named {
                 return course;
             }
 
-            @Override
             public String getName() {
                 return course.getName() + "-" + suffix;
             }

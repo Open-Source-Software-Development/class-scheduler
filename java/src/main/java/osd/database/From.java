@@ -16,7 +16,7 @@ class From {
         this.sessionFactory = sessionFactory;
     }
 
-    <T> List<T> from(final Class<T> interfaceType) {
+    <T> List<Record<T>> from(final Class<T> interfaceType) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -30,10 +30,8 @@ class From {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> List<T> validateQueryResult(final Query query, final Class<T> interfaceType) {
-        final List<?> list = query.list();
-        list.forEach(interfaceType::cast);
-        return (List<T>)list;
+    private static <T> List<Record<T>> validateQueryResult(final Query query, final Class<T> interfaceType) {
+        return (List<Record<T>>)query.list();
     }
 
 }

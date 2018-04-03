@@ -48,6 +48,7 @@ class SchedulerCandidate implements Results {
     // Copy-construct a candidate schedule and update its state. This MUST be called from
     // getNextGenerationCandidates(), and nowhere else.
     private SchedulerCandidate(final SchedulerCandidate copyOf, final SchedulerState withState) {
+        System.out.println("DEBUG: " + withState.recentHunk);
         // Copy data, copy-construct containers.
         this.state = withState;
         this.coursesByCandidateCount = new OneToManyRelation<>(copyOf.coursesByCandidateCount);

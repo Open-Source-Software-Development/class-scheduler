@@ -1,6 +1,6 @@
 package osd.database;
 
-class ProfessorRecord implements Professor {
+class ProfessorRecord extends Record<Professor> {
 
 	private int id;
 	private String firstName;
@@ -43,5 +43,9 @@ class ProfessorRecord implements Professor {
 	public String getName() {
 	    return firstName + " " + lastName;
 	}
-	
+
+	@Override
+	Professor create(final RecordLookup lookup) {
+	    return new Professor(getName());
+	}
 }

@@ -1,5 +1,6 @@
 package osd.database;
 
+import java.util.Arrays;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -7,7 +8,11 @@ import java.util.stream.Stream;
  * Represents a specific course. The most important element of a course is its
  * sections, so that's what this focuses on.
  */
-public interface Course extends Named {
+public class Course extends SchedulingElement {
+
+    Course(final String name) {
+        super(name);
+    }
 
     /**
      * Return all the sections for this course. This should consider both
@@ -15,14 +20,18 @@ public interface Course extends Named {
      * sections specified in the course's "sections" column.
      * @return an iterable representing this course's sections
      */
-    Iterable<Section> getSections();
+    Iterable<Section> getSections() {
+        // TODO: proper implementation
+        return Arrays.asList(Section.of(this, "1"));
+    }
 
     /**
      * Indicate how to generate block pairs for this course.
      * @return how to generate block pairs for this course
      * @see BlockingStrategy
      */
-    default Function<Block, Stream<Block>> getBlockingStrategy() {
+    public Function<Block, Stream<Block>> getBlockingStrategy() {
+        // TODO: proper implementation
         return BlockingStrategy.PAIR;
     }
 

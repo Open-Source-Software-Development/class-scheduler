@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_course")
-class CourseRecord implements Course {
+class CourseRecord extends Record<Course> {
 
 	@Id @GeneratedValue
 	@Column(name = "id")
@@ -31,13 +31,6 @@ class CourseRecord implements Course {
 	
 	@Column(name = "division_id")
 	private int divisionId;
-
-    @Override
-    public Iterable<Section> getSections() {
-        // You might want to return a java.util.ArrayList<Section>, for example.
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
-    }
 
 	public int getId() {
 		return id;
@@ -99,4 +92,8 @@ class CourseRecord implements Course {
 		this.divisionId = Integer.valueOf(divisionId.toString());
 	}
 
+    @Override
+    Course create(final RecordLookup lookup) {
+	    return new Course(getName());
+    }
 }

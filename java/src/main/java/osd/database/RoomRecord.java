@@ -8,12 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_room")
-class RoomRecord implements Room {
-
-	/*
-
-
-	 */
+class RoomRecord extends Record<Room> {
 
     @Id @GeneratedValue
     @Column(name = "id")
@@ -34,16 +29,12 @@ class RoomRecord implements Room {
     @Column(name = "room_type_id")
     private int roomTypeId;
 
-    @Override
-    public String getName() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
-    }
+    @Column(name = "room_number")
+    private int roomNumber;
 
     @Override
-    public RoomType getRoomType() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
+    public String getName() {
+        return building + "-" + roomNumber;
     }
 
 	public int getId() {
@@ -94,4 +85,16 @@ class RoomRecord implements Room {
 		this.roomTypeId = Integer.valueOf(roomTypeId.toString());
 	}
 
+	public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(Object roomNumber) {
+        this.roomNumber = Integer.valueOf(roomNumber.toString());
+    }
+
+    @Override
+    Room create(final RecordLookup lookup) {
+        return new Room(getName(), lookup.get(RoomType.class, roomTypeId));
+    }
 }

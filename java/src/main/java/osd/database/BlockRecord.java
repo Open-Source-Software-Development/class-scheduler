@@ -4,15 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "scheduler_block")
-class BlockRecord implements Block {
+class BlockRecord extends Record<Block> {
 
 	@Id @GeneratedValue
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "name")
-	private String name;
-
 	@Column(name = "block_id")
 	private String blockId;
 	
@@ -25,38 +22,12 @@ class BlockRecord implements Block {
 	@Column(name = "end_time")
 	private String endTime;
 
-    @Override
-    public Block getPrevious() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-
-    @Override
-    public Block getPairedWith() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-
-	@Override
-	public Block getNext() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-    
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getBlockId() {
@@ -90,4 +61,14 @@ class BlockRecord implements Block {
 	public void setEndTime(Object endTime) {
     	this.endTime = endTime.toString();
 	}
+
+    @Override
+    Block create(final RecordLookup lookup) {
+        return new Block(blockId, day, Integer.valueOf(startTime.split(":")[0]), lookup);
+    }
+
+    @Override
+    String getName() {
+        return blockId;
+    }
 }
