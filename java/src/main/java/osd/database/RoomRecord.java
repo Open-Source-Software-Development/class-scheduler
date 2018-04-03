@@ -77,16 +77,16 @@ class RoomRecord implements Room {
 		return divisionId;
 	}
 
-	public void setDivisionId(int divisionId) {
-		this.divisionId = divisionId;
+	public void setDivisionId(Object divisionId) {
+		this.divisionId = Integer.valueOf(divisionId.toString());
 	}
 
 	public int getRoomTypeId() {
 		return roomTypeId;
 	}
 
-	public void setRoomTypeId(int roomTypeId) {
-		this.roomTypeId = roomTypeId;
+	public void setRoomTypeId(Object roomTypeId) {
+		this.roomTypeId = Integer.valueOf(roomTypeId.toString());
 	}
 
 }

@@ -35,14 +35,13 @@ class ProfessorRecord implements Professor {
 		return divisionId;
 	}
 
-	public void setDivisionId(int divisionId) {
-		this.divisionId = divisionId;
+	public void setDivisionId(Object divisionId) {
+		this.divisionId = Integer.valueOf(divisionId.toString());
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	    return firstName + " " + lastName;
 	}
 	
 }

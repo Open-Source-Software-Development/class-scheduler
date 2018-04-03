@@ -12,8 +12,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.7.2" level="project" />
-    <orderEntry type="library" name="Maven: net.kemitix:sqlite-dialect:0.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.21.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.zsoltfabok:sqlite-dialect:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.dagger:dagger:2.13" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.2.15.Final" level="project" />
@@ -47,7 +47,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy:1.4.26" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.4.26" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:2.4" level="project" />
-    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Maven: io.github.lukehutch:fast-classpath-scanner:2.18.1" level="project" />
   </component>
 </module>

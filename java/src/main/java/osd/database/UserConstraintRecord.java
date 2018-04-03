@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "scheduler_userpreference")
+@Table(name = "scheduler_userconstraint")
 public class UserConstraintRecord {
 
 	// TODO: add column fields, getters, and setters here

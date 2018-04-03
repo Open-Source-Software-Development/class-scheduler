@@ -46,94 +46,64 @@ class CourseRecord implements Course {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public String getName() {
 		return name;
 	}
 
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 	public String getProgram() {
 		return program;
 	}
 
-
-
 	public void setProgram(String program) {
 		this.program = program;
 	}
-
-
 
 	public String getTitle() {
 		return title;
 	}
 
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
 
 	public String getInsMethod() {
 		return insMethod;
 	}
 
-
-
 	public void setInsMethod(String insMethod) {
 		this.insMethod = insMethod;
 	}
-
-
 
 	public int getSectionCapacity() {
 		return sectionCapacity;
 	}
 
-
-
-	public void setSectionCapacity(int sectionCapacity) {
-		this.sectionCapacity = sectionCapacity;
+	public void setSectionCapacity(Object sectionCapacity) {
+		this.sectionCapacity = Integer.valueOf(sectionCapacity.toString());
 	}
-
-
 
 	public String getStyle() {
 		return style;
 	}
 
-
-
 	public void setStyle(String style) {
 		this.style = style;
 	}
-
-
 
 	public int getDivisionId() {
 		return divisionId;
 	}
 
-
-
-	public void setDivisionId(int divisionId) {
-		this.divisionId = divisionId;
+	public void setDivisionId(Object divisionId) {
+		this.divisionId = Integer.valueOf(divisionId.toString());
 	}
 
 }

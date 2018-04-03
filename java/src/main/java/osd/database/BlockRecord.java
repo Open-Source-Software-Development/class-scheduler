@@ -81,15 +81,23 @@ class BlockRecord implements Block {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
-		this.startTime = startTime;
+	public void setStartTime(Object startTime) {
+		if (startTime instanceof Time) {
+			this.startTime = (Time)startTime;
+		} else {
+			this.startTime = Time.valueOf(startTime.toString());
+		}
 	}
 
 	public Time getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
-		this.endTime = endTime;
+	public void setEndTime(Object endTime) {
+        if (endTime instanceof Time) {
+			this.endTime = (Time)endTime;
+		} else {
+        	this.endTime = Time.valueOf(endTime.toString());
+		}
 	}
 }

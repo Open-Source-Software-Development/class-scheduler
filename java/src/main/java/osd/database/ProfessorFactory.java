@@ -32,7 +32,7 @@ public class ProfessorFactory {
 		try {
 			tx = session.beginTransaction();
 			session.isConnected();
-			List professors = session.createQuery("FROM ProfessorFactory").list();
+			List professors = session.createQuery("FROM ProfessorRecord").list();
 			for(Iterator iterator = professors.iterator(); iterator.hasNext();) {
 				ProfessorRecord prof = (ProfessorRecord) iterator.next();
 				System.out.print("Name: " + prof.getFirstName() + " " + prof.getLastName());

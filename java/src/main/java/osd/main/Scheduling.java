@@ -4,11 +4,9 @@ import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import org.apache.commons.cli.ParseException;
 import osd.considerations.BaseConsiderationModule;
 import osd.considerations.ConsiderationModule;
-import osd.database.placeholder.PlaceholderModule;
-import osd.flags.FlagModule;
+import osd.database.DatabaseModule;
 import osd.schedule.Callbacks;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
@@ -18,7 +16,7 @@ import javax.inject.Singleton;
 @Singleton
 @Component(
     modules={
-            PlaceholderModule.class, // TODO: replace this with osd.database.DatabaseModule
+            DatabaseModule.class,
             ConsiderationModule.class,
             ScheduleModule.class,
             Scheduling.DemoCallbacksModule.class,
@@ -28,10 +26,9 @@ public abstract class Scheduling {
 
     abstract Scheduler schedulingAttempt();
 
-    public static void main(final String[] args) throws ParseException {
+    public static void main(final String[] args) {
         // Demo code.
         Scheduling scheduling = DaggerScheduling.builder()
-                .flagModule(new FlagModule(args))
                 .baseConsiderationModule(new BaseConsiderationModule(FastClasspathScanner::new))
                 .build();
 
