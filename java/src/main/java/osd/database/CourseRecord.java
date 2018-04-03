@@ -93,7 +93,7 @@ class CourseRecord extends Record<Course> {
 	}
 
     @Override
-    Course create(final RecordLookup lookup) {
-	    return new Course(getName());
+    Course create(final RecordAccession lookup) {
+	    return new Course(id, getName());
     }
 }

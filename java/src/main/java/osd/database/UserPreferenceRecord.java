@@ -7,14 +7,27 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_userpreference")
-public class UserPreferenceRecord {
+public class UserPreferenceRecord extends UserConsiderationRecord<UserPreference> {
 
-	// TODO: add column fields, getters, and setters here
-	// see https://www.tutorialspoint.com/hibernate/hibernate_annotations.htm
+    private int score;
 
-    public UserPreference toUserPreference() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
+    @Override
+    UserPreference createImpl(Object left, Object right) {
+        return new UserPreference(left, right, score);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(Object score) {
+        this.score = Integer.valueOf(score.toString());
+    }
+
+    // metamprogramming hack
+    @Override
+    UserPreference create(final RecordAccession accession) {
+        return super.create(accession);
     }
 
 }

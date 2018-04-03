@@ -6,8 +6,8 @@ package osd.database;
  */
 public class Professor extends SchedulingElement {
 
-	Professor(final String name) {
-		super(name);
+	Professor(final int id, final String name) {
+		super(id, name);
 	}
 
 	/**

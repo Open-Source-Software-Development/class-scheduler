@@ -11,13 +11,13 @@ public class Block extends SchedulingElement {
     private final String day;
     private final int hour;
 
-    private RecordLookup lookup;
+    private RecordAccession lookup;
     private Block next;
     private Block previous;
     private Block pairedWith;
 
-    Block(final String blockId, final String day, final int hour, final RecordLookup lookup) {
-        super(blockId);
+    Block(final int id, final String blockId, final String day, final int hour, final RecordAccession lookup) {
+        super(id, blockId);
         this.day = day;
         this.hour = hour;
         this.lookup = lookup;

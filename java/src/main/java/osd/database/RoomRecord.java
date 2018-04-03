@@ -94,7 +94,7 @@ class RoomRecord extends Record<Room> {
     }
 
     @Override
-    Room create(final RecordLookup lookup) {
-        return new Room(getName(), lookup.get(RoomType.class, roomTypeId));
+    Room create(final RecordAccession lookup) {
+        return new Room(id, getName(), lookup.get(RoomType.class, roomTypeId));
     }
 }

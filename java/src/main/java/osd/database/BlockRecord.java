@@ -63,8 +63,8 @@ class BlockRecord extends Record<Block> {
 	}
 
     @Override
-    Block create(final RecordLookup lookup) {
-        return new Block(blockId, day, Integer.valueOf(startTime.split(":")[0]), lookup);
+    Block create(final RecordAccession lookup) {
+        return new Block(id, blockId, day, Integer.valueOf(startTime.split(":")[0]), lookup);
     }
 
     @Override

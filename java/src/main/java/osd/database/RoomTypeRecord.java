@@ -32,7 +32,7 @@ class RoomTypeRecord extends Record<RoomType> {
     }
 
     @Override
-    RoomType create(final RecordLookup lookup) {
-        return new RoomType(name);
+    RoomType create(final RecordAccession lookup) {
+        return new RoomType(id, name);
     }
 }

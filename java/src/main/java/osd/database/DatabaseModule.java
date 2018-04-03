@@ -8,24 +8,26 @@ import osd.considerations.UserConstraint;
 import osd.considerations.UserPreference;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Module
 public class DatabaseModule {
 
+    private static final SessionFactory SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
+
     @Provides
     static SessionFactory providesSessionFactory() {
-        return new Configuration().configure().buildSessionFactory();
+        return SESSION_FACTORY;
     }
 
     @Provides
-    static Collection<UserConstraint> providesUserConstraints() {
-        return Collections.emptyList();
+    static Collection<UserConstraint> providesUserConstraints(final RecordAccession recordAccession) {
+        return recordAccession.getAll(UserConstraint.class).collect(Collectors.toList());
     }
 
     @Provides
-    static Collection<UserPreference> providesUserPreferences() {
-        return Collections.emptyList();
+    static Collection<UserPreference> providesUserPreferences(final RecordAccession recordAccession) {
+        return recordAccession.getAll(UserPreference.class).collect(Collectors.toList());
     }
 
 }

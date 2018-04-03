@@ -2,20 +2,18 @@ package osd.database;
 
 abstract class AbstractSchedulingElement {
 
+    abstract int getId();
+
     abstract String getName();
 
     @Override
-    public int hashCode() {
-        return getName().hashCode();
+    public final int hashCode() {
+        return getId();
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (getClass() != o.getClass()) return false;
-        final SchedulingElement other = (SchedulingElement)o;
-        return getName().equals(other.getName());
+    public final boolean equals(final Object o) {
+        return o != null && getClass() == o.getClass() && hashCode() == o.hashCode();
     }
 
     @Override

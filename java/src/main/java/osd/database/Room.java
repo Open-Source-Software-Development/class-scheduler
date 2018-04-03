@@ -7,8 +7,8 @@ public class Room extends SchedulingElement {
 
     private final RoomType roomType;
 
-    Room(final String name, final RoomType roomType) {
-        super(name);
+    Room(final int id, final String name, final RoomType roomType) {
+        super(id, name);
         this.roomType = roomType;
     }
 

@@ -136,7 +136,7 @@ class Professor(models.Model):
     qualifications = models.ManyToManyField(Course)
     
     def __str__(self):
-        return self.first + self.last
+        return self.first + " " + self.last
 
 class PregenSection(models.Model):
     """
@@ -192,6 +192,9 @@ class ProfessorConstraint(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
     # block = models.ForeignKey(Block, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "({}, {}, {})".format(self.professor, self.block)
 
 # Input : User preferences/constraints
 

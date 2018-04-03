@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration SYSTEM 
-"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-   <session-factory>
-   
-      <property name = "hibernate.dialect">
-         org.hibernate.dialect.SQLiteDialect
-      </property>
-      
-      <property name = "hibernate.connection.driver_class">
-         org.sqlite.JDBC
-      </property>
-      
-      <property name = "hibernate.connection.url">
-         jdbc:sqlite:../mysite/db.sqlite3
-      </property>
-      
-      <property name = "hibernate.connection.username">
-      </property>
-      
-      <property name = "hibernate.connection.password">
-      </property>
-	  
-	  <mapping resource = "ProfessorRecord.hbm.xml"/>
-      <mapping resource = "BlockRecord.hbm.xml"/>
-      <mapping resource = "CourseRecord.hbm.xml"/>
-      <mapping resource = "RoomRecord.hbm.xml"/>
-      <mapping resource = "RoomTypeRecord.hbm.xml"/>
+    <session-factory>
 
-   </session-factory>
+        <property name = "hibernate.dialect">
+            org.hibernate.dialect.SQLiteDialect
+        </property>
+
+        <property name = "hibernate.connection.driver_class">
+            org.sqlite.JDBC
+        </property>
+
+        <property name = "hibernate.connection.url">
+            jdbc:sqlite:../mysite/db.sqlite3
+        </property>
+
+        <property name = "hibernate.connection.username">
+        </property>
+
+        <property name = "hibernate.connection.password">
+        </property>
+
+        <mapping resource = "ProfessorRecord.hbm.xml"/>
+        <mapping resource = "BlockRecord.hbm.xml"/>
+        <mapping resource = "CourseRecord.hbm.xml"/>
+        <mapping resource = "RoomRecord.hbm.xml"/>
+        <mapping resource = "RoomTypeRecord.hbm.xml"/>
+        <mapping resource = "UserConstraintRecord.hbm.xml"/>
+        <mapping resource = "UserPreferenceRecord.hbm.xml"/>
+
+    </session-factory>
 </hibernate-configuration>

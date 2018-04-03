@@ -7,14 +7,26 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_userconstraint")
-public class UserConstraintRecord {
+public class UserConstraintRecord extends UserConsiderationRecord<UserConstraint> {
 
-	// TODO: add column fields, getters, and setters here
-	// see https://www.tutorialspoint.com/hibernate/hibernate_annotations.htm
+    private boolean isBlacklist;
 
-    public UserConstraint toUserConstraint() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
+    @Override
+    UserConstraint createImpl(final Object leftObject, final Object rightObject) {
+        return new UserConstraint(leftObject, rightObject, isBlacklist);
     }
 
+    public boolean getIsBlacklist() {
+        return isBlacklist;
+    }
+
+    public void setIsBlacklist(boolean blacklist) {
+        isBlacklist = blacklist;
+    }
+
+    // metaprogramming hack
+    @Override
+    UserConstraint create(final RecordAccession accession) {
+        return super.create(accession);
+    }
 }

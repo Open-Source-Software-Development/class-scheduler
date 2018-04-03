@@ -1,6 +1,6 @@
 package osd.database;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -10,8 +10,8 @@ import java.util.stream.Stream;
  */
 public class Course extends SchedulingElement {
 
-    Course(final String name) {
-        super(name);
+    Course(final int id, final String name) {
+        super(id, name);
     }
 
     /**
@@ -22,7 +22,7 @@ public class Course extends SchedulingElement {
      */
     Iterable<Section> getSections() {
         // TODO: proper implementation
-        return Arrays.asList(Section.of(this, "1"));
+        return Collections.singleton(Section.of(this, "1"));
     }
 
     /**

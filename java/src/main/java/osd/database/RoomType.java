@@ -6,8 +6,8 @@ package osd.database;
  */
 public class RoomType extends SchedulingElement {
 
-    RoomType(final String name) {
-        super(name);
+    RoomType(final int id, final String name) {
+        super(id, name);
     }
 
 }

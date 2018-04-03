@@ -45,7 +45,7 @@ class ProfessorRecord extends Record<Professor> {
 	}
 
 	@Override
-	Professor create(final RecordLookup lookup) {
-	    return new Professor(getName());
+	Professor create(final RecordAccession lookup) {
+	    return new Professor(id, getName());
 	}
 }
