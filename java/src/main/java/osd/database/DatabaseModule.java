@@ -9,6 +9,7 @@ import osd.considerations.UserPreference;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Module
 public class DatabaseModule {
@@ -22,12 +23,15 @@ public class DatabaseModule {
 
     @Provides
     static Collection<UserConstraint> providesUserConstraints(final RecordAccession recordAccession) {
-        return recordAccession.getAll(UserConstraint.class).collect(Collectors.toList());
+        return Stream.concat(
+                recordAccession.getAllFromDefaultRecord(UserConstraint.class),
+                recordAccession.getAll(UserConstraint.class, ProfessorQualificationRecord.class)
+        ).collect(Collectors.toList());
     }
 
     @Provides
     static Collection<UserPreference> providesUserPreferences(final RecordAccession recordAccession) {
-        return recordAccession.getAll(UserPreference.class).collect(Collectors.toList());
+        return recordAccession.getAllFromDefaultRecord(UserPreference.class).collect(Collectors.toList());
     }
 
 }

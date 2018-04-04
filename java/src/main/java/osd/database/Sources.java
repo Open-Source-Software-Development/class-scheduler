@@ -14,22 +14,22 @@ public class Sources {
     }
 
     public Stream<Section> getSections() {
-        return recordAccession.getAll(Course.class)
+        return recordAccession.getAllFromDefaultRecord(Course.class)
                 .map(Course::getSections)
                 .map(Iterable::spliterator)
                 .flatMap(spliterator -> StreamSupport.stream(spliterator, false));
     }
 
     public Stream<Professor> getProfessors() {
-        return recordAccession.getAll(Professor.class);
+        return recordAccession.getAllFromDefaultRecord(Professor.class);
     }
 
     public Stream<Block> getBlocks() {
-        return recordAccession.getAll(Block.class);
+        return recordAccession.getAllFromDefaultRecord(Block.class);
     }
 
     public Stream<Room> getRooms() {
-        return recordAccession.getAll(Room.class);
+        return recordAccession.getAllFromDefaultRecord(Room.class);
     }
 
 

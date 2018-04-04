@@ -32,11 +32,6 @@ class RoomRecord extends Record<Room> {
     @Column(name = "room_number")
     private int roomNumber;
 
-    @Override
-    public String getName() {
-        return building + "-" + roomNumber;
-    }
-
 	public int getId() {
 		return id;
 	}
@@ -97,4 +92,9 @@ class RoomRecord extends Record<Room> {
     Room create(final RecordAccession lookup) {
         return new Room(id, getName(), lookup.get(RoomType.class, roomTypeId));
     }
+
+	private String getName() {
+		return building + "-" + roomNumber;
+	}
+
 }

@@ -26,7 +26,6 @@ class RoomTypeRecord extends Record<RoomType> {
         this.name = name;
     }
 
-    @Override
     public String getName() {
         return name;
     }

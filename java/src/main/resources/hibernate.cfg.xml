@@ -29,6 +29,7 @@
         <mapping resource = "RoomTypeRecord.hbm.xml"/>
         <mapping resource = "UserConstraintRecord.hbm.xml"/>
         <mapping resource = "UserPreferenceRecord.hbm.xml"/>
+        <mapping resource = "ProfessorQualificationRecord.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

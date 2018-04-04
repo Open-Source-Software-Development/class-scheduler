@@ -67,8 +67,4 @@ class BlockRecord extends Record<Block> {
         return new Block(id, blockId, day, Integer.valueOf(startTime.split(":")[0]), lookup);
     }
 
-    @Override
-    String getName() {
-        return blockId;
-    }
 }

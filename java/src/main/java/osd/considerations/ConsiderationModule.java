@@ -19,7 +19,6 @@ public interface ConsiderationModule {
     @Provides
     static BiFunction<Lookups, Hunk, Integer> providesPreferences(
             final Collection<UserPreference> userPreferences, final Collection<BasePreference> basePreferences) {
-        System.out.println("Have " + userPreferences.size() + " user preferences");
         return (lookups, hunk) -> {
             final int preferencesScore = userPreferences.stream()
                     .mapToInt(p -> p.evaluate(hunk))
@@ -34,7 +33,6 @@ public interface ConsiderationModule {
 
     @Provides
     static Predicate<Hunk> providesUserConstraints(final Collection<UserConstraint> records) {
-        System.out.println("Have " + records.size() + " user constraints");
         return records.stream()
                 // Break the list up into blacklist and whitelist constraints.
                 .collect(Collectors.groupingBy(UserConstraint::getWhitelistKey))

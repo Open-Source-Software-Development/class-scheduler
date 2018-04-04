@@ -1,6 +1,6 @@
 package osd.database;
 
-abstract class Record<T> extends AbstractSchedulingElement {
+abstract class Record<T> {
 
     abstract T create(final RecordAccession lookup);
 

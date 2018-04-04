@@ -9,11 +9,6 @@ public abstract class UserConsiderationRecord<T> extends Record<T> {
     private int rightId;
 
     @Override
-    String getName() {
-        return "Constraint" + id;
-    }
-
-    @Override
     T create(final RecordAccession lookup) {
         final Object leftObject = lookup.get(leftTypeId, leftId);
         final Object rightObject = lookup.get(rightTypeId, rightId);

@@ -40,12 +40,12 @@ class ProfessorRecord extends Record<Professor> {
 	}
 
 	@Override
-	public String getName() {
-	    return firstName + " " + lastName;
-	}
-
-	@Override
 	Professor create(final RecordAccession lookup) {
 	    return new Professor(id, getName());
 	}
+
+	private String getName() {
+		return firstName + " " + lastName;
+	}
+
 }

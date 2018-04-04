@@ -66,15 +66,15 @@ public class Block extends SchedulingElement {
         if (lookup == null) {
             return;
         }
-        next = lookup.getAll(Block.class)
+        next = lookup.getAllFromDefaultRecord(Block.class)
                 .filter(block -> day.equals(block.day))
                 .filter(block -> block.hour == hour + 1)
                 .findFirst().orElse(null);
-        previous = lookup.getAll(Block.class)
+        previous = lookup.getAllFromDefaultRecord(Block.class)
                 .filter(block -> day.equals(block.day))
                 .filter(block -> block.hour == hour - 1)
                 .findFirst().orElse(null);
-        pairedWith = lookup.getAll(Block.class)
+        pairedWith = lookup.getAllFromDefaultRecord(Block.class)
                 .filter(block -> block.getName().equals(getPairBlockId()))
                 .findFirst().orElse(null);
         lookup = null;
