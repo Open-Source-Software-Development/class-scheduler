@@ -56,7 +56,7 @@ coverage.xml
 .media/
 local_settings.py
 */db.sqlite3
-mysite/scheduler/migrations
+mysite/*/migrations
 
 # Flask stuff:
 instance/

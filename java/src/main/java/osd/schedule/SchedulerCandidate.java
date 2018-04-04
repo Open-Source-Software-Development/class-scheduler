@@ -169,3 +169,4 @@ class SchedulerCandidate implements Results {
         return expectedHunkCount;
     }
 }
+

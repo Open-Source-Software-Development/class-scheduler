@@ -6,171 +6,67 @@
 
     <title>Champlain Scheduler</title>
 
+    <!-- bootstrap css -->
     <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
     <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
 	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- SB admin 2 css -->
     <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
     <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="{% static '/cssLocal/styles.css' %}">
+	<!-- custom css -->
+    <link href="{% static 'css/cssLocal.css' %}" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
 
+	<!-- page content -->
     <div id="wrapper">
+	
+        {% include 'blank.html' %}
 
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'index' %}">Champlain Scheduler</a>
-            </div>
-
-            <ul class="nav navbar-top-links navbar-right">
-                
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Scheduler Finished
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-				<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Hello, {{request.user.username}}!</a>
-                        </li>
-						<li><a href="#">Staff?: <b>{{ request.user.is_staff }}</b></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="{% url 'login' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="{% url 'index' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'professor_settings' %}"><i class="fa fa-edit fa-fw"></i> Input Schedule Data</a>
-                        </li>
-						<li>
-                            <a href="{% url 'professor_settings' %}"><i class="fa fa-upload fa-fw"></i> Upload CSV File</a>
-                        </li>
-						<li>
-                            <a href="{% url 'professor_settings' %}"><i class="fa fa-files-o fa-fw"></i> Review Program Courses</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'run' %}"><i class="fa fa-tasks fa-fw"></i> Run Scheduler</a>
-                        </li>
-						<li>
-                            <a href="{% url 'history' %}"><i class="fa fa-table fa-fw"></i> View Season History</a>
-                        </li>       
-                </div>
-            </div>
-        </nav>
-
+		<!-- page content -->
         <div id="page-wrapper">
-				<table class="table table-striped table-bordered">						
-					<thead>
-											
-						<tr>
-							<th>Section Name</th>
-							<th>Title</th>
-							<th>Room</th>
-							<th>Time Block</th>
-							<th>Professor</th>
-						</tr>
-					</thead>
+            
+			<!-- PD review panel -->
+			<div id="profSettingsHead">
+			
+				<!-- PD welcome panel -->
+				<div class="panel panel-primary">
+				
+					<!-- welcome panel top -->
+					<div class="panel-heading">
 					
-					<tbody>
-						<tr>
-							<th width="120px">CCC-410ITS-06</th>
-							<th width="120px">Capstone Design:FOR</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">12A,13A</th>
-							<th width="120px">Yogeshkumar Khatri</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-100-01</th>
-							<th width="120px">Intro to Cybercrime & Df</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">6A,6B</th>
-							<th width="120px">Joseph Letourneau</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-100-51</th>	
-							<th width="120px">Intro to Cybercrime & Df</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">15A,17A</th>
-							<th width="120px">Joseph Letourneau</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-100-52</th>
-							<th width="120px">Intro to Cybercrime & Df</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">15B,17B</th>
-							<th width="120px">Joseph Letourneau</th>							
-						</tr>
-						<tr>
-							<th width="120px">FOR-240-01</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">10A,10B</th>
-							<th width="120px">Devin	Paden</th>
-						</tr>
-						<tr>
-							<th width="120px">FOR-240-02</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">9A,9B</th>
-							<th width="120px">Yogeshkumar Khatri</th>
-						</tr>
-						<tr>
-							<th width="120px" >FOR-240-03</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">10A,10B</th>
-							<th width="120px">Yogeshkumar Khatri</th>
-						</tr>
-						<tr>
-							<th width="120px" >FOR-240-51</th>
-							<th width="120px">Intro. to Digital Forensics</th>
-							<th width="120px">FOST-100</th>
-							<th width="120px">11A,11B</th>
-							<th width="120px">Patrick Dunston</th>
-						</tr>
-					</tbody>
-				</table>
+						<H1 id="titleScreen"> Scheduler Results</H1>
+						
+					</div>
+					
+					<!-- welcome panel bottom -->
+					<div class="panel-footer">
+						<table class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th width="120px">Section</th>
+								<th width="120px">Professor</th>
+								<th width="120px">Room</th>
+								<th width="120px">Time Block</th>
+							</tr>
+						</thead>
+							{% for item in query_results %}
+							<tr> 
+								<td width="120px">{{ item.section }}</td>
+								<td width="120px">{{ item.professor }}</td>
+								<td width="120px">{{ item.room }}</td>
+								<td width="120px">{{ item.second_block }}</td>
+							</tr>
+							{% endfor %}
+						</table>	
+					</div>	
+				</div>
+			</div>
 		</div>
 
     </div>
