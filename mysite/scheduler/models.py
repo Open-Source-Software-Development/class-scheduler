@@ -222,7 +222,13 @@ class Qualification(models.Model):
     def __str__(self):
         return "{} can teach {}".format(self.professor, self.course)
 
-
+class GradeLevel(models.Model):
+    """
+        TODO Documentation
+    """
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    grade_level = models.PositiveIntegerField()
+    
 class ProfessorConstraint(models.Model):
     """
         TODO Documentation
