@@ -133,7 +133,7 @@ class Course(models.Model):
                 - The style of the course (ex: studio)
 
     """
-    name = models.CharField(max_length=20, null=True)
+
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     program = models.CharField(max_length=10)
     style = models.CharField(max_length=20, blank=True)
@@ -226,8 +226,15 @@ class GradeLevel(models.Model):
     """
         TODO Documentation
     """
+    
+    class Meta:
+        unique_together = (("course", "grade_level"),)
+    
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    grade_level = models.PositiveIntegerField()
+    grade_level = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return "{} ".format(self.course)
     
 class ProfessorConstraint(models.Model):
     """

@@ -11,6 +11,8 @@ from scheduler.models import Professor
 from scheduler.models import Block
 from scheduler.models import Division
 from scheduler.models import ProfessorConstraint
+from scheduler.models import GradeLevel
+from scheduler.courseConstraints import CourseLevel
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
 
@@ -89,15 +91,14 @@ def course_selection(request):
     filter = request.GET.get('division')
     if filter == None:
         filter = 'All'
+        
     year = request.GET.get('year')
-    if year == None:
-        year = 'Select Year'
-   
     selected = request.POST.getlist('Courses')
     first = request.user.first_name
     last = request.user.last_name
     
-        
+    for course in selected:
+        CourseLevel(course).insert_grade_level(year)
     
     return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'filter': filter, 'selected':selected, 'year': year})
 

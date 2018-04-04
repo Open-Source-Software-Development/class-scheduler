@@ -36,14 +36,8 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="wrapper">
-            <hr>
-            <b>Selected Courses:</b> {{ selected }}
-            <hr>
-            </div>
         
-            <form action="{% url 'course_selection' %}" method="post">
+            <form action="{% url 'course_selection' %}?year={{ year }}" method="post">
             {% csrf_token %}
                   <div class="dual-list list-left col-md-5">
                     <div class="well text-left">
@@ -92,11 +86,11 @@
                     <div class="well">
                      <div class="wrapper">
                         <select name="yearSelection" onchange="filterYear()">
-                                <option class="list-group-item" value="">({{ year }})</a></option>
-                                <option class="list-group-item" value="First">First</a></option>
-                                <option class="list-group-item" value="Second">Second</a></option>
-                                <option class="list-group-item" value="Third">Third</a></option>
-                                <option class="list-group-item" value="Fourth">Fourth</a></option>
+                                <option class="list-group-item" value="{{ year }}">({{ year }})</option>
+                                <option class="list-group-item" value="First">First</option>
+                                <option class="list-group-item" value="Second">Second</option>
+                                <option class="list-group-item" value="Third">Third</option>
+                                <option class="list-group-item" value="Fourth">Fourth</option>
                             </select>
                       </div>
                       <hr>
