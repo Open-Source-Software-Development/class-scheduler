@@ -3,12 +3,21 @@ package osd.database;
 /**
  * Represents a specific room.
  */
-public interface Room extends Named {
+public class Room extends SchedulingElement {
+
+    private final RoomType roomType;
+
+    Room(final int id, final String name, final RoomType roomType) {
+        super(id, name);
+        this.roomType = roomType;
+    }
 
     /**
      * Determines what type of room this is.
      * @return what type of room this is
      */
-	RoomType getRoomType();
+	public RoomType getRoomType() {
+	    return roomType;
+    }
 
 }

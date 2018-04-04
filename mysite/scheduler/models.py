@@ -131,9 +131,9 @@ class Course(models.Model):
                 - The courses instructional method (ex STN)
             style: Charfield (Max Length 20)
                 - The style of the course (ex: studio)
+                - This somehow seems to actually be used for the course ID...?
 
     """
-    name = models.CharField(max_length=20, null=True)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     program = models.CharField(max_length=10)
     style = models.CharField(max_length=20, blank=True)
@@ -167,6 +167,7 @@ class Professor(models.Model):
         return self.first + " " + self.last
 
 
+@six.python_2_unicode_compatible
 class PregenSection(models.Model):
     """
         TODO: Finish Table
@@ -212,6 +213,7 @@ class Room(models.Model):
         return "{}-{}".format(self.building, self.room_number)
 
 
+@six.python_2_unicode_compatible
 class Qualification(models.Model):
     """Semantic constraint that whitelists class/professor combinations.
     nb. when turning this into a constraint, *make sure to use the
@@ -220,7 +222,7 @@ class Qualification(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{} can teach {}".format(self.professor, self.course)
+        return six.text_type("{} can teach {}").format(self.professor, self.course)
 
 class GradeLevel(models.Model):
     """
@@ -243,6 +245,9 @@ class ProfessorConstraint(models.Model):
     
     def __str__(self):
         return "({}, {}, {})".format(self.professor, self.block, self.value)
+
+    def __str__(self):
+        return "({}, {}, {})".format(self.professor, self.block)
 
 # Input : User preferences/constraints
 
@@ -311,6 +316,14 @@ class UserConstraint(UserPreferenceOrConstraint):
 
 # Output
 
+
+@six.python_2_unicode_compatible
+class Run(models.Model):
+
+    # TODO: have an actual Season table and make this a foreign key
+    season = models.PositiveIntegerField()
+
+
 @six.python_2_unicode_compatible
 class Section(models.Model):
     """
@@ -320,9 +333,10 @@ class Section(models.Model):
     """
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     section_identifier = models.CharField(max_length=50)
+    run = models.ForeignKey(Run, on_delete=models.CASCADE)
 
     def __str__(self):
-        return six.text_type("{}{}").format(str(self.course), self.suffix)
+        return six.text_type("{}-{}").format(str(self.course), self.suffix)
 
 @six.python_2_unicode_compatible
 class Hunk(models.Model):
@@ -333,9 +347,7 @@ class Hunk(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    first_block = models.ForeignKey(Block, on_delete=models.CASCADE, related_name='first')
-    second_block = models.ForeignKey(Block, on_delete=models.CASCADE,related_name='second')
-    
+    block = models.ForeignKey(Block, on_delete=models.CASCADE)
 
     def __str__(self):
         return six.text_type("Hunk({}, {}, {}, {})").format(self.section, self.professor, self.room, self.block)

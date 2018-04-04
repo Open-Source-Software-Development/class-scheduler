@@ -121,7 +121,7 @@ class SchedulerImplTest {
         when(mockCandidateGen1.getNextGenerationCandidates()).then(unused ->
                 Stream.generate(() -> mockCandidateGen2B));
         assertTimeoutPreemptively(Duration.ofSeconds(5), () -> instance.run(),
-                "Scheduling did not short-circuit after meeting stop condition.");
+                "SchedulingMain did not short-circuit after meeting stop condition.");
     }
 
 }

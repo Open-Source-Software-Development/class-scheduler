@@ -38,7 +38,7 @@ class SchedulerCandidate implements Results {
         sources.getSections().forEach(this::registerOutstandingSection);
 
         // Initialize the priority of each course.
-        // Using outstandingSections.keySet() instead of sources.getSections(),
+        // Using outstandingSections.keySet() instead of sources.getSections()
         // is a "free" way of only computing priorities once per course.
         this.lowestCandidateCount = Integer.MAX_VALUE;
         outstandingSections.keySet().forEach(this::updatePriority);
@@ -48,6 +48,7 @@ class SchedulerCandidate implements Results {
     // Copy-construct a candidate schedule and update its state. This MUST be called from
     // getNextGenerationCandidates(), and nowhere else.
     private SchedulerCandidate(final SchedulerCandidate copyOf, final SchedulerState withState) {
+        System.err.println(withState.recentHunk);
         // Copy data, copy-construct containers.
         this.state = withState;
         this.coursesByCandidateCount = new OneToManyRelation<>(copyOf.coursesByCandidateCount);
@@ -80,9 +81,10 @@ class SchedulerCandidate implements Results {
         }
 
         // Update the priorities of other sections as needed.
-        state.getAdjacent(newCourse)
+        final Set<Course> adjacent = state.getAdjacent(newCourse)
                 .filter(outstandingSections::containsKey)
-                .forEach(this::updatePriority);
+                .collect(Collectors.toSet());
+        adjacent.forEach(this::updatePriority);
     }
 
     /**
@@ -168,3 +170,4 @@ class SchedulerCandidate implements Results {
         return expectedHunkCount;
     }
 }
+
