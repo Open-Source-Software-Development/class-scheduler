@@ -9,6 +9,7 @@ from .models import Block
 from scheduler.models import Course
 from scheduler.models import Professor
 from scheduler.models import Block
+from scheduler.models import Division
 from scheduler.models import ProfessorConstraint
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
@@ -83,8 +84,15 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
-	courses = Course.objects.filter()	
-	return render(request, 'PDcoursesSelector.html', {'courses': courses})
+    courses = Course.objects.filter()
+    divisions = Division.objects.filter()
+    filter = request.GET.get('division')
+    if filter == None:
+        filter = 'All'
+   
+    selected = request.POST.getlist('Courses')
+    
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'filter': filter, 'selected':selected})
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
