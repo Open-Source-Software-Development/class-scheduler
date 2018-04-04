@@ -20,9 +20,6 @@ class RoomRecord extends Record<Room> {
     @Column(name = "subject")
     private String subject;
     
-    @Column(name = "style")
-    private String style;
-    
     @Column(name = "division_id")
     private int divisionId;
     
@@ -54,14 +51,6 @@ class RoomRecord extends Record<Room> {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-
-	public String getStyle() {
-		return style;
-	}
-
-	public void setStyle(String style) {
-		this.style = style;
 	}
 
 	public int getDivisionId() {

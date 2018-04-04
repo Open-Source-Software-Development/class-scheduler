@@ -25,7 +25,7 @@ public class DatabaseModule {
     static Collection<UserConstraint> providesUserConstraints(final RecordAccession recordAccession) {
         return Stream.concat(
                 recordAccession.getAllFromDefaultRecord(UserConstraint.class),
-                recordAccession.getAll(UserConstraint.class, ProfessorQualificationRecord.class)
+                recordAccession.getAll(UserConstraint.class, QualificationRecord.class)
         ).collect(Collectors.toList());
     }
 

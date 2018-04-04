@@ -167,6 +167,7 @@ class Professor(models.Model):
         return self.first + " " + self.last
 
 
+@six.python_2_unicode_compatible
 class PregenSection(models.Model):
     """
         TODO: Finish Table
@@ -212,6 +213,7 @@ class Room(models.Model):
         return "{}-{}".format(self.building, self.room_number)
 
 
+@six.python_2_unicode_compatible
 class Qualification(models.Model):
     """Semantic constraint that whitelists class/professor combinations.
     nb. when turning this into a constraint, *make sure to use the
@@ -220,7 +222,7 @@ class Qualification(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{} can teach {}".format(self.professor, self.course)
+        return six.text_type("{} can teach {}").format(self.professor, self.course)
 
 
 class ProfessorConstraint(models.Model):

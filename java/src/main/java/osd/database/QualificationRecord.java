@@ -2,7 +2,7 @@ package osd.database;
 
 import osd.considerations.UserConstraint;
 
-class ProfessorQualificationRecord extends Record<UserConstraint> {
+class QualificationRecord extends Record<UserConstraint> {
 
     private int id, professorId, courseId;
 

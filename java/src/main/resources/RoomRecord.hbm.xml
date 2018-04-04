@@ -12,7 +12,7 @@
 
       <property name="roomTypeId" column="ROOM_TYPE_ID" type="int" />
       <property name="divisionId" column="DIVISION_ID" type="int" />
-      <property name="style" column="STYLE" type="string" />
+      <property name="roomNumber" column="ROOM_NUMBER" type="int" />
       <property name="subject" column="SUBJECT" type="string" />
       <property name="building" column="BUILDING" type="string" />
 

@@ -56,7 +56,7 @@ public class Block extends SchedulingElement {
     private String getPairBlockId() {
         final String blockId = getName();
         final int len = blockId.length();
-        final String prefix = blockId.substring(0, len - 2);
+        final String prefix = blockId.substring(0, len - 1);
         final char suffix = blockId.charAt(len - 1);
         final String otherSuffix = (suffix == 'A' ? "B" : "A");
         return prefix + otherSuffix;

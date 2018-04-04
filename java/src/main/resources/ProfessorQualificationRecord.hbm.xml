@@ -4,7 +4,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name = "osd.database.ProfessorQualificationRecord" table = "scheduler_professor_qualifications">
+   <class name = "osd.database.QualificationRecord" table = "scheduler_qualification">
       
       <id name = "id" type = "int" column = "ID">
          <generator class="native"/>
