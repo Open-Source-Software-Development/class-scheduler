@@ -95,19 +95,20 @@ def simple_upload(request):
 def history(request):
 	return render(request, 'history.html')
 
+def run(request):
+	return render(request, 'run.html')
+	
+## TODO: Documentation
 def view_history(request):
-	query_results = Hunk.objects.all()
+	query_results = Run.objects.all()
 	
 	return render(request, 'view_history.html', {'query_results': query_results})
 
-def run(request):
-	return render(request, 'run.html')
-
 ## TODO: Documentation
 def results(request):
-	query_results = Hunk.objects.all()
+	algo_results = Hunk.objects.all()
 	
-	return render(request, 'results.html', {'query_results': query_results})
+	return render(request, 'results.html', {'algo_results': algo_results})
 	
 	
 ## TODO: Documentation
