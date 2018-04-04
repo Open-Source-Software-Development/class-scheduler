@@ -86,21 +86,24 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
-    courses = Course.objects.filter()
     divisions = Division.objects.filter()
-    filter = request.GET.get('division')
-    if filter == None:
-        filter = 'All'
-        
+   
     year = request.GET.get('year')
+    if year == None:
+        year = 'First'
+        
+    running = CourseLevel().get_grade_by_year(year)
     selected = request.POST.getlist('Courses')
     first = request.user.first_name
     last = request.user.last_name
     
-    for course in selected:
-        CourseLevel(course).insert_grade_level(year)
+    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
+    courses = Course.objects.exclude(id__in=excluded_courses)
     
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'filter': filter, 'selected':selected, 'year': year})
+    for course in selected:
+        CourseLevel().insert_grade_level(course, year)
+    
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'selected':selected, 'year': year, 'running': running})
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
