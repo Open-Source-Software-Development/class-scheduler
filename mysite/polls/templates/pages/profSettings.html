@@ -33,12 +33,22 @@
           <div class="panel panel-primary">
             <!-- top of welcome panel -->
             <div class="panel-heading">
-              <h1 id="titleScreen"> Professor Settings</h1>
+              {% if not pd %}
+              <h1 id="titleScreen">Professor Schedule</h1>
+              {% endif %}
+              {% if pd %}
+              <h1 id="titleScreen">Professor Schedule Review</h1>
+              {% endif %}
             </div>
             <!-- bottom of welcome panel -->
             <div class="panel-footer">
               <h4> Hello, {{request.user.username}}</h4>
-              <h6>Click on the boxes until the color matches your desired color</h6>
+              {% if not pd %}
+              <h6>Click on boxes to set availability for each day/time</h6>
+              {% endif %}
+              {% if pd %}
+              <h6>Select a professor from the list to view their schedule data</h6>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -47,12 +57,12 @@
 	  <!-- if we're in the program director view, render a professor select dropdown -->
           <hr>
           <!-- professor selection menu -->
-          <div class="btn-group" id="dropdownMenu">
+          <div class="btn-group dual-list input-group" id="dropdownMenu">
             <button class="btn btn-primary" data-toggle="dropdown">Professors <i class="fa fa-chevron-down"></i></button>
-            <ul class="dropdown-menu">
-              <li><a tabindex="-1" href="{% url 'PD_professor_settings' %}?prof=None Selected">None</a></li>
+            <ul class="dropdown-menu scrollableMenu list-group" role="menu">
+              <input id="ScrollMenuSearch" type="text" name="SearchDualList" class="form-control" placeholder="Search...">
               {% for i in profs %}
-                <li><a tabindex="-1" href="{% url 'PD_professor_settings' %}?prof={{ i }}">{{ i }}</a></li>
+                <li class="list-group-item"><a tabindex="-1" href="{% url 'PD_professor_settings' %}?prof={{ i }}">{{ i }}</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -62,6 +72,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <i class="fa fa-calendar fa-fw"></i> Professor Schedule
+            <span style="float:right;"><b>{{ selected }}</b></span>
           </div>
 
           <!-- review panel body -->
@@ -80,7 +91,12 @@
                       {% endfor %}
                     </tr>
                   </thead>
+                  {% if pd %}
+                  <tbody style="pointer-events: none;">
+                  {% endif %}
+                  {% if not pd %}
                   <tbody>
+                  {% endif %}
                     {% for start_time in blocks_by_time %}
                       <tr>
                         <th width="120px" >{{ start_time }}</th>
@@ -106,10 +122,12 @@
                     </div>
                   </span>
                 {% endif %}
-                    
+                
+                {% if not pd %}
                 <div class="spacing wrapper">
                   <input type="submit" value="Apply Preferences" id="loginButton"/>
                 </div>
+                {% endif %}
               </form>
             </div>
           </div>
@@ -127,6 +145,7 @@
     <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
     <!-- custom javascript -->
     <script src="{% static 'js/professorSettings.js' %}"></script>
+    <script src="{% static 'js/PDcourseSelection.js' %}"></script>
 
   </body>
 

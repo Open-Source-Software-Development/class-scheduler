@@ -228,8 +228,15 @@ class GradeLevel(models.Model):
     """
         TODO Documentation
     """
+    
+    class Meta:
+        unique_together = (("course", "grade_level"),)
+    
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    grade_level = models.PositiveIntegerField()
+    grade_level = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return "{} ".format(self.course)
     
 class ProfessorConstraint(models.Model):
     """
