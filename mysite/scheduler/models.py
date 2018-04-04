@@ -324,7 +324,6 @@ class UserConstraint(UserPreferenceOrConstraint):
 # Output
 
 
-@six.python_2_unicode_compatible
 class Run(models.Model):
 
     # TODO: have an actual Season table and make this a foreign key
