@@ -89,10 +89,17 @@ def course_selection(request):
     filter = request.GET.get('division')
     if filter == None:
         filter = 'All'
+    year = request.GET.get('year')
+    if year == None:
+        year = 'Select Year'
    
     selected = request.POST.getlist('Courses')
+    first = request.user.first_name
+    last = request.user.last_name
     
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'filter': filter, 'selected':selected})
+        
+    
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'filter': filter, 'selected':selected, 'year': year})
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
