@@ -3,13 +3,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
-from scheduler.dataAPI import *
+from scheduler.blockcalendar import *
 from django.urls import reverse
 from .models import Block
 from scheduler.models import Course
 from scheduler.models import Professor
 from scheduler.models import Block
+from scheduler.models import ProfessorConstraint
 from polls.templatetags.poll_extras import register
+from collections import OrderedDict
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -17,101 +19,72 @@ def blank(request):
 def index(request):
 	return render(request, 'index.html')
 
+DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"]
+
 ## TODO: Documentation
 #
 def professor_settings(request):
-    D = DataAPI()
-    
-    #Get current user's name
+    #Get the Professor instance representing the current user
     first = request.user.first_name
     last = request.user.last_name
-    
-    #Get list of current professors constraints
-    restraints = list(D.get_professor_avalible(first, last))
-    constraints = {}
-    for i in restraints:
-        constraints[i['block']] = i['value']
-        #BLOCK IDS NOT CORRECT
-
-    #Get all time block data from database
-    block_data = list(Block.objects.filter().values('start_time', 'end_time', 'day', 'block_id'))
-    #Create list to hold unique time blocks during each day
-    block_times = []
-	
-    #Get all unique time blocks classes are held on days
-    for i in block_data:
-        if str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3] not in block_times:
-            block_times.append(str(i['start_time'])[:-3] + ' - ' + str(i['end_time'])[:-3])	
-		
-    #Create a dictionary of dictionaries, holding time blocks for each day of the week
-    block_ids = {'Monday': {}, 'Tuesday': {}, 'Wednesday': {}, 'Thursday': {}, 'Friday': {}}
-    for day in block_ids:
-        for time in block_times:
-            block_ids[day][time] = 'N/A'
-    
-    #Populate each time block, for each day of the week, with the ID of each block
-    #GO THROUGH EACH DAY
-    for day in block_ids:
-        #GO THROUGH EACH TIME BLOCK
-        for time in block_times:
-            #GO THROUGH EACH BLOCK
-            for data in block_data:
-                #IF THE DAY OF BLOCK IS EQUAL TO DAY
-                if data['day'] == day:
-                    #IF THE TIME BLOCK OF BLOCK IS EQUAL TO TIME BLOCK
-                    if str(data['start_time'])[:-3] + ' - ' + str(data['end_time'])[:-3] == time:
-                        #ADD BLOCK ID TO THAT TIME ON THAT DAY
-                        block_ids[day][time] = data['block_id']
-	
-    if request.method == 'POST':
-
-        schedule_info = (request.POST.copy()).dict()
-        del schedule_info['csrfmiddlewaretoken']
-
-        for key, value in schedule_info.items():
-            if value == '1':
-                D.insert_professor_avalible(first, last, key, value)
-            if value == '2':
-                D.insert_professor_avalible(first, last, key, value)
-
-        return render(request, 'profSettings.html', {'message': 'Settings Applied', 'data': schedule_info, 'block_ids': block_ids, 'block_times': block_times})
-    else:
-        return render(request, 'profSettings.html', {'data': constraints, 'block_ids': block_ids, 'block_times': block_times})
+    professor = Professor.objects.get(first=first, last=last)
+    return render(request, 'profSettings.html', professor_settings_helper(professor, request))
 
 def PD_professor_settings(request):
-    professors = Professor.objects.filter()
-
-    if request.GET.get('prof'):
-        selected = request.GET.get('prof')
+    selected = request.GET.get('prof')
+    template_args = None
+    if not selected:
+        template_args = {'error': 'Please select a professor'}
     else:
-        selected = 'None Selected'
-		
+        names = selected.split()
+        professor = Professor.objects.get(first=names[0], last=names[1])
+        template_args = professor_settings_helper(professor, request)
+    template_args['profs'] = Professor.objects.all()
+    template_args['selected'] = selected
+    template_args['pd'] = True
+    return render(request, 'profSettings.html', template_args)
+
+def professor_settings_helper(professor, request):
     if request.method == 'POST':
-        if selected == 'None Selected':
-            return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'error': 'Please Select a Professor'})
-        else:
-            schedule_info = (request.POST.copy()).dict()
-            del schedule_info['csrfmiddlewaretoken']
-
-            first = selected.split()[0]
-            last = selected.split()[1]
-
-            D = DataAPI()
-
-            for key, value in schedule_info.items():
-                if value == '1':
-                    D.insert_professor_avalible(first, key, value)
-                if value == '2':
-                    D.insert_professor_avalible(first, key, value)
-
-        return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected, 'message': 'Settings Applied', 'data': schedule_info})
+        return update_professor_constraints(professor, request.POST)
     else:
-        return render(request, 'PDProfSettings.html', {'profs': professors, 'selected': selected})
+        return get_professor_constraints(professor)
+
+def get_professor_constraints(professor):
+    #Get list of current professors constraints
+    calendar = BlockCalendar(professor)
+    constraints = calendar.get_professor_available()
+
+    blocks = list(Block.objects.all().values('start_time', 'end_time', 'day', 'block_id'))
+    blocks_by_time = OrderedDict()
+    for block in sorted(blocks, key=lambda b: b['start_time']):
+        day = block['day']
+        time = block['start_time']
+        if not time in blocks_by_time:
+            blocks_by_time[time] = {}
+        blocks_by_time[time][day] = block
+    return {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS}
+
+def update_professor_constraints(professor, post_data):
+    result = get_professor_constraints(professor)
+    constraints = result['data']
+
+    schedule_info = post_data.copy().dict()
+    del schedule_info['csrfmiddlewaretoken']
+
+    calendar = BlockCalendar(professor)
+    calendar.clear_professor()
+    for key, value in schedule_info.items():
+        constraints[key] = value
+        if value != '0':
+            calendar.insert_professor_available(key, value)
+
+    result['message'] = 'Settings applied'
+    return result
 
 def course_selection(request):
-	classes = Course.objects.filter()	
-
-	return render(request, 'PDcoursesSelector.html', {'classes': classes})
+	courses = Course.objects.filter()	
+	return render(request, 'PDcoursesSelector.html', {'courses': courses})
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')
@@ -119,13 +92,24 @@ def course_review(request):
 def simple_upload(request):
 	return render(request, 'import_data.html')
 
-def run(request):
-	return render(request, 'run.html')
-
 def history(request):
 	return render(request, 'history.html')
 
+def view_history(request):
+	query_results = Hunk.objects.all()
+	
+	return render(request, 'view_history.html', {'query_results': query_results})
 
+def run(request):
+	return render(request, 'run.html')
+
+## TODO: Documentation
+def results(request):
+	query_results = Hunk.objects.all()
+	
+	return render(request, 'results.html', {'query_results': query_results})
+	
+	
 ## TODO: Documentation
 #
 def userSettings(request):

@@ -227,10 +227,16 @@ class ProfessorConstraint(models.Model):
     """
         TODO Documentation
     """
+    class Meta:
+        unique_together = (('professor', 'block'),)
+        
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
     value = models.PositiveIntegerField()
     # block = models.ForeignKey(Block, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return "({}, {}, {})".format(self.professor, self.block, self.value)
 
 # Input : User preferences/constraints
 
@@ -321,7 +327,9 @@ class Hunk(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    block = models.ForeignKey(Block, on_delete=models.CASCADE)
+    first_block = models.ForeignKey(Block, on_delete=models.CASCADE, related_name='first')
+    second_block = models.ForeignKey(Block, on_delete=models.CASCADE,related_name='second')
+    
 
     def __str__(self):
         return six.text_type("Hunk({}, {}, {}, {})").format(self.section, self.professor, self.room, self.block)

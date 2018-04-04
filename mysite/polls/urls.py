@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^run/', polls.views.run, name='run'),
     url(r'^history/', polls.views.history, name='history'),
+	url(r'^results/', polls.views.results, name='results'),
+    url(r'^view_history/', polls.views.view_history, name='view_history'),
     url(r'^PD_professor_settings/', polls.views.PD_professor_settings, name='PD_professor_settings'),
     url(r'^course_review/', polls.views.course_review, name='course_review'),
     url(r'^upload/', scheduler.views.upload_csv, name='upload'),
