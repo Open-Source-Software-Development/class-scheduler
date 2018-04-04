@@ -22,14 +22,5 @@
         <property name = "hibernate.connection.password">
         </property>
 
-        <mapping resource = "ProfessorRecord.hbm.xml"/>
-        <mapping resource = "BlockRecord.hbm.xml"/>
-        <mapping resource = "CourseRecord.hbm.xml"/>
-        <mapping resource = "RoomRecord.hbm.xml"/>
-        <mapping resource = "RoomTypeRecord.hbm.xml"/>
-        <mapping resource = "UserConstraintRecord.hbm.xml"/>
-        <mapping resource = "UserPreferenceRecord.hbm.xml"/>
-        <mapping resource = "ProfessorQualificationRecord.hbm.xml"/>
-
     </session-factory>
 </hibernate-configuration>

@@ -2,9 +2,9 @@ package osd.database;
 
 abstract class AbstractSchedulingElement {
 
-    abstract int getId();
+    public abstract int getId();
 
-    abstract String getName();
+    public abstract String getName();
 
     @Override
     public final int hashCode() {

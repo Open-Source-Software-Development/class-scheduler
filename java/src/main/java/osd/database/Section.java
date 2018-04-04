@@ -17,6 +17,8 @@ public interface Section {
 
     String getName();
 
+    String getSuffix();
+
     static Section of(final Course course, final String suffix) {
         return new Section() {
 
@@ -27,6 +29,10 @@ public interface Section {
 
             public String getName() {
                 return course.getName() + "-" + suffix;
+            }
+
+            public String getSuffix() {
+                return suffix;
             }
 
             @Override

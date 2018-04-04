@@ -19,27 +19,27 @@ import javax.inject.Singleton;
             DatabaseModule.class,
             ConsiderationModule.class,
             ScheduleModule.class,
-            Scheduling.DemoCallbacksModule.class,
+            SchedulingMain.MainModule.class,
     }
 )
-public abstract class Scheduling {
+public abstract class SchedulingMain {
 
     abstract Scheduler schedulingAttempt();
 
     public static void main(final String[] args) {
-        // Demo code.
-        Scheduling scheduling = DaggerScheduling.builder()
+        DaggerSchedulingMain.builder()
                 .baseConsiderationModule(new BaseConsiderationModule(FastClasspathScanner::new))
-                .build();
-
-        scheduling.schedulingAttempt().run();
+                .build()
+                .schedulingAttempt()
+                .run();
+        System.exit(0);
     }
 
     @Module
-    abstract class DemoCallbacksModule {
+    abstract class MainModule {
 
         @Binds
-        abstract Callbacks bindsCallbacks(DemoCallbacks demoCallbacks);
+        abstract Callbacks bindsCallbacks(SchedulingCallbacks demoCallbacks);
 
     }
 

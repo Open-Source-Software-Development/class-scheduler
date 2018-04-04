@@ -41,7 +41,7 @@ class SchedulerCandidate implements Results {
         // Using outstandingSections.keySet() instead of sources.getSections()
         // is a "free" way of only computing priorities once per course.
         this.lowestCandidateCount = Integer.MAX_VALUE;
-        updatePriorities(outstandingSections.keySet());
+        outstandingSections.keySet().forEach(this::updatePriority);
         expectedHunkCount = (int)sources.getSections().count();
     }
 
@@ -84,17 +84,7 @@ class SchedulerCandidate implements Results {
         final Set<Course> adjacent = state.getAdjacent(newCourse)
                 .filter(outstandingSections::containsKey)
                 .collect(Collectors.toSet());
-        updatePriorities(adjacent);
-    }
-
-    private void updatePriorities(final Set<Course> courses) {
-        final int total = courses.size();
-        int complete = 0;
-        for (final Course course: courses) {
-            updatePriority(course);
-            complete++;
-            System.err.println("Initialized " + complete + "/" + total + " courses");
-        }
+        adjacent.forEach(this::updatePriority);
     }
 
     /**

@@ -1,9 +1,9 @@
 package osd.database;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="scheduler_roomtype")
 class RoomTypeRecord extends Record<RoomType> {
 
     @Id

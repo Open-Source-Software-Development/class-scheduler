@@ -2,6 +2,7 @@ package osd.database;
 
 import dagger.Module;
 import dagger.Provides;
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import osd.considerations.UserConstraint;
@@ -11,10 +12,19 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.*;
+
 @Module
 public class DatabaseModule {
 
-    private static final SessionFactory SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
+    private static final SessionFactory SESSION_FACTORY;
+    static {
+        final Configuration configuration = new Configuration();
+        new FastClasspathScanner()
+                .matchClassesWithAnnotation(Entity.class, configuration::addAnnotatedClass)
+                .scan();
+        SESSION_FACTORY = configuration.configure().buildSessionFactory();
+    }
 
     @Provides
     static SessionFactory providesSessionFactory() {

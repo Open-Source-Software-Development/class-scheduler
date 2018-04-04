@@ -2,9 +2,21 @@ package osd.database;
 
 import osd.considerations.UserConstraint;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="scheduler_qualification")
 class QualificationRecord extends Record<UserConstraint> {
 
-    private int id, professorId, courseId;
+    @Id @GeneratedValue
+    @Column(name="id")
+    private int id;
+
+    @Column(name="professor_id")
+    private int professorId;
+
+    @Column(name="course_id")
+    private int courseId;
 
     @Override
     UserConstraint create(RecordAccession lookup) {

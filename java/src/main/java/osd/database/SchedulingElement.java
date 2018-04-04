@@ -13,12 +13,12 @@ class SchedulingElement extends AbstractSchedulingElement {
     }
 
     @Override
-    int getId() {
+    public int getId() {
         return id;
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return name;
     }
 }
