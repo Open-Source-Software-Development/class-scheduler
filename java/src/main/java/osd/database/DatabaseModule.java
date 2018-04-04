@@ -2,56 +2,46 @@ package osd.database;
 
 import dagger.Module;
 import dagger.Provides;
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import osd.considerations.UserConstraint;
 import osd.considerations.UserPreference;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.persistence.*;
 
 @Module
 public class DatabaseModule {
 
-    public DatabaseModule(/* Add arguments here, if needed. */) {
-        // You might want to use FlagModule as an argument.
-        // It gives you an API for finding the database hostname,
-        // username, etc...
+    private static final SessionFactory SESSION_FACTORY;
+    static {
+        final Configuration configuration = new Configuration();
+        new FastClasspathScanner()
+                .matchClassesWithAnnotation(Entity.class, configuration::addAnnotatedClass)
+                .scan();
+        SESSION_FACTORY = configuration.configure().buildSessionFactory();
     }
 
     @Provides
-    Collection<BlockRecord> providesBlockRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
+    static SessionFactory providesSessionFactory() {
+        return SESSION_FACTORY;
     }
 
     @Provides
-    Collection<ProfessorRecord> providesProfessorRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
+    static Collection<UserConstraint> providesUserConstraints(final RecordAccession recordAccession) {
+        return Stream.concat(
+                recordAccession.getAllFromDefaultRecord(UserConstraint.class),
+                recordAccession.getAll(UserConstraint.class, QualificationRecord.class)
+        ).collect(Collectors.toList());
     }
 
     @Provides
-    Collection<RoomRecord> providesRoomRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<CourseRecord> providesCourseRecords() {
-        // TODO: implement this
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<UserConstraint> providesUserConstraintRecords() {
-        // TODO: implement this
-        // See UserConstraintRecord
-        throw new UnsupportedOperationException();
-    }
-
-    @Provides
-    Collection<UserPreference> providesUserPreferenceRecords() {
-        // TODO: implement this
-        // See UserConstraintRecord
-        throw new UnsupportedOperationException();
+    static Collection<UserPreference> providesUserPreferences(final RecordAccession recordAccession) {
+        return recordAccession.getAllFromDefaultRecord(UserPreference.class).collect(Collectors.toList());
     }
 
 }

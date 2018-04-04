@@ -1,37 +1,70 @@
 package osd.database;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "scheduler_block")
-class BlockRecord implements Block {
+class BlockRecord extends Record<Block> {
 
-    // TODO: add column fields, getters, and setters here
-    // see https://www.tutorialspoint.com/hibernate/hibernate_annotations.htm
+	@Id @GeneratedValue
+	@Column(name = "id")
+	private int id;
+	
+	@Column(name = "block_id")
+	private String blockId;
+	
+	@Column(name = "day")
+	private String day;
+	
+	@Column(name = "start_time")
+	private String startTime;
+	
+	@Column(name = "end_time")
+	private String endTime;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getBlockId() {
+		return blockId;
+	}
+
+	public void setBlockId(String blockId) {
+		this.blockId = blockId;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Object startTime) {
+        this.startTime = startTime.toString();
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Object endTime) {
+    	this.endTime = endTime.toString();
+	}
 
     @Override
-    public String getName() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-
-    @Override
-    public Block getNext() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-
-    @Override
-    public Block getPrevious() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-
-    @Override
-    public Block getPairedWith() {
-        // TODO: implement this
-        throw new UnsupportedOperationException("not yet implemented");
+    Block create(final RecordAccession lookup) {
+        return new Block(id, blockId, day, Integer.valueOf(startTime.split(":")[0]), lookup);
     }
 
 }

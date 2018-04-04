@@ -1,40 +1,36 @@
 package osd.database;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class Sources {
 
-    private final Collection<Section> sections;
-    private final Collection<Professor> professors;
-    private final Collection<Block> blocks;
-    private final Collection<Room> rooms;
+    private final RecordAccession recordAccession;
 
     @Inject
-    Sources(final Collection<Section> sections, final Collection<Professor> professors,
-            final Collection<Block> blocks, final Collection<Room> rooms) {
-        // Defensive-copy everything.
-        this.sections = new ArrayList<>(sections);
-        this.professors = new ArrayList<>(professors);
-        this.blocks = new ArrayList<>(blocks);
-        this.rooms = new ArrayList<>(rooms);
+    Sources(final RecordAccession recordAccession) {
+        this.recordAccession = recordAccession;
     }
 
     public Stream<Section> getSections() {
-        return sections.stream();
+        return recordAccession.getAllFromDefaultRecord(Course.class)
+                .map(Course::getSections)
+                .map(Iterable::spliterator)
+                .flatMap(spliterator -> StreamSupport.stream(spliterator, false));
     }
 
     public Stream<Professor> getProfessors() {
-        return professors.stream();
+        return recordAccession.getAllFromDefaultRecord(Professor.class);
     }
 
     public Stream<Block> getBlocks() {
-        return blocks.stream();
+        return recordAccession.getAllFromDefaultRecord(Block.class);
     }
 
     public Stream<Room> getRooms() {
-        return rooms.stream();
+        return recordAccession.getAllFromDefaultRecord(Room.class);
     }
+
+
 }
