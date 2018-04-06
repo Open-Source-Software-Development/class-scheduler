@@ -111,7 +111,7 @@ class SchedulerCandidate implements Results {
     /**
      * Determine if this candidate schedule is impossible. A schedule is
      * "impossible" if at least one section has no candidates. A complete
-     * candidate is never impossible.
+     * schedule is never impossible.
      * @return if this candidate schedule is impossible
      */
     boolean isImpossible() {

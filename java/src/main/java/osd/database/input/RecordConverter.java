@@ -1,15 +1,16 @@
 package osd.database.input;
 
-import osd.database.input.record.Record;
 import osd.database.input.record.RecordStreamer;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,12 +54,12 @@ public class RecordConverter {
     }
 
     private <T> Stream<T> convertAll(final Class<T> clazz) {
-        final Map<Class<? extends Record>, Constructor<T>> constructors = getConstructors(clazz);
-        return constructors.keySet().stream()
-                .flatMap(recordType -> {
-                    final Constructor<T> ctor = constructors.get(recordType);
+        return getConstructors(clazz)
+                .flatMap(constructor -> {
+                    final Class<?> recordType = constructor.getParameterTypes()[0];
                     return records.stream(recordType)
-                            .map(record -> convert(record, ctor));
+                            .filter(getFilter(constructor))
+                            .map(record -> convert(record, constructor));
                 });
     }
 
@@ -71,13 +72,32 @@ public class RecordConverter {
         }
     }
 
+    private static Predicate<Object> getFilter(final Constructor<?> constructor) {
+        final String filterName = constructor.getAnnotation(RecordConversion.class).filter();
+        if (filterName.equals("")) {
+            return anything -> true;
+        }
+        final Class<?> recordType = constructor.getParameterTypes()[0];
+        try {
+            final Method filter = constructor.getDeclaringClass().getDeclaredMethod(filterName, recordType);
+            filter.setAccessible(true);
+            return record -> {
+                try {
+                    return (Boolean)filter.invoke(null, record);
+                } catch (final ReflectiveOperationException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+        } catch (final NoSuchMethodException e) {
+            throw new AssertionError(constructor + " has invalid @RecordConversion: no such filter() method");
+        }
+    }
+
     @SuppressWarnings("unchecked") // getDeclaredConstructors returns Constructor<?>[]
-    private static <T> Map<Class<? extends Record>, Constructor<T>> getConstructors(final Class<T> clazz) {
+    private static <T> Stream<Constructor<T>> getConstructors(final Class<T> clazz) {
         return Arrays.stream(clazz.getDeclaredConstructors())
-                .filter(ctor -> ctor.isAnnotationPresent(RecordConversion.class))
-                .collect(Collectors.toMap(
-                        ctor -> (Class<? extends Record>)ctor.getParameterTypes()[0],
-                        ctor -> (Constructor<T>)ctor));
+                .filter(constructor -> constructor.isAnnotationPresent(RecordConversion.class))
+                .map(constructor -> (Constructor<T>)constructor);
     }
 
 }

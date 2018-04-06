@@ -1,7 +1,10 @@
 package osd.considerations;
 
+import osd.database.input.Block;
+import osd.database.input.Professor;
 import osd.database.input.RecordConversion;
 import osd.database.input.RecordConverter;
+import osd.database.input.record.ProfessorConstraintRecord;
 import osd.database.input.record.UserConstraintRecord;
 import osd.schedule.Hunk;
 import osd.util.ImmutablePair;
@@ -44,6 +47,13 @@ public class UserConstraint extends UserConsideration implements Constraint {
         }
     }
 
+    @RecordConversion(filter="professorConstraintIsApplicable")
+    UserConstraint(final ProfessorConstraintRecord record, final RecordConverter recordConverter) {
+        this(recordConverter.get(Professor.class, record.getProfessorId()),
+                recordConverter.get(Block.class, record.getBlockId()),
+                true);
+    }
+
     UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
         super(left, right);
         if (isBlacklist) {
@@ -71,6 +81,11 @@ public class UserConstraint extends UserConsideration implements Constraint {
 
     Pair<Object, HunkField<?>> getWhitelistKey() {
         return whitelistKey;
+    }
+
+    @SuppressWarnings("unused")
+    private static boolean professorConstraintIsApplicable(final ProfessorConstraintRecord record) {
+        return record.getValue() == 1;
     }
 
 }
