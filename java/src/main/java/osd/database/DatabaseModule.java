@@ -33,6 +33,7 @@ public class DatabaseModule {
 
     @Provides
     static Collection<UserConstraint> providesUserConstraints(final RecordAccession recordAccession) {
+        // TODO: include professor availability
         return Stream.concat(
                 recordAccession.getAllFromDefaultRecord(UserConstraint.class),
                 recordAccession.getAll(UserConstraint.class, QualificationRecord.class)
@@ -41,6 +42,7 @@ public class DatabaseModule {
 
     @Provides
     static Collection<UserPreference> providesUserPreferences(final RecordAccession recordAccession) {
+        // TODO: include professor availability
         return recordAccession.getAllFromDefaultRecord(UserPreference.class).collect(Collectors.toList());
     }
 
