@@ -12,6 +12,9 @@ from scheduler.models import Block
 from scheduler.models import ProfessorConstraint
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
+import subprocess
+from multiprocessing import Pool
+from multiprocessing import Process
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -95,7 +98,22 @@ def simple_upload(request):
 def history(request):
 	return render(request, 'history.html')
 
+def runHelper():
+    subprocess.run(['java', '-jar', '../java/target/Scheduler.jar'])
+
+runScheduler = None
+
+## TODO: Documentation
 def run(request):
+	global runScheduler
+	action = request.GET.get('action')
+	if action == "run":
+		if runScheduler is None or not runScheduler.is_alive():
+			runScheduler = Process(group=None, target=runHelper, name=None, args=(), kwargs={})
+			runScheduler.start()
+	elif action == "cancel":
+		if runScheduler is not None and runScheduler.is_alive():
+			runScheduler.kill()
 	return render(request, 'run.html')
 	
 ## TODO: Documentation
