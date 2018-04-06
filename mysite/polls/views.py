@@ -89,25 +89,44 @@ def course_selection(request):
     year = request.GET.get('year')
     if year == None:
         year = 'First'
-        
-    running = CourseLevel().get_grade_by_year(year)
+    running_filter = request.GET.get('running-list')
+    if running_filter == None:
+        running_filter = 'None'
+    course_filter = request.GET.get('course-list') 
+    if course_filter == None:
+        course_filter = 'None'
+    
+    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
     selected = request.POST.getlist('Courses')
+    removed = request.POST.getlist('Removed')
     first = request.user.first_name
     last = request.user.last_name
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    courses = Course.objects.exclude(id__in=excluded_courses)
+    if course_filter != 'None':
+        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    else:
+        courses = Course.objects.exclude(id__in=excluded_courses)
+    
+    running = CourseLevel().get_grade_by_year(year)
     
     for course in selected:
+        print('Adding ' + course)
         CourseLevel().insert_grade_level(course, year)
-    
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running})
+        
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
 
 def course_review(request):
     programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
     program = request.GET.get('program')
     if program == None:
         program = 'ACC'
+    running_filter = request.GET.get('running-list')
+    if running_filter == None:
+        running_filter = 'None'
+    course_filter = request.GET.get('course-list') 
+    if course_filter == None:
+        course_filter = 'None'
 
     year = request.GET.get('year')
     if year == None:
@@ -118,7 +137,10 @@ def course_review(request):
     last = request.user.last_name
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    courses = Course.objects.exclude(id__in=excluded_courses)
+    if course_filter != 'None':
+        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    else:
+        courses = Course.objects.exclude(id__in=excluded_courses)
 
     program_restriction = Course.objects.filter(program=program).values('id')
     running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
@@ -127,7 +149,7 @@ def course_review(request):
     for course in selected:
         CourseLevel().insert_grade_level(course, year)
     
-    return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program})
+    return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program, 'course_filter': course_filter, 'running_filter': running_filter})
 
 def simple_upload(request):
 	return render(request, 'import_data.html')
