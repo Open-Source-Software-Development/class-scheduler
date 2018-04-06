@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_qualification")
-class QualificationRecord {
+public class QualificationRecord {
 
     @Id @GeneratedValue
     @Column(name="id")

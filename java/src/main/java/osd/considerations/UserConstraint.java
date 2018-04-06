@@ -1,10 +1,8 @@
 package osd.considerations;
 
-import osd.database.input.Block;
-import osd.database.input.Professor;
-import osd.database.input.RecordConversion;
-import osd.database.input.RecordConverter;
+import osd.database.input.*;
 import osd.database.input.record.ProfessorConstraintRecord;
+import osd.database.input.record.QualificationRecord;
 import osd.database.input.record.UserConstraintRecord;
 import osd.schedule.Hunk;
 import osd.util.ImmutablePair;
@@ -45,6 +43,14 @@ public class UserConstraint extends UserConsideration implements Constraint {
         } else {
             whitelistKey = ImmutablePair.of(left, HunkField.get(right));
         }
+    }
+
+    @RecordConversion
+    UserConstraint(final QualificationRecord record, final RecordConverter recordConverter) {
+        this(recordConverter.get(Course.class, record.getCourseId()),
+             recordConverter.get(Professor.class, record.getProfessorId()),
+            false);
+
     }
 
     @RecordConversion(filter="professorConstraintIsApplicable")
