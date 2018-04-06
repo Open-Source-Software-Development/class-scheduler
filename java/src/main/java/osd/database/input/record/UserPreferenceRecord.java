@@ -25,18 +25,22 @@ public class UserPreferenceRecord implements UserConsiderationRecord {
     @Column(name="score")
     private int score;
 
+    @SuppressWarnings("unused")
     public int getScore() {
         return score;
     }
 
+    @SuppressWarnings("unused")
     public void setScore(Object score) {
         this.score = Integer.valueOf(score.toString());
     }
 
+    @SuppressWarnings("unused")
     public int getId() {
         return id;
     }
 
+    @SuppressWarnings("unused")
     public void setId(int id) {
         this.id = id;
     }
@@ -46,6 +50,7 @@ public class UserPreferenceRecord implements UserConsiderationRecord {
         return leftTypeId;
     }
 
+    @SuppressWarnings("unused")
     public void setLeftTypeId(int leftTypeId) {
         this.leftTypeId = leftTypeId;
     }
@@ -55,6 +60,7 @@ public class UserPreferenceRecord implements UserConsiderationRecord {
         return rightTypeId;
     }
 
+    @SuppressWarnings("unused")
     public void setRightTypeId(int rightTypeId) {
         this.rightTypeId = rightTypeId;
     }
@@ -64,6 +70,7 @@ public class UserPreferenceRecord implements UserConsiderationRecord {
         return leftId;
     }
 
+    @SuppressWarnings("unused")
     public void setLeftId(int leftId) {
         this.leftId = leftId;
     }
@@ -73,10 +80,12 @@ public class UserPreferenceRecord implements UserConsiderationRecord {
         return rightId;
     }
 
+    @SuppressWarnings("unused")
     public void setRightId(int rightId) {
         this.rightId = rightId;
     }
 
+    @SuppressWarnings("unused")
     public void setScore(int score) {
         this.score = score;
     }

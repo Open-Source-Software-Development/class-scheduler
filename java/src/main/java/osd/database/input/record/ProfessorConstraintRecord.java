@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "scheduler_professorconstraint")
-public class ProfessorConstraintRecord implements Record {
+public class ProfessorConstraintRecord {
 
     @Id
     @GeneratedValue
@@ -20,35 +20,42 @@ public class ProfessorConstraintRecord implements Record {
     @Column(name = "value")
     private int value;
 
-    @Override
+    @SuppressWarnings("unused")
     public int getId() {
         return id;
     }
 
+    @SuppressWarnings("unused")
     public void setId(int id) {
         this.id = id;
     }
 
+    @SuppressWarnings("unused")
     public int getProfessorId() {
         return professorId;
     }
 
+    @SuppressWarnings("unused")
     public void setProfessorId(int professorId) {
         this.professorId = professorId;
     }
 
+    @SuppressWarnings("unused")
     public int getBlockId() {
         return blockId;
     }
 
+    @SuppressWarnings("unused")
     public void setBlockId(int blockId) {
         this.blockId = blockId;
     }
 
+    @SuppressWarnings("unused")
     public int getValue() {
         return value;
     }
 
+    @SuppressWarnings("unused")
     public void setValue(int value) {
         this.value = value;
     }

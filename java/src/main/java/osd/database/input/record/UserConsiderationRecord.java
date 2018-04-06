@@ -1,6 +1,6 @@
 package osd.database.input.record;
 
-public interface UserConsiderationRecord extends Record {
+public interface UserConsiderationRecord {
 
     int getLeftTypeId();
 

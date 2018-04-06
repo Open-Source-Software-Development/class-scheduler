@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_course")
-public class CourseRecord implements Record {
+public class CourseRecord {
 
 	@Id @GeneratedValue
 	@Column(name = "id")
@@ -35,70 +35,87 @@ public class CourseRecord implements Record {
 	@Column(name = "division_id")
 	private int divisionId;
 
+    @SuppressWarnings("unused")
 	public int getId() {
 		return id;
 	}
 
+    @SuppressWarnings("unused")
 	public void setId(int id) {
 		this.id = id;
 	}
 
+    @SuppressWarnings("unused")
 	public String getName() {
 		return this.program + "-" + this.style;
 	}
 
+    @SuppressWarnings("unused")
 	public String getProgram() {
 		return program;
 	}
 
+    @SuppressWarnings("unused")
 	public void setProgram(String program) {
 		this.program = program;
 	}
 
+    @SuppressWarnings("unused")
 	public String getTitle() {
 		return title;
 	}
 
+    @SuppressWarnings("unused")
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+    @SuppressWarnings("unused")
 	public String getInsMethod() {
 		return insMethod;
 	}
 
+    @SuppressWarnings("unused")
 	public void setInsMethod(String insMethod) {
 		this.insMethod = insMethod;
 	}
 
+    @SuppressWarnings("unused")
 	public int getSectionCapacity() {
 		return sectionCapacity;
 	}
 
+    @SuppressWarnings("unused")
 	public void setSectionCapacity(Object sectionCapacity) {
 		this.sectionCapacity = Integer.valueOf(sectionCapacity.toString());
 	}
 
+    @SuppressWarnings("unused")
 	public String getStyle() {
 		return style;
 	}
 
+    @SuppressWarnings("unused")
 	public void setStyle(String style) {
 		this.style = style;
 	}
 
+    @SuppressWarnings("unused")
 	public int getDivisionId() {
 		return divisionId;
 	}
 
+    @SuppressWarnings("unused")
 	public void setDivisionId(Object divisionId) {
 		this.divisionId = Integer.valueOf(divisionId.toString());
 	}
 
+    @SuppressWarnings("unused")
     public int getBaseSectionCount() {
         return baseSectionCount;
     }
 
+    @SuppressWarnings("unused")
     public void setBaseSectionCount(Object baseSectionCount) {
         this.baseSectionCount = Integer.valueOf(baseSectionCount.toString());
     }
