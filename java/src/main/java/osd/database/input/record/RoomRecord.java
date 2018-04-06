@@ -1,4 +1,4 @@
-package osd.database;
+package osd.database.input.record;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_room")
-class RoomRecord extends Record<Room> {
+public class RoomRecord implements Record {
 
     @Id @GeneratedValue
     @Column(name = "id")
@@ -75,11 +75,6 @@ class RoomRecord extends Record<Room> {
 
     public void setRoomNumber(Object roomNumber) {
         this.roomNumber = Integer.valueOf(roomNumber.toString());
-    }
-
-    @Override
-    Room create(final RecordAccession lookup) {
-        return new Room(id, getName(), lookup.get(RoomType.class, roomTypeId));
     }
 
 	private String getName() {

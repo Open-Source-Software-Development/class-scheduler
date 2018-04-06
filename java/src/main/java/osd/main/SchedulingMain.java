@@ -6,7 +6,7 @@ import dagger.Module;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import osd.considerations.BaseConsiderationModule;
 import osd.considerations.ConsiderationModule;
-import osd.database.DatabaseModule;
+import osd.database.HibernateSessionFactoryModule;
 import osd.schedule.Callbacks;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
@@ -16,7 +16,7 @@ import javax.inject.Singleton;
 @Singleton
 @Component(
     modules={
-            DatabaseModule.class,
+            HibernateSessionFactoryModule.class,
             ConsiderationModule.class,
             ScheduleModule.class,
             SchedulingMain.MainModule.class,

@@ -1,12 +1,10 @@
-package osd.database;
-
-import osd.considerations.UserConstraint;
+package osd.database.input.record;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_qualification")
-class QualificationRecord extends Record<UserConstraint> {
+class QualificationRecord implements Record {
 
     @Id @GeneratedValue
     @Column(name="id")
@@ -18,14 +16,6 @@ class QualificationRecord extends Record<UserConstraint> {
     @Column(name="course_id")
     private int courseId;
 
-    @Override
-    UserConstraint create(RecordAccession lookup) {
-        final Professor professor = lookup.get(Professor.class, professorId);
-        final Course course = lookup.get(Course.class, courseId);
-        return new UserConstraint(course, professor, false);
-    }
-
-    @Override
     public int getId() {
         return id;
     }

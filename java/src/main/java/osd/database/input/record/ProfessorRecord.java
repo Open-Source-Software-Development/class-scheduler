@@ -1,10 +1,10 @@
-package osd.database;
+package osd.database.input.record;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_professor")
-class ProfessorRecord extends Record<Professor> {
+public class ProfessorRecord implements Record {
 
 	@Id @GeneratedValue
     @Column(name="id")
@@ -49,11 +49,6 @@ class ProfessorRecord extends Record<Professor> {
 
 	public void setDivisionId(Object divisionId) {
 		this.divisionId = Integer.valueOf(divisionId.toString());
-	}
-
-	@Override
-	Professor create(final RecordAccession lookup) {
-	    return new Professor(id, getName());
 	}
 
 	private String getName() {

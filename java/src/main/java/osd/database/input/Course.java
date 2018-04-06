@@ -1,6 +1,7 @@
-package osd.database;
+package osd.database.input;
 
-import java.util.Collections;
+import osd.database.input.record.CourseRecord;
+
 import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -13,21 +14,28 @@ public class Course extends SchedulingElement {
 
     private final int baseSectionCount;
 
-    Course(final int id, final String name, final int baseSectionCount) {
-        super(id, name);
-        this.baseSectionCount = baseSectionCount;
+    @RecordConversion
+    Course(final CourseRecord record, final RecordConverter recordConverter) {
+        super(record.getId(), record.getName());
+        this.baseSectionCount = record.getBaseSectionCount();
+    }
+
+    private Iterable<Section> getSections0() {
+        // TODO: consider pregen sections
+        return () -> IntStream.rangeClosed(1, baseSectionCount)
+                .mapToObj(i -> Section.of(this, String.valueOf(i)))
+                .iterator();
     }
 
     /**
      * Return all the sections for this course. This should consider both
      * "pregenerated" sections specified in the database, and "additional"
      * sections specified in the course's "sections" column.
-     * @return an iterable representing this course's sections
+     * @return a stream of this course's sections
      */
-    Iterable<Section> getSections() {
-        return () -> IntStream.rangeClosed(1, baseSectionCount)
-                .mapToObj(i -> Section.of(this, String.valueOf(i)))
-                .iterator();
+    public Stream<Section> streamSections() {
+        return IntStream.rangeClosed(1, baseSectionCount)
+                .mapToObj(i -> Section.of(this, String.valueOf(i)));
     }
 
     /**

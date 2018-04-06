@@ -1,4 +1,4 @@
-package osd.database;
+package osd.database.input;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

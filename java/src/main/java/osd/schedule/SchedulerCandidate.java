@@ -1,8 +1,8 @@
 package osd.schedule;
 
-import osd.database.Course;
-import osd.database.Section;
-import osd.database.Sources;
+import osd.database.input.Course;
+import osd.database.input.Section;
+import osd.database.input.Sources;
 import osd.util.relation.OneToManyRelation;
 
 import javax.inject.Inject;

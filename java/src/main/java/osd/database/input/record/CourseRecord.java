@@ -1,4 +1,4 @@
-package osd.database;
+package osd.database.input.record;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_course")
-class CourseRecord extends Record<Course> {
+public class CourseRecord implements Record {
 
 	@Id @GeneratedValue
 	@Column(name = "id")
@@ -96,16 +96,11 @@ class CourseRecord extends Record<Course> {
 	}
 
     public int getBaseSectionCount() {
-        return divisionId;
+        return baseSectionCount;
     }
 
     public void setBaseSectionCount(Object baseSectionCount) {
         this.baseSectionCount = Integer.valueOf(baseSectionCount.toString());
-    }
-
-    @Override
-    Course create(final RecordAccession lookup) {
-	    return new Course(id, getName(), baseSectionCount);
     }
 
 }

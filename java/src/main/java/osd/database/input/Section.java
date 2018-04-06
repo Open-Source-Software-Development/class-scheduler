@@ -1,4 +1,4 @@
-package osd.database;
+package osd.database.input;
 
 import java.util.Objects;
 import java.util.function.Function;

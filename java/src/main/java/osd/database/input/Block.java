@@ -1,4 +1,9 @@
-package osd.database;
+package osd.database.input;
+
+import osd.database.input.record.BlockRecord;
+
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * A specific time block, as specified in the sandbox. A block represents a
@@ -11,16 +16,17 @@ public class Block extends SchedulingElement {
     private final String day;
     private final int hour;
 
-    private RecordAccession lookup;
+    private Supplier<Stream<Block>> allBlocks;
     private Block next;
     private Block previous;
     private Block pairedWith;
 
-    Block(final int id, final String blockId, final String day, final int hour, final RecordAccession lookup) {
-        super(id, blockId);
-        this.day = day;
-        this.hour = hour;
-        this.lookup = lookup;
+    @RecordConversion
+    Block(final BlockRecord record, final RecordConverter recordConverter) {
+        super(record.getId(), record.getBlockId());
+        this.day = record.getDay();
+        this.hour = Integer.valueOf(record.getStartTime().split(":")[0]);
+        this.allBlocks = () -> recordConverter.getAll(Block.class);
     }
 
     /**
@@ -58,26 +64,26 @@ public class Block extends SchedulingElement {
         final int len = blockId.length();
         final String prefix = blockId.substring(0, len - 1);
         final char suffix = blockId.charAt(len - 1);
-        final String otherSuffix = (suffix == 'A' ? "B" : "A");
-        return prefix + otherSuffix;
+        final String allSuffix = (suffix == 'A' ? "B" : "A");
+        return prefix + allSuffix;
     }
 
     private void init() {
-        if (lookup == null) {
+        if (allBlocks == null) {
             return;
         }
-        next = lookup.getAllFromDefaultRecord(Block.class)
+        next = allBlocks.get()
                 .filter(block -> day.equals(block.day))
                 .filter(block -> block.hour == hour + 1)
                 .findFirst().orElse(null);
-        previous = lookup.getAllFromDefaultRecord(Block.class)
+        previous = allBlocks.get()
                 .filter(block -> day.equals(block.day))
                 .filter(block -> block.hour == hour - 1)
                 .findFirst().orElse(null);
-        pairedWith = lookup.getAllFromDefaultRecord(Block.class)
+        pairedWith = allBlocks.get()
                 .filter(block -> block.getName().equals(getPairBlockId()))
                 .findFirst().orElse(null);
-        lookup = null;
+        allBlocks = null;
     }
 
 }

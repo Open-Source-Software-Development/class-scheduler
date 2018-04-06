@@ -1,10 +1,10 @@
-package osd.database;
+package osd.database.output;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_hunk")
-public class OutputHunk {
+public class HunkRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "sqlite")

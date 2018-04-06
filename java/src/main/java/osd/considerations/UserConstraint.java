@@ -1,5 +1,8 @@
 package osd.considerations;
 
+import osd.database.input.RecordConversion;
+import osd.database.input.RecordConverter;
+import osd.database.input.record.UserConstraintRecord;
 import osd.schedule.Hunk;
 import osd.util.ImmutablePair;
 import osd.util.Pair;
@@ -31,7 +34,17 @@ public class UserConstraint extends UserConsideration implements Constraint {
 
     private final Pair<Object, HunkField<?>> whitelistKey;
 
-    public UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
+    @RecordConversion
+    UserConstraint(final UserConstraintRecord record, final RecordConverter recordConverter) {
+        super(record, recordConverter);
+        if (record.getIsBlacklist()) {
+            whitelistKey = ImmutablePair.of(null, null);
+        } else {
+            whitelistKey = ImmutablePair.of(left, HunkField.get(right));
+        }
+    }
+
+    UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
         super(left, right);
         if (isBlacklist) {
             whitelistKey = ImmutablePair.of(null, null);

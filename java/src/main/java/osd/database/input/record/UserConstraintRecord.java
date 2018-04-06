@@ -1,13 +1,10 @@
-package osd.database;
-
-import osd.considerations.UserConstraint;
-import osd.considerations.UserPreference;
+package osd.database.input.record;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "scheduler_userconstraint")
-public class UserConstraintRecord extends Record<UserConstraint> {
+public class UserConstraintRecord implements UserConsiderationRecord {
 
     @Id @GeneratedValue
     @Column(name="id")
@@ -36,14 +33,6 @@ public class UserConstraintRecord extends Record<UserConstraint> {
         isBlacklist = Boolean.valueOf(blacklist.toString());
     }
 
-    @Override
-    UserConstraint create(final RecordAccession accession) {
-        final Object left = accession.get(leftTypeId, leftId);
-        final Object right = accession.get(rightTypeId, rightId);
-        return new UserConstraint(left, right, isBlacklist);
-    }
-
-    @Override
     public int getId() {
         return id;
     }
@@ -52,6 +41,7 @@ public class UserConstraintRecord extends Record<UserConstraint> {
         this.id = id;
     }
 
+    @Override
     public int getLeftTypeId() {
         return leftTypeId;
     }
@@ -60,6 +50,7 @@ public class UserConstraintRecord extends Record<UserConstraint> {
         this.leftTypeId = leftTypeId;
     }
 
+    @Override
     public int getRightTypeId() {
         return rightTypeId;
     }
@@ -68,6 +59,7 @@ public class UserConstraintRecord extends Record<UserConstraint> {
         this.rightTypeId = rightTypeId;
     }
 
+    @Override
     public int getLeftId() {
         return leftId;
     }
@@ -76,6 +68,7 @@ public class UserConstraintRecord extends Record<UserConstraint> {
         this.leftId = leftId;
     }
 
+    @Override
     public int getRightId() {
         return rightId;
     }

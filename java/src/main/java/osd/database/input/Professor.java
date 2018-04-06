@@ -1,4 +1,6 @@
-package osd.database;
+package osd.database.input;
+
+import osd.database.input.record.ProfessorRecord;
 
 /**
  * Represents a professor. The most important characteristic of a professor
@@ -6,9 +8,14 @@ package osd.database;
  */
 public class Professor extends SchedulingElement {
 
-	Professor(final int id, final String name) {
+	public Professor(final int id, final String name) {
 		super(id, name);
 	}
+
+	@RecordConversion
+    Professor(final ProfessorRecord record, final RecordConverter recordConverter) {
+	    super(record.getId(), record.getFirstName() + " " + record.getLastName());
+    }
 
 	/**
      * Gets the maximum number of course sections this professor can teach.
@@ -17,6 +24,7 @@ public class Professor extends SchedulingElement {
      */
 
 	public int getCourseCapacity() {
+	    // TODO: real implementation
 		return 4;
 	}
 

@@ -1,9 +1,10 @@
 package osd.considerations;
 
+import osd.database.input.RecordConverter;
+import osd.database.input.record.UserConsiderationRecord;
 import osd.schedule.Hunk;
 
 import java.util.function.Function;
-import static osd.considerations.HunkField.Extraction;
 
 /**
  * Abstract base class for user preferences and constraints. User preferences
@@ -14,14 +15,17 @@ import static osd.considerations.HunkField.Extraction;
  */
 abstract class UserConsideration implements Consideration {
 
-    private final Function<Hunk, Extraction> extractLeft, extractRight;
+    final Object left, right;
+    private final Function<Hunk, HunkField.Extraction> extractLeft, extractRight;
 
-    /**
-     * Construct a user consideration with some pair.
-     * @param left the first element of the pair
-     * @param right the second element of the pair
-     */
+    UserConsideration(final UserConsiderationRecord record, final RecordConverter recordConverter) {
+        this(recordConverter.getGeneric(record.getLeftTypeId(), record.getLeftId()),
+             recordConverter.getGeneric(record.getRightTypeId(), record.getRightId()));
+    }
+
     UserConsideration(final Object left, final Object right) {
+        this.left = left;
+        this.right = right;
         this.extractLeft = HunkField.get(left).getExtractor(left);
         this.extractRight = HunkField.get(right).getExtractor(right);
     }
@@ -67,18 +71,18 @@ abstract class UserConsideration implements Consideration {
      * @return whether both scheduling elements are present
      */
     Match getMatch(final Hunk hunk) {
-        final Extraction left = extractLeft.apply(hunk);
-        final Extraction right = extractRight.apply(hunk);
-        if (left == Extraction.INCONCLUSIVE || right == Extraction.INCONCLUSIVE) {
+        final HunkField.Extraction left = extractLeft.apply(hunk);
+        final HunkField.Extraction right = extractRight.apply(hunk);
+        if (left == HunkField.Extraction.INCONCLUSIVE || right == HunkField.Extraction.INCONCLUSIVE) {
             return Match.INCONCLUSIVE;
         }
-        if (left == Extraction.MATCH && right == Extraction.MATCH) {
+        if (left == HunkField.Extraction.MATCH && right == HunkField.Extraction.MATCH) {
             return Match.BOTH;
         }
-        if (left == Extraction.NO_MATCH && right == Extraction.NO_MATCH) {
+        if (left == HunkField.Extraction.NO_MATCH && right == HunkField.Extraction.NO_MATCH) {
             return Match.NEITHER;
         }
-        return (left == Extraction.MATCH) ? Match.LEFT : Match.RIGHT;
+        return (left == HunkField.Extraction.MATCH) ? Match.LEFT : Match.RIGHT;
     }
 
 }

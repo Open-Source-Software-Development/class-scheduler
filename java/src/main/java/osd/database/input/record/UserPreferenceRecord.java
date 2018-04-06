@@ -1,12 +1,10 @@
-package osd.database;
-
-import osd.considerations.UserPreference;
+package osd.database.input.record;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "scheduler_userpreference")
-public class UserPreferenceRecord extends Record<UserPreference> {
+public class UserPreferenceRecord implements UserConsiderationRecord {
 
     @Id @GeneratedValue
     @Column(name="id")
@@ -35,13 +33,6 @@ public class UserPreferenceRecord extends Record<UserPreference> {
         this.score = Integer.valueOf(score.toString());
     }
 
-    UserPreference create(final RecordAccession accession) {
-        final Object left = accession.get(leftTypeId, leftId);
-        final Object right = accession.get(rightTypeId, rightId);
-        return new UserPreference(left, right, score);
-    }
-
-    @Override
     public int getId() {
         return id;
     }
@@ -50,6 +41,7 @@ public class UserPreferenceRecord extends Record<UserPreference> {
         this.id = id;
     }
 
+    @Override
     public int getLeftTypeId() {
         return leftTypeId;
     }
@@ -58,6 +50,7 @@ public class UserPreferenceRecord extends Record<UserPreference> {
         this.leftTypeId = leftTypeId;
     }
 
+    @Override
     public int getRightTypeId() {
         return rightTypeId;
     }
@@ -66,6 +59,7 @@ public class UserPreferenceRecord extends Record<UserPreference> {
         this.rightTypeId = rightTypeId;
     }
 
+    @Override
     public int getLeftId() {
         return leftId;
     }
@@ -74,6 +68,7 @@ public class UserPreferenceRecord extends Record<UserPreference> {
         this.leftId = leftId;
     }
 
+    @Override
     public int getRightId() {
         return rightId;
     }

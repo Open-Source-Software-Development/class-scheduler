@@ -1,10 +1,10 @@
-package osd.database;
+package osd.database.input.record;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_roomtype")
-class RoomTypeRecord extends Record<RoomType> {
+public class RoomTypeRecord implements Record {
 
     @Id
     @GeneratedValue
@@ -30,8 +30,4 @@ class RoomTypeRecord extends Record<RoomType> {
         return name;
     }
 
-    @Override
-    RoomType create(final RecordAccession lookup) {
-        return new RoomType(id, name);
-    }
 }

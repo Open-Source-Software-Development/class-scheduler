@@ -3,7 +3,10 @@ package osd.main;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import osd.database.*;
+import osd.database.input.*;
+import osd.database.output.HunkRecord;
+import osd.database.output.RunRecord;
+import osd.database.output.SectionRecord;
 import osd.schedule.Hunk;
 
 import javax.inject.Inject;
@@ -25,44 +28,44 @@ class CompleteScheduleHandler implements Consumer<List<Hunk>> {
     public synchronized void accept(final List<Hunk> hunks) {
         Session session = sessionFactory.openSession();
         final Transaction transaction = session.beginTransaction();
-        final OutputRun run = createRun(session);
+        final RunRecord run = createRun(session);
         hunks.forEach(hunk -> saveHunk(session, hunk, run));
         transaction.commit();
         session.close();
     }
 
-    private void saveHunk(final Session session, final Hunk hunk, final OutputRun run) {
-        final OutputSection section = convertSection(hunk.getSection(), run);
+    private void saveHunk(final Session session, final Hunk hunk, final RunRecord run) {
+        final SectionRecord section = convertSection(hunk.getSection(), run);
         final Professor professor = hunk.getProfessor();
         final Room room = hunk.getRoom();
         final Set<Block> blocks = hunk.getBlocks();
         final Block block = pickRepresentativeBlock(blocks);
 
         session.save(section);
-        final OutputHunk outputHunk = new OutputHunk();
-        outputHunk.setBlockId(block.getId());
-        outputHunk.setProfessorId(professor.getId());
-        outputHunk.setRoomId(room.getId());
-        outputHunk.setSectionId(section.getId());
-        session.save(outputHunk);
+        final HunkRecord hunkRecord = new HunkRecord();
+        hunkRecord.setBlockId(block.getId());
+        hunkRecord.setProfessorId(professor.getId());
+        hunkRecord.setRoomId(room.getId());
+        hunkRecord.setSectionId(section.getId());
+        session.save(hunkRecord);
     }
 
-    private OutputRun createRun(final Session session) {
-        final OutputRun run = new OutputRun();
+    private RunRecord createRun(final Session session) {
+        final RunRecord run = new RunRecord();
         session.save(run);
         return run;
     }
 
-    private OutputSection convertSection(final Section section, final OutputRun run) {
+    private SectionRecord convertSection(final Section section, final RunRecord run) {
         final Course course = section.getCourse();
         final int courseId = course.getId();
         final int runId = run.getId();
         final String suffix = section.getSuffix();
-        final OutputSection outputSection = new OutputSection();
-        outputSection.setCourseId(courseId);
-        outputSection.setSuffix(suffix);
-        outputSection.setRunId(runId);
-        return outputSection;
+        final SectionRecord sectionRecord = new SectionRecord();
+        sectionRecord.setCourseId(courseId);
+        sectionRecord.setSuffix(suffix);
+        sectionRecord.setRunId(runId);
+        return sectionRecord;
     }
 
     private Block pickRepresentativeBlock(final Set<Block> blocks) {

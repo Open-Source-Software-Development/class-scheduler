@@ -4,10 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.Course;
-import osd.database.Professor;
-import osd.database.Room;
-import osd.database.Section;
+import osd.database.input.*;
 import osd.schedule.Hunk;
 import osd.schedule.Lookups;
 
@@ -89,7 +86,7 @@ class ConsiderationModuleTest {
     void providesPreferences() {
         when(mockUserPreference.evaluate(mockHunk)).thenReturn(1);
         when(mockBoundPreference.evaluate(mockHunk)).thenReturn(2);
-        final BiFunction<Lookups, Hunk, Integer> result = ConsiderationModule.providesPreferences(
+        final BiFunction<Lookups, Hunk, Integer> result = ConsiderationModule.providesPreferenceBiFunction(
                 Collections.singleton(mockUserPreference),
                 Collections.singleton(mockBasePreference)
         );
@@ -101,7 +98,7 @@ class ConsiderationModuleTest {
 
     @Test
     void providesUserConstraints_Good() {
-        final Predicate<Hunk> result = ConsiderationModule.providesUserConstraints(userConstraints);
+        final Predicate<Hunk> result = ConsiderationModule.providesUserConstraintPredicate(userConstraints);
         when(mockSection.getCourse()).thenReturn(mockCourse);
         when(mockHunk.getProfessor()).thenReturn(mockProfessorGood1);
         when(mockHunk.getRoom()).thenReturn(mockRoomGood);
@@ -110,7 +107,7 @@ class ConsiderationModuleTest {
 
     @Test
     void providesUserConstraints_Whitelist() {
-        final Predicate<Hunk> result = ConsiderationModule.providesUserConstraints(userConstraints);
+        final Predicate<Hunk> result = ConsiderationModule.providesUserConstraintPredicate(userConstraints);
         when(mockSection.getCourse()).thenReturn(mockCourse);
         when(mockHunk.getProfessor()).thenReturn(mockProfessorBad);
         when(mockHunk.getRoom()).thenReturn(mockRoomGood);
@@ -119,7 +116,7 @@ class ConsiderationModuleTest {
 
     @Test
     void providesUserConstraints_Blacklist() {
-        final Predicate<Hunk> result = ConsiderationModule.providesUserConstraints(userConstraints);
+        final Predicate<Hunk> result = ConsiderationModule.providesUserConstraintPredicate(userConstraints);
         when(mockSection.getCourse()).thenReturn(mockCourse);
         when(mockHunk.getProfessor()).thenReturn(mockProfessorGood1);
         when(mockHunk.getRoom()).thenReturn(mockRoomBlacklisted);
