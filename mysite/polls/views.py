@@ -231,3 +231,12 @@ def upload_csv_time_block(request):
 		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
 
 	return HttpResponseRedirect(reverse("upload"))
+	
+## Create views for custom 404 and 500 error pages
+def handler404(request):
+	
+	return render(request, 'error_404.html', status=404)
+	
+def handler500(request):
+	
+	return render(request, 'error_500.html', status=500)
