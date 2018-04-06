@@ -19,6 +19,9 @@ class CourseRecord extends Record<Course> {
 	
 	@Column(name = "title")
 	private String title;
+
+	@Column(name = "base_section_count")
+    private int baseSectionCount;
 	
 	@Column(name = "ins_method")
 	private String insMethod;
@@ -92,8 +95,17 @@ class CourseRecord extends Record<Course> {
 		this.divisionId = Integer.valueOf(divisionId.toString());
 	}
 
+    public int getBaseSectionCount() {
+        return divisionId;
+    }
+
+    public void setBaseSectionCount(Object baseSectionCount) {
+        this.baseSectionCount = Integer.valueOf(baseSectionCount.toString());
+    }
+
     @Override
     Course create(final RecordAccession lookup) {
-	    return new Course(id, getName());
+	    return new Course(id, getName(), baseSectionCount);
     }
+
 }

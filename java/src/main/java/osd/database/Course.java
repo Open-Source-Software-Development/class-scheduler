@@ -2,6 +2,7 @@ package osd.database;
 
 import java.util.Collections;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -10,8 +11,11 @@ import java.util.stream.Stream;
  */
 public class Course extends SchedulingElement {
 
-    Course(final int id, final String name) {
+    private final int baseSectionCount;
+
+    Course(final int id, final String name, final int baseSectionCount) {
         super(id, name);
+        this.baseSectionCount = baseSectionCount;
     }
 
     /**
@@ -21,8 +25,9 @@ public class Course extends SchedulingElement {
      * @return an iterable representing this course's sections
      */
     Iterable<Section> getSections() {
-        // TODO: proper implementation
-        return Collections.singleton(Section.of(this, "1"));
+        return () -> IntStream.rangeClosed(1, baseSectionCount)
+                .mapToObj(i -> Section.of(this, String.valueOf(i)))
+                .iterator();
     }
 
     /**
