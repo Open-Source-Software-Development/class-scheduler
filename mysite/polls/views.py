@@ -99,8 +99,6 @@ def course_selection(request):
     programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
     selected = request.POST.getlist('Courses')
     removed = request.POST.getlist('Removed')
-    first = request.user.first_name
-    last = request.user.last_name
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
     if course_filter != 'None':
@@ -108,7 +106,12 @@ def course_selection(request):
     else:
         courses = Course.objects.exclude(id__in=excluded_courses)
     
-    running = CourseLevel().get_grade_by_year(year)
+    if running_filter != 'None':
+        program_restriction = Course.objects.filter(program=running_filter).values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    else:
+        program_restriction = Course.objects.filter().values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
     
     for course in selected:
         print('Adding ' + course)
@@ -119,22 +122,19 @@ def course_selection(request):
 def course_review(request):
     programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
     program = request.GET.get('program')
-    if program == None:
-        program = 'ACC'
+    if program == 'All' or program == None:
+        program = 'All'
     running_filter = request.GET.get('running-list')
     if running_filter == None:
         running_filter = 'None'
     course_filter = request.GET.get('course-list') 
     if course_filter == None:
         course_filter = 'None'
-
     year = request.GET.get('year')
     if year == None:
         year = 'First'
         
     selected = request.POST.getlist('Courses')
-    first = request.user.first_name
-    last = request.user.last_name
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
     if course_filter != 'None':
@@ -142,8 +142,12 @@ def course_review(request):
     else:
         courses = Course.objects.exclude(id__in=excluded_courses)
 
-    program_restriction = Course.objects.filter(program=program).values('id')
-    running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    if program != 'All':
+        program_restriction = Course.objects.filter(program=program).values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    else:
+        program_restriction = Course.objects.filter().values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
     
     
     for course in selected:
