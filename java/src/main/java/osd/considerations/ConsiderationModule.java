@@ -57,7 +57,7 @@ public interface ConsiderationModule {
     }
 
     @Provides
-    static BiPredicate<Lookups, Hunk> providesBaseConstraints(final Collection<BaseConstraint> baseConstraints) {
+    static BiPredicate<Lookups, Hunk> providesBaseConstraintPredicate(final Collection<BaseConstraint> baseConstraints) {
         return (lookups, hunk) -> baseConstraints.stream()
                 .map(baseConstraint -> baseConstraint.bind(lookups))
                 .allMatch(predicate -> predicate.test(hunk));

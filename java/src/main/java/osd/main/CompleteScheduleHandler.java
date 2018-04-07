@@ -13,9 +13,8 @@ import osd.schedule.Results;
 import javax.inject.Inject;
 import java.util.Comparator;
 import java.util.Set;
-import java.util.function.Consumer;
 
-class CompleteScheduleHandler implements Consumer<Results> {
+class CompleteScheduleHandler {
 
     private final SessionFactory sessionFactory;
     private final RunRecord run;
@@ -26,17 +25,13 @@ class CompleteScheduleHandler implements Consumer<Results> {
         this.run = run;
     }
 
-    @Override
-    public synchronized void accept(final Results results) {
-        Transaction transaction = null;
+    void accept(final Results results) {
         Session session = sessionFactory.openSession();
         try {
-            transaction = session.beginTransaction();
+            final Transaction transaction = session.beginTransaction();
             results.getHunks().forEach(hunk -> saveHunk(session, hunk, run));
+            transaction.commit();
         } finally {
-            if (transaction != null) {
-                transaction.commit();
-            }
             if (session != null) {
                 session.close();
             }

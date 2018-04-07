@@ -13,9 +13,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
@@ -48,6 +46,8 @@ class ConsiderationModuleTest {
     private Object[] mockRightValues;
     @Mock private Professor mockProfessorGood1, mockProfessorGood2, mockProfessorBad;
     @Mock private Room mockRoomGood, mockRoomBad, mockRoomBlacklisted;
+
+    @Mock private Sources mockSources;
 
     @MockConstraintData(course = 0, right = 0, isBlacklist = false)
     @Mock private UserConstraint mockUserConstraint_Course_GoodProfessor1_Whitelist;
@@ -83,7 +83,7 @@ class ConsiderationModuleTest {
     }
 
     @Test
-    void providesPreferences() {
+    void providesPreferenceBiFunction() {
         when(mockUserPreference.evaluate(mockHunk)).thenReturn(1);
         when(mockBoundPreference.evaluate(mockHunk)).thenReturn(2);
         final BiFunction<Lookups, Hunk, Integer> result = ConsiderationModule.providesPreferenceBiFunction(
@@ -97,7 +97,7 @@ class ConsiderationModuleTest {
     }
 
     @Test
-    void providesUserConstraints_Good() {
+    void providesUserConstraintPredicate_Good() {
         final Predicate<Hunk> result = ConsiderationModule.providesUserConstraintPredicate(userConstraints);
         when(mockSection.getCourse()).thenReturn(mockCourse);
         when(mockHunk.getProfessor()).thenReturn(mockProfessorGood1);
@@ -106,7 +106,7 @@ class ConsiderationModuleTest {
     }
 
     @Test
-    void providesUserConstraints_Whitelist() {
+    void providesUserConstraintPredicate_Whitelist() {
         final Predicate<Hunk> result = ConsiderationModule.providesUserConstraintPredicate(userConstraints);
         when(mockSection.getCourse()).thenReturn(mockCourse);
         when(mockHunk.getProfessor()).thenReturn(mockProfessorBad);
@@ -115,7 +115,7 @@ class ConsiderationModuleTest {
     }
 
     @Test
-    void providesUserConstraints_Blacklist() {
+    void providesUserConstraintPredicate_Blacklist() {
         final Predicate<Hunk> result = ConsiderationModule.providesUserConstraintPredicate(userConstraints);
         when(mockSection.getCourse()).thenReturn(mockCourse);
         when(mockHunk.getProfessor()).thenReturn(mockProfessorGood1);
@@ -124,21 +124,37 @@ class ConsiderationModuleTest {
     }
 
     @Test
-    void providesBaseConstraints() {
-        providesBaseConstraintsHelper(true);
-        providesBaseConstraintsHelper(false);
+    void providesBaseConstraintPredicate() {
+        providesBaseConstraintPredicateHelper(true);
+        providesBaseConstraintPredicateHelper(false);
     }
 
-    private void providesBaseConstraintsHelper(final boolean testReturns) {
+    private void providesBaseConstraintPredicateHelper(final boolean testReturns) {
         clearInvocations(mockBaseConstraint);
         clearInvocations(mockBoundConstraint);
         when(mockBoundConstraint.test(mockHunk)).thenReturn(testReturns);
-        final BiPredicate<Lookups, Hunk> result = ConsiderationModule.providesBaseConstraints(
+        final BiPredicate<Lookups, Hunk> result = ConsiderationModule.providesBaseConstraintPredicate(
                 Collections.singleton(mockBaseConstraint)
         );
         assertEquals(testReturns, result.test(mockLookups, mockHunk));
         verify(mockBaseConstraint).bind(mockLookups);
         verify(mockBoundConstraint).test(mockHunk);
+    }
+
+    @Test
+    void providesUserConstraints() {
+        final Collection<UserConstraint> expected = Collections.singleton(mockUserConstraint);
+        when(mockSources.getDirect(UserConstraint.class)).then(invocation -> expected.stream());
+        final Collection<UserConstraint> result = new HashSet<>(ConsiderationModule.providesUserConstraints(mockSources));
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void providesUserPreferences() {
+        final Collection<UserPreference> expected = Collections.singleton(mockUserPreference);
+        when(mockSources.getDirect(UserPreference.class)).then(invocation -> expected.stream());
+        final Collection<UserPreference> result = new HashSet<>(ConsiderationModule.providesUserPreferences(mockSources));
+        assertEquals(expected, result);
     }
 
     @Target(ElementType.FIELD)

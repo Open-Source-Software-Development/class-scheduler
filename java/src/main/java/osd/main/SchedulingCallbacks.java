@@ -6,11 +6,10 @@ import osd.schedule.Results;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 class SchedulingCallbacks implements Callbacks {
 
-    private final Consumer<Results> onComplete;
+    private final CompleteScheduleHandler onComplete;
     private final List<Results> completeResults = new ArrayList<>();
 
     @Inject
@@ -31,7 +30,9 @@ class SchedulingCallbacks implements Callbacks {
 
     @Override
     public void done(final boolean success) {
-        completeResults.forEach(onComplete);
+        for (final Results results: completeResults) {
+            onComplete.accept(results);
+        }
     }
 
 }
