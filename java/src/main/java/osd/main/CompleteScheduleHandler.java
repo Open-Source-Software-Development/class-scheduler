@@ -8,14 +8,14 @@ import osd.database.output.HunkRecord;
 import osd.database.output.RunRecord;
 import osd.database.output.SectionRecord;
 import osd.schedule.Hunk;
+import osd.schedule.Results;
 
 import javax.inject.Inject;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-class CompleteScheduleHandler implements Consumer<List<Hunk>> {
+class CompleteScheduleHandler implements Consumer<Results> {
 
     private final SessionFactory sessionFactory;
 
@@ -25,11 +25,11 @@ class CompleteScheduleHandler implements Consumer<List<Hunk>> {
     }
 
     @Override
-    public synchronized void accept(final List<Hunk> hunks) {
+    public synchronized void accept(final Results results) {
         Session session = sessionFactory.openSession();
         final Transaction transaction = session.beginTransaction();
         final RunRecord run = createRun(session);
-        hunks.forEach(hunk -> saveHunk(session, hunk, run));
+        results.getHunks().forEach(hunk -> saveHunk(session, hunk, run));
         transaction.commit();
         session.close();
     }

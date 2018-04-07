@@ -101,12 +101,18 @@ class SchedulerImplTest {
     }
 
     @Test
-    void run_CallsFailureCallbackOnFailedRun() {
+    void run_CalledDone() {
+        instance.run();
+        verify(mockCallbacks).done(true);
+    }
+
+    @Test
+    void run_CallsDoneWithFalseOnFailure() {
         // Re-stub the callbacks' onCompleteResult() to always return false.
         // This ensures that the run will "fail".
         when(mockCallbacks.onCompleteResult(any())).thenReturn(false);
         instance.run();
-        verify(mockCallbacks).onSchedulingFailed();
+        verify(mockCallbacks).done(false);
     }
 
     @Test
@@ -114,7 +120,7 @@ class SchedulerImplTest {
         // The scheduler implementation is supposed to short-circuit
         // evaluation of any outstanding candidates once the callbacks
         // return true. Since there can be thousands or MILLIONS of
-        // outstanding candidates, this is a pretty important optimization...
+        // outstanding candidates, this is a pretty important optimization!
         // To test it, we re-stub the second generation to be an infinite
         // stream of candidates that cause the callbacks to return true,
         // and make sure that the algorithm completes in finite time.

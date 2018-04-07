@@ -20,11 +20,11 @@ public class Everything {
     }
 
     public <T> Stream<Class<?>> extending(final Class<T> clazz) {
-        return scan((list, scanner) -> scanner.matchSubclassesOf(clazz, list::add));
-    }
-
-    public <T> Stream<Class<?>> implementing(final Class<T> clazz) {
-        return scan((list, scanner) -> scanner.matchClassesImplementing(clazz, list::add));
+        if (clazz.isInterface()) {
+            return scan((list, scanner) -> scanner.matchClassesImplementing(clazz, list::add));
+        } else {
+            return scan((list, scanner) -> scanner.matchSubclassesOf(clazz, list::add));
+        }
     }
 
     public Stream<Class<?>> annotatedBy(final Class<? extends Annotation> annotation) {
