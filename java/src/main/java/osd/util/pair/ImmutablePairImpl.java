@@ -1,4 +1,4 @@
-package osd.util;
+package osd.util.pair;
 
 class ImmutablePairImpl<L, R> extends AbstractPair<L, R> implements ImmutablePair<L, R> {
 

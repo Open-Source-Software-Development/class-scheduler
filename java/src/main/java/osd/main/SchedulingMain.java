@@ -3,13 +3,12 @@ package osd.main;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import osd.considerations.BaseConsiderationModule;
 import osd.considerations.ConsiderationModule;
 import osd.database.HibernateSessionFactoryModule;
 import osd.schedule.Callbacks;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
+import osd.util.classpath.ClasspathModule;
 
 import javax.inject.Singleton;
 
@@ -20,6 +19,7 @@ import javax.inject.Singleton;
             ConsiderationModule.class,
             ScheduleModule.class,
             SchedulingMain.MainModule.class,
+            ClasspathModule.class,
     }
 )
 public abstract class SchedulingMain {
@@ -27,9 +27,7 @@ public abstract class SchedulingMain {
     abstract Scheduler schedulingAttempt();
 
     public static void main(final String[] args) {
-        DaggerSchedulingMain.builder()
-                .baseConsiderationModule(new BaseConsiderationModule(FastClasspathScanner::new))
-                .build()
+        DaggerSchedulingMain.create()
                 .schedulingAttempt()
                 .run();
         System.exit(0);
@@ -39,7 +37,7 @@ public abstract class SchedulingMain {
     abstract class MainModule {
 
         @Binds
-        abstract Callbacks bindsCallbacks(SchedulingCallbacks demoCallbacks);
+        abstract Callbacks bindsCallbacks(SchedulingCallbacks callbacks);
 
     }
 

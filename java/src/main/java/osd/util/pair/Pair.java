@@ -1,4 +1,4 @@
-package osd.util;
+package osd.util.pair;
 
 /**
  * A pair of two elements.

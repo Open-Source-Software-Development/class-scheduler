@@ -1,4 +1,4 @@
-package osd.util;
+package osd.util.pair;
 
 import org.junit.jupiter.api.Test;
 

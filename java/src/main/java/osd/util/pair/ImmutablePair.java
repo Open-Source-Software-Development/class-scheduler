@@ -1,4 +1,4 @@
-package osd.util;
+package osd.util.pair;
 
 /**
  * A {@link Pair} that is explicitly immutable.

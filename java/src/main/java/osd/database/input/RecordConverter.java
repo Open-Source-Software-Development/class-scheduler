@@ -72,6 +72,13 @@ public class RecordConverter {
         }
     }
 
+    @SuppressWarnings("unchecked") // getDeclaredConstructors returns Constructor<?>[]
+    private static <T> Stream<Constructor<T>> getConstructors(final Class<T> clazz) {
+        return Arrays.stream(clazz.getDeclaredConstructors())
+                .filter(constructor -> constructor.isAnnotationPresent(RecordConversion.class))
+                .map(constructor -> (Constructor<T>)constructor);
+    }
+
     private static Predicate<Object> getFilter(final Constructor<?> constructor) {
         final String filterName = constructor.getAnnotation(RecordConversion.class).filter();
         if (filterName.equals("")) {
@@ -91,13 +98,6 @@ public class RecordConverter {
         } catch (final NoSuchMethodException e) {
             throw new AssertionError(constructor + " has invalid @RecordConversion: no such filter() method");
         }
-    }
-
-    @SuppressWarnings("unchecked") // getDeclaredConstructors returns Constructor<?>[]
-    private static <T> Stream<Constructor<T>> getConstructors(final Class<T> clazz) {
-        return Arrays.stream(clazz.getDeclaredConstructors())
-                .filter(constructor -> constructor.isAnnotationPresent(RecordConversion.class))
-                .map(constructor -> (Constructor<T>)constructor);
     }
 
 }

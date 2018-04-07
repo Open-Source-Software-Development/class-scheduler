@@ -5,8 +5,8 @@ import osd.database.input.record.ProfessorConstraintRecord;
 import osd.database.input.record.QualificationRecord;
 import osd.database.input.record.UserConstraintRecord;
 import osd.schedule.Hunk;
-import osd.util.ImmutablePair;
-import osd.util.Pair;
+import osd.util.pair.ImmutablePair;
+import osd.util.pair.Pair;
 
 /**
  * User constraints whitelist or blacklist pairs of scheduling elements. For
