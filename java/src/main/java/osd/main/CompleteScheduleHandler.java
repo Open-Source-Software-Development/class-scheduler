@@ -18,20 +18,29 @@ import java.util.function.Consumer;
 class CompleteScheduleHandler implements Consumer<Results> {
 
     private final SessionFactory sessionFactory;
+    private final RunRecord run;
 
     @Inject
-    CompleteScheduleHandler(final SessionFactory sessionFactory) {
+    CompleteScheduleHandler(final SessionFactory sessionFactory, final RunRecord run) {
         this.sessionFactory = sessionFactory;
+        this.run = run;
     }
 
     @Override
     public synchronized void accept(final Results results) {
+        Transaction transaction = null;
         Session session = sessionFactory.openSession();
-        final Transaction transaction = session.beginTransaction();
-        final RunRecord run = createRun(session);
-        results.getHunks().forEach(hunk -> saveHunk(session, hunk, run));
-        transaction.commit();
-        session.close();
+        try {
+            transaction = session.beginTransaction();
+            results.getHunks().forEach(hunk -> saveHunk(session, hunk, run));
+        } finally {
+            if (transaction != null) {
+                transaction.commit();
+            }
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     private void saveHunk(final Session session, final Hunk hunk, final RunRecord run) {
@@ -48,12 +57,6 @@ class CompleteScheduleHandler implements Consumer<Results> {
         hunkRecord.setRoomId(room.getId());
         hunkRecord.setSectionId(section.getId());
         session.save(hunkRecord);
-    }
-
-    private RunRecord createRun(final Session session) {
-        final RunRecord run = new RunRecord();
-        session.save(run);
-        return run;
     }
 
     private SectionRecord convertSection(final Section section, final RunRecord run) {

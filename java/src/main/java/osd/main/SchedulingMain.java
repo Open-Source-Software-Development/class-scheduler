@@ -1,11 +1,8 @@
 package osd.main;
 
-import dagger.Binds;
 import dagger.Component;
-import dagger.Module;
 import osd.considerations.ConsiderationModule;
 import osd.database.HibernateSessionFactoryModule;
-import osd.schedule.Callbacks;
 import osd.schedule.ScheduleModule;
 import osd.schedule.Scheduler;
 import osd.util.classpath.ClasspathModule;
@@ -18,7 +15,7 @@ import javax.inject.Singleton;
             HibernateSessionFactoryModule.class,
             ConsiderationModule.class,
             ScheduleModule.class,
-            SchedulingMain.MainModule.class,
+            MainModule.class,
             ClasspathModule.class,
     }
 )
@@ -31,14 +28,6 @@ public abstract class SchedulingMain {
                 .schedulingAttempt()
                 .run();
         System.exit(0);
-    }
-
-    @Module
-    abstract class MainModule {
-
-        @Binds
-        abstract Callbacks bindsCallbacks(SchedulingCallbacks callbacks);
-
     }
 
 }
