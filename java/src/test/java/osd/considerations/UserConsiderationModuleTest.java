@@ -1,22 +1,7 @@
 package osd.considerations;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import osd.database.UserConstraintRecord;
-import osd.database.UserPreferenceRecord;
-import osd.database.Section;
-import osd.schedule.Hunk;
-import osd.util.ImmutablePair;
-import osd.util.Pair;
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class UserConsiderationModuleTest {
 

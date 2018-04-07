@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.*;
+import osd.database.input.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,9 +51,9 @@ class SchedulerCandidateTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         when(mockSources.getSections()).then(unused -> sections.stream());
-        when(mockSources.getBlocks()).then(unused -> blocks.stream());
-        when(mockSources.getRooms()).then(unused -> rooms.stream());
-        when(mockSources.getProfessors()).then(unused -> professors.stream());
+        when(mockSources.get(Block.class)).then(unused -> blocks.stream());
+        when(mockSources.get(Room.class)).then(unused -> rooms.stream());
+        when(mockSources.get(Professor.class)).then(unused -> professors.stream());
 
         // mockSection2 can be taught by either professor, mockSection1 needs mockProfessor1.
         when(mockConsiderations.getUserConstraints()).thenReturn(hunk -> {

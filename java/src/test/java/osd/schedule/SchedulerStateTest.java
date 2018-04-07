@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.*;
+import osd.database.input.*;
 
 import java.util.*;
 import java.util.function.Function;
@@ -118,9 +118,9 @@ class SchedulerStateTest {
         when(mockBlock2B.getPairedWith()).thenReturn(mockBlock2A);
 
         when(mockSources.getSections()).then(unused -> Stream.of(mockSection1, mockSection2, mockSection3, mockSection4));
-        when(mockSources.getProfessors()).then(unused -> Stream.of(mockProfessor1, mockProfessor2, mockProfessor3));
-        when(mockSources.getRooms()).then(unused -> Stream.of(mockRoom1, mockRoom2, mockRoom3));
-        when(mockSources.getBlocks()).then(unused -> Stream.of(mockBlock1A, mockBlock1B, mockBlock2A, mockBlock2B));
+        when(mockSources.get(Professor.class)).then(unused -> Stream.of(mockProfessor1, mockProfessor2, mockProfessor3));
+        when(mockSources.get(Room.class)).then(unused -> Stream.of(mockRoom1, mockRoom2, mockRoom3));
+        when(mockSources.get(Block.class)).then(unused -> Stream.of(mockBlock1A, mockBlock1B, mockBlock2A, mockBlock2B));
 
         root = new SchedulerState(mockSources, mockConsiderations);
         withSection1Hunk = root.childStatesForSection(mockSection1).iterator().next();

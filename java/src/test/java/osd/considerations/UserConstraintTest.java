@@ -4,11 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.Professor;
-import osd.database.Section;
+import osd.database.input.Professor;
+import osd.database.input.Section;
 import osd.schedule.Hunk;
-import osd.util.ImmutablePair;
-import osd.util.Pair;
+import osd.util.pair.ImmutablePair;
+import osd.util.pair.Pair;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;

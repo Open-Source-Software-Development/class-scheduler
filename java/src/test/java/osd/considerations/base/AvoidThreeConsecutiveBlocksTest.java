@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.schedule.Lookups;
-import osd.database.Block;
-import osd.database.Professor;
-import osd.database.Section;
+import osd.database.input.Block;
+import osd.database.input.Professor;
+import osd.database.input.Section;
 import osd.schedule.Hunk;
 
 import java.util.*;

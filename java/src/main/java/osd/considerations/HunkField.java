@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.database.*;
+import osd.database.input.*;
 import osd.schedule.Hunk;
 
 import java.util.*;

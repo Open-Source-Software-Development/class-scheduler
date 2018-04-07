@@ -7,9 +7,9 @@ import dagger.Module;
  * Dagger module to provide the scheduler instance.
  */
 @Module
-public abstract class ScheduleModule {
+public interface ScheduleModule {
 
     @Binds
-    abstract Scheduler bindsScheduler(SchedulerImpl schedulerImpl);
+    Scheduler bindsScheduler(SchedulerImpl schedulerImpl);
 
 }
