@@ -3,8 +3,8 @@ package osd.considerations.base;
 import osd.considerations.BasePreference;
 import osd.considerations.Preference;
 import osd.schedule.Lookups;
-import osd.database.Block;
-import osd.database.Professor;
+import osd.database.input.Block;
+import osd.database.input.Professor;
 import osd.schedule.Hunk;
 
 import java.util.Set;

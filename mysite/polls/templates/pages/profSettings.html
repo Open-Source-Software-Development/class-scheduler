@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+{% load poll_extras %}
+<html lang="en">
+
+  <head>
+    <title>Champlain Scheduler</title>
+
+    <!-- bootstrap css -->
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- metis graphs css -->
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+    <!-- morris graphs css -->
+    <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+    <!-- SB admin 2 css -->
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+    <!-- font awesome css -->
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
+  </head>
+
+  <body onload="setup()")>
+    {% include 'blank.html' %}
+    <div id="wrapper">
+      <div id="page-wrapper">
+
+        <div id="profSettingsHead">
+          <div class="panel panel-primary">
+            <!-- top of welcome panel -->
+            <div class="panel-heading">
+              {% if not pd %}
+              <h1 id="titleScreen">Professor Schedule</h1>
+              {% endif %}
+              {% if pd %}
+              <h1 id="titleScreen">Professor Schedule Review</h1>
+              {% endif %}
+            </div>
+            <!-- bottom of welcome panel -->
+            <div class="panel-footer">
+              <h4> Hello, {{request.user.username}}</h4>
+              {% if not pd %}
+              <h6>Click on boxes to set availability for each day/time</h6>
+              {% endif %}
+              {% if pd %}
+              <h6>Select a professor from the list to view their schedule data</h6>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        {% if pd %}
+	  <!-- if we're in the program director view, render a professor select dropdown -->
+          <hr>
+          <!-- professor selection menu -->
+          <div class="btn-group dual-list input-group" id="dropdownMenu">
+            <button class="btn btn-primary" data-toggle="dropdown">Professors <i class="fa fa-chevron-down"></i></button>
+            <ul class="dropdown-menu scrollableMenu list-group" role="menu">
+              <input id="ScrollMenuSearch" type="text" name="SearchDualList" class="form-control" placeholder="Search...">
+              {% for i in profs %}
+                <li class="list-group-item"><a tabindex="-1" href="{% url 'PD_professor_settings' %}?prof={{ i }}">{{ i }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <!-- review panel top -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-calendar fa-fw"></i> Professor Schedule
+            <span style="float:right;"><b>{{ selected }}</b></span>
+          </div>
+
+          <!-- review panel body -->
+          <div class="panel-body">
+            <!-- preference table -->
+            <div id="timeTable" class="table-responsive">
+              <!-- input form -->
+	      <form action="{% if pd %}{% url 'PD_professor_settings' %}?prof={{ selected }}{% else %}{% url 'professor_settings' %}{% endif %}" method="post">
+                {% csrf_token %}    
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {% for day in days %}
+                        <th>{{ day }}</th>
+                      {% endfor %}
+                    </tr>
+                  </thead>
+                  {% if pd %}
+                  <tbody style="pointer-events: none;">
+                  {% endif %}
+                  {% if not pd %}
+                  <tbody>
+                  {% endif %}
+                    {% for start_time in blocks_by_time %}
+                      <tr>
+                        <th width="120px" >{{ start_time }}</th>
+                        {% for day in days %}
+                          {% with timeblock=blocks_by_time|get_item:start_time|get_item:day %}
+                            {% with id=timeblock.block_id %}
+                              {% with state=data|get_item:id %}
+                                <th width="120px" data-block-state="{{ state }}" class="ClickableTimeBlock" id="{{ id }}">{{ id }}</th>
+                              {% endwith %}
+                            {% endwith %}
+                          {% endwith %}
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                                
+                <!-- success message -->
+                {% if message %}
+                  <span id="goodMsg" onclick='this.remove(this); return false;'>
+                    <div onclick='this.remove(this); return false;' class="panel panel-primary wrapper">
+                      <p>{{ message }}</p>
+                    </div>
+                  </span>
+                {% endif %}
+                
+                {% if not pd %}
+                <div class="spacing wrapper">
+                  <input type="submit" value="Apply Preferences" id="loginButton"/>
+                </div>
+                {% endif %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jquery javascript -->
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <!-- bootstrap javascript -->
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- metis graph javascript -->
+    <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+    <!-- SB admin 2 javascript -->
+    <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+    <!-- custom javascript -->
+    <script src="{% static 'js/professorSettings.js' %}"></script>
+    <script src="{% static 'js/PDcourseSelection.js' %}"></script>
+
+  </body>
+
+</html>

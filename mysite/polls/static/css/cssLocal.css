@@ -2,10 +2,6 @@ body {
 	background-color: #fff;
 }
 
-.col-md-2 {
-  outline: 2px solid #ccc;  
-}
-
 .col-md {
   height : 8em;
   margin-left: 40px;
@@ -77,6 +73,18 @@ body {
 
 .smallButton:hover {
 	background-color: #0057A1;
+}
+
+.scrollableMenu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.scrollableMenuCourses {
+    height: auto;
+    max-height: 50vh;
+    overflow-x: hidden;
 }
 
 #profSettingsHead {
@@ -221,4 +229,8 @@ body {
 
 #dropdownMenu:hover button{
 	background-color: #0057A1;
+}
+
+#ScrollMenuSearch {
+    margin: -5px auto 10px auto;
 }
