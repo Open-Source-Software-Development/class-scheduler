@@ -1,8 +1,8 @@
 package osd.schedule;
 
-import osd.database.Course;
-import osd.database.Section;
-import osd.database.Sources;
+import osd.database.input.Course;
+import osd.database.input.Section;
+import osd.database.input.Sources;
 import osd.util.relation.OneToManyRelation;
 
 import javax.inject.Inject;
@@ -111,7 +111,7 @@ class SchedulerCandidate implements Results {
     /**
      * Determine if this candidate schedule is impossible. A schedule is
      * "impossible" if at least one section has no candidates. A complete
-     * candidate is never impossible.
+     * schedule is never impossible.
      * @return if this candidate schedule is impossible
      */
     boolean isImpossible() {

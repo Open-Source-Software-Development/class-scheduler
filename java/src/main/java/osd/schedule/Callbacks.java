@@ -10,11 +10,14 @@ package osd.schedule;
  * {@code boolean] return value that indicates whether the algorithm should
  * stop. Once a stop condition is met, no further candidates will be generated,
  * and no further callbacks will occur.
- * <p>If the algorithm runs out of candidates before a stop condition is met,
- * {@link #onSchedulingFailed()} will be called to indicate that.</p>
+ * <p>None of these callbacks should have any externally visible side effects.
+ * These callbacks are used as {@linkplain java.util.function.Predicate predicates},
+ * and any externally visible side-effects would violate the contract of that
+ * interface. Instead, the implementation should act as a "stateful filter",
+ * building up results internally. A third callback, {@link #done(boolean)}, is
+ * provided to define behavior for after the algorithm has completed.</p>
  */
 public interface Callbacks {
-
 
     /**
      * Called whenever the algorithm generates a complete result. The return
@@ -39,8 +42,11 @@ public interface Callbacks {
     boolean onBacktrack(final Results results);
 
     /**
-     * Called if the algorithm runs out of candidates before the stop condition.
+     * Called when the algorithm completes. The {@code boolean} argument
+     * indicates whether the algorithm completed successfully {@code true} or
+     * ran out of candidates {@code false}.
+     * @param success whether the algorithm completed successfully
      */
-    void onSchedulingFailed();
+    void done(final boolean success);
 
 }

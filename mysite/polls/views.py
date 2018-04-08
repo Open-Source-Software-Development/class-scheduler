@@ -9,7 +9,10 @@ from .models import Block
 from scheduler.models import Course
 from scheduler.models import Professor
 from scheduler.models import Block
+from scheduler.models import Division
 from scheduler.models import ProfessorConstraint
+from scheduler.models import GradeLevel
+from scheduler.courseConstraints import CourseLevel
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
 import subprocess
@@ -45,7 +48,7 @@ def PD_professor_settings(request):
     template_args['profs'] = Professor.objects.all()
     template_args['selected'] = selected
     template_args['pd'] = True
-    return render(request, 'profSettings.html', template_args)
+    return render(request, 'profSettings.html', template_args, selected)
 
 def professor_settings_helper(professor, request):
     if request.method == 'POST':
@@ -86,8 +89,24 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
-	courses = Course.objects.filter()	
-	return render(request, 'PDcoursesSelector.html', {'courses': courses})
+    divisions = Division.objects.filter()
+   
+    year = request.GET.get('year')
+    if year == None:
+        year = 'First'
+        
+    running = CourseLevel().get_grade_by_year(year)
+    selected = request.POST.getlist('Courses')
+    first = request.user.first_name
+    last = request.user.last_name
+    
+    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
+    courses = Course.objects.exclude(id__in=excluded_courses)
+    
+    for course in selected:
+        CourseLevel().insert_grade_level(course, year)
+    
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'selected':selected, 'year': year, 'running': running})
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')

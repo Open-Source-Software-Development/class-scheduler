@@ -9,7 +9,7 @@ import osd.schedule.Hunk;
  * constraint attempts to refer to some member of a hunk for which that member
  * is {@code null}, the constraint must return {@code true}.</p>
  */
-interface Constraint extends Consideration {
+public interface Constraint extends Consideration {
 
     /**
      * Determines whether some hunk satisfies this consideration. If the

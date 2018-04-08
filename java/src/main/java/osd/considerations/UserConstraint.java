@@ -1,8 +1,12 @@
 package osd.considerations;
 
+import osd.database.input.*;
+import osd.database.input.record.ProfessorConstraintRecord;
+import osd.database.input.record.QualificationRecord;
+import osd.database.input.record.UserConstraintRecord;
 import osd.schedule.Hunk;
-import osd.util.ImmutablePair;
-import osd.util.Pair;
+import osd.util.pair.ImmutablePair;
+import osd.util.pair.Pair;
 
 /**
  * User constraints whitelist or blacklist pairs of scheduling elements. For
@@ -31,7 +35,32 @@ public class UserConstraint extends UserConsideration implements Constraint {
 
     private final Pair<Object, HunkField<?>> whitelistKey;
 
-    public UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
+    @RecordConversion
+    UserConstraint(final UserConstraintRecord record, final RecordConverter recordConverter) {
+        super(record, recordConverter);
+        if (record.getIsBlacklist()) {
+            whitelistKey = ImmutablePair.of(null, null);
+        } else {
+            whitelistKey = ImmutablePair.of(left, HunkField.get(right));
+        }
+    }
+
+    @RecordConversion
+    UserConstraint(final QualificationRecord record, final RecordConverter recordConverter) {
+        this(recordConverter.get(Course.class, record.getCourseId()),
+             recordConverter.get(Professor.class, record.getProfessorId()),
+            false);
+
+    }
+
+    @RecordConversion(filter="professorConstraintIsApplicable")
+    UserConstraint(final ProfessorConstraintRecord record, final RecordConverter recordConverter) {
+        this(recordConverter.get(Professor.class, record.getProfessorId()),
+                recordConverter.get(Block.class, record.getBlockId()),
+                true);
+    }
+
+    UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
         super(left, right);
         if (isBlacklist) {
             whitelistKey = ImmutablePair.of(null, null);
@@ -58,6 +87,11 @@ public class UserConstraint extends UserConsideration implements Constraint {
 
     Pair<Object, HunkField<?>> getWhitelistKey() {
         return whitelistKey;
+    }
+
+    @SuppressWarnings("unused")
+    private static boolean professorConstraintIsApplicable(final ProfessorConstraintRecord record) {
+        return record.getValue() == 1;
     }
 
 }

@@ -1,6 +1,6 @@
 package osd.schedule;
 
-import osd.database.*;
+import osd.database.input.*;
 import osd.util.relation.ManyToManyRelation;
 
 import java.util.HashMap;
@@ -33,7 +33,7 @@ class SchedulerState implements Lookups {
         this.professorsTeaching = new HashMap<>();
         this.hunks = new HashMap<>();
 
-        sources.getBlocks().forEach(block -> initBlock(sources, block));
+        sources.get(Block.class).forEach(block -> initBlock(sources, block));
         sources.getSections().forEach(section -> initSection(sources, section));
 
         recentHunk = null;
@@ -160,8 +160,8 @@ class SchedulerState implements Lookups {
 
     private void initBlock(final Sources sources, final Block block) {
         // Each professor and room is initially available at every block.
-        sources.getProfessors().forEach(professor -> professorAvailableAt.add(professor, block));
-        sources.getRooms().forEach(room -> roomAvailableAt.add(room, block));
+        sources.get(Professor.class).forEach(professor -> professorAvailableAt.add(professor, block));
+        sources.get(Room.class).forEach(room -> roomAvailableAt.add(room, block));
     }
 
     private void initSection(final Sources sources, final Section section) {
@@ -172,10 +172,10 @@ class SchedulerState implements Lookups {
         // or room directly, however, so we first wrap them in a hunk, filling in the other values
         // with null.
         final Predicate<Hunk> constraints = considerations.getUserConstraints();
-        sources.getProfessors()
+        sources.get(Professor.class)
                 .filter(professor -> constraints.test(new Hunk(section, professor, null, null)))
                 .forEach(professor -> professorsForCourse.add(section.getCourse(), professor));
-        sources.getRooms()
+        sources.get(Room.class)
                 .filter(room -> constraints.test(new Hunk(section, null, room, null)))
                 .forEach(room -> roomsForCourse.add(section.getCourse(), room));
     }

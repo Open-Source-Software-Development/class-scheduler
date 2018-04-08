@@ -2,39 +2,29 @@ package osd.considerations;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import osd.util.classpath.Everything;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Module
 public class BaseConsiderationModule {
 
-    private final Supplier<FastClasspathScanner> scannerFactory;
-
-    public BaseConsiderationModule(final Supplier<FastClasspathScanner> scannerFactory) {
-        this.scannerFactory = scannerFactory;
+    @Provides
+    Collection<BaseConstraint> providesRawBaseConstraints(final Everything everything) {
+        return everything.extending(BaseConstraint.class)
+                .map(BaseConsiderationModule::init)
+                .map(BaseConstraint.class::cast)
+                .collect(Collectors.toList());
     }
 
     @Provides
-    Collection<BaseConstraint> providesRawBaseConstraints() {
-        return scan(BaseConstraint.class);
-    }
-
-    @Provides
-    Collection<BasePreference> providesRawBasePreferences() {
-        return scan(BasePreference.class);
-    }
-
-    private <T> Collection<T> scan(final Class<T> clazz) {
-        final List<T> result = new ArrayList<>();
-        scannerFactory.get()
-                .matchClassesImplementing(clazz, c -> result.add(init(c)))
-                .scan();
-        return result;
+    Collection<BasePreference> providesRawBasePreferences(final Everything everything) {
+        return everything.extending(BasePreference.class)
+                .map(BaseConsiderationModule::init)
+                .map(BasePreference.class::cast)
+                .collect(Collectors.toList());
     }
 
     private static <T> T init(final Class<T> clazz) {
