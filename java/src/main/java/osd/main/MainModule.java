@@ -3,32 +3,62 @@ package osd.main;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import osd.database.input.record.RecordStreamer;
 import osd.database.output.RunRecord;
+import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;
 
+import java.util.Comparator;
+
 @Module
-interface MainModule {
+abstract class MainModule {
+
+    private static RunRecord runRecord;
+    private static SeasonRecord seasonRecord;
 
     @Provides
-    static RunRecord providesRunRecord(final SessionFactory sessionFactory) {
-        final RunRecord result = new RunRecord();
-        Session session = sessionFactory.openSession();
-        try {
-            final Transaction transaction = session.beginTransaction();
-            session.save(result);
-            transaction.commit();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+    static SeasonRecord providesSeasonRecord(final SessionFactory sessionFactory, final RecordStreamer recordStreamer) {
+        if (seasonRecord == null) {
+            seasonRecord = recordStreamer.stream(SeasonRecord.class)
+                    .sorted(Comparator.comparing(SeasonRecord::getId).reversed())
+                    .findFirst()
+                    .orElseGet(() -> Save.save(sessionFactory, new SeasonRecord()));
         }
-        return result;
+        return seasonRecord;
+    }
+
+    @Provides
+    static RunRecord providesRunRecord(final SessionFactory sessionFactory, final SeasonRecord season) {
+        if (runRecord == null) {
+            runRecord = new RunRecord();
+            runRecord.setSeasonId(season.getId());
+            runRecord.setActive(true);
+            runRecord.setPid(pid());
+            Save.save(sessionFactory, runRecord);
+        }
+        return runRecord;
     }
 
     @Binds
-    Callbacks bindsCallbacks(SchedulingCallbacks callbacks);
+    abstract Callbacks bindsCallbacks(SchedulingCallbacks callbacks);
+
+    private static int pid() {
+        // Taken from https://stackoverflow.com/a/12066696/8560257
+        try {
+            final java.lang.management.RuntimeMXBean runtime =
+                    java.lang.management.ManagementFactory.getRuntimeMXBean();
+            final java.lang.reflect.Field jvm = runtime.getClass().getDeclaredField("jvm");
+            jvm.setAccessible(true);
+            final sun.management.VMManagement management =
+                    (sun.management.VMManagement) jvm.get(runtime);
+            final java.lang.reflect.Method pid_method =
+                    management.getClass().getDeclaredMethod("getProcessId");
+            pid_method.setAccessible(true);
+            return (Integer)pid_method.invoke(management);
+        } catch (final ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

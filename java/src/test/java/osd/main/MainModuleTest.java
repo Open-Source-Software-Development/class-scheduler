@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.database.output.RunRecord;
+import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;
 
 import java.lang.reflect.Method;
@@ -23,6 +24,7 @@ class MainModuleTest {
     @Mock private SessionFactory mockSessionFactory;
     @Mock private Session mockSession;
     @Mock private Transaction mockTransaction;
+    @Mock private SeasonRecord mockSeasonRecord;
 
     @BeforeEach
     void setUp() {
@@ -33,20 +35,20 @@ class MainModuleTest {
 
     @Test
     void providesRunRecord() {
-        final RunRecord result = MainModule.providesRunRecord(mockSessionFactory);
+        final RunRecord result = MainModule.providesRunRecord(mockSessionFactory, mockSeasonRecord);
         verify(mockSession).save(result);
         assertNotNull(result);
     }
 
     @Test
     void providesRunRecord_TransactionCommitted() {
-        MainModule.providesRunRecord(mockSessionFactory);
+        MainModule.providesRunRecord(mockSessionFactory, mockSeasonRecord);
         verify(mockTransaction).commit();
     }
 
     @Test
     void providesRunRecord_SessionClosed() {
-        MainModule.providesRunRecord(mockSessionFactory);
+        MainModule.providesRunRecord(mockSessionFactory, mockSeasonRecord);
         verify(mockSession).close();
     }
 
@@ -54,7 +56,7 @@ class MainModuleTest {
     void providesRunRecord_SessionClosed_EvenAfterException() {
         when(mockSession.save(any())).thenThrow(new RuntimeException());
         try {
-            MainModule.providesRunRecord(mockSessionFactory);
+            MainModule.providesRunRecord(mockSessionFactory, mockSeasonRecord);
         } catch (final RuntimeException ignored) {}
         verify(mockSession).close();
     }
