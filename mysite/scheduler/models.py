@@ -341,7 +341,8 @@ class Run(models.Model):
     def terminate(self):
         try:
             os.kill(self.pid, signal.SIGTERM)
-        except OSError:
+        except OSError as e:
+            print(e)
             pass
         if self.active:
             self.active = False

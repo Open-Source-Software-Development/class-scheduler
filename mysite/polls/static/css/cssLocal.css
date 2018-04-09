@@ -126,6 +126,7 @@ body {
 	border-radius: 8px;
 	outline: none;
 	font-weight: bold;
+	display: block;
 }
 
 #loginButton:hover {

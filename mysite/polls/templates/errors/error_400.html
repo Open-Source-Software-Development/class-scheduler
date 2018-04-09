@@ -1,6 +1,6 @@
-<!DOCTYPE html> {% load static %}
-<html lang="en">
-
+{% extends 'errors/error_base.html' %}
+{% block title %}  Bad Request - Error 400 {% endblock %}
+{% block content %}
 <head>
 
     <title>Champlain Scheduler</title>
@@ -21,10 +21,8 @@
 </head>
 
 <body>
-
 	<!-- page content -->
     <div id="wrapper">
-	
         {% include 'blank.html' %}
 
 		<!-- page content -->
@@ -39,20 +37,18 @@
 					<!-- welcome panel top -->
 					<div class="panel-heading">
 					
-						<H1 id="titleScreen"> Run Scheduler</H1>
+						<H1 id="titleScreen">  Bad Request - Error 400</H1>
 						
 					</div>
-					
 				<!-- welcome panel bottom -->
 				<div class="panel-footer">
-					
-						<h4> Hello, {{request.user.username}}</h4>
-						<h6>Begin running the scheduler algorithm or cancel an algorithm that is currently running</h6>
-
-						<a href="?action=run" id="loginButton">Run Scheduler</a> 
-						<a href="?action=cancel" id="loginButton">Cancel Scheduler</a>
+					Your browser sent a request that this server could not understand. Please check that your URL is typed correctly.
+				</div>
+				</div>
 			</div>
+		</div>
 	</div>
+{% endblock %}
 
   <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
