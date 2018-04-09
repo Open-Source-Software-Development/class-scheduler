@@ -39,8 +39,8 @@ public class UserPreference extends UserConsideration implements Preference {
     }
 
     @Override
-    public boolean test(final Hunk hunk) {
-        return getMatch(hunk) == Match.BOTH;
+    public int evaluate(final Hunk hunk) {
+        return (getMatch(hunk) == Match.BOTH) ? worth : 0;
     }
 
     @SuppressWarnings("unused")

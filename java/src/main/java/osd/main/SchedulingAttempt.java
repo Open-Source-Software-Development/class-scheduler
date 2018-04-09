@@ -9,14 +9,16 @@ import javax.inject.Inject;
 class SchedulingAttempt implements Runnable, AutoCloseable {
 
     private final Scheduler scheduler;
-    private final SessionFactory sessionFactory;
+    private final Save save;
     private final RunRecord runRecord;
+    private final SessionFactory sessionFactory;
 
     @Inject
-    SchedulingAttempt(final Scheduler scheduler, final SessionFactory sessionFactory, final RunRecord runRecord) {
+    SchedulingAttempt(final SessionFactory sessionFactory, final Scheduler scheduler, final Save save, final RunRecord runRecord) {
         this.scheduler = scheduler;
-        this.sessionFactory = sessionFactory;
+        this.save = save;
         this.runRecord = runRecord;
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -27,7 +29,8 @@ class SchedulingAttempt implements Runnable, AutoCloseable {
     @Override
     public void close() {
         runRecord.setActive(false);
-        Save.save(sessionFactory, runRecord);
+        save.save(runRecord);
+        sessionFactory.close();
     }
 
 }

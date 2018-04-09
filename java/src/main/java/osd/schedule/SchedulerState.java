@@ -197,4 +197,5 @@ class SchedulerState implements Lookups {
     public Hunk lookup(final Section section) {
         return hunks.get(section);
     }
+
 }

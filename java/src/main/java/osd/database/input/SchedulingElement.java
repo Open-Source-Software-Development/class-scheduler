@@ -27,7 +27,7 @@ public class SchedulingElement {
 
     @Override
     public boolean equals(final Object o) {
-        return o != null && getClass() == o.getClass() && hashCode() == o.hashCode();
+        return o != null && getClass() == o.getClass() && id == ((SchedulingElement)o).id;
     }
 
     @Override

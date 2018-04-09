@@ -18,21 +18,15 @@ import javax.inject.Singleton;
             ClasspathModule.class,
     }
 )
-public abstract class SchedulingMain {
+interface SchedulingMain {
 
-    abstract SchedulingAttempt schedulingAttempt();
+    SchedulingAttempt schedulingAttempt();
 
-    public static void main(final String[] args) {
-        Exception exception;
+    static void main(final String[] args) {
         final SchedulingMain main = DaggerSchedulingMain.create();
         try (final SchedulingAttempt attempt = main.schedulingAttempt()){
             attempt.run();
-            exception = null;
-        } catch (final RuntimeException e) {
-            e.printStackTrace();
-            exception = e;
         }
-        System.exit(exception == null ? 0 : 1);
     }
 
 }

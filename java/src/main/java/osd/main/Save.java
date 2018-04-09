@@ -4,18 +4,22 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import javax.inject.Inject;
+
 class Save {
 
-    static <T> T save(final SessionFactory sessionFactory, final T object) {
-        Session session = sessionFactory.openSession();
-        try {
+    private final SessionFactory sessionFactory;
+
+    @Inject
+    Save(final SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    <T> T save(final T object) {
+        try (final Session session = sessionFactory.openSession()) {
             final Transaction transaction = session.beginTransaction();
             session.saveOrUpdate(object);
             transaction.commit();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return object;
     }

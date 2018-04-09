@@ -22,7 +22,6 @@ class UserPreferenceTest {
     private UserConsideration.Match matchResult = null;
     private UserPreference instance;
 
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -42,31 +41,31 @@ class UserPreferenceTest {
     @Test
     void test_MatchIsBoth() {
         matchResult = UserConsideration.Match.BOTH;
-        assertTrue(instance.test(mockHunk));
+        assertTrue(0 != instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsLeft() {
         matchResult = UserConsideration.Match.LEFT;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsRight() {
         matchResult = UserConsideration.Match.RIGHT;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsNeither() {
         matchResult = UserConsideration.Match.NEITHER;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsNull() {
         matchResult = UserConsideration.Match.INCONCLUSIVE;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
 }
