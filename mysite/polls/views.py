@@ -96,14 +96,20 @@ def course_selection(request):
     selected = request.POST.getlist('Courses')
     first = request.user.first_name
     last = request.user.last_name
+    selected_course = []
+    for title in selected:
+        selected_course.append(CourseLevel().get_course_by_title(title))
+
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
     courses = Course.objects.exclude(id__in=excluded_courses)
     
+    
+    
     for course in selected:
         CourseLevel().insert_grade_level(course, year)
     
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'selected':selected, 'year': year, 'running': running})
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'selected':selected, 'year': year, 'running': running })
 
 def course_review(request):
 	return render(request, 'PDcoursesReview.html')

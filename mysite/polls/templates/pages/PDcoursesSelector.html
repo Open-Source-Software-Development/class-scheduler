@@ -38,6 +38,7 @@
             </div>
             
             {{ already_running }}
+            {{selected}}
         
             <form action="{% url 'course_selection' %}?year={{ year }}" method="post">
             {% csrf_token %}
