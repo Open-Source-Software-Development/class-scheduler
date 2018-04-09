@@ -100,7 +100,16 @@ def course_selection(request):
     
     programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
     selected = request.POST.getlist('Courses')
+
+    first = request.user.first_name
+    last = request.user.last_name
+    remove_course = []
+    
+
     removed = request.POST.getlist('Removed')
+    
+    for title in removed:
+        remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
     if course_filter != 'None':
@@ -115,11 +124,15 @@ def course_selection(request):
         program_restriction = Course.objects.filter().values('id')
         running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
     
+    
+    
     for course in selected:
         print('Adding ' + course)
         CourseLevel().insert_grade_level(course, year)
-        
+    for course in removed:
+        CourseLevel().remove_courselevel(course, year)
     return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
+
 
 def course_review(request):
     programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
@@ -137,7 +150,11 @@ def course_review(request):
         year = 'First'
         
     selected = request.POST.getlist('Courses')
+    remove_course = []
+    removed = request.POST.getlist('Removed')
     
+    for title in removed:
+        remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
     if course_filter != 'None':
         courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
@@ -154,6 +171,8 @@ def course_review(request):
     
     for course in selected:
         CourseLevel().insert_grade_level(course, year)
+    for course in removed:
+        CourseLevel().remove_courselevel(course, year)
     
     return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program, 'course_filter': course_filter, 'running_filter': running_filter})
 

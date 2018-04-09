@@ -22,11 +22,11 @@ class CourseLevel():
         course = Course.objects.all().get(title = course_title)
         ngl = GradeLevel(course=course, grade_level = grade_level)
         ngl.save()
-        
-    def remove_grade_level(self, course_id, grade_level):
- 
-        gl = GradeLevel.objects.get(pk = course.id, grade_level= grade_level )
-        gl.delete()
-        #course.delete()
 
-   
+    def get_course_by_title(self, title):
+        return Course.objects.get(title = title)
+    
+    def remove_courselevel(self, course_title, grade_level):
+        course = Course.objects.get(title = course_title.strip())
+        gl = GradeLevel.objects.get(course = course.id,grade_level=grade_level)
+        gl.delete()

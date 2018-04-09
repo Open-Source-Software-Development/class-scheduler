@@ -8,7 +8,7 @@ $(function() {
     if ($button.hasClass('move-left')) {
       actives = $('.list-right ul li.active');
       actives.each(function () {
-        this.innerHTML = this.id;
+        this.innerHTML = "<input type=\"hidden\" name=\"Removed\" value=\"" + this.id + "\">" + this.id;
       });
       actives.clone().appendTo('.list-left ul');
       actives.remove();
