@@ -1,9 +1,6 @@
 package osd.considerations;
 
-import osd.schedule.Hunk;
 import osd.schedule.Lookups;
-
-import java.util.function.Predicate;
 
 /**
  * Superinterface for base constraints and base preferences. Unlike user
@@ -18,7 +15,7 @@ import java.util.function.Predicate;
  * will not find it.</p>
  * @param <T> {@link Constraint} or {@link Preference} as appropriate
  */
-interface BaseConsideration<T extends Consideration> {
+interface BaseConsideration<T> {
 
     /**
      * Binds this base consideration to the current schedule data.
@@ -30,15 +27,6 @@ interface BaseConsideration<T extends Consideration> {
      * }}</p>
      * @param lookups {@link Lookups} representing the current schedule
      * @return a predicate
-     */
-    Predicate<Hunk> bindPredicate(final Lookups lookups);
-
-    /**
-     * Converts the {@link #bindPredicate(Lookups)} to an actual consideration.
-     * This is mostly a convenience to ensure implementations of subinterfaces
-     * are eligible for lambda syntax when implementing that method.
-     * @param lookups {@link Lookups} representing the current schedule
-     * @return an appropriate consideration
      */
     T bind(final Lookups lookups);
 

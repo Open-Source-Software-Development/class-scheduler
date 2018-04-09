@@ -15,6 +15,8 @@ from scheduler.models import GradeLevel
 from scheduler.courseConstraints import CourseLevel
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
+import subprocess
+import threading
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -86,33 +88,85 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
-    divisions = Division.objects.filter()
-   
     year = request.GET.get('year')
     if year == None:
         year = 'First'
-        
-    running = CourseLevel().get_grade_by_year(year)
+    running_filter = request.GET.get('running-list')
+    if running_filter == None:
+        running_filter = 'None'
+    course_filter = request.GET.get('course-list') 
+    if course_filter == None:
+        course_filter = 'None'
+    
+    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
     selected = request.POST.getlist('Courses')
+
     first = request.user.first_name
     last = request.user.last_name
     selected_course = []
     for title in selected:
         selected_course.append(CourseLevel().get_course_by_title(title))
 
+    removed = request.POST.getlist('Removed')
+
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    courses = Course.objects.exclude(id__in=excluded_courses)
+    if course_filter != 'None':
+        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    else:
+        courses = Course.objects.exclude(id__in=excluded_courses)
     
+    if running_filter != 'None':
+        program_restriction = Course.objects.filter(program=running_filter).values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    else:
+        program_restriction = Course.objects.filter().values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    
+    
+    
+    for course in selected:
+        print('Adding ' + course)
+        CourseLevel().insert_grade_level(course, year)
+        
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
+
+
+def course_review(request):
+    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
+    program = request.GET.get('program')
+    if program == 'All' or program == None:
+        program = 'All'
+    running_filter = request.GET.get('running-list')
+    if running_filter == None:
+        running_filter = 'None'
+    course_filter = request.GET.get('course-list') 
+    if course_filter == None:
+        course_filter = 'None'
+    year = request.GET.get('year')
+    if year == None:
+        year = 'First'
+        
+    selected = request.POST.getlist('Courses')
+    
+    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
+    if course_filter != 'None':
+        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    else:
+        courses = Course.objects.exclude(id__in=excluded_courses)
+
+    if program != 'All':
+        program_restriction = Course.objects.filter(program=program).values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    else:
+        program_restriction = Course.objects.filter().values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
     
     
     for course in selected:
         CourseLevel().insert_grade_level(course, year)
     
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'selected':selected, 'year': year, 'running': running })
-
-def course_review(request):
-	return render(request, 'PDcoursesReview.html')
+    return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program, 'course_filter': course_filter, 'running_filter': running_filter})
 
 def simple_upload(request):
 	return render(request, 'import_data.html')
@@ -120,19 +174,31 @@ def simple_upload(request):
 def history(request):
 	return render(request, 'history.html')
 
+def runHelper():
+	subprocess.run(["java", "-jar", "../java/target/Scheduler-jar-with-dependencies.jar"])
+	
+## TODO: Documentation
+def run(request):
+	action = request.GET.get('action')
+	if action == "run":
+		if len(Run.objects.filter(active = True)) == 0:
+			threading.Thread(target=runHelper).start()
+	elif action == "cancel":
+		for run in Run.objects.all():
+			run.terminate()
+	return render(request, 'run.html')
+	
+## TODO: Documentation
 def view_history(request):
-	query_results = Hunk.objects.all()
+	query_results = Hunk.objects.filter()
 	
 	return render(request, 'view_history.html', {'query_results': query_results})
 
-def run(request):
-	return render(request, 'run.html')
-
 ## TODO: Documentation
 def results(request):
-	query_results = Hunk.objects.all()
+	algo_results = Hunk.objects.filter()
 	
-	return render(request, 'results.html', {'query_results': query_results})
+	return render(request, 'results.html', {'algo_results': algo_results})
 	
 	
 ## TODO: Documentation
@@ -213,45 +279,12 @@ def loginUser(request):
 		else:
 			return render(request, 'Login.html')
 
-## TODO: Documentation
-def upload_csv_time_block(request):
-	data = {}
-	if "GET" == request.method:
-		return render(request, "import_data.html", data)
-    # if not GET, then proceed
-	try:
-		csv_file = request.FILES["csv_file"]
-		if not csv_file.name.endswith('.csv'):
-			messages.error(request,'File is not CSV type')
-			return HttpResponseRedirect(reverse("upload"))
 
-		file_data = csv_file.read().decode("utf-8")
-
-		lines = file_data.split("\n")
-		#loop over the lines and save them in db. If error , store as string and then display
-		for line in lines:
-			fields = line.split(",")
-			data_dict = {}
-			ids = fields[0]
-			block = fields[1]
-			day = fields[2]
-			block_id = fields[3]
-			try:
-				block, created = Block.objects.get_or_create(
-					ids = id,
-					block = block,
-					day = day,
-					block_id = block_id,
-				)
-				if created:
-					block.save()
-				else:
-					logging.getLogger("error_logger").error(form.errors.as_json())
-			except Exception as e:
-				logging.getLogger("error_logger").error(repr(e))
-				pass
-
-	except Exception as e:
-		logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-
-	return HttpResponseRedirect(reverse("upload"))
+## Create views for custom 404 and 500 error pages
+def handler404(request):
+	
+	return render(request, 'error_404.html', status=404)
+	
+def handler500(request):
+	
+	return render(request, 'error_500.html', status=500)

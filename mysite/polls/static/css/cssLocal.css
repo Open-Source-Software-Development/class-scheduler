@@ -2,6 +2,11 @@ body {
 	background-color: #fff;
 }
 
+.no-break {
+    white-space: nowrap;
+    display: inline-block;
+}
+
 .col-md {
   height : 8em;
   margin-left: 40px;
@@ -83,7 +88,7 @@ body {
 
 .scrollableMenuCourses {
     height: auto;
-    max-height: 50vh;
+    max-height: 30vh;
     overflow-x: hidden;
 }
 
@@ -121,6 +126,7 @@ body {
 	border-radius: 8px;
 	outline: none;
 	font-weight: bold;
+	display: block;
 }
 
 #loginButton:hover {
@@ -233,4 +239,9 @@ body {
 
 #ScrollMenuSearch {
     margin: -5px auto 10px auto;
+}
+
+#yearSelect {
+    width: 100%;
+    margin: 0 auto;
 }

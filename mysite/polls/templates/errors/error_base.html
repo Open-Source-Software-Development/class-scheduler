@@ -1,0 +1,31 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+
+    <title>Champlain Scheduler</title>
+
+    <!-- bootstrap css -->
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- SB admin 2 css -->
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<!-- custom css -->
+    <link href="{% static 'css/cssLocal.css' %}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="page-wrapper">
+          {% block content %} Override here {% endblock %}
+    </div>
+  </div>
+</body>
+
+</html>

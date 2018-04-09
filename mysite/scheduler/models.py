@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 import six
 from datetime import time
+import os, signal
 
 # Input
 
@@ -327,10 +328,25 @@ class UserConstraint(UserPreferenceOrConstraint):
 # Output
 
 
+class Season(models.Model):
+    pass
+
+
 class Run(models.Model):
 
-    # TODO: have an actual Season table and make this a foreign key
-    season = models.PositiveIntegerField()
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
+    pid = models.PositiveIntegerField()
+    active = models.BooleanField()
+
+    def terminate(self):
+        try:
+            os.kill(self.pid, signal.SIGTERM)
+        except OSError as e:
+            print(e)
+            pass
+        if self.active:
+            self.active = False
+            self.save()
 
 
 @six.python_2_unicode_compatible

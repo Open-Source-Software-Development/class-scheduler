@@ -3,32 +3,43 @@ package osd.main;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import osd.database.input.record.RecordStreamer;
 import osd.database.output.RunRecord;
+import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;
 
+import java.util.Comparator;
+
 @Module
-interface MainModule {
+abstract class MainModule {
+
+    private static RunRecord runRecord;
+    private static SeasonRecord seasonRecord;
 
     @Provides
-    static RunRecord providesRunRecord(final SessionFactory sessionFactory) {
-        final RunRecord result = new RunRecord();
-        Session session = sessionFactory.openSession();
-        try {
-            final Transaction transaction = session.beginTransaction();
-            session.save(result);
-            transaction.commit();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+    static SeasonRecord providesSeasonRecord(final Save save, final RecordStreamer recordStreamer) {
+        if (seasonRecord == null) {
+            seasonRecord = recordStreamer.stream(SeasonRecord.class)
+                    .sorted(Comparator.comparing(SeasonRecord::getId).reversed())
+                    .findFirst()
+                    .orElseGet(() -> save.save(new SeasonRecord()));
         }
-        return result;
+        return seasonRecord;
+    }
+
+    @Provides
+    static RunRecord providesRunRecord(final PID pid, final Save save, final SeasonRecord season) {
+        if (runRecord == null) {
+            runRecord = new RunRecord();
+            runRecord.setSeasonId(season.getId());
+            runRecord.setActive(true);
+            runRecord.setPid(pid.pid());
+            save.save(runRecord);
+        }
+        return runRecord;
     }
 
     @Binds
-    Callbacks bindsCallbacks(SchedulingCallbacks callbacks);
+    abstract Callbacks bindsCallbacks(SchedulingCallbacks callbacks);
 
 }

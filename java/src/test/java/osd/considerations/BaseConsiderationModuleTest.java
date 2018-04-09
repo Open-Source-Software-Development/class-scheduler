@@ -45,7 +45,7 @@ class BaseConsiderationModuleTest {
 
     private static class FakeBaseConstraint implements BaseConstraint {
         @Override
-        public Predicate<Hunk> bindPredicate(final Lookups lookups) {
+        public Constraint bind(final Lookups lookups) {
             return h -> true;
         }
     }
@@ -58,8 +58,8 @@ class BaseConsiderationModuleTest {
         }
 
         @Override
-        public Predicate<Hunk> bindPredicate(Lookups lookups) {
-            return h -> true;
+        public Preference bind(final Lookups lookups) {
+            return Preference.of(h -> true, worth());
         }
 
     }

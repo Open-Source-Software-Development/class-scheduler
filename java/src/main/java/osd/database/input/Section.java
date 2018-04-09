@@ -1,8 +1,6 @@
 package osd.database.input;
 
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * Represents a specific section of some course.
@@ -10,10 +8,6 @@ import java.util.stream.Stream;
 public interface Section {
 
     Course getCourse();
-
-    default Function<Block, Stream<Block>> getBlockingStrategy() {
-        return getCourse().getBlockingStrategy();
-    }
 
     String getName();
 
@@ -42,12 +36,12 @@ public interface Section {
                 }
                 final Section other = (Section)o;
                 return Objects.equals(course, other.getCourse())
-                        && Objects.equals(getName(), other.getName());
+                        && Objects.equals(getSuffix(), other.getSuffix());
             }
 
             @Override
             public int hashCode() {
-                return Objects.hash(getCourse(), getName());
+                return Objects.hash(getCourse(), getSuffix());
             }
 
             @Override

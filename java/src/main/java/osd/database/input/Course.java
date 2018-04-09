@@ -20,20 +20,14 @@ public class Course extends SchedulingElement {
         this.baseSectionCount = record.getBaseSectionCount();
     }
 
-    private Iterable<Section> getSections0() {
-        // TODO: consider pregen sections
-        return () -> IntStream.rangeClosed(1, baseSectionCount)
-                .mapToObj(i -> Section.of(this, String.valueOf(i)))
-                .iterator();
-    }
-
     /**
      * Return all the sections for this course. This should consider both
      * "pregenerated" sections specified in the database, and "additional"
      * sections specified in the course's "sections" column.
      * @return a stream of this course's sections
      */
-    public Stream<Section> streamSections() {
+    Stream<Section> streamSections() {
+        // TODO: consider pregen sections
         return IntStream.rangeClosed(1, baseSectionCount)
                 .mapToObj(i -> Section.of(this, String.valueOf(i)));
     }
