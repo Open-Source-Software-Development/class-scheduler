@@ -15,12 +15,6 @@ public class RunRecord {
     @Column(name="season_id")
     private int seasonId;
 
-    @Column(name="active")
-    private boolean active;
-
-    @Column(name="pid")
-    private int pid;
-
     @SuppressWarnings("unused")
     public int getId() {
         return id;
@@ -41,23 +35,4 @@ public class RunRecord {
         this.seasonId = seasonId;
     }
 
-    @SuppressWarnings("unused")
-    public boolean getActive() {
-        return active;
-    }
-
-    @SuppressWarnings("unused")
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    @SuppressWarnings("unused")
-    public int getPid() {
-        return pid;
-    }
-
-    @SuppressWarnings("unused")
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
 }

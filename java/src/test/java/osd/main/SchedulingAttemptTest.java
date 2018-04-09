@@ -37,7 +37,6 @@ class SchedulingAttemptTest {
     void close() {
         instance.close();
         final InOrder inOrder = Mockito.inOrder(mockRunRecord, mockSave, mockSessionFactory);
-        inOrder.verify(mockRunRecord).setActive(false);
         inOrder.verify(mockSave).save(mockRunRecord);
         inOrder.verify(mockSessionFactory).close();
     }

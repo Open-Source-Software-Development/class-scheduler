@@ -333,20 +333,7 @@ class Season(models.Model):
 
 
 class Run(models.Model):
-
     season = models.ForeignKey(Season, on_delete=models.CASCADE)
-    pid = models.PositiveIntegerField()
-    active = models.BooleanField()
-
-    def terminate(self):
-        try:
-            os.kill(self.pid, signal.SIGTERM)
-        except OSError as e:
-            print(e)
-            pass
-        if self.active:
-            self.active = False
-            self.save()
 
 
 @six.python_2_unicode_compatible

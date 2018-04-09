@@ -30,17 +30,14 @@ class MainModuleTest {
     @Mock private Save mockSave;
     @Mock private SeasonRecord mockSeasonRecord;
     @Mock private RecordStreamer mockRecordStreamer;
-    @Mock private PID mockPid;
 
     private final int seasonId = (int)(Math.random() * 1000) + 500;
-    private final int pid = (int)(Math.random() * 1000) + 500;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         when(mockSave.save(any())).then(invocation -> invocation.getArgument(0));
         when(mockSeasonRecord.getId()).thenReturn(seasonId);
-        when(mockPid.pid()).thenReturn(pid);
         when(mockRecordStreamer.stream(SeasonRecord.class)).then(unused ->
             Stream.concat(IntStream.range(0, 20)
                     .mapToObj(i -> {
@@ -65,19 +62,16 @@ class MainModuleTest {
 
     @Test
     void providesRunRecord() {
-        final RunRecord result = MainModule.providesRunRecord(mockPid, mockSave, mockSeasonRecord);
+        final RunRecord result = MainModule.providesRunRecord(mockSave, mockSeasonRecord);
         verify(mockSave).save(result);
         assertNotNull(result);
-        assertTrue(result.getActive());
-        assertEquals(pid, result.getPid());
         assertEquals(mockSeasonRecord.getId(), result.getSeasonId());
-        assertNotEquals(0, result.getPid());
     }
 
     @Test
     void providesRunRecord_Cache() {
-        final RunRecord result1 = MainModule.providesRunRecord(mockPid, mockSave, mockSeasonRecord);
-        final RunRecord result2 = MainModule.providesRunRecord(mockPid, mockSave, mockSeasonRecord);
+        final RunRecord result1 = MainModule.providesRunRecord(mockSave, mockSeasonRecord);
+        final RunRecord result2 = MainModule.providesRunRecord(mockSave, mockSeasonRecord);
         assertTrue(result1 == result2);
     }
 
