@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scheduler',
-    'faculty_data',
-    'room_data',
 	'polls',
 ]
 
