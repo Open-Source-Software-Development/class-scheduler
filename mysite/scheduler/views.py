@@ -31,3 +31,5 @@ def upload_csv(request):
     for model in result:
         model.save()
     return HttpResponseRedirect(reverse("upload"))
+    #next = request.POST.get('css-tabs', '/')
+    #return HttpResponseRedirect(next)
