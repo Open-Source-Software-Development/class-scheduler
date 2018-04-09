@@ -86,27 +86,74 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
-    divisions = Division.objects.filter()
-   
+    year = request.GET.get('year')
+    if year == None:
+        year = 'First'
+    running_filter = request.GET.get('running-list')
+    if running_filter == None:
+        running_filter = 'None'
+    course_filter = request.GET.get('course-list') 
+    if course_filter == None:
+        course_filter = 'None'
+    
+    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
+    selected = request.POST.getlist('Courses')
+    removed = request.POST.getlist('Removed')
+    
+    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
+    if course_filter != 'None':
+        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    else:
+        courses = Course.objects.exclude(id__in=excluded_courses)
+    
+    if running_filter != 'None':
+        program_restriction = Course.objects.filter(program=running_filter).values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    else:
+        program_restriction = Course.objects.filter().values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    
+    for course in selected:
+        print('Adding ' + course)
+        CourseLevel().insert_grade_level(course, year)
+        
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
+
+def course_review(request):
+    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
+    program = request.GET.get('program')
+    if program == 'All' or program == None:
+        program = 'All'
+    running_filter = request.GET.get('running-list')
+    if running_filter == None:
+        running_filter = 'None'
+    course_filter = request.GET.get('course-list') 
+    if course_filter == None:
+        course_filter = 'None'
     year = request.GET.get('year')
     if year == None:
         year = 'First'
         
-    running = CourseLevel().get_grade_by_year(year)
     selected = request.POST.getlist('Courses')
-    first = request.user.first_name
-    last = request.user.last_name
     
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    courses = Course.objects.exclude(id__in=excluded_courses)
+    if course_filter != 'None':
+        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    else:
+        courses = Course.objects.exclude(id__in=excluded_courses)
+
+    if program != 'All':
+        program_restriction = Course.objects.filter(program=program).values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    else:
+        program_restriction = Course.objects.filter().values('id')
+        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    
     
     for course in selected:
         CourseLevel().insert_grade_level(course, year)
     
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'divisions': divisions, 'selected':selected, 'year': year, 'running': running})
-
-def course_review(request):
-	return render(request, 'PDcoursesReview.html')
+    return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program, 'course_filter': course_filter, 'running_filter': running_filter})
 
 def simple_upload(request):
 	return render(request, 'import_data.html')

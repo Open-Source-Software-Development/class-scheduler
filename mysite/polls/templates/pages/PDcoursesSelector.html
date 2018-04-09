@@ -11,7 +11,6 @@
   <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
   <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
-
   <link rel="stylesheet" href="{% static 'css/PDcourseSelection.css' %}">
 
 </head>
@@ -22,7 +21,7 @@
     {% include 'blank.html' %}
 
 		<div class="spacing" id="page-wrapper">
-        
+
             <div id="profSettingsHead">
                 <div class="panel panel-primary">
                         <!-- top of welcome panel -->
@@ -32,17 +31,35 @@
                         <!-- bottom of welcome panel -->
                     <div class="panel-footer">
                         <h4> Hello, {{request.user.username}}</h4>
-                        <h6>Click on the boxes until the color matches your desired color</h6>
+                        <h6>Select grade level, then add courses to that year's course list</h6>
                     </div>
                 </div>
             </div>
-            
-            {{ already_running }}
         
             <form action="{% url 'course_selection' %}?year={{ year }}" method="post">
             {% csrf_token %}
+            
+              <div class="row panel panel-default">
+            
+                <div class="panel-heading">
+                    <i class="fa fa-list fa-fw"></i> Course Selection
+                </div>
+            
+                <div class="panel-body">
                   <div class="dual-list list-left col-md-5">
                     <div class="well text-left">
+                      <div class="wrapper">
+                        <h2>Course List</h2>
+                        <b>Course Filter: </b>
+                        <select class="form-control" name="course-list" onchange="filters()">
+                            <option class="list-group-item" value="{{ course_filter }}">({{ course_filter }})</option>
+                            <option class="list-group-item" value="None">None</option>
+                            {% for i in programs %}
+                                <option class="list-group-item" value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                      <br>
                       <div class="row">
                         <div class="col-md-1">
                           <div class="btn-group">
@@ -51,7 +68,7 @@
                         </div>
                         <div class="col-md-11">
                           <div class="input-group">
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." />
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." autocomplete="off"/>
                             <span class="input-group-addon glyphicon glyphicon-search"></span>
                           </div>
                         </div>
@@ -63,7 +80,7 @@
                     </div>
                   </div>
                   
-                  <div class="list-arrows col-md-1 text-center" style="padding-left: 0px; padding-right: 0px; width: 50px;">
+                  <div class="list-arrows col-md-1 text-center">
                     <button type=button class="btn btn-default btn-sm move-left">
                       <span class="glyphicon glyphicon-chevron-left"></span>
                     </button>
@@ -75,15 +92,30 @@
 
                   <div class="dual-list list-right col-md-5">
                     <div class="well">
-                     <div class="wrapper">
-                        <b>Selected Year: </b>
-                        <select name="yearSelection" onchange="filterYear()">
-                                <option class="list-group-item" value="{{ year }}">({{ year }})</option>
-                                <option class="list-group-item" value="First">First</option>
-                                <option class="list-group-item" value="Second">Second</option>
-                                <option class="list-group-item" value="Third">Third</option>
-                                <option class="list-group-item" value="Fourth">Fourth</option>
-                            </select>
+                      <div class="wrapper">
+                        <h2>{{ year }} Year Courses</h2>    
+                        <div class="row">
+                            <div class="col-md-4">
+                                <b>Course Filter: </b>
+                                <select class="form-control" name="running-list" onchange="filters()">
+                                    <option class="list-group-item" value="{{ running_filter }}">({{ running_filter }})</option>
+                                    <option class="list-group-item" value="None">None</option>
+                                    {% for i in programs %}
+                                        <option class="list-group-item" value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <b>Selected Year: </b>
+                                <select class="form-control" name="yearSelection" onchange="filters()">
+                                    <option class="list-group-item" value="{{ year }}">({{ year }})</option>
+                                    <option class="list-group-item" value="First">First</option>
+                                    <option class="list-group-item" value="Second">Second</option>
+                                    <option class="list-group-item" value="Third">Third</option>
+                                    <option class="list-group-item" value="Fourth">Fourth</option>
+                                </select>
+                            </div>
+                        </div>
                       </div>
                       <br>
                       <div class="row">
@@ -94,7 +126,7 @@
                         </div>
                         <div class="col-md-11">
                           <div class="input-group">
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." />
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." autocomplete="off"/>
                             <span class="input-group-addon glyphicon glyphicon-search"></span>
                           </div>
                         </div>
@@ -105,17 +137,22 @@
                       {% endfor %}
                       </ul>
                     </div>
-                    <input type="submit" value="Apply Preferences"/>
-                  </div>  
+                  </div> 
+                
+                  <div class="wrapper">
+                    <input id="loginButton" type="submit" value="Apply Preferences"/>
+                  </div>
+                </div>
+              </div>
             </form>
         </div>
 
+        <br>
   </div>
 
   <!-- Start Dual Box list JS-->
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <!-- End Dual Box list JS-->
   <script src="{% static 'js/PDcourseSelection.js' %}"></script>
@@ -125,7 +162,7 @@
   <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
   <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
   <script src="{% static 'js/professorSettings.js' %}"></script>
-  <script src="{% static 'js/yearFilter.js' %}"></script>
+  <script src="{% static 'js/programFilter.js' %}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
