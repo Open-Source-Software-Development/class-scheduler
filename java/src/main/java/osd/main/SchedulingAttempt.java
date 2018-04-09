@@ -28,7 +28,6 @@ class SchedulingAttempt implements Runnable, AutoCloseable {
 
     @Override
     public void close() {
-        runRecord.setActive(false);
         save.save(runRecord);
         sessionFactory.close();
     }

@@ -15,8 +15,7 @@ from scheduler.models import GradeLevel
 from scheduler.courseConstraints import CourseLevel
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
-import subprocess
-import threading
+import subprocess, threading, time
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -182,18 +181,24 @@ def simple_upload(request):
 def history(request):
 	return render(request, 'history.html')
 
+active_run = None
+
 def runHelper():
-	subprocess.run(["java", "-jar", "../java/target/Scheduler-jar-with-dependencies.jar"])
+    global active_run
+    active_run = subprocess.Popen(["java", "-jar", "../java/target/Scheduler-jar-with-dependencies.jar"])
+    while active_run.poll() is None:
+        time.sleep(0.1)
+    active_run = None
 	
 ## TODO: Documentation
 def run(request):
 	action = request.GET.get('action')
 	if action == "run":
-		if len(Run.objects.filter(active = True)) == 0:
-			threading.Thread(target=runHelper).start()
-	elif action == "cancel":
-		for run in Run.objects.all():
-			run.terminate()
+	    if active_run is not None:
+                active_run.terminate()
+	    threading.Thread(target=runHelper).start()
+	elif action == "cancel" and active_run is not None:
+		active_run.terminate()
 	return render(request, 'run.html')
 	
 ## TODO: Documentation

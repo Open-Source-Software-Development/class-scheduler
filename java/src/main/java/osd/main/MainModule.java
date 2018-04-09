@@ -28,12 +28,10 @@ abstract class MainModule {
     }
 
     @Provides
-    static RunRecord providesRunRecord(final PID pid, final Save save, final SeasonRecord season) {
+    static RunRecord providesRunRecord(final Save save, final SeasonRecord season) {
         if (runRecord == null) {
             runRecord = new RunRecord();
             runRecord.setSeasonId(season.getId());
-            runRecord.setActive(true);
-            runRecord.setPid(pid.pid());
             save.save(runRecord);
         }
         return runRecord;
