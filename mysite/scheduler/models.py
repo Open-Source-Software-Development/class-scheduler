@@ -144,11 +144,11 @@ class Course(models.Model):
     title = models.CharField(max_length=30, blank=True)
     ins_method = models.CharField(max_length=20, null=True, blank=True)
     section_capacity = models.PositiveIntegerField()
-
+    
     def __str__(self):
         return self.title
-
-
+    
+    
 class Professor(models.Model):
     """
         Table: Professor
@@ -329,8 +329,8 @@ class UserConstraint(UserPreferenceOrConstraint):
 
 
 class Season(models.Model):
-	name = models.CharField(max_length=20)
-
+    name = models.CharField(max_length=20)
+    courses = models.ManyToManyField(Course)
 
 class Run(models.Model):
     season = models.ForeignKey(Season, on_delete=models.CASCADE)
