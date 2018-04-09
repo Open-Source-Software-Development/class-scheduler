@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.Section;
+import osd.database.input.Section;
 import osd.schedule.Hunk;
 
 import java.util.Objects;
@@ -21,7 +21,6 @@ class UserPreferenceTest {
     // this is OK, since getMatch() is inherited and not under test here.
     private UserConsideration.Match matchResult = null;
     private UserPreference instance;
-
 
     @BeforeEach
     void setUp() {
@@ -42,31 +41,31 @@ class UserPreferenceTest {
     @Test
     void test_MatchIsBoth() {
         matchResult = UserConsideration.Match.BOTH;
-        assertTrue(instance.test(mockHunk));
+        assertTrue(0 != instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsLeft() {
         matchResult = UserConsideration.Match.LEFT;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsRight() {
         matchResult = UserConsideration.Match.RIGHT;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsNeither() {
         matchResult = UserConsideration.Match.NEITHER;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
     @Test
     void test_MatchIsNull() {
         matchResult = UserConsideration.Match.INCONCLUSIVE;
-        assertFalse(instance.test(mockHunk));
+        assertTrue(0 == instance.evaluate(mockHunk));
     }
 
 }

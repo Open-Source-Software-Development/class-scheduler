@@ -28,8 +28,8 @@ class BasePreferenceTest {
         }
 
         @Override
-        public Predicate<Hunk> bindPredicate(final Lookups lookups) {
-            return mockPredicate;
+        public Preference bind(final Lookups lookups) {
+            return Preference.of(mockPredicate, worth());
         }
     };
 

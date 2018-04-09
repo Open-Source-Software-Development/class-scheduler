@@ -4,8 +4,6 @@ from . import views
 from django.conf.urls import url, include
 import polls.views
 from django.contrib import admin
-import faculty_data.views
-import room_data.views
 import scheduler.views
 
 ## TODO: Documentation

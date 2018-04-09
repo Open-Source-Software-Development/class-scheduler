@@ -2,6 +2,7 @@ package osd.considerations;
 
 import dagger.Module;
 import dagger.Provides;
+import osd.database.input.Sources;
 import osd.schedule.Hunk;
 import osd.schedule.Lookups;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public interface ConsiderationModule {
 
     @Provides
-    static BiFunction<Lookups, Hunk, Integer> providesPreferences(
+    static BiFunction<Lookups, Hunk, Integer> providesPreferenceBiFunction(
             final Collection<UserPreference> userPreferences, final Collection<BasePreference> basePreferences) {
         return (lookups, hunk) -> {
             final int preferencesScore = userPreferences.stream()
@@ -32,7 +33,7 @@ public interface ConsiderationModule {
     }
 
     @Provides
-    static Predicate<Hunk> providesUserConstraints(final Collection<UserConstraint> records) {
+    static Predicate<Hunk> providesUserConstraintPredicate(final Collection<UserConstraint> records) {
         return records.stream()
                 // Break the list up into blacklist and whitelist constraints.
                 .collect(Collectors.groupingBy(UserConstraint::getWhitelistKey))
@@ -56,10 +57,20 @@ public interface ConsiderationModule {
     }
 
     @Provides
-    static BiPredicate<Lookups, Hunk> providesBaseConstraints(final Collection<BaseConstraint> baseConstraints) {
+    static BiPredicate<Lookups, Hunk> providesBaseConstraintPredicate(final Collection<BaseConstraint> baseConstraints) {
         return (lookups, hunk) -> baseConstraints.stream()
                 .map(baseConstraint -> baseConstraint.bind(lookups))
                 .allMatch(predicate -> predicate.test(hunk));
+    }
+
+    @Provides
+    static Collection<UserConstraint> providesUserConstraints(final Sources sources) {
+        return sources.getDirect(UserConstraint.class).collect(Collectors.toSet());
+    }
+
+    @Provides
+    static Collection<UserPreference> providesUserPreferences(final Sources sources) {
+        return sources.getDirect(UserPreference.class).collect(Collectors.toSet());
     }
 
 }

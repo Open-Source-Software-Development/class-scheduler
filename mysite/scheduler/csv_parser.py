@@ -134,7 +134,7 @@ class RoomTypeParser(Parser):
         return value
 
 
-@Parser.register(Course, "courses", "division", "program", "style", "title", "ins_method", "section_capacity")
+@Parser.register(Course, "courses", "division", "program", "style", "base_section_count", "title", "ins_method", "section_capacity")
 class CourseParser(Parser):
     def convert(self, index, value):
         if index == 0:

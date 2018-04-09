@@ -20,10 +20,8 @@ class SchedulerImpl implements Scheduler {
 
     @Override
     public void run() {
-        boolean succeeded = run0(initialGeneration);
-        if (!succeeded) {
-            callbacks.onSchedulingFailed();
-        }
+        final boolean success = run0(initialGeneration);
+        callbacks.done(success);
     }
 
     private boolean run0(final SchedulerCandidate generation) {

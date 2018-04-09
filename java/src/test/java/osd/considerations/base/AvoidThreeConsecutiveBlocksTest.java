@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.schedule.Lookups;
-import osd.database.Block;
-import osd.database.Professor;
-import osd.database.Section;
+import osd.database.input.Block;
+import osd.database.input.Professor;
+import osd.database.input.Section;
 import osd.schedule.Hunk;
 
 import java.util.*;
@@ -48,34 +48,34 @@ class AvoidThreeConsecutiveBlocksTest {
 
     @Test
     void bindPredicate_FalseOnEmptyLookup() {
-        assertFalse(evaluatePredicate(2));
+        assertFalse(0 != evaluate(2));
     }
 
     @Test
     void bindPredicate_FalseOnSingleAdjacentCourse() {
         addMockBlockToLookups(1);
-        assertFalse(evaluatePredicate(2));
+        assertFalse(0 != evaluate(2));
     }
 
     @Test
     void bindPredicate_TrueOnTwoAdjacentCourses() {
         addMockBlockToLookups(1);
         addMockBlockToLookups(3);
-        assertTrue(evaluatePredicate(2));
+        assertTrue(0 != evaluate(2));
     }
 
     @Test
     void bindPredicate_TrueWhenTwoCoursesBefore() {
         addMockBlockToLookups(0);
         addMockBlockToLookups(1);
-        assertTrue(evaluatePredicate(2));
+        assertTrue(0 != evaluate(2));
     }
 
     @Test
     void bindPredicate_TrueWhenTwoCoursesAfter() {
         addMockBlockToLookups(4);
         addMockBlockToLookups(3);
-        assertTrue(evaluatePredicate(2));
+        assertTrue(0 != evaluate(2));
     }
 
     @Test
@@ -84,13 +84,13 @@ class AvoidThreeConsecutiveBlocksTest {
     void bindPredicate_FalseWhenOnlyAdjacent() {
         addMockBlockToLookups(0);
         addMockBlockToLookups(1);
-        assertFalse(evaluatePredicate(3));
+        assertFalse(0 != evaluate(3));
     }
 
-    private boolean evaluatePredicate(final int forWhichBlock) {
+    private int evaluate(final int forWhichBlock) {
         final Set<Block> blocks = Collections.singleton(mockBlocks[forWhichBlock]);
         when(mockHunk.getBlocks()).thenReturn(blocks);
-        return instance.bindPredicate(mockLookups).test(mockHunk);
+        return instance.bind(mockLookups).evaluate(mockHunk);
     }
 
     private void addMockBlockToLookups(final int i) {

@@ -1,76 +1,51 @@
 package osd.considerations;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.ImplementingClassMatchProcessor;
-import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.schedule.Hunk;
 import osd.schedule.Lookups;
+import osd.util.classpath.Everything;
 
 import java.util.Collection;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class BaseConsiderationModuleTest<T> {
+class BaseConsiderationModuleTest {
 
-    @Mock private FastClasspathScanner mockScanner;
-    private Class<? extends T> scanResult;
-    private ImplementingClassMatchProcessor<T> callback;
+    @Mock private Everything mockEverything; // MOCK THE WORLD!!!
     private BaseConsiderationModule instance;
 
     @BeforeEach
     @SuppressWarnings("unchecked")
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(mockScanner.matchClassesImplementing(any(), any())).thenAnswer(a -> {
-            setScanResult(a.getArgument(0));
-            callback = a.getArgument(1);
-            return mockScanner;
-        });
-        when(mockScanner.scan()).then(a -> {
-            callback.processMatch(scanResult);
-            return mock(ScanResult.class);
-        });
-        instance = new BaseConsiderationModule(() -> mockScanner);
+        when(mockEverything.extending(BaseConstraint.class)).thenReturn(Stream.of(FakeBaseConstraint.class));
+        when(mockEverything.extending(BasePreference.class)).thenReturn(Stream.of(FakeBasePreference.class));
+        instance = new BaseConsiderationModule();
     }
 
     @Test
     void providesBaseConstraints() {
-        final Collection<BaseConstraint> result = instance.providesRawBaseConstraints();
+        final Collection<BaseConstraint> result = instance.providesRawBaseConstraints(mockEverything);
         assertTrue(result.size() == 1);
         assertTrue(result.iterator().next() instanceof FakeBaseConstraint);
     }
 
     @Test
     void providesBasePreferences() {
-        final Collection<BasePreference> result = instance.providesRawBasePreferences();
+        final Collection<BasePreference> result = instance.providesRawBasePreferences(mockEverything);
         assertTrue(result.size() == 1);
         assertTrue(result.iterator().next() instanceof FakeBasePreference);
     }
 
-    @SuppressWarnings("unchecked")
-    private void setScanResult(final Class<? extends T> clazz) {
-        if (clazz == BaseConstraint.class) {
-            scanResult = (Class<? extends T>)FakeBaseConstraint.class;
-            return;
-        }
-        if (clazz == BasePreference.class) {
-            scanResult = (Class<? extends T>)FakeBasePreference.class;
-            return;
-        }
-        throw new IllegalArgumentException(clazz.getCanonicalName());
-    }
-
     private static class FakeBaseConstraint implements BaseConstraint {
         @Override
-        public Predicate<Hunk> bindPredicate(final Lookups lookups) {
+        public Constraint bind(final Lookups lookups) {
             return h -> true;
         }
     }
@@ -83,8 +58,8 @@ class BaseConsiderationModuleTest<T> {
         }
 
         @Override
-        public Predicate<Hunk> bindPredicate(Lookups lookups) {
-            return h -> true;
+        public Preference bind(final Lookups lookups) {
+            return Preference.of(h -> true, worth());
         }
 
     }

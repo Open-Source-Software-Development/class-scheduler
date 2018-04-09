@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 import six
 from datetime import time
+import os, signal
 
 # Input
 
@@ -122,6 +123,11 @@ class Course(models.Model):
                 - The course's division code (ex: ITS)
             program: CharField (Max Length 10)
                 -  The program identifier (ex: CSI)
+            style: Charfield (Max Length 20)
+                - The style of the course (ex: studio)
+                - This somehow seems to actually be used for the course ID...?
+            base_section_count: Positive Integer
+                - If nonzero, the number of sections needed for the course
             title: CharFierld (Max Length 30)
                 - The course title (ex: "intro to computer science" )
             section_capacity: Positive Integer
@@ -129,14 +135,12 @@ class Course(models.Model):
                 - Used to generate number of sections needed
             ins_method (instructional Method): CharField (Max Lenght 20)
                 - The courses instructional method (ex STN)
-            style: Charfield (Max Length 20)
-                - The style of the course (ex: studio)
-                - This somehow seems to actually be used for the course ID...?
 
     """
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     program = models.CharField(max_length=10)
     style = models.CharField(max_length=20, blank=True)
+    base_section_count = models.PositiveIntegerField()
     title = models.CharField(max_length=30, blank=True)
     ins_method = models.CharField(max_length=20, null=True, blank=True)
     section_capacity = models.PositiveIntegerField()
@@ -324,10 +328,12 @@ class UserConstraint(UserPreferenceOrConstraint):
 # Output
 
 
-class Run(models.Model):
+class Season(models.Model):
+	name = models.CharField(max_length=20)
 
-    # TODO: have an actual Season table and make this a foreign key
-    season = models.PositiveIntegerField()
+
+class Run(models.Model):
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
 
 
 @six.python_2_unicode_compatible
@@ -342,7 +348,7 @@ class Section(models.Model):
     run = models.ForeignKey(Run, on_delete=models.CASCADE)
 
     def __str__(self):
-        return six.text_type("{}-{}").format(str(self.course), self.suffix)
+        return six.text_type("{}-{}").format(str(self.course), self.section_identifier)
 
 @six.python_2_unicode_compatible
 class Hunk(models.Model):
@@ -354,6 +360,6 @@ class Hunk(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
-
+	
     def __str__(self):
         return six.text_type("Hunk({}, {}, {}, {})").format(self.section, self.professor, self.room, self.block)

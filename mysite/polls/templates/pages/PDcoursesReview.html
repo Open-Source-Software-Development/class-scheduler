@@ -10,9 +10,8 @@
   <link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
   <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
   <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/PDcourseSelection.css' %}">
   <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
-  <link rel="stylesheet" href="{% static 'css/PDcourse_review.css' %}">
-
 
 </head>
 
@@ -21,107 +20,163 @@
   <div id="wrapper">
     {% include 'blank.html' %}
 
-    <div id="page-wrapper">
+		<div class="spacing" id="page-wrapper">
 
-		<br><br>
-
-		<!-- professor selection menu -->
-		<div class="btn-group" id="dropdownMenu">
-			<button class="btn btn-primary" data-toggle="dropdown">Program Directors <i class="fa fa-chevron-down"></i></button>
-			<ul class="dropdown-menu">
-				<li><a tabindex="-1" href="#">Program Director 1</a></li>
-				<li><a tabindex="-1" href="#">Program Director 2</a></li>
-				<li><a tabindex="-1" href="#">Program Director 3</a></li>
-			</ul>
-		</div>
-
-      <div></div>
-      <br/>
-      <div class="dual-list list-left col-md-5">
-        <div class="well text-left">
-          <div class="row">
-            <div class="col-md-2">
-              <div class="btn-group">
-                <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+            <div id="profSettingsHead">
+                <div class="panel panel-primary">
+                        <!-- top of welcome panel -->
+                        <div class="panel-heading">
+                        <h1 id="titleScreen"> Course Review</h1>
+                    </div>
+                        <!-- bottom of welcome panel -->
+                    <div class="panel-footer">
+                        <h4> Hello, {{request.user.username}}</h4>
+                        <h6>Select a program, then select a grade level to view/add courses to that year's course list</h6>
+                    </div>
+                </div>
+            </div>         
+        
+            <form action="{% url 'course_review' %}?year={{ year }}" method="post">
+            {% csrf_token %}
+            
+              <div class="btn-group dual-list input-group" id="dropdownMenu">
+                <button class="btn btn-primary" data-toggle="dropdown">Programs <i class="fa fa-chevron-down"></i></button>
+                <ul class="dropdown-menu scrollableMenu list-group" role="menu">
+                  <input id="ScrollMenuSearch" type="text" name="SearchDualList" class="form-control" placeholder="Search..." autocomplete="off">
+                  <li class="list-group-item"><a tabindex="-1" href="{% url 'course_review' %}?program=All">All</a></li>
+                  {% for i in programs %}
+                    <li class="list-group-item"><a tabindex="-1" href="{% url 'course_review' %}?program={{ i }}">{{ i }}</a></li>
+                  {% endfor %}
+                </ul>
               </div>
-            </div>
-            <div class="col-md-10">
-              <div class="input-group">
-                <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." />
-                <span class="input-group-addon glyphicon glyphicon-search"></span>
+            
+              <div class="row panel panel-default">
+            
+                <div class="panel-heading">
+                    <i class="fa fa-list fa-fw"></i> Course Review
+                    <span style="float:right;"><b>Selected Program: {{ program }}</b></span>
+                </div>
+            
+                <div class="panel-body">
+                  <div class="dual-list list-left col-md-5">
+                    <div class="well text-left">
+                      <div class="wrapper">
+                        <h2>Course List</h2>
+                        <b>Course Filter: </b>
+                        <select class="form-control" name="course-list" onchange="filters()">
+                            <option class="list-group-item" value="{{ course_filter }}">({{ course_filter }})</option>
+                            <option class="list-group-item" value="None">None</option>
+                            {% for i in programs %}
+                                <option class="list-group-item" value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-1">
+                          <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                          </div>
+                        </div>
+                        <div class="col-md-11">
+                          <div class="input-group">
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." autocomplete="off"/>
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <ul class="list-group scrollableMenuCourses">
+                        {% for i in courses %}
+                        <li class="list-group-item" id="{{ i }}">{{ i }}</li>
+                        {% endfor %}
+                    </div>
+                  </div>
+                  
+                  <div class="list-arrows col-md-1 text-center">
+                    <button type=button class="btn btn-default btn-sm move-left">
+                      <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <br/>
+                    <button type=button class="btn btn-default btn-sm move-right">
+                      <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                  </div>
+
+                  <div class="dual-list list-right col-md-5">
+                    <div class="well">
+                     <div class="wrapper">
+                        <h2>{{ year }} Year Courses</h2>    
+                        <div class="row">
+                            <div class="col-md-4">
+                                <b>Course Filter: </b>
+                                <select class="form-control" name="running-list" onchange="filters()">
+                                    <option class="list-group-item" value="{{ running_filter }}">({{ running_filter }})</option>
+                                    <option class="list-group-item" value="None">None</option>
+                                    {% for i in programs %}
+                                        <option class="list-group-item" value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <b>Selected Year: </b>
+                                <select class="form-control" name="yearSelection" onchange="filters()">
+                                    <option class="list-group-item" value="{{ year }}">({{ year }})</option>
+                                    <option class="list-group-item" value="First">First</option>
+                                    <option class="list-group-item" value="Second">Second</option>
+                                    <option class="list-group-item" value="Third">Third</option>
+                                    <option class="list-group-item" value="Fourth">Fourth</option>
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-1">
+                          <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                          </div>
+                        </div>
+                        <div class="col-md-11">
+                          <div class="input-group">
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." autocomplete="off"/>
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <ul class="list-group scrollableMenuCourses">
+                      {% for i in running %}
+                      <li class="list-group-item" id="{{ i }}">{{ i }}</li>
+                      {% endfor %}
+                      </ul>
+                    </div>
+                  </div> 
+                
+                  <div class="wrapper">
+                    <input id="loginButton" type="submit" value="Apply Preferences"/>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <ul class="list-group">
-            <li class="list-group-item">Computer & Net Security</li>
-            <li class="list-group-item">Discrete Mathematics</li>
-            <li class="list-group-item">Global IT & Ethics</li>
-            <li class="list-group-item">Intro to Programming</li>
-            <li class="list-group-item">Linux/Unix Programming</li>
-            <li class="list-group-item">Programming for Mobile Devices</li>
-            <li class="list-group-item">Python Programming</li>
-            <li class="list-group-item">Web Development</li>
-            <li class="list-group-item">System Sofware</li>
-          </ul>
+            </form>
         </div>
-      </div>
 
-      <div class="list-arrows col-md-1 text-center" style="padding-left: 0px; padding-right: 0px; width: 50px;">
-        <button class="btn btn-default btn-sm move-left">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-        </button>
-        <br/>
-        <button class="btn btn-default btn-sm move-right">
-          <span class="glyphicon glyphicon-chevron-right"></span>
-        </button>
-      </div>
-
-      <div class="dual-list list-right col-md-5">
-        <div class="well">
-          <div class="row">
-            <div class="col-md-2">
-              <div class="btn-group">
-                <a class="btn btn-default selector" title="select all">
-                  <i class="glyphicon glyphicon-unchecked"></i>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-10">
-              <div class="input-group">
-                <input type="text" name="SearchDualList" class="form-control" placeholder="Search..." />
-                <span class="input-group-addon glyphicon glyphicon-search"></span>
-              </div>
-            </div>
-          </div>
-          <ul class="list-group">
-            <li class="list-group-item">The Global Condition</li>
-            <li class="list-group-item">Intro 3D Modeling & Texturing</li>
-            <li class="list-group-item">Graphic Design/Objects & Spaces</li>
-            <li class="list-group-item">Game Technology II</li>
-            <li class="list-group-item">Web Design II</li>
-          </ul>
-        </div>
-        <button type="button" class="btn btn-outline-primary">Submit</button>
-      </div>
-    </div>
-
+        <br>
   </div>
 
   <!-- Start Dual Box list JS-->
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <!-- End Dual Box list JS-->
   <script src="{% static 'js/PDcourse_review.js' %}"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
   <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
   <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
   <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
   <script src="{% static 'js/professorSettings.js' %}"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="{% static 'js/programFilter.js' %}"></script>
   
 </body>
 

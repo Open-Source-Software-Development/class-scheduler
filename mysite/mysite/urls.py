@@ -20,3 +20,9 @@ urlpatterns = [
 
     url(r'', include('polls.urls')),
 ]
+
+
+handler404 = 'polls.views.not_found'
+handler500 = 'polls.views.server_error'
+handler403 = 'polls.views.permission_denied'
+handler400 = 'polls.views.bad_request'

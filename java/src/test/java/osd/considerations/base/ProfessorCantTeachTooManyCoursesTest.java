@@ -5,13 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import osd.schedule.Lookups;
-import osd.database.Professor;
+import osd.database.input.Professor;
 import osd.schedule.Hunk;
 
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class ProfessorCantTeachTooManyCoursesTest {
@@ -45,7 +44,7 @@ class ProfessorCantTeachTooManyCoursesTest {
     void bind_PermitsWhenBelowCapacity() {
         currentCourseLoad = capacity - 1;
         final boolean expected = true;
-        final boolean result = instance.bindPredicate(mockLookups).test(mockHunk);
+        final boolean result = instance.bind(mockLookups).test(mockHunk);
         assertEquals(expected, result);
     }
 
@@ -53,7 +52,7 @@ class ProfessorCantTeachTooManyCoursesTest {
     void bind_RejectsWhenAtCapacity() {
         currentCourseLoad = capacity;
         final boolean expected = false;
-        final boolean result = instance.bindPredicate(mockLookups).test(mockHunk);
+        final boolean result = instance.bind(mockLookups).test(mockHunk);
         assertEquals(expected, result);
     }
 
@@ -61,7 +60,7 @@ class ProfessorCantTeachTooManyCoursesTest {
     void bind_RejectsWhenAboveCapacity() {
         currentCourseLoad = capacity + 1;
         final boolean expected = false;
-        final boolean result = instance.bindPredicate(mockLookups).test(mockHunk);
+        final boolean result = instance.bind(mockLookups).test(mockHunk);
         assertEquals(expected, result);
     }
 

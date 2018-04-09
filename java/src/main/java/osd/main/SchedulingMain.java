@@ -1,46 +1,32 @@
 package osd.main;
 
-import dagger.Binds;
 import dagger.Component;
-import dagger.Module;
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import osd.considerations.BaseConsiderationModule;
 import osd.considerations.ConsiderationModule;
-import osd.database.DatabaseModule;
-import osd.schedule.Callbacks;
+import osd.database.HibernateSessionFactoryModule;
 import osd.schedule.ScheduleModule;
-import osd.schedule.Scheduler;
+import osd.util.classpath.ClasspathModule;
 
 import javax.inject.Singleton;
 
 @Singleton
 @Component(
     modules={
-            DatabaseModule.class,
+            HibernateSessionFactoryModule.class,
             ConsiderationModule.class,
             ScheduleModule.class,
-            SchedulingMain.MainModule.class,
+            MainModule.class,
+            ClasspathModule.class,
     }
 )
-public abstract class SchedulingMain {
+interface SchedulingMain {
 
-    abstract Scheduler schedulingAttempt();
+    SchedulingAttempt schedulingAttempt();
 
-    public static void main(final String[] args) {
-        DaggerSchedulingMain.builder()
-                .baseConsiderationModule(new BaseConsiderationModule(FastClasspathScanner::new))
-                .build()
-                .schedulingAttempt()
-                .run();
-        System.exit(0);
-    }
-
-    @Module
-    abstract class MainModule {
-
-        @Binds
-        abstract Callbacks bindsCallbacks(SchedulingCallbacks demoCallbacks);
-
+    static void main(final String[] args) {
+        final SchedulingMain main = DaggerSchedulingMain.create();
+        try (final SchedulingAttempt attempt = main.schedulingAttempt()){
+            attempt.run();
+        }
     }
 
 }

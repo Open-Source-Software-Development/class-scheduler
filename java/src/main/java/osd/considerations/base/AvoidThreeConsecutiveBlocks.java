@@ -1,13 +1,13 @@
 package osd.considerations.base;
 
 import osd.considerations.BasePreference;
+import osd.considerations.Preference;
 import osd.schedule.Lookups;
-import osd.database.Block;
-import osd.database.Professor;
+import osd.database.input.Block;
+import osd.database.input.Professor;
 import osd.schedule.Hunk;
 
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -26,8 +26,8 @@ class AvoidThreeConsecutiveBlocks implements BasePreference {
     }
 
     @Override
-    public Predicate<Hunk> bindPredicate(final Lookups lookups) {
-        return h -> test(h, lookups);
+    public Preference bind(final Lookups lookups) {
+        return Preference.of(h -> test(h, lookups), worth());
     }
 
     private static boolean test(final Hunk hunk, final Lookups lookups) {

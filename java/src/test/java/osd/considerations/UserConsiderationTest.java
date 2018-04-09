@@ -4,26 +4,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.Room;
-import osd.database.Section;
+import osd.database.input.RecordConverter;
+import osd.database.input.Room;
+import osd.database.input.Section;
+import osd.database.input.record.UserConsiderationRecord;
 import osd.schedule.Hunk;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserConsiderationTest {
-
-    private static final class UserConsiderationTestImpl extends UserConsideration {
-
-        UserConsiderationTestImpl(Object left, Object right) {
-            super(left, right);
-        }
-
-        @Override
-        public boolean test(final Hunk hunk) {
-            return true;
-        }
-    }
 
     @Mock private Hunk mockHunk;
     @Mock private Section mockSection;
@@ -35,7 +25,7 @@ class UserConsiderationTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new UserConsiderationTestImpl(mockSection, mockRoom);
+        instance = new UserConsideration(mockSection, mockRoom);
     }
 
     @Test
@@ -95,8 +85,28 @@ class UserConsiderationTest {
     @Test
     void extract_IllegalArgumentExceptionOnUnknownField() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserConsiderationTestImpl(null, null)
-                        .test(mockHunk));
+                new UserConsideration((Object)null, null));
+    }
+
+    @Test
+    void recordConstructor() {
+        final UserConsiderationRecord mockRecord = mock(UserConsiderationRecord.class);
+        final RecordConverter mockRecordConverter = mock(RecordConverter.class);
+        when(mockRecord.getLeftId()).thenReturn(0);
+        when(mockRecord.getLeftTypeId()).thenReturn(1);
+        when(mockRecord.getRightId()).thenReturn(2);
+        when(mockRecord.getRightTypeId()).thenReturn(3);
+        when(mockRecordConverter.getGeneric(mockRecord.getLeftTypeId(), mockRecord.getLeftId()))
+                .thenReturn(mockSection);
+        when(mockRecordConverter.getGeneric(mockRecord.getRightTypeId(), mockRecord.getRightId()))
+                .thenReturn(mockRoom);
+        final UserConsideration instance = new UserConsideration(mockRecord, mockRecordConverter);
+
+        when(mockHunk.getSection()).thenReturn(mockSection);
+        when(mockHunk.getRoom()).thenReturn(mockRoom);
+        final UserConsideration.Match expected = UserConsideration.Match.BOTH;
+        final UserConsideration.Match result = instance.getMatch(mockHunk);
+        assertEquals(expected, result);
     }
 
 }
