@@ -49,7 +49,7 @@
 						<h4> Hello, {{request.user.username}}</h4>
 						<h6>Choose a season to view the schedules that were generated for it</h6>
 						
-						<form action="{% url 'view_history' %}" method="post">
+						<form name="historyChoose" action="{% url 'view_history' %}?pickSeason=" method="POST">
 						{% csrf_token %}
 								<div class="spacing wrapper">
 									<h4>Choose a Season:</h4>

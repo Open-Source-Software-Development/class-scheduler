@@ -329,7 +329,7 @@ class UserConstraint(UserPreferenceOrConstraint):
 
 
 class Season(models.Model):
-    pass
+	name = models.CharField(max_length=20)
 
 
 class Run(models.Model):
@@ -373,6 +373,7 @@ class Hunk(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     block = models.ForeignKey(Block, on_delete=models.CASCADE)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
 
     def __str__(self):
         return six.text_type("Hunk({}, {}, {}, {})").format(self.section, self.professor, self.room, self.block)

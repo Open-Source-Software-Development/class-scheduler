@@ -132,7 +132,7 @@ def run(request):
 	
 ## TODO: Documentation
 def view_history(request):
-	query_results = Hunk.objects.filter()
+	query_results = Hunk.objects.filter(Season=historyChoose.POST['pickSeason'])
 	
 	return render(request, 'view_history.html', {'query_results': query_results})
 
