@@ -1,5 +1,7 @@
 package osd.considerations;
 
+import osd.database.RecordConversion;
+import osd.database.RecordConverter;
 import osd.database.input.*;
 import osd.database.input.record.ProfessorConstraintRecord;
 import osd.database.input.record.QualificationRecord;

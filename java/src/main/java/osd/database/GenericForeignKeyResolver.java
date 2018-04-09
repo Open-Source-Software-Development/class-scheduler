@@ -1,4 +1,6 @@
-package osd.database.input;
+package osd.database;
+
+import osd.database.input.*;
 
 import javax.inject.Inject;
 import java.util.NoSuchElementException;
@@ -9,6 +11,7 @@ class GenericForeignKeyResolver {
     GenericForeignKeyResolver() {}
 
     Class<? extends SchedulingElement> resolve(final int typeId) {
+        // TODO: real implementation
         switch(typeId) {
             case 7: return Block.class;
             case 8: return Course.class;

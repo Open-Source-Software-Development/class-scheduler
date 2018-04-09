@@ -2,8 +2,8 @@ package osd.considerations;
 
 import osd.database.input.Block;
 import osd.database.input.Professor;
-import osd.database.input.RecordConversion;
-import osd.database.input.RecordConverter;
+import osd.database.RecordConversion;
+import osd.database.RecordConverter;
 import osd.database.input.record.ProfessorConstraintRecord;
 import osd.database.input.record.UserPreferenceRecord;
 import osd.schedule.Hunk;

@@ -1,6 +1,6 @@
 package osd.considerations;
 
-import osd.database.input.RecordConverter;
+import osd.database.RecordConverter;
 import osd.database.input.record.UserConsiderationRecord;
 import osd.schedule.Hunk;
 
