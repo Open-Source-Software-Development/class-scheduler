@@ -43,3 +43,18 @@
   line-height: 1.428571429;
   border-radius: 15px;
 }
+
+.tab-showing{
+  padding: 1.618rem;
+    background: #fff;
+    color: #2c3e50;
+    border-bottom: 0.25rem solid #bdc3c7;
+    position: absolute;
+    z-index: 1;
+    top: 2.75em;
+    left: 0;
+    opacity: 0;
+    transition: all 0.35s;
+    width: 100%;
+    align-content: left;
+}
