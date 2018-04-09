@@ -16,15 +16,10 @@ class Save {
     }
 
     <T> T save(final T object) {
-        final Session session = sessionFactory.openSession();
-        try {
+        try (final Session session = sessionFactory.openSession()) {
             final Transaction transaction = session.beginTransaction();
             session.saveOrUpdate(object);
             transaction.commit();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return object;
     }

@@ -26,15 +26,10 @@ class CompleteScheduleHandler {
     }
 
     void accept(final Results results) {
-        Session session = sessionFactory.openSession();
-        try {
+        try (final Session session = sessionFactory.openSession()) {
             final Transaction transaction = session.beginTransaction();
             results.getHunks().forEach(hunk -> saveHunk(session, hunk, run));
             transaction.commit();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 

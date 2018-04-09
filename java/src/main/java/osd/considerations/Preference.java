@@ -2,6 +2,7 @@ package osd.considerations;
 
 import osd.schedule.Hunk;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -45,11 +46,13 @@ public interface Preference {
      * @return a preference defined by the above
      */
     static Preference of(final Predicate<Hunk> predicate, final int worth) {
+        Objects.requireNonNull(predicate);
         return new Preference() {
 
             @Override
-            public int evaluate(Hunk hunk) {
-                return predicate.test(hunk) ? worth : 0;
+            public int evaluate(final Hunk hunk) {
+                final boolean result = predicate.test(hunk);
+                return result ? worth : 0;
             }
 
             @Override

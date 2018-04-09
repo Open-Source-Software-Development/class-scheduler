@@ -20,22 +20,12 @@ class PreferenceTest {
 
     private final int worth = 7;
 
-    private final Preference instance = new Preference() {
-
-        @Override
-        public int evaluate(final Hunk hunk) {
-            return mockPredicate.test(hunk) ? worth : 0;
-        }
-
-        @Override
-        public int worth() {
-            return worth;
-        }
-    };
+    private Preference instance;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        instance = Preference.of(mockPredicate, worth);
     }
 
     @Test
@@ -52,6 +42,11 @@ class PreferenceTest {
         final int result = instance.evaluate(mockHunk);
         assertEquals(worth, result);
         verify(mockPredicate).test(mockHunk);
+    }
+
+    @Test
+    void of_Worth() {
+        assertEquals(worth, instance.worth());
     }
 
 }
