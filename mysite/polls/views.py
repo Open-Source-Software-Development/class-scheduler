@@ -120,19 +120,15 @@ def history(request):
 def runHelper():
     subprocess.run(['java', '-jar', '../java/target/Scheduler.jar'])
 
-runScheduler = None
-
 ## TODO: Documentation
 def run(request):
-	global runScheduler
 	action = request.GET.get('action')
 	if action == "run":
-		if runScheduler is None or not runScheduler.is_alive():
-			runScheduler = Process(group=None, target=runHelper, name=None, args=(), kwargs={})
-			runScheduler.start()
+		if len(Run.objects.filter(active = True)) == 0:
+			subprocess.run(["java", "-jar", "../java/target/Scheduler-jar-with-dependencies.jar"])
 	elif action == "cancel":
-		if runScheduler is not None and runScheduler.is_alive():
-			runScheduler.kill()
+		for run in Run.objects.all():
+			run.terminate()
 	return render(request, 'run.html')
 	
 ## TODO: Documentation
