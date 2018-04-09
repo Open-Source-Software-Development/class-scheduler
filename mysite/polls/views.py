@@ -137,13 +137,13 @@ def run(request):
 	
 ## TODO: Documentation
 def view_history(request):
-	query_results = Run.objects.all()
+	query_results = Hunk.objects.filter()
 	
 	return render(request, 'view_history.html', {'query_results': query_results})
 
 ## TODO: Documentation
 def results(request):
-	algo_results = Hunk.objects.all()
+	algo_results = Hunk.objects.filter()
 	
 	return render(request, 'results.html', {'algo_results': algo_results})
 	
