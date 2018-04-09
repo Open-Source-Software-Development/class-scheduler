@@ -2,6 +2,8 @@ package osd.considerations;
 
 import osd.schedule.Hunk;
 
+import java.util.function.Predicate;
+
 /**
  * A predicate over hunks.
  * <p>Since hunks are used as both schedule and internally during scheduling,
@@ -9,7 +11,7 @@ import osd.schedule.Hunk;
  * constraint attempts to refer to some member of a hunk for which that member
  * is {@code null}, the constraint must return {@code true}.</p>
  */
-public interface Constraint extends Consideration {
+public interface Constraint extends Predicate<Hunk> {
 
     /**
      * Determines whether some hunk satisfies this consideration. If the

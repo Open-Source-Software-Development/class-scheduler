@@ -59,24 +59,24 @@ class EverythingTest {
 
     @Test
     void extending_Class() {
-        doTest(TestClass.class, Everything::extending);
+        doTest(TestClass.class, instance.extending(TestClass.class));
         verify(mockScanner).matchSubclassesOf(eq(TestClass.class), any());
     }
 
     @Test
     void extending_Interface() {
-        doTest(TestInterface.class, Everything::extending);
+        doTest(TestInterface.class, instance.extending(TestInterface.class));
         verify(mockScanner).matchClassesImplementing(eq(TestInterface.class), any());
     }
 
     @Test
     void annotatedBy() {
-        doTest(TestAnnotation.class, Everything::annotatedBy);
+        doTest(TestAnnotation.class, instance.annotatedBy(TestAnnotation.class));
     }
 
-    private void doTest(final Class<?> clazz, final BiFunction<Everything, Class, Stream<Class<?>>> callback) {
+    private void doTest(final Class<?> clazz, Stream<Class<?>> resultStream) {
         final Set<Class<?>> expected = Collections.singleton(clazz);
-        final Set<Class<?>> result = callback.apply(instance, clazz).collect(Collectors.toSet());
+        final Set<Class<?>> result = resultStream.collect(Collectors.toSet());
         assertEquals(expected, result);
         verify(mockScanner).scan();
     }

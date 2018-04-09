@@ -13,7 +13,7 @@ import java.util.function.Function;
  * Interpretation of those element pairs is up to the specific implementation.
  * @see #getMatch(Hunk)
  */
-abstract class UserConsideration implements Consideration {
+class UserConsideration {
 
     final Object left, right;
     private final Function<Hunk, HunkField.Extraction> extractLeft, extractRight;
