@@ -1,10 +1,12 @@
 package osd.database.input.record;
 
+import osd.database.Identified;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_professor")
-public class ProfessorRecord {
+public class ProfessorRecord implements Identified {
 
 	@Id @GeneratedValue
     @Column(name="id")

@@ -1,7 +1,7 @@
 package osd.database.input;
 
+import osd.database.RecordAccession;
 import osd.database.RecordConversion;
-import osd.database.RecordConverter;
 import osd.database.input.record.RoomRecord;
 
 /**
@@ -12,9 +12,9 @@ public class Room extends SchedulingElement {
     private final RoomType roomType;
 
     @RecordConversion
-    Room(final RoomRecord record, final RecordConverter recordConverter) {
+    Room(final RoomRecord record, final RecordAccession recordAccession) {
         super(record.getId(), record.getBuilding() + "-" + record.getRoomNumber());
-        this.roomType = recordConverter.get(RoomType.class, record.getRoomTypeId());
+        this.roomType = recordAccession.get(RoomType.class, record.getRoomTypeId());
     }
 
     /**

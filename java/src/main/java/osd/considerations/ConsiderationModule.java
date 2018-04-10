@@ -65,12 +65,12 @@ public interface ConsiderationModule {
 
     @Provides
     static Collection<UserConstraint> providesUserConstraints(final Sources sources) {
-        return sources.getDirect(UserConstraint.class).collect(Collectors.toSet());
+        return sources.get(UserConstraint.class).collect(Collectors.toSet());
     }
 
     @Provides
     static Collection<UserPreference> providesUserPreferences(final Sources sources) {
-        return sources.getDirect(UserPreference.class).collect(Collectors.toSet());
+        return sources.get(UserPreference.class).collect(Collectors.toSet());
     }
 
 }

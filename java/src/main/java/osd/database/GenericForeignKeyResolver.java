@@ -10,7 +10,7 @@ class GenericForeignKeyResolver {
     @Inject
     GenericForeignKeyResolver() {}
 
-    Class<? extends SchedulingElement> resolve(final int typeId) {
+    Class<? extends Identified> resolve(final int typeId) {
         // TODO: real implementation
         switch(typeId) {
             case 7: return Block.class;

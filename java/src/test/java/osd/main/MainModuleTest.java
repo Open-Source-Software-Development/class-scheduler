@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.RecordStreamer;
+import osd.database.RecordAccession;
 import osd.database.output.RunRecord;
 import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;
@@ -29,7 +29,7 @@ class MainModuleTest {
 
     @Mock private Save mockSave;
     @Mock private SeasonRecord mockSeasonRecord;
-    @Mock private RecordStreamer mockRecordStreamer;
+    @Mock private RecordAccession mockRecordAccession;
 
     private final int seasonId = (int)(Math.random() * 1000) + 500;
 
@@ -38,7 +38,7 @@ class MainModuleTest {
         MockitoAnnotations.initMocks(this);
         when(mockSave.save(any())).then(invocation -> invocation.getArgument(0));
         when(mockSeasonRecord.getId()).thenReturn(seasonId);
-        when(mockRecordStreamer.stream(SeasonRecord.class)).then(unused ->
+        when(mockRecordAccession.getAll(SeasonRecord.class)).then(unused ->
             Stream.concat(IntStream.range(0, 20)
                     .mapToObj(i -> {
                         final SeasonRecord mockRecord = mock(SeasonRecord.class);
@@ -49,14 +49,14 @@ class MainModuleTest {
 
     @Test
     void providesSeasonRecord() {
-        final SeasonRecord result = MainModule.providesSeasonRecord(mockSave, mockRecordStreamer);
+        final SeasonRecord result = MainModule.providesSeasonRecord(mockSave, mockRecordAccession);
         assertEquals(result, mockSeasonRecord);
     }
 
     @Test
     void providesSeasonRecord_Cache() {
-        final SeasonRecord result1 = MainModule.providesSeasonRecord(mockSave, mockRecordStreamer);
-        final SeasonRecord result2 = MainModule.providesSeasonRecord(mockSave, mockRecordStreamer);
+        final SeasonRecord result1 = MainModule.providesSeasonRecord(mockSave, mockRecordAccession);
+        final SeasonRecord result2 = MainModule.providesSeasonRecord(mockSave, mockRecordAccession);
         assertTrue(result1 == result2);
     }
 

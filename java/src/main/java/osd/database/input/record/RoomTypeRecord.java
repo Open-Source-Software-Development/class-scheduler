@@ -1,10 +1,12 @@
 package osd.database.input.record;
 
+import osd.database.Identified;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_roomtype")
-public class RoomTypeRecord {
+public class RoomTypeRecord implements Identified {
 
     @Id
     @GeneratedValue

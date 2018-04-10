@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Singleton
-public class RecordStreamer {
+class RecordStreamer {
 
     private final SessionFactory sessionFactory;
 
@@ -24,7 +24,7 @@ public class RecordStreamer {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> Stream<T> stream(final Class<T> recordType) {
+    <T> Stream<T> stream(final Class<T> recordType) {
         return (Stream<T>)(records.computeIfAbsent(recordType, this::readRecords)).stream();
     }
 

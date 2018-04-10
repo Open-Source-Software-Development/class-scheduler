@@ -1,8 +1,10 @@
 package osd.database.input;
 
+import osd.database.Identified;
+
 import java.util.Objects;
 
-public class SchedulingElement {
+class SchedulingElement implements Identified {
 
     private final int id;
     private final String name;
@@ -12,6 +14,7 @@ public class SchedulingElement {
         this.name = Objects.requireNonNull(name);
     }
 
+    @Override
     public int getId() {
         return id;
     }

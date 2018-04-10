@@ -1,6 +1,7 @@
 package osd.database.input;
 
-import osd.database.RecordConverter;
+import osd.database.Identified;
+import osd.database.RecordAccession;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,19 +10,15 @@ import java.util.stream.Stream;
 @Singleton
 public class Sources {
 
-    private final RecordConverter recordConverter;
+    private final RecordAccession recordAccession;
 
     @Inject
-    Sources(final RecordConverter recordConverter) {
-        this.recordConverter = recordConverter;
+    Sources(final RecordAccession recordAccession) {
+        this.recordAccession = recordAccession;
     }
 
-    public <T> Stream<T> getDirect(final Class<T> clazz) {
-        return recordConverter.getDirect(clazz);
-    }
-
-    public <T extends SchedulingElement> Stream<T> get(final Class<T> clazz) {
-        return recordConverter.getAll(clazz);
+    public <T extends Identified> Stream<T> get(final Class<T> clazz) {
+        return recordAccession.getAll(clazz);
     }
 
     public Stream<Section> getSections() {

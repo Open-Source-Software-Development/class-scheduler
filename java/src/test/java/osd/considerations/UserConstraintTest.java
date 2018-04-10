@@ -27,8 +27,8 @@ class UserConstraintTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        whitelist = new UserConstraint(mockSection, mockProfessor, false);
-        blacklist = new UserConstraint(mockSection, mockProfessor, true);
+        whitelist = new UserConstraint(0, mockSection, mockProfessor, false);
+        blacklist = new UserConstraint(1, mockSection, mockProfessor, true);
     }
 
     @Test

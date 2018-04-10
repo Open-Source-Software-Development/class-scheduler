@@ -1,7 +1,7 @@
 package osd.database.input;
 
+import osd.database.RecordAccession;
 import osd.database.RecordConversion;
-import osd.database.RecordConverter;
 import osd.database.input.record.CourseRecord;
 
 import java.util.function.Function;
@@ -17,7 +17,7 @@ public class Course extends SchedulingElement {
     private final int baseSectionCount;
 
     @RecordConversion
-    Course(final CourseRecord record, final RecordConverter recordConverter) {
+    Course(final CourseRecord record, final RecordAccession recordAccession) {
         super(record.getId(), record.getName());
         this.baseSectionCount = record.getBaseSectionCount();
     }

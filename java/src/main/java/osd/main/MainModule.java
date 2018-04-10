@@ -3,7 +3,7 @@ package osd.main;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import osd.database.RecordStreamer;
+import osd.database.RecordAccession;
 import osd.database.output.RunRecord;
 import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;
@@ -17,9 +17,9 @@ abstract class MainModule {
     private static SeasonRecord seasonRecord;
 
     @Provides
-    static SeasonRecord providesSeasonRecord(final Save save, final RecordStreamer recordStreamer) {
+    static SeasonRecord providesSeasonRecord(final Save save, final RecordAccession recordAccession) {
         if (seasonRecord == null) {
-            seasonRecord = recordStreamer.stream(SeasonRecord.class)
+            seasonRecord = recordAccession.getAll(SeasonRecord.class)
                     .sorted(Comparator.comparing(SeasonRecord::getId).reversed())
                     .findFirst()
                     .orElseGet(() -> save.save(new SeasonRecord()));

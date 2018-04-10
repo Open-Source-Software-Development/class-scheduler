@@ -144,7 +144,7 @@ class ConsiderationModuleTest {
     @Test
     void providesUserConstraints() {
         final Collection<UserConstraint> expected = Collections.singleton(mockUserConstraint);
-        when(mockSources.getDirect(UserConstraint.class)).then(invocation -> expected.stream());
+        when(mockSources.get(UserConstraint.class)).then(invocation -> expected.stream());
         final Collection<UserConstraint> result = new HashSet<>(ConsiderationModule.providesUserConstraints(mockSources));
         assertEquals(expected, result);
     }
@@ -152,7 +152,7 @@ class ConsiderationModuleTest {
     @Test
     void providesUserPreferences() {
         final Collection<UserPreference> expected = Collections.singleton(mockUserPreference);
-        when(mockSources.getDirect(UserPreference.class)).then(invocation -> expected.stream());
+        when(mockSources.get(UserPreference.class)).then(invocation -> expected.stream());
         final Collection<UserPreference> result = new HashSet<>(ConsiderationModule.providesUserPreferences(mockSources));
         assertEquals(expected, result);
     }
@@ -176,7 +176,7 @@ class ConsiderationModuleTest {
                     final MockConstraintData data = field.getAnnotation(MockConstraintData.class);
                     final Object left = mockCourses[data.course()];
                     final Object right = mockRightValues[data.right()];
-                    final UserConstraint implementation = new UserConstraint(left, right, data.isBlacklist());
+                    final UserConstraint implementation = new UserConstraint(0, left, right, data.isBlacklist());
                     when(constraint.getWhitelistKey()).thenReturn(implementation.getWhitelistKey());
                     when(constraint.test(any())).then(invocation -> implementation.test(invocation.getArgument(0)));
                     userConstraints.add(constraint);
