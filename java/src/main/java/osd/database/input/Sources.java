@@ -1,5 +1,7 @@
 package osd.database.input;
 
+import osd.database.RecordConverter;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.stream.Stream;

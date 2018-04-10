@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.input.RecordConverter;
+import osd.database.RecordConverter;
 import osd.database.input.Room;
 import osd.database.input.Section;
 import osd.database.input.record.UserConsiderationRecord;

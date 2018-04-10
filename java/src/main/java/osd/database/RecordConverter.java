@@ -1,6 +1,6 @@
-package osd.database.input;
+package osd.database;
 
-import osd.database.input.record.RecordStreamer;
+import osd.database.input.SchedulingElement;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -36,11 +36,11 @@ public class RecordConverter {
         return get(clazz, id);
     }
 
-    <T extends SchedulingElement> Stream<T> getAll(final Class<T> clazz) {
+    public <T extends SchedulingElement> Stream<T> getAll(final Class<T> clazz) {
         return get0(clazz).values().stream();
     }
 
-    <T> Stream<T> getDirect(final Class<T> clazz) {
+    public <T> Stream<T> getDirect(final Class<T> clazz) {
         return convertAll(clazz);
     }
 

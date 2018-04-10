@@ -1,11 +1,11 @@
-package osd.database.input.record;
+package osd.database;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.persistence.TypedQuery;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +33,8 @@ public class RecordStreamer {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            final Query query = session.createQuery( "FROM " + recordType.getSimpleName());
-            return (List<T>)query.list();
+            final TypedQuery<T> query = session.createQuery( "FROM " + recordType.getSimpleName(), recordType);
+            return query.getResultList();
         } finally {
             if (session != null) {
                 session.close();

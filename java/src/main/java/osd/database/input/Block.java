@@ -1,5 +1,7 @@
 package osd.database.input;
 
+import osd.database.RecordConversion;
+import osd.database.RecordConverter;
 import osd.database.input.record.BlockRecord;
 
 import java.util.function.Supplier;

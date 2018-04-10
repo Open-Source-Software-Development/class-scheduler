@@ -3,7 +3,7 @@ package osd.main;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import osd.database.input.record.RecordStreamer;
+import osd.database.RecordStreamer;
 import osd.database.output.RunRecord;
 import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;

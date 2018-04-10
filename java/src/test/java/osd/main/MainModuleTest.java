@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.input.record.RecordStreamer;
+import osd.database.RecordStreamer;
 import osd.database.output.RunRecord;
 import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;
