@@ -2,7 +2,7 @@ package osd.considerations;
 
 import dagger.Module;
 import dagger.Provides;
-import osd.database.input.Sources;
+import osd.schedule.Sources;
 import osd.schedule.Hunk;
 import osd.schedule.Lookups;
 

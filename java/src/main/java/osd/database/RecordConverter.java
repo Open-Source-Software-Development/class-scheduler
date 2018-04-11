@@ -11,9 +11,10 @@ class RecordConverter {
     RecordConverter() {}
 
     @SuppressWarnings("unchecked")
-    <T extends Identified> Stream<T> convertAll(final RecordAccession accession, final Class<T> clazz) {
+    <T extends Identified> Stream<T> convertAll(final RecordStreamer records,
+                                                final RecordAccession accession, final Class<T> clazz) {
         return getConstructors(clazz)
-                .flatMap(constructor -> accession.getAll(clazz)
+                .flatMap(constructor -> records.stream(constructor.getParameterTypes()[0])
                         .filter(RecordConversionPredicate.of(constructor, accession))
                         .map(RecordConversionFunction.of(constructor, accession)));
     }

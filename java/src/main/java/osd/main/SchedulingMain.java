@@ -3,7 +3,6 @@ package osd.main;
 import dagger.Component;
 import osd.considerations.ConsiderationModule;
 import osd.database.HibernateSessionFactoryModule;
-import osd.schedule.ScheduleModule;
 import osd.util.classpath.ClasspathModule;
 
 import javax.inject.Singleton;
@@ -13,7 +12,6 @@ import javax.inject.Singleton;
     modules={
             HibernateSessionFactoryModule.class,
             ConsiderationModule.class,
-            ScheduleModule.class,
             MainModule.class,
             ClasspathModule.class,
     }

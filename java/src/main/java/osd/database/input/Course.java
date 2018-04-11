@@ -28,7 +28,7 @@ public class Course extends SchedulingElement {
      * sections specified in the course's "sections" column.
      * @return a stream of this course's sections
      */
-    Stream<Section> streamSections() {
+    public Stream<Section> streamSections() {
         // TODO: consider pregen sections
         return IntStream.rangeClosed(1, baseSectionCount)
                 .mapToObj(i -> Section.of(this, String.valueOf(i)));

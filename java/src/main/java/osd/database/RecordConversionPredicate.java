@@ -27,6 +27,10 @@ interface RecordConversionPredicate extends Predicate<Object> {
     }
 
     class Dummy implements RecordConversionPredicate {
+
+        @SuppressWarnings("unused")
+        Dummy(final RecordAccession unused) {}
+
         @Override
         public boolean test(final Object o) {
             return true;

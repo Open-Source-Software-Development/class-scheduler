@@ -50,7 +50,7 @@ class SchedulerCandidateTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(mockSources.getSections()).then(unused -> sections.stream());
+        when(mockSources.get(Course.class).flatMap(Course::streamSections)).then(unused -> sections.stream());
         when(mockSources.get(Block.class)).then(unused -> blocks.stream());
         when(mockSources.get(Room.class)).then(unused -> rooms.stream());
         when(mockSources.get(Professor.class)).then(unused -> professors.stream());

@@ -52,7 +52,7 @@ public class RecordAccession {
         if (clazz.isAnnotationPresent(Entity.class)) {
             return records.stream(clazz);
         }
-        return converter.convertAll(this, clazz);
+        return converter.convertAll(records, this, clazz);
     }
 
 }
