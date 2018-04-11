@@ -14,9 +14,11 @@ from scheduler.models import Division
 from scheduler.models import ProfessorConstraint
 from scheduler.models import GradeLevel
 from scheduler.courseConstraints import CourseLevel
+from scheduler.courseSeason import CourseSeason
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
 import subprocess, threading, time
+from django.shortcuts import redirect
 
 def blank(request):
 	return render(request, 'blank.html')
@@ -88,6 +90,7 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
+    courses = Course.objects.all()
     running_filter = request.GET.get('running-list')
     if running_filter == None:
         running_filter = 'None'
@@ -109,59 +112,62 @@ def course_selection(request):
     
     if running_filter != 'None':
         program_restriction = Course.objects.filter(program=running_filter).values('id')
-        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+        season = CourseSeason().get_courses_from_recent_season()
+        running = season.filter(courses__in=program_restriction)
     else:
         program_restriction = Course.objects.filter().values('id')
-        running = Season.objects.filter(courses__in=program_restriction)
+        season = CourseSeason().get_courses_from_recent_season()
+        running = season.filter(id__in=program_restriction)
     
     for course in selected:
-        Season().insert_course(course)
+        CourseSeason().add_course_season(course)
     for course in removed:
-        Season().remove_course(course)
+        CourseSeason().remove_course_season(course)
     return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
 
 
 def course_review(request):
-    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
-    program = request.GET.get('program')
-    if program == 'All' or program == None:
-        program = 'All'
-    running_filter = request.GET.get('running-list')
-    if running_filter == None:
-        running_filter = 'None'
-    course_filter = request.GET.get('course-list') 
-    if course_filter == None:
-        course_filter = 'None'
-    year = request.GET.get('year')
-    if year == None:
-        year = 'First'
-        
-    selected = request.POST.getlist('Courses')
-    remove_course = []
-    removed = request.POST.getlist('Removed')
-    
-    for title in removed:
-        remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
-    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    if course_filter != 'None':
-        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
-    else:
-        courses = Course.objects.exclude(id__in=excluded_courses)
-
-    if program != 'All':
-        program_restriction = Course.objects.filter(program=program).values('id')
-        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
-    else:
-        program_restriction = Course.objects.filter().values('id')
-        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
-    
-    
-    for course in selected:
-        CourseLevel().insert_grade_level(course, year)
-    for course in removed:
-        CourseLevel().remove_courselevel(course, year)
-    
-    return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program, 'course_filter': course_filter, 'running_filter': running_filter})
+    return redirect(course_selection)
+#    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
+#    program = request.GET.get('program')
+#    if program == 'All' or program == None:
+#        program = 'All'
+#    running_filter = request.GET.get('running-list')
+#    if running_filter == None:
+#        running_filter = 'None'
+#    course_filter = request.GET.get('course-list') 
+#    if course_filter == None:
+#        course_filter = 'None'
+#    year = request.GET.get('year')
+#    if year == None:
+#        year = 'First'
+#        
+#    selected = request.POST.getlist('Courses')
+#    remove_course = []
+#    removed = request.POST.getlist('Removed')
+#    
+#    for title in removed:
+#        remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
+#    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
+#    if course_filter != 'None':
+#        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+#    else:
+#        courses = Course.objects.exclude(id__in=excluded_courses)
+#
+#    if program != 'All':
+#        program_restriction = Course.objects.filter(program=program).values('id')
+#        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+#    else:
+#        program_restriction = Course.objects.filter().values('id')
+#        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+#    
+#    
+#    for course in selected:
+#        CourseLevel().insert_grade_level(course, year)
+#    for course in removed:
+#        CourseLevel().remove_courselevel(course, year)
+#    
+#    return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program, 'course_filter': course_filter, 'running_filter': running_filter})
 
 def simple_upload(request):
 	return render(request, 'import_data.html')

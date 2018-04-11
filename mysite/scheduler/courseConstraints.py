@@ -30,3 +30,4 @@ class CourseLevel():
         course = Course.objects.get(title = course_title.strip())
         gl = GradeLevel.objects.get(course = course.id,grade_level=grade_level)
         gl.delete()
+
