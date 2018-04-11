@@ -1,6 +1,7 @@
 package osd.considerations;
 
-import osd.database.input.RecordConverter;
+import osd.database.Identified;
+import osd.database.RecordAccession;
 import osd.database.input.record.UserConsiderationRecord;
 import osd.schedule.Hunk;
 
@@ -13,17 +14,20 @@ import java.util.function.Function;
  * Interpretation of those element pairs is up to the specific implementation.
  * @see #getMatch(Hunk)
  */
-class UserConsideration {
+class UserConsideration implements Identified {
 
+    private final int id;
     final Object left, right;
     private final Function<Hunk, HunkField.Extraction> extractLeft, extractRight;
 
-    UserConsideration(final UserConsiderationRecord record, final RecordConverter recordConverter) {
-        this(recordConverter.getGeneric(record.getLeftTypeId(), record.getLeftId()),
-             recordConverter.getGeneric(record.getRightTypeId(), record.getRightId()));
+    UserConsideration(final UserConsiderationRecord record, final RecordAccession recordAccession) {
+        this(record.getId(),
+                recordAccession.getGeneric(record.getLeftTypeId(), record.getLeftId()),
+                recordAccession.getGeneric(record.getRightTypeId(), record.getRightId()));
     }
 
-    UserConsideration(final Object left, final Object right) {
+    UserConsideration(final int id, final Object left, final Object right) {
+        this.id = id;
         this.left = left;
         this.right = right;
         this.extractLeft = HunkField.get(left).getExtractor(left);
@@ -83,6 +87,11 @@ class UserConsideration {
             return Match.NEITHER;
         }
         return (left == HunkField.Extraction.MATCH) ? Match.LEFT : Match.RIGHT;
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
 }

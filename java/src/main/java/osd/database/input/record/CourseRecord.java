@@ -1,5 +1,7 @@
 package osd.database.input.record;
 
+import osd.database.Identified;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scheduler_course")
-public class CourseRecord {
+public class CourseRecord implements Identified {
 
 	@Id @GeneratedValue
 	@Column(name = "id")

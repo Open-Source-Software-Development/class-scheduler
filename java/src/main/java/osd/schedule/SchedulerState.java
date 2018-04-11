@@ -34,7 +34,7 @@ class SchedulerState implements Lookups {
         this.hunks = new HashMap<>();
 
         sources.get(Block.class).forEach(block -> initBlock(sources, block));
-        sources.getSections().forEach(section -> initSection(sources, section));
+        sources.get(Course.class).flatMap(Course::streamSections).forEach(section -> initSection(sources, section));
 
         recentHunk = null;
     }

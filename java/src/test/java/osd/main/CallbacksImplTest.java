@@ -9,7 +9,7 @@ import osd.schedule.Results;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-class SchedulingCallbacksTest {
+class CallbacksImplTest {
 
     // This class is still very subject to change, so these tests are
     // intentionally very minimal. The only thing that's actually tested
@@ -17,12 +17,12 @@ class SchedulingCallbacksTest {
 
     @Mock private Results mockResults;
     @Mock private CompleteScheduleHandler mockHandler;
-    private SchedulingCallbacks instance;
+    private CallbacksImpl instance;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new SchedulingCallbacks(mockHandler);
+        instance = new CallbacksImpl(mockHandler);
     }
 
     @Test

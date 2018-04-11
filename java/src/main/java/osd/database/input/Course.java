@@ -1,5 +1,7 @@
 package osd.database.input;
 
+import osd.database.RecordAccession;
+import osd.database.RecordConversion;
 import osd.database.input.record.CourseRecord;
 
 import java.util.function.Function;
@@ -15,7 +17,7 @@ public class Course extends SchedulingElement {
     private final int baseSectionCount;
 
     @RecordConversion
-    Course(final CourseRecord record, final RecordConverter recordConverter) {
+    Course(final CourseRecord record, final RecordAccession recordAccession) {
         super(record.getId(), record.getName());
         this.baseSectionCount = record.getBaseSectionCount();
     }
@@ -26,7 +28,7 @@ public class Course extends SchedulingElement {
      * sections specified in the course's "sections" column.
      * @return a stream of this course's sections
      */
-    Stream<Section> streamSections() {
+    public Stream<Section> streamSections() {
         // TODO: consider pregen sections
         return IntStream.rangeClosed(1, baseSectionCount)
                 .mapToObj(i -> Section.of(this, String.valueOf(i)));

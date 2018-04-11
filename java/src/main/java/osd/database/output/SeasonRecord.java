@@ -1,10 +1,12 @@
 package osd.database.output;
 
+import osd.database.Identified;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="scheduler_season")
-public class SeasonRecord {
+public class SeasonRecord implements Identified {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "sqlite")

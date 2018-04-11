@@ -5,15 +5,16 @@ import osd.database.Identified;
 import javax.persistence.*;
 
 @Entity
-@Table(name="scheduler_qualification")
-public class QualificationRecord implements Identified {
+@Table(name = "scheduler_season_courses")
+public class SeasonCourseRecord implements Identified {
 
-    @Id @GeneratedValue
-    @Column(name="id")
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private int id;
 
-    @Column(name="professor_id")
-    private int professorId;
+    @Column(name="season_id")
+    private int seasonId;
 
     @Column(name="course_id")
     private int courseId;
@@ -24,18 +25,18 @@ public class QualificationRecord implements Identified {
     }
 
     @SuppressWarnings("unused")
-    public void setId(final int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     @SuppressWarnings("unused")
-    public int getProfessorId() {
-        return professorId;
+    public int getSeasonId() {
+        return seasonId;
     }
 
     @SuppressWarnings("unused")
-    public void setProfessorId(final Object professorId) {
-        this.professorId = Integer.valueOf(professorId.toString());
+    public void setSeasonId(Object seasonId) {
+        this.seasonId = Integer.valueOf(seasonId.toString());
     }
 
     @SuppressWarnings("unused")
@@ -44,8 +45,7 @@ public class QualificationRecord implements Identified {
     }
 
     @SuppressWarnings("unused")
-    public void setCourseId(final Object courseId) {
+    public void setCourseId(Object courseId) {
         this.courseId = Integer.valueOf(courseId.toString());
     }
-
 }

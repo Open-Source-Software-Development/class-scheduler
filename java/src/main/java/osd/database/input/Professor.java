@@ -1,5 +1,7 @@
 package osd.database.input;
 
+import osd.database.RecordAccession;
+import osd.database.RecordConversion;
 import osd.database.input.record.ProfessorRecord;
 
 /**
@@ -13,7 +15,7 @@ public class Professor extends SchedulingElement {
 	}
 
 	@RecordConversion
-    Professor(final ProfessorRecord record, final RecordConverter recordConverter) {
+    Professor(final ProfessorRecord record, final RecordAccession recordAccession) {
 	    super(record.getId(), record.getFirstName() + " " + record.getLastName());
     }
 

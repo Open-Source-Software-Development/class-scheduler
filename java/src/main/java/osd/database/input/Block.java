@@ -1,5 +1,7 @@
 package osd.database.input;
 
+import osd.database.RecordAccession;
+import osd.database.RecordConversion;
 import osd.database.input.record.BlockRecord;
 
 import java.util.function.Supplier;
@@ -22,11 +24,11 @@ public class Block extends SchedulingElement {
     private Block pairedWith;
 
     @RecordConversion
-    Block(final BlockRecord record, final RecordConverter recordConverter) {
+    Block(final BlockRecord record, final RecordAccession recordAccession) {
         super(record.getId(), record.getBlockId());
         this.day = record.getDay();
         this.hour = Integer.valueOf(record.getStartTime().split(":")[0]);
-        this.allBlocks = () -> recordConverter.getAll(Block.class);
+        this.allBlocks = () -> recordAccession.getAll(Block.class);
     }
 
     /**

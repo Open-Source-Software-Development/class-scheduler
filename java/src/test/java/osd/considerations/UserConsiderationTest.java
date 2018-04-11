@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import osd.database.input.RecordConverter;
+import osd.database.RecordAccession;
 import osd.database.input.Room;
 import osd.database.input.Section;
 import osd.database.input.record.UserConsiderationRecord;
@@ -20,12 +20,14 @@ class UserConsiderationTest {
     @Mock private Section anotherMockSection;
     @Mock private Room mockRoom;
     @Mock private Room anotherMockRoom;
+
+    private int id =(int)(Math.random() * 1000);
     private UserConsideration instance;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new UserConsideration(mockSection, mockRoom);
+        instance = new UserConsideration(id, mockSection, mockRoom);
     }
 
     @Test
@@ -85,22 +87,27 @@ class UserConsiderationTest {
     @Test
     void extract_IllegalArgumentExceptionOnUnknownField() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserConsideration((Object)null, null));
+                new UserConsideration(id, (Object)null, null));
+    }
+
+    @Test
+    void getId() {
+        assertEquals(id, instance.getId());
     }
 
     @Test
     void recordConstructor() {
         final UserConsiderationRecord mockRecord = mock(UserConsiderationRecord.class);
-        final RecordConverter mockRecordConverter = mock(RecordConverter.class);
+        final RecordAccession mockRecordAccession = mock(RecordAccession.class);
         when(mockRecord.getLeftId()).thenReturn(0);
         when(mockRecord.getLeftTypeId()).thenReturn(1);
         when(mockRecord.getRightId()).thenReturn(2);
         when(mockRecord.getRightTypeId()).thenReturn(3);
-        when(mockRecordConverter.getGeneric(mockRecord.getLeftTypeId(), mockRecord.getLeftId()))
+        when(mockRecordAccession.getGeneric(mockRecord.getLeftTypeId(), mockRecord.getLeftId()))
                 .thenReturn(mockSection);
-        when(mockRecordConverter.getGeneric(mockRecord.getRightTypeId(), mockRecord.getRightId()))
+        when(mockRecordAccession.getGeneric(mockRecord.getRightTypeId(), mockRecord.getRightId()))
                 .thenReturn(mockRoom);
-        final UserConsideration instance = new UserConsideration(mockRecord, mockRecordConverter);
+        final UserConsideration instance = new UserConsideration(mockRecord, mockRecordAccession);
 
         when(mockHunk.getSection()).thenReturn(mockSection);
         when(mockHunk.getRoom()).thenReturn(mockRoom);

@@ -3,41 +3,40 @@ package osd.main;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import osd.database.input.record.RecordStreamer;
+import osd.database.RecordAccession;
 import osd.database.output.RunRecord;
 import osd.database.output.SeasonRecord;
 import osd.schedule.Callbacks;
+import osd.schedule.Sources;
 
+import javax.inject.Singleton;
 import java.util.Comparator;
 
 @Module
-abstract class MainModule {
-
-    private static RunRecord runRecord;
-    private static SeasonRecord seasonRecord;
+interface MainModule {
 
     @Provides
-    static SeasonRecord providesSeasonRecord(final Save save, final RecordStreamer recordStreamer) {
-        if (seasonRecord == null) {
-            seasonRecord = recordStreamer.stream(SeasonRecord.class)
-                    .sorted(Comparator.comparing(SeasonRecord::getId).reversed())
-                    .findFirst()
-                    .orElseGet(() -> save.save(new SeasonRecord()));
-        }
-        return seasonRecord;
+    @Singleton
+    static SeasonRecord providesSeasonRecord(final RecordAccession recordAccession) {
+        return recordAccession.getAll(SeasonRecord.class)
+                .sorted(Comparator.comparing(SeasonRecord::getId).reversed())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No seasons present in database"));
     }
 
     @Provides
+    @Singleton
     static RunRecord providesRunRecord(final Save save, final SeasonRecord season) {
-        if (runRecord == null) {
-            runRecord = new RunRecord();
-            runRecord.setSeasonId(season.getId());
-            save.save(runRecord);
-        }
+        final RunRecord runRecord = new RunRecord();
+        runRecord.setSeasonId(season.getId());
+        save.save(runRecord);
         return runRecord;
     }
 
     @Binds
-    abstract Callbacks bindsCallbacks(SchedulingCallbacks callbacks);
+    Callbacks bindsCallbacks(CallbacksImpl callbacks);
+
+    @Binds
+    Sources bindsSources(SourcesImpl sources);
 
 }

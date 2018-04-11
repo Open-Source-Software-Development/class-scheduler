@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class SchedulerImplTest {
+class SchedulerTest {
 
     /* HOW THIS TEST WORKS:
     We have four mock candidate schedules. The first represents the empty
@@ -52,7 +52,7 @@ class SchedulerImplTest {
 
     @Mock private Callbacks mockCallbacks;
 
-    private SchedulerImpl instance;
+    private Scheduler instance;
 
     @BeforeEach
     void setUp() {
@@ -78,7 +78,7 @@ class SchedulerImplTest {
         // The second is complete.
         when(mockCandidateGen2B.isComplete()).thenReturn(true);
 
-        instance = new SchedulerImpl(mockCandidateGen1, mockCallbacks);
+        instance = new Scheduler(mockCandidateGen1, mockCallbacks);
     }
 
 

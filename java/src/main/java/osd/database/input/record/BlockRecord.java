@@ -1,10 +1,12 @@
 package osd.database.input.record;
 
+import osd.database.Identified;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "scheduler_block")
-public class BlockRecord {
+public class BlockRecord implements Identified {
 
     @Id @GeneratedValue
     @Column(name = "id")
