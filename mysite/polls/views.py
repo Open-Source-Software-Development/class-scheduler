@@ -48,11 +48,25 @@ def PD_professor_settings(request):
     template_args['pd'] = True
     return render(request, 'profSettings.html', template_args, selected)
 
+def get_rooms(request):
+    select = request.GET.get('room')
+    template_args = None
+    if not selected:
+        template_args = {'error': 'Please select a building'}
+    else:
+        names = selected.split()
+        rooms = Room.objects.get(building = names[0])
+    template_args['room'] = Room.objects.all()
+    template_args['selected'] = selected
+    return render(request, 'index.html', template_args, selected)
+
+
 def professor_settings_helper(professor, request):
     if request.method == 'POST':
         return update_professor_constraints(professor, request.POST)
     else:
         return get_professor_constraints(professor)
+
 
 def get_professor_constraints(professor):
     #Get list of current professors constraints
@@ -93,36 +107,36 @@ def course_selection(request):
     running_filter = request.GET.get('running-list')
     if running_filter == None:
         running_filter = 'None'
-    course_filter = request.GET.get('course-list') 
+    course_filter = request.GET.get('course-list')
     if course_filter == None:
         course_filter = 'None'
-    
+
     programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
     selected = request.POST.getlist('Courses')
 
     first = request.user.first_name
     last = request.user.last_name
     remove_course = []
-    
+
 
     removed = request.POST.getlist('Removed')
-    
+
     for title in removed:
         remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
-    
+
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
     if course_filter != 'None':
         courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
     else:
         courses = Course.objects.exclude(id__in=excluded_courses)
-    
+
     if running_filter != 'None':
         program_restriction = Course.objects.filter(program=running_filter).values('id')
         running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
     else:
         program_restriction = Course.objects.filter().values('id')
         running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
-    
+
     for course in selected:
         print('Adding ' + course)
         CourseLevel().insert_grade_level(course, year)
@@ -139,17 +153,17 @@ def course_review(request):
     running_filter = request.GET.get('running-list')
     if running_filter == None:
         running_filter = 'None'
-    course_filter = request.GET.get('course-list') 
+    course_filter = request.GET.get('course-list')
     if course_filter == None:
         course_filter = 'None'
     year = request.GET.get('year')
     if year == None:
         year = 'First'
-        
+
     selected = request.POST.getlist('Courses')
     remove_course = []
     removed = request.POST.getlist('Removed')
-    
+
     for title in removed:
         remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
     excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
@@ -164,13 +178,13 @@ def course_review(request):
     else:
         program_restriction = Course.objects.filter().values('id')
         running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
-    
-    
+
+
     for course in selected:
         CourseLevel().insert_grade_level(course, year)
     for course in removed:
         CourseLevel().remove_courselevel(course, year)
-    
+
     return render(request, 'PDcoursesReview.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'programs': programs, 'program': program, 'course_filter': course_filter, 'running_filter': running_filter})
 
 def simple_upload(request):
@@ -191,16 +205,16 @@ def run(request):
 ## TODO: Documentation
 def view_history(request):
     query_results = Hunk.objects.filter(Run=historyChoose.POST['pickSeason'])
-    
+
     return render(request, 'view_history.html', {'query_results': query_results})
 
 ## TODO: Documentation
 def results(request):
     algo_results = Hunk.objects.filter()
-    
+
     return render(request, 'results.html', {'algo_results': algo_results})
-    
-    
+
+
 ## TODO: Documentation
 #
 def userSettings(request):
@@ -282,9 +296,9 @@ def loginUser(request):
 
 ## Create views for custom 404 and 500 error pages
 def handler404(request):
-    
+
     return render(request, 'error_404.html', status=404)
-    
+
 def handler500(request):
-    
+
     return render(request, 'error_500.html', status=500)

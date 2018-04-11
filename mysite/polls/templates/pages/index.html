@@ -20,12 +20,27 @@
 
   <div id="wrapper">
     {% include 'blank.html' %}
-
     <div id="page-wrapper">
-
+      <br/>
+        <!-- if we're in the program director view, render a professor select dropdown -->
+        <!-- room selection menu -->
+        <div class="btn-group dual-list input-group" id="dropdownMenu">
+          <button class="btn btn-primary" data-toggle="dropdown">Building <i class="fa fa-chevron-down"></i></button>
+          <ul class="dropdown-menu scrollableMenu list-group" role="menu">
+            {% for room in rooms %}
+              <li class="list-group-item"><a tabindex="-1" href="{% url 'seleted_building' %}?room={{ i }}">{{ room.building }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <br/>
+        <p> <b>CCM Building:</b> The percentage of room usage</p>
+        <div class="progress" style="width:55%; background-color: #e2e1e1">
+          <div class="progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" style="width:55%">
+            65%
+          </div>
+        </div>
 
     </div>
-
   </div>
 
   <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
