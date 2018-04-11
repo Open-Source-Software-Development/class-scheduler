@@ -48,17 +48,7 @@ def PD_professor_settings(request):
     template_args['pd'] = True
     return render(request, 'profSettings.html', template_args, selected)
 
-def get_rooms(request):
-    select = request.GET.get('room')
-    template_args = None
-    if not selected:
-        template_args = {'error': 'Please select a building'}
-    else:
-        names = selected.split()
-        rooms = Room.objects.get(building = names[0])
-    template_args['room'] = Room.objects.all()
-    template_args['selected'] = selected
-    return render(request, 'index.html', template_args, selected)
+
 
 
 def professor_settings_helper(professor, request):
@@ -302,22 +292,10 @@ def handler404(request):
 def handler500(request):
 
     return render(request, 'error_500.html', status=500)
+	
+#Algorithim stats views
 
-	
-	
-def algo_stats_total(request):
-	rooms = Room.objects.all()
-	blocks = Block.objects.all()
-	
-	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks)))
-	return (request, 'polls/dashboard' ,{'algo_results': algo_results})
-	
-def algo_stats_by_building(request, room_building):
-	rooms = Rooms.objects.get(building = room_building)
-	room_stats = {}
-	for r in room:
-		room_stats.update({str(r.room_number): get_room_use(r)})
-	return (request, 'polls/dashboard' ,{'room_stats': room_stats})
+#Helper methods
 def get_room_use(room):
 	return len(room.hunk_set.all()) #Individual room use is determined by how many hunks it has
 	
@@ -326,3 +304,31 @@ def get_total_use(rooms):
 	for r in rooms:
 		roomTotalUse = roomTotalUse + get_room_use(r) 
 	return roomTotalUse
+
+#View methods	
+
+def algo_stats_total(request):
+	rooms = Room.objects.all()
+	blocks = Block.objects.all()
+	
+	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
+	return (request, 'index.html' ,{'algo_stats': algo_stats}) #The name of the context object is algo_stats, this is the object we would access in the template
+	
+def algo_stats_by_building(request, room_building): # I setup this method to take a room_building to determine what building we are getting data for, 
+	rooms = Rooms.objects.get(building = room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
+	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
+	for r in room:
+		room_stats.update({str(r.room_number): get_room_use(r)}) #places the individual room utilization in a dict with the room_number
+	return (request, 'index.html' ,{'building_stats': building_stats}) #The name of the context object is building_stats, this is the object we would access in the template
+
+def get_rooms(request):
+    select = request.GET.get('room')
+    template_args = None
+    if not selected:
+        template_args = {'error': 'Please select a building'}
+    else:
+        names = selected.split()
+        rooms = Room.objects.get(building = names[0])
+    template_args['room'] = Room.objects.all()
+    template_args['selected'] = selected
+    return render(request, 'index.html', template_args, selected)
