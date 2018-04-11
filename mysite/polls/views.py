@@ -6,6 +6,7 @@ from django import template
 from scheduler.blockcalendar import *
 from django.urls import reverse
 from .models import Block
+from scheduler.models import Season
 from scheduler.models import Course
 from scheduler.models import Professor
 from scheduler.models import Block
@@ -87,9 +88,6 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
-    year = request.GET.get('year')
-    if year == None:
-        year = 'First'
     running_filter = request.GET.get('running-list')
     if running_filter == None:
         running_filter = 'None'
@@ -103,34 +101,24 @@ def course_selection(request):
     first = request.user.first_name
     last = request.user.last_name
     remove_course = []
-    
 
     removed = request.POST.getlist('Removed')
     
     for title in removed:
         remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
     
-    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    if course_filter != 'None':
-        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
-    else:
-        courses = Course.objects.exclude(id__in=excluded_courses)
-    
     if running_filter != 'None':
         program_restriction = Course.objects.filter(program=running_filter).values('id')
         running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
     else:
         program_restriction = Course.objects.filter().values('id')
-        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
-    
-    
+        running = Season.objects.filter(courses__in=program_restriction)
     
     for course in selected:
-        print('Adding ' + course)
-        CourseLevel().insert_grade_level(course, year)
+        Season().insert_course(course)
     for course in removed:
-        CourseLevel().remove_courselevel(course, year)
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'year': year, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
+        Season().remove_course(course)
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
 
 
 def course_review(request):
