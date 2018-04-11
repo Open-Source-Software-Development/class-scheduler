@@ -302,3 +302,27 @@ def handler404(request):
 def handler500(request):
 
     return render(request, 'error_500.html', status=500)
+
+	
+	
+def algo_stats_total(request):
+	rooms = Room.objects.all()
+	blocks = Block.objects.all()
+	
+	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks)))
+	return (request, 'polls/dashboard' ,{'algo_results': algo_results})
+	
+def algo_stats_by_building(request, room_building):
+	rooms = Rooms.objects.get(building = room_building)
+	room_stats = {}
+	for r in room:
+		room_stats.update({str(r.room_number): get_room_use(r)})
+	return (request, 'polls/dashboard' ,{'room_stats': room_stats})
+def get_room_use(room):
+	return len(room.hunk_set.all()) #Individual room use is determined by how many hunks it has
+	
+def get_total_use(rooms):
+	roomTotalUse = 0
+	for r in rooms:
+		roomTotalUse = roomTotalUse + get_room_use(r) 
+	return roomTotalUse
