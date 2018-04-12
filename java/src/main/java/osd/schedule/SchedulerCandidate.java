@@ -2,7 +2,6 @@ package osd.schedule;
 
 import osd.database.input.Course;
 import osd.database.input.Section;
-import osd.database.input.Sources;
 import osd.util.relation.OneToManyRelation;
 
 import javax.inject.Inject;
@@ -35,14 +34,14 @@ class SchedulerCandidate implements Results {
         this.outstandingSections = new HashMap<>();
 
         // Initially, every section is outstanding.
-        sources.getSections().forEach(this::registerOutstandingSection);
+        sources.get(Course.class).flatMap(Course::streamSections).forEach(this::registerOutstandingSection);
 
         // Initialize the priority of each course.
         // Using outstandingSections.keySet() instead of sources.getSections()
         // is a "free" way of only computing priorities once per course.
         this.lowestCandidateCount = Integer.MAX_VALUE;
         outstandingSections.keySet().forEach(this::updatePriority);
-        expectedHunkCount = (int)sources.getSections().count();
+        expectedHunkCount = (int) sources.get(Course.class).flatMap(Course::streamSections).count();
     }
 
     // Copy-construct a candidate schedule and update its state. This MUST be called from

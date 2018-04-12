@@ -117,7 +117,7 @@ class SchedulerStateTest {
         when(mockBlock2A.getPairedWith()).thenReturn(mockBlock2B);
         when(mockBlock2B.getPairedWith()).thenReturn(mockBlock2A);
 
-        when(mockSources.getSections()).then(unused -> Stream.of(mockSection1, mockSection2, mockSection3, mockSection4));
+        when(mockSources.get(Course.class).flatMap(Course::streamSections)).then(unused -> Stream.of(mockSection1, mockSection2, mockSection3, mockSection4));
         when(mockSources.get(Professor.class)).then(unused -> Stream.of(mockProfessor1, mockProfessor2, mockProfessor3));
         when(mockSources.get(Room.class)).then(unused -> Stream.of(mockRoom1, mockRoom2, mockRoom3));
         when(mockSources.get(Block.class)).then(unused -> Stream.of(mockBlock1A, mockBlock1B, mockBlock2A, mockBlock2B));

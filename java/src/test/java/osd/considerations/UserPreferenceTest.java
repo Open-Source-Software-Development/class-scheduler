@@ -25,7 +25,7 @@ class UserPreferenceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new UserPreference(mockSection, mockSection, worth) {
+        instance = new UserPreference(0, mockSection, mockSection, worth) {
             @Override
             Match getMatch(final Hunk hunk) {
                 return Objects.requireNonNull(matchResult, "set matchResult before running tests");

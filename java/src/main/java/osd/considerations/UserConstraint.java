@@ -1,5 +1,7 @@
 package osd.considerations;
 
+import osd.database.RecordConversion;
+import osd.database.RecordAccession;
 import osd.database.input.*;
 import osd.database.input.record.ProfessorConstraintRecord;
 import osd.database.input.record.QualificationRecord;
@@ -7,6 +9,8 @@ import osd.database.input.record.UserConstraintRecord;
 import osd.schedule.Hunk;
 import osd.util.pair.ImmutablePair;
 import osd.util.pair.Pair;
+
+import java.util.function.Predicate;
 
 /**
  * User constraints whitelist or blacklist pairs of scheduling elements. For
@@ -36,8 +40,8 @@ public class UserConstraint extends UserConsideration implements Constraint {
     private final Pair<Object, HunkField<?>> whitelistKey;
 
     @RecordConversion
-    UserConstraint(final UserConstraintRecord record, final RecordConverter recordConverter) {
-        super(record, recordConverter);
+    UserConstraint(final UserConstraintRecord record, final RecordAccession recordAccession) {
+        super(record, recordAccession);
         if (record.getIsBlacklist()) {
             whitelistKey = ImmutablePair.of(null, null);
         } else {
@@ -46,22 +50,24 @@ public class UserConstraint extends UserConsideration implements Constraint {
     }
 
     @RecordConversion
-    UserConstraint(final QualificationRecord record, final RecordConverter recordConverter) {
-        this(recordConverter.get(Course.class, record.getCourseId()),
-             recordConverter.get(Professor.class, record.getProfessorId()),
-            false);
+    UserConstraint(final QualificationRecord record, final RecordAccession recordAccession) {
+        this(record.getId(),
+                recordAccession.get(Course.class, record.getCourseId()),
+                recordAccession.get(Professor.class, record.getProfessorId()),
+                false);
 
     }
 
-    @RecordConversion(filter="professorConstraintIsApplicable")
-    UserConstraint(final ProfessorConstraintRecord record, final RecordConverter recordConverter) {
-        this(recordConverter.get(Professor.class, record.getProfessorId()),
-                recordConverter.get(Block.class, record.getBlockId()),
+    @RecordConversion(filter=ProfessorConstraintIsApplicable.class)
+    UserConstraint(final ProfessorConstraintRecord record, final RecordAccession recordAccession) {
+        this(record.getId(),
+                recordAccession.get(Professor.class, record.getProfessorId()),
+                recordAccession.get(Block.class, record.getBlockId()),
                 true);
     }
 
-    UserConstraint(final Object left, final Object right, final boolean isBlacklist) {
-        super(left, right);
+    UserConstraint(final int id, final Object left, final Object right, final boolean isBlacklist) {
+        super(id, left, right);
         if (isBlacklist) {
             whitelistKey = ImmutablePair.of(null, null);
         } else {
@@ -89,9 +95,15 @@ public class UserConstraint extends UserConsideration implements Constraint {
         return whitelistKey;
     }
 
-    @SuppressWarnings("unused")
-    private static boolean professorConstraintIsApplicable(final ProfessorConstraintRecord record) {
-        return record.getValue() == 1;
+    private static class ProfessorConstraintIsApplicable implements Predicate<ProfessorConstraintRecord> {
+
+        @SuppressWarnings("unused")
+        ProfessorConstraintIsApplicable(final RecordAccession unused) {}
+
+        @Override
+        public boolean test(final ProfessorConstraintRecord record) {
+            return record.getValue() == 1;
+        }
     }
 
 }
