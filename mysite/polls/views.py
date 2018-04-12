@@ -210,7 +210,7 @@ def view_history(request):
 		chooseSeason = request.POST['item']
 		print(chooseSeason)
 		query_results = Hunk.objects.filter(section__run__season__id__contains = chooseSeason)
-		return render(request, 'view_history.html', {'selected_item':item, 'query_results': query_results})
+		return render(request, 'view_history.html', {'selected_item':chooseSeason, 'query_results': query_results})
 	else:
 		return render(request, 'view_history.html')
 
