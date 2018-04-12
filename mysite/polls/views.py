@@ -16,6 +16,7 @@ from scheduler.courseConstraints import CourseLevel
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
 import polls.run
+from django.db.models import Max
 
 def blank(request):
     return render(request, 'blank.html')
@@ -177,13 +178,9 @@ def simple_upload(request):
     return render(request, 'import_data.html')
 
 def history(request):
-<<<<<<< HEAD
 	seasonList = Season.objects.all
 	
 	return render(request, 'history.html', {'seasonList': seasonList})
-=======
-    return render(request, 'history.html')
->>>>>>> develop
 
 def run(request):
     action = request.GET.get('action')
@@ -196,36 +193,25 @@ def run(request):
 
 ## TODO: Documentation
 def view_history(request):
-<<<<<<< HEAD
-	
 	if request.method == 'POST':
 		chooseSeason = request.POST['item']
-		print(chooseSeason)
-		query_results = Hunk.objects.filter(section__run__season__id__contains = chooseSeason)
-		return render(request, 'view_history.html', {'selected_item':chooseSeason, 'query_results': query_results})
+		if chooseSeason == "":
+			return render(request, 'view_history.html')
+		else:
+			query_results = Hunk.objects.filter(section__run__season__id__contains = chooseSeason)
+			return render(request, 'view_history.html', {'selected_item':chooseSeason, 'query_results': query_results})
 	else:
 		return render(request, 'view_history.html')
 
 ## TODO: Documentation
 def results(request):
-	algo_results = Hunk.objects.filter(section__run__)
+	latestRun = Run.objects.latest('id').id
+	algo_results = Hunk.objects.filter(section__run__id__contains = latestRun)
+	print(algo_results)
 	
 	return render(request, 'results.html', {'algo_results': algo_results})
-	
-	
-=======
-    query_results = Hunk.objects.filter(Run=historyChoose.POST['pickSeason'])
-    
-    return render(request, 'view_history.html', {'query_results': query_results})
 
-## TODO: Documentation
-def results(request):
-    algo_results = Hunk.objects.filter()
-    
-    return render(request, 'results.html', {'algo_results': algo_results})
-    
-    
->>>>>>> develop
+
 ## TODO: Documentation
 #
 def userSettings(request):
