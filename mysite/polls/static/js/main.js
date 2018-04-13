@@ -1,3 +1,3 @@
 $('.btn-expand-collapse').click(function(e) {
-				$('.navbar-primary').toggleClass('collapsed');
+  $('.navbar-primary').toggleClass('collapsed');
 });
