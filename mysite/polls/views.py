@@ -292,29 +292,29 @@ def handler404(request):
 def handler500(request):
 
     return render(request, 'error_500.html', status=500)
-	
+
 #Algorithim stats views
 
 #Helper methods
 def get_room_use(room):
 	return len(room.hunk_set.all()) #Individual room use is determined by how many hunks it has
-	
+
 def get_total_use(rooms):
 	roomTotalUse = 0
 	for r in rooms:
-		roomTotalUse = roomTotalUse + get_room_use(r) 
+		roomTotalUse = roomTotalUse + get_room_use(r)
 	return roomTotalUse
 
-#View methods	
+#View methods
 
 def algo_stats_total(request):
 	rooms = Room.objects.all()
 	blocks = Block.objects.all()
-	
+
 	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
 	return (request, 'index.html' ,{'algo_stats': algo_stats}) #The name of the context object is algo_stats, this is the object we would access in the template
-	
-def algo_stats_by_building(request, room_building): # I setup this method to take a room_building to determine what building we are getting data for, 
+
+def algo_stats_by_building(request, room_building): # I setup this method to take a room_building to determine what building we are getting data for,
 	rooms = Rooms.objects.get(building = room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
 	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
 	for r in room:
