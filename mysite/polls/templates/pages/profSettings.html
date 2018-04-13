@@ -97,18 +97,20 @@
                   <tbody>
                   {% endif %}
                     {% for start_time in blocks_by_time %}
-                      <tr>
-                        <th width="120px" >{{ start_time }}</th>
-                        {% for day in days %}
-                          {% with timeblock=blocks_by_time|get_item:start_time|get_item:day %}
-                            {% with id=timeblock.block_id %}
-                              {% with state=data|get_item:id %}
-                                <th width="120px" data-block-state="{{ state }}" class="ClickableTimeBlock" id="{{ id }}">{{ id }}</th>
+		      {% with end_time=end_times|get_item:start_time %}
+                        <tr>
+                          <th width="120px" >{{ start_time|time:"h:i" }} - {{ end_time|time:"h:i" }}</th>
+                          {% for day in days %}
+                            {% with timeblock=blocks_by_time|get_item:start_time|get_item:day %}
+                              {% with id=timeblock.block_id %}
+                                {% with state=data|get_item:id %}
+                                  <th width="120px" data-block-state="{{ state }}" class="ClickableTimeBlock" id="{{ id }}">{{ id }}</th>
+                                {% endwith %}
                               {% endwith %}
                             {% endwith %}
-                          {% endwith %}
-                        {% endfor %}
-                      </tr>
+                          {% endfor %}
+                        </tr>
+		      {% endwith %}
                     {% endfor %}
                   </tbody>
                 </table>

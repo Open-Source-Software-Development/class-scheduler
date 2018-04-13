@@ -61,13 +61,15 @@ def get_professor_constraints(professor):
 
     blocks = list(Block.objects.all().values('start_time', 'end_time', 'day', 'block_id'))
     blocks_by_time = OrderedDict()
+    end_times = {}
     for block in sorted(blocks, key=lambda b: b['start_time']):
         day = block['day']
         time = block['start_time']
         if not time in blocks_by_time:
             blocks_by_time[time] = {}
         blocks_by_time[time][day] = block
-    return {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS}
+        end_times[time] = block['end_time']
+    return {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS, 'end_times':end_times}
 
 def update_professor_constraints(professor, post_data):
     result = get_professor_constraints(professor)
