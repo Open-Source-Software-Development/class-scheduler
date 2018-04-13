@@ -76,7 +76,7 @@
                       </div>
                       <ul class="list-group scrollableMenuCourses">
                         {% for i in courses %}
-                        <li class="list-group-item" id="{{ i }}">{{ i }}</li>
+                          <li class="list-group-item" id="{{ i }}">{{ i.program }}-{{ i.style }}</li>
                         {% endfor %}
                     </div>
                   </div>
