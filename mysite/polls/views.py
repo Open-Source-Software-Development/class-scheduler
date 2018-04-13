@@ -179,7 +179,8 @@ def simple_upload(request):
     return render(request, 'import_data.html')
 
 def history(request):
-    return render(request, 'history.html')
+    seasonList = Season.objects.all
+    return render(request, 'history.html', {'seasonList': seasonList})
 
 def run(request):
     action = request.GET.get('action')
@@ -192,17 +193,20 @@ def run(request):
 
 ## TODO: Documentation
 def view_history(request):
-    query_results = Hunk.objects.filter(Run=historyChoose.POST['pickSeason'])
-    
-    return render(request, 'view_history.html', {'query_results': query_results})
+    if request.method == 'POST':
+        chooseSeason = request.POST['item']
+        print(chooseSeason)
+        query_results = Hunk.objects.filter(section__run__season__id__contains = chooseSeason)
+        return render(request, 'view_history.html', {'selected_item':chooseSeason, 'query_results': query_results})
+    else:
+        return render(request, 'view_history.html')
 
 ## TODO: Documentation
 def results(request):
-    algo_results = Hunk.objects.filter()
-    
+    algo_results = Hunk.objects.filter(section__run__)
     return render(request, 'results.html', {'algo_results': algo_results})
-    
-    
+        
+        
 ## TODO: Documentation
 #
 def userSettings(request):
