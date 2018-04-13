@@ -312,13 +312,13 @@ def algo_stats_total(request):
 	blocks = Block.objects.all()
 
 	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
-	return (request, 'index.html' ,{'algo_stats': algo_stats}) #The name of the context object is algo_stats, this is the object we would access in the template
+	return (request, 'index.html' ,{'algo_stats': algo_results}) #The name of the context object is algo_stats, this is the object we would access in the template
 
 def algo_stats_by_building(request, room_building): # I setup this method to take a room_building to determine what building we are getting data for,
 	rooms = Rooms.objects.get(building = room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
 	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
 	for r in room:
-		room_stats.update({str(r.room_number): get_room_use(r)}) #places the individual room utilization in a dict with the room_number
+		building_stats.update({str(r.room_number): get_room_use(r)}) #places the individual room utilization in a dict with the room_number
 	return (request, 'index.html' ,{'building_stats': building_stats}) #The name of the context object is building_stats, this is the object we would access in the template
 
 def get_rooms(request):
