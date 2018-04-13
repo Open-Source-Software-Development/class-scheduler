@@ -27,7 +27,7 @@
 				<li>
 					<a href="{% url 'run' %}">
 						<div>
-							<i class="fa fa-spinner fa-fw"></i> Scheduler Status: (status)
+							<i class="fa fa-spinner fa-fw"></i> Scheduler Status: <span id="status"></span>
 						</div>
 					</a>
 				</li>
@@ -107,6 +107,7 @@
                     <li>
                         <a href="{% url 'run' %}">&ensp;&ensp;&ensp;<i class="fa fa-bar-chart-o fa-fw"></i> Run Scheduler</a>
                     </li>
+						<a href="{% url 'results' %}">&ensp;&ensp;&ensp;<i class="fa fa-sort-amount-asc fa-fw"></i> View Scheduler Results</a>
                     <li>
                         <a href="{% url 'history' %}">&ensp;&ensp;&ensp;<i class="fa fa-table fa-fw"></i> View Season History</a>
                     </li> 
@@ -114,5 +115,6 @@
                 </li>
 				{% endif %}
 		</div>
+
 	</div>
 </nav>
