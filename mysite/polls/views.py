@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, authenticate, logout
 from django import template
+from django.template.response import TemplateResponse
 from scheduler.blockcalendar import *
 from django.urls import reverse
 from .models import Block
@@ -12,16 +13,18 @@ from scheduler.models import Block
 from scheduler.models import Division
 from scheduler.models import ProfessorConstraint
 from scheduler.models import GradeLevel
+from scheduler.models import Room
 from scheduler.courseConstraints import CourseLevel
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
 import polls.run
+from django.db.models import Count, Q
+import json
+from django.db.models import Sum
+
 
 def blank(request):
     return render(request, 'blank.html')
-
-def index(request):
-    return render(request, 'index.html')
 
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"]
 
@@ -307,28 +310,63 @@ def get_total_use(rooms):
 
 #View methods
 
+"""
 def algo_stats_total(request):
 	rooms = Room.objects.all()
 	blocks = Block.objects.all()
-
 	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
-	return (request, 'index.html' ,{'algo_stats': algo_results}) #The name of the context object is algo_stats, this is the object we would access in the template
+	return render(request, 'index.html' ,{'algo_stats': algo_results}) #The name of the context object is algo_stats, this is the object we would access in the template
+"""
 
 def algo_stats_by_building(request, room_building): # I setup this method to take a room_building to determine what building we are getting data for,
 	rooms = Rooms.objects.get(building = room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
 	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
-	for r in room:
+	for r in rooms:
 		building_stats.update({str(r.room_number): get_room_use(r)}) #places the individual room utilization in a dict with the room_number
-	return (request, 'index.html' ,{'building_stats': building_stats}) #The name of the context object is building_stats, this is the object we would access in the template
+	return (request, 'index.html', {'building_stats': building_stats}) #The name of the context object is building_stats, this is the object we would access in the template
 
-def get_rooms(request):
-    select = request.GET.get('room')
-    template_args = None
-    if not selected:
-        template_args = {'error': 'Please select a building'}
-    else:
-        names = selected.split()
-        rooms = Room.objects.get(building = names[0])
-    template_args['room'] = Room.objects.all()
-    template_args['selected'] = selected
-    return render(request, 'index.html', template_args, selected)
+def indexs(request):
+	rooms = Room.objects.all()
+	blocks = Block.objects.all()
+
+	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
+	return render(request, 'index.html' ,{'algo_stats': algo_results}) #The name of the context object is algo_stats, this is the object we would access in the template
+
+def get_data(self):
+    data = {}
+    for prof in Professor.objects.all():
+        data[prof.name] = prof.name
+    return render('index.html',{'data':data})
+
+def index(request):
+    dataset = Room.objects \
+        .values('building') \
+        .annotate(capacity_count=Sum('room_capacity'),
+                  division_count=Sum('room_capacity')) \
+        .order_by('building')
+
+    categories = list()
+    survived_series = list()
+    not_survived_series = list()
+
+    for entry in dataset:
+        categories.append('%s building' % entry['building'])
+        survived_series.append(entry['capacity_count'])
+        #not_survived_series.append(entry['division_count'])
+
+    survived_series = {
+        'name': 'Overall Room Cap.',
+        'data': survived_series,
+        'color': 'green'
+    }
+
+    chart = {
+        'chart': {'type': 'column'},
+        'title': {'text': 'Room Capacity by each building'},
+        'xAxis': {'categories': categories},
+        'yAxis': {'text': 'Room Capacity'},
+        'series': [survived_series],
+        }
+
+    dump = json.dumps(chart)
+    return render(request, 'index.html', {'chart': dump})
