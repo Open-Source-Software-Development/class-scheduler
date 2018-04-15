@@ -327,7 +327,7 @@ def algo_stats_by_building(request, room_building): # I setup this method to tak
 
 def index(request):
     """
-        create room data: (this is simple graph)
+        create room data: (this is sample  )
         values: count the number of builds
         annotate: add hover label to show data, capacity_count is variable
                   that holds the sum of all room_capacity
