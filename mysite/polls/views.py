@@ -325,48 +325,58 @@ def algo_stats_by_building(request, room_building): # I setup this method to tak
 		building_stats.update({str(r.room_number): get_room_use(r)}) #places the individual room utilization in a dict with the room_number
 	return (request, 'index.html', {'building_stats': building_stats}) #The name of the context object is building_stats, this is the object we would access in the template
 
-def indexs(request):
-	rooms = Room.objects.all()
-	blocks = Block.objects.all()
-
-	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
-	return render(request, 'index.html' ,{'algo_stats': algo_results}) #The name of the context object is algo_stats, this is the object we would access in the template
-
-def get_data(self):
-    data = {}
-    for prof in Professor.objects.all():
-        data[prof.name] = prof.name
-    return render('index.html',{'data':data})
-
 def index(request):
+    """
+        create room data: (this is sample  )
+        values: count the number of builds
+        annotate: add hover label to show data, capacity_count is variable
+                  that holds the sum of all room_capacity
+        order_by: order by building data
+    """
     dataset = Room.objects \
         .values('building') \
-        .annotate(capacity_count=Sum('room_capacity'),
-                  division_count=Sum('room_capacity')) \
+        .annotate(capacity_count=Sum('room_capacity')) \
         .order_by('building')
-
+    """
+        store list of data
+        categories: contains category data
+        room_capacity_data: contains room capacity
+    """
     categories = list()
-    survived_series = list()
-    not_survived_series = list()
+    room_capacity_data = list()
 
     for entry in dataset:
+        # append building data to categories list
         categories.append('%s building' % entry['building'])
-        survived_series.append(entry['capacity_count'])
-        #not_survived_series.append(entry['division_count'])
+        # append the room capacity using 'capacity_count' variable
+        room_capacity_data.append(entry['capacity_count'])
 
-    survived_series = {
+    """
+        defined data on our graph
+        name: graph name
+        data: the room capacity by each building
+        color: the color of the graph
+    """
+    room_capacity_data = {
         'name': 'Overall Room Cap.',
-        'data': survived_series,
-        'color': 'green'
+        'data': room_capacity_data,
+        'color': '#0095ff'
     }
 
+    """
+        defined chart
+        chart: defined chart type
+        title, xAxis, yAxis:
+        series: plot the data
+    """
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': 'Room Capacity by each building'},
         'xAxis': {'categories': categories},
-        'yAxis': {'text': 'Room Capacity'},
-        'series': [survived_series],
+        'yAxis': { 'title': { 'text': 'Room Capacity'}, 'visible': 'true' },
+        'series': [room_capacity_data],
         }
 
+    # dump our graph data into json and use tha for calling in our html page
     dump = json.dumps(chart)
     return render(request, 'index.html', {'chart': dump})
