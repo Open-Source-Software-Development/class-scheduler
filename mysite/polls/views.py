@@ -17,12 +17,9 @@ from scheduler.courseConstraints import CourseLevel
 from scheduler.courseSeason import CourseSeason
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
-<<<<<<< HEAD
 import polls.run
-=======
 import subprocess, threading, time
 from django.shortcuts import redirect
->>>>>>> feature/RedoCoursePage
 
 def blank(request):
     return render(request, 'blank.html')
@@ -122,7 +119,12 @@ def course_selection(request):
         running = season.filter(courses__in=program_restriction)
     else:
         program_restriction = Course.objects.filter().values('id')
-        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+        #running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+        try:
+            season = CourseSeason().get_courses_from_recent_season()
+            running = season.filter(id__in=program_restriction)
+        except season.DoesNotExist:
+            pass
     
     for course in selected:
         CourseSeason().add_course_season(course)
