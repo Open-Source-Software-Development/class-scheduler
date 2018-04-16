@@ -119,19 +119,24 @@ def course_selection(request):
     for title in removed:
         remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
 
-    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    if course_filter != 'None':
-        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
-    else:
-        courses = Course.objects.exclude(id__in=excluded_courses)
+    # excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
+    # if course_filter != 'None':
+        # courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    # else:
+        # courses = Course.objects.exclude(id__in=excluded_courses)
 
     if running_filter != 'None':
         program_restriction = Course.objects.filter(program=running_filter).values('id')
         season = CourseSeason().get_courses_from_recent_season()
         running = season.filter(courses__in=program_restriction)
     else:
-        program_restriction = Course.objects.filter().values('id')
-        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+        try:
+            program_restriction = Course.objects.filter().values('id')
+            season = CourseSeason().get_grade_by_year(year).filter(course__in=program_restriction)
+            running = season.filter(id__in=program_restriction)
+        except:
+            running = []
+            # running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
 
     for course in selected:
         CourseSeason().add_course_season(course)
