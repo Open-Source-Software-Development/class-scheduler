@@ -119,12 +119,12 @@ def course_selection(request):
         running = season.filter(courses__in=program_restriction)
     else:
         program_restriction = Course.objects.filter().values('id')
-        #running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
         try:
+            # running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
             season = CourseSeason().get_courses_from_recent_season()
             running = season.filter(id__in=program_restriction)
-        except season.DoesNotExist:
-            pass
+        except Season.DoesNotExist:
+            running = []
     
     for course in selected:
         CourseSeason().add_course_season(course)
