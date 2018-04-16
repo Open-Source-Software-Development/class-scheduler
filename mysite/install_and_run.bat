@@ -10,52 +10,60 @@
 
 WHERE python3
 IF %ERRORLEVEL% EQU 0 (
+	cd ../java
+	mvn clean install
+	cd ../mysite
 	python3 -m pip install --upgrade pip
 	pip install django
 	cd
     python3 manage.py makemigrations
     python3 manage.py migrate
     python3 manage.py runserver
-	PAUSE
     cd ..
     exit /b 0
 )
 
 WHERE py3
 IF %ERRORLEVEL% EQU 0 (
+	cd ../java
+	mvn clean install
+	cd ../mysite
 	py3 -m pip install --upgrade pip
 	pip install django
 	cd
     py3 manage.py makemigrations
     py3 manage.py migrate
     py3 manage.py runserver
-	PAUSE
     cd ..
     exit /b 0
 )
 
 WHERE python
 IF %ERRORLEVEL% EQU 0 (
+	cd ../java
+	mvn clean install
+	cd ../mysite
 	python -m pip install --upgrade pip
 	pip install django
 	cd
     python manage.py makemigrations
     python manage.py migrate
     python manage.py runserver
-	PAUSE
     cd ..
     exit /b 0
 )
 
 WHERE py
 IF %ERRORLEVEL% EQU 0 (
+	cd ../java
+	mvn clean install
+	cd ../mysite
 	py -m pip install --upgrade pip
 	pip install django
 	cd
     py manage.py makemigrations
     py manage.py migrate
     py manage.py runserver
-	PAUSE
     cd ..
     exit /b 0
 )

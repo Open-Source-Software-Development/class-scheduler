@@ -1,6 +1,6 @@
 Notes on the install_and_run bat script
 
-Assumptions: Python v3 is installed and accessible from your PATH
+Assumptions: Python v3 is installed and accessible from your Path, Java SDK is installed and accessible from your Path, Maven is installed and accessible from your Path
 
 First the script will check what the name of your python environment variable is (py, python etc)
 It will then update pip to insure you are getting up to data packages.
