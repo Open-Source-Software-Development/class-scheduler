@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['import_5ffaculty_5fdata',['import_faculty_data',['../namespaceimport__faculty__data.html',1,'']]],
-  ['import_5froom_5fdata',['import_room_data',['../namespaceimport__room__data.html',1,'']]]
+  ['settings',['settings',['../namespacemysite_1_1settings.html',1,'mysite']]],
+  ['urls',['urls',['../namespacemysite_1_1urls.html',1,'mysite']]],
+  ['wsgi',['wsgi',['../namespacemysite_1_1wsgi.html',1,'mysite']]]
 ];

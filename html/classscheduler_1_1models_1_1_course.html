@@ -111,9 +111,6 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__str__</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:ad4e95149f2196790c62cdd737f183fed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4e95149f2196790c62cdd737f183fed"></a>
-tuple&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> = models.CharField(max_length=20, null=True)</td></tr>
-<tr class="separator:ad4e95149f2196790c62cdd737f183fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a469fbc25ba99da1185556bcd2d46f1b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a469fbc25ba99da1185556bcd2d46f1b0"></a>
 tuple&#160;</td><td class="memItemRight" valign="bottom"><b>division</b> = models.ForeignKey(<a class="el" href="classscheduler_1_1models_1_1_division.html">Division</a>, on_delete=models.CASCADE)</td></tr>
 <tr class="separator:a469fbc25ba99da1185556bcd2d46f1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,6 +120,9 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>program</b> = models
 <tr class="memitem:a2d8ee964882dee311d4734297cb6c91b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d8ee964882dee311d4734297cb6c91b"></a>
 tuple&#160;</td><td class="memItemRight" valign="bottom"><b>style</b> = models.CharField(max_length=20, blank=True)</td></tr>
 <tr class="separator:a2d8ee964882dee311d4734297cb6c91b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa34905c7764be6f3c2f80b0bafc5dbff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa34905c7764be6f3c2f80b0bafc5dbff"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>base_section_count</b> = models.PositiveIntegerField()</td></tr>
+<tr class="separator:aa34905c7764be6f3c2f80b0bafc5dbff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1adc8da7f3f21d51f6262caea84123d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1adc8da7f3f21d51f6262caea84123d7"></a>
 tuple&#160;</td><td class="memItemRight" valign="bottom"><b>title</b> = models.CharField(max_length=30, blank=True)</td></tr>
 <tr class="separator:a1adc8da7f3f21d51f6262caea84123d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,15 +141,18 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>section_capacity</b>
             - The course's division code (ex: ITS)
         program: CharField (Max Length 10)
             -  The program identifier (ex: CSI)
+        style: Charfield (Max Length 20)
+            - The style of the course (ex: studio)
+            - This somehow seems to actually be used for the course ID...?
+        base_section_count: Positive Integer
+            - If nonzero, the number of sections needed for the course
         title: CharFierld (Max Length 30)
             - The course title (ex: "intro to computer science" )
         section_capacity: Positive Integer
             - The maximum number of registerable students in this course
             - Used to generate number of sections needed
         ins_method (instructional Method): CharField (Max Lenght 20)
-            - The courses instructional method (ex STN)
-        style: Charfield (Max Length 20)
-            - The style of the course (ex: studio)</pre> </div><hr/>The documentation for this class was generated from the following file:<ul>
+            - The courses instructional method (ex STN)</pre> </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py</li>
 </ul>
 </div><!-- contents -->
