@@ -1,7 +1,7 @@
 Assumptions: You have java sdk installed
 
 1). Create a system environment variable named 'JAVA_HOME' and set the value to the path to your java sdk folder, mine is 'C:\Program Files\Java\jdk1.8.0_131'
-2). Download and unzip Maven where you would like to store it. Copy the path to the root folder, mine is 'C:\Users\<username>\Documents\apache-maven-3.5.3'
+2). Download (https://maven.apache.org/download.cgi) and unzip Maven where you would like to store it. Copy the path to the root folder, mine is 'C:\Users\<username>\Documents\apache-maven-3.5.3'
 3). Create two system environment variables named 'M2_HOME' and 'MAVEN_HOME' with their value being the path to the maven folder aforementioned
 4). Edit the system environment variable named 'Path' and click new, input %JAVA_HOME%\bin, click add new, input %M2_HOME%\bin, click add new, input %MAVEN_HOME%\bin
 5). May not be neccessary, but reboot your machine after applying these changes 
