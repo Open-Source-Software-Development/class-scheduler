@@ -24,15 +24,31 @@
       <br/>
       <!-- if we're in the program director view, render a professor select dropdown -->
       <!-- room selection menu -->
-      <div class="btn-group dual-list input-group" id="dropdownMenu">
-        <button class="btn btn-primary" data-toggle="dropdown">Building <i class="fa fa-chevron-down"></i></button>
-        <ul class="dropdown-menu scrollableMenu list-group" role="menu">
-          {% for room in building %}
-          <li class="list-group-item"><a tabindex="-1" href="#">{{ room }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
+      <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+      <select class="form-control" name="select_building" style="width: 15%">
+        <option value="placeholder">Select Building</option>
+        {% for room in building %}
+          <option value="{{room}}">{{room}}</option>
+        {% endfor %}
+      </select>
+
+      <!-- error message form -->
+      {% if error %}
+      <span id="errorMsg" onclick='this.remove(this); return false;'>
+        <div class="panel panel-primary wrapper">
+          <p>
+            {{ error }}
+          </p>
+        </div>
+      </span>
+      {% endif %}
+        <input type="submit" value="Update" id="building-selection">
+      </form>
       <br/>
+      <br/>
+      <br/>
+
 
       {% block content %}
       <p>The percentage of room usage</p>

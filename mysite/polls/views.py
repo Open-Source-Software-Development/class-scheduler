@@ -309,8 +309,7 @@ def get_total_use(rooms):
 	return roomTotalUse
 
 #View methods
-def show_building():
-    #if request.METHOD == 'POST':
+def show_building(request):
     rooms = Room.objects.all()
     build_list = []
     for room in rooms:
@@ -326,12 +325,12 @@ def algo_stats_total():
 	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
 	return round(algo_results, 4) #The name of the context object is algo_stats, this is the object we would access in the template
 
-def algo_stats_by_building(request, room_building): # I setup this method to take a room_building to determine what building we are getting data for,
-	rooms = Rooms.objects.get(building = room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
+def algo_stats_by_building(room_building): # I setup this method to take a room_building to determine what building we are getting data for,
+	rooms = Room.objects.filter(building=room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
 	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
 	for r in rooms:
 		building_stats.update({str(r.room_number): get_room_use(r)}) #places the individual room utilization in a dict with the room_number
-	return (request, 'index.html', {'building_stats': building_stats}) #The name of the context object is building_stats, this is the object we would access in the template
+	return building_stats #The name of the context object is building_stats, this is the object we would access in the template
 
 def index(request):
     """
@@ -341,53 +340,59 @@ def index(request):
                   that holds the sum of all room_capacity
         order_by: order by building data
     """
-    dataset = Room.objects \
-        .values('building') \
-        .annotate(capacity_count=Sum('room_capacity')) \
-        .order_by('building')
-    """
-        store list of data
-        categories: contains category data
-        room_capacity_data: contains room capacity
-    """
-    categories = list()
-    room_capacity_data = list()
+    if request.method == 'POST':
+        builds = request.POST['select_building']
+        if builds == 'Select Building':
+            return render(request, {'error':'No selection made'})
+        dataset = algo_stats_by_building(builds)
 
-    for entry in dataset:
-        # append building data to categories list
-        categories.append('%s building' % entry['building'])
-        # append the room capacity using 'capacity_count' variable
-        room_capacity_data.append(entry['capacity_count'])
+        """
+            store list of data
+            categories: contains category data
+            room_capacity_data: contains room capacity
+        """
+        categories = list()
+        room_capacity_data = list()
 
-    """
-        defined data on our graph
-        name: graph name
-        data: the room capacity by each building
-        color: the color of the graph
-    """
-    room_capacity_data = {
-        'name': 'Overall Room Cap.',
-        'data': room_capacity_data,
-        'color': '#0095ff'
-    }
+        for key, util_value in dataset.items():
+            # append building data to categories list
+            categories.append(builds+" "+str(key))
+            # append the room capacity using 'capacity_count' variable
+            #room_capacity_data.append(entry['capacity_count'])
+            room_capacity_data.append(util_value)
 
-    """
-        defined chart
-        chart: defined chart type
-        title, xAxis, yAxis:
-        series: plot the data
-    """
-    chart = {
-        'chart': {'type': 'column'},
-        'title': {'text': 'Room Capacity by each building'},
-        'xAxis': {'categories': categories},
-        'yAxis': { 'title': { 'text': 'Room Capacity'}, 'visible': 'true' },
-        'series': [room_capacity_data],
+        """
+            defined data on our graph
+            name: graph name
+            data: the room capacity by each building
+            color: the color of the graph
+        """
+        room_capacity_data = {
+            'name': 'Overall Room Cap.',
+            'data': room_capacity_data,
+            'color': '#0095ff'
         }
 
-    # dump our graph data into json and use tha for calling in our html page
-    dump = json.dumps(chart)
-    return render(request, 'index.html', {
-    'chart': dump,
-    'algo_stats':algo_stats_total,
-    'building': show_building})
+        """
+            defined chart
+            chart: defined chart type
+            title, xAxis, yAxis:
+            series: plot the data
+        """
+        chart = {
+            'chart': {'type': 'column'},
+            'title': {'text': 'Room Capacity by each building'},
+            'xAxis': {'categories': categories},
+            'yAxis': { 'title': { 'text': 'Room Capacity'}, 'visible': 'true' },
+            'series': [room_capacity_data],
+            }
+
+        # dump our graph data into json and use tha for calling in our html page
+        dump = json.dumps(chart)
+        return render(request, 'index.html', {
+        'chart': dump,
+        'algo_stats':algo_stats_total,
+        'building': show_building(request)})
+    else:
+        return render(request, 'index.html', {'algo_stats':algo_stats_total,
+        'building': show_building(request)})
