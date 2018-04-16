@@ -258,7 +258,7 @@ class ProfessorConstraint(models.Model):
         return "({}, {}, {})".format(self.professor, self.block, self.value)
 
     def __str__(self):
-        return "({}, {}, {})".format(self.professor, self.block)
+        return "({}, {}, {})".format(self.professor, self.block, self.value)
 
 # Input : User preferences/constraints
 
