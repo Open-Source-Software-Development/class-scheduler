@@ -3,6 +3,7 @@ from scheduler.models import *
 class CourseSeason():
     def get_recent_season(self):
         return Season.objects.latest('id')
+        
     def get_courses_from_recent_season(self):
         season = self.get_recent_season()
         return season.courses
