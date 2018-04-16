@@ -19,6 +19,7 @@ class CallbacksImpl implements Callbacks {
 
     @Override
     public boolean onCompleteResult(final Results results) {
+        // TODO: we want to give the registrar a couple choices
         completeResults.add(results);
         return true;
     }
