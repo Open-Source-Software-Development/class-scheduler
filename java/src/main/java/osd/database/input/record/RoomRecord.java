@@ -19,11 +19,11 @@ public class RoomRecord implements Identified {
     @Column(name = "building")
     private String building;
     
-    @Column(name = "subject")
-    private String subject;
-    
     @Column(name = "division_id")
     private int divisionId;
+    
+    @Column(name = "subject")
+    private String subject;
     
     @Column(name = "room_type_id")
     private int roomTypeId;

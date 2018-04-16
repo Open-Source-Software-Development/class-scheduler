@@ -155,7 +155,7 @@ class Course(models.Model):
     program = models.CharField(max_length=10)
     style = models.CharField(max_length=20, blank=True)
     base_section_count = models.PositiveIntegerField()
-    title = models.CharField(max_length=30, blank=True)
+    title = models.CharField(max_length=256, blank=True)
     ins_method = models.CharField(max_length=20, null=True, blank=True)
     section_capacity = models.PositiveIntegerField()
 
