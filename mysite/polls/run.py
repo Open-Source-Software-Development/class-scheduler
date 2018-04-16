@@ -3,7 +3,7 @@ import subprocess, threading, time
 active_run = None
 
 def start_run():
-    """Starts a new scheduler run, cancelling any already active."""
+    """Starts a new scheduler run, canceling any already active."""
     cancel_run()
     threading.Thread(target=runHelper).start()
 

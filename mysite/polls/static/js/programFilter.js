@@ -1,6 +1,5 @@
 function filters() {
-    location.href="?year=" +
-    document.getElementsByName("yearSelection")[0].options[document.getElementsByName("yearSelection")[0].selectedIndex].value + 
+    location.href=
     "&course-list=" +
     document.getElementsByName("course-list")[0].options[document.getElementsByName("course-list")[0].selectedIndex].value +
     "&running-list=" + 

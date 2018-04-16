@@ -92,6 +92,12 @@ body {
     overflow-x: hidden;
 }
 
+.schedulerActive {
+	opacity = 0.5;
+	background-color = gray;
+	pointer-events = none;
+}
+
 #profSettingsHead {
 	margin: 25px auto;
 	width: 100%;

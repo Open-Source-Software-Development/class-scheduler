@@ -8,6 +8,8 @@ from scheduler.blockcalendar import *
 from django.urls import reverse
 from .models import *
 from .csv_parser import parse
+import polls.run
+import json
 
 def upload_csv(request):
     """Parses models from a CSV and saves them.
@@ -31,5 +33,19 @@ def upload_csv(request):
     for model in result:
         model.save()
     return HttpResponseRedirect(reverse("upload"))
-    #next = request.POST.get('css-tabs', '/')
-    #return HttpResponseRedirect(next)
+
+def status(request):
+    """Returns a JSON dictionary indicating whether the algorithm is running.
+
+    The returned dictionary has a single key, `status`, which is `True` if the
+    algorithm is running and `False` otherwise.
+
+    Args:
+        request: an HTTP request (unused)
+
+    Returns:
+        an HTTP response with the above JSON
+    """
+    data = {'status': polls.run.is_running()}
+    data_str = json.dumps(data)
+    return HttpResponse(data_str, content_type='application/json')

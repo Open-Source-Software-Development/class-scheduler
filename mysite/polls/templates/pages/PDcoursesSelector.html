@@ -50,7 +50,8 @@
                   <div class="dual-list list-left col-md-5">
                     <div class="well text-left">
                       <div class="wrapper">
-                        <h2>Course List</h2>
+                        <h2>Master Course List</h2>
+                        <!--
                         <b>Course Filter: </b>
                         <select class="form-control" name="course-list" onchange="filters()">
                             <option class="list-group-item" value="{{ course_filter }}">({{ course_filter }})</option>
@@ -59,6 +60,7 @@
                                 <option class="list-group-item" value="{{ i }}">{{ i }}</option>
                             {% endfor %}
                         </select>
+                        -->
                       </div>
                       <br>
                       <div class="row">
@@ -76,7 +78,7 @@
                       </div>
                       <ul class="list-group scrollableMenuCourses">
                         {% for i in courses %}
-                        <li class="list-group-item" id="{{ i }}">{{ i }}</li>
+                          <li class="list-group-item" id="{{ i }}">{{ i.program }}-{{ i.style }}: {{ i.title }}</li>
                         {% endfor %}
                     </div>
                   </div>
@@ -94,29 +96,17 @@
                   <div class="dual-list list-right col-md-5">
                     <div class="well">
                       <div class="wrapper">
-                        <h2>{{ year }} Year Courses</h2>    
-                        <div class="row">
-                            <div class="col-md-4">
-                                <b>Course Filter: </b>
-                                <select class="form-control" name="running-list" onchange="filters()">
-                                    <option class="list-group-item" value="{{ running_filter }}">({{ running_filter }})</option>
-                                    <option class="list-group-item" value="None">None</option>
-                                    {% for i in programs %}
-                                        <option class="list-group-item" value="{{ i }}">{{ i }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-md-8">
-                                <b>Selected Year: </b>
-                                <select class="form-control" name="yearSelection" onchange="filters()">
-                                    <option class="list-group-item" value="{{ year }}">({{ year }})</option>
-                                    <option class="list-group-item" value="First">First</option>
-                                    <option class="list-group-item" value="Second">Second</option>
-                                    <option class="list-group-item" value="Third">Third</option>
-                                    <option class="list-group-item" value="Fourth">Fourth</option>
-                                </select>
-                            </div>
-                        </div>
+                        <h2>Running Courses</h2>  
+                        <!--
+                        <b>Course Filter: </b>
+                        <select class="form-control" name="running-list" onchange="filters()">
+                            <option class="list-group-item" value="{{ running_filter }}">({{ running_filter }})</option>
+                            <option class="list-group-item" value="None">None</option>
+                            {% for i in programs %}
+                                <option class="list-group-item" value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        -->
                       </div>
                       <br>
                       <div class="row">
@@ -134,14 +124,14 @@
                       </div>
                       <ul class="list-group scrollableMenuCourses">
                       {% for i in running %}
-                      <li class="list-group-item" id="{{ i }}">{{ i }}</li>
+                          <li class="list-group-item" id="{{ i }}">{{ i.program }}-{{ i.style }}: {{ i.title }}</li>
                       {% endfor %}
                       </ul>
                     </div>
                   </div> 
                 
                   <div class="wrapper">
-                    <input id="loginButton" type="submit" value="Apply Preferences"/>
+                    <input id="loginButton" class="lockout" type="submit" value="Apply Preferences"/>
                   </div>
                 </div>
               </div>

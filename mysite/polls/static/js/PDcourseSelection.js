@@ -8,14 +8,14 @@ $(function() {
     if ($button.hasClass('move-left')) {
       actives = $('.list-right ul li.active');
       actives.each(function () {
-        this.innerHTML = "<input type=\"hidden\" name=\"Removed\" value=\"" + this.id + "\">" + this.id;
+        this.innerHTML = "<input type=\"hidden\" name=\"Removed\" value=\"" + this.id + "\">" + this.innerHTML;
       });
       actives.clone().appendTo('.list-left ul');
       actives.remove();
     } else if ($button.hasClass('move-right')) {
       actives = $('.list-left ul li.active');
       actives.each(function () {
-        this.innerHTML = "<input type=\"hidden\" name=\"Courses\" value=\"" + this.id + "\">" + this.id;
+        this.innerHTML = "<input type=\"hidden\" name=\"Courses\" value=\"" + this.id + "\">" + this.innerHTML;
       });
       actives.clone().appendTo('.list-right ul');
       actives.remove();

@@ -20,13 +20,60 @@
 
   <div id="wrapper">
     {% include 'blank.html' %}
-
     <div id="page-wrapper">
+      <br/>
+      <!-- if we're in the program director view, render a professor select dropdown -->
+      <!-- room selection menu -->
+      <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+      <select class="form-control" name="select_building" style="width: 15%">
+        <option value="placeholder">Select Building</option>
+        {% for room in building %}
+          <option value="{{room}}">{{room}}</option>
+        {% endfor %}
+      </select>
 
+      <!-- error message form -->
+      {% if error %}
+      <span id="errorMsg" onclick='this.remove(this); return false;'>
+        <div class="panel panel-primary wrapper">
+          <p>
+            {{ error }}
+          </p>
+        </div>
+      </span>
+      {% endif %}
+        <input type="submit" value="Update" id="building-selection">
+      </form>
+      <br/>
+      <br/>
+      <br/>
+
+
+      {% block content %}
+      <p>The percentage of room usage</p>
+      <div class="progress" style="width:55%; background-color: #e2e1e1">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{algo_stats}}" aria-valuemin="0" aria-valuemax="100" style="width:{{algo_stats}}%">
+          {{algo_stats}}%
+        </div>
+      </div>
+      {% endblock content %}
+
+      <!-- Show barplots-->
+      <div id="container" style="width: 600px; height:300px">
+      </div>
+
+      <!-- End barplots-->
+
+      <!-- Show piechart-->
+      <!-- End piechart-->
 
     </div>
-
   </div>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+  <script>
+    Highcharts.chart('container', {{ chart|safe }});
+  </script>
 
   <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
