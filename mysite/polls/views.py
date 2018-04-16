@@ -309,14 +309,22 @@ def get_total_use(rooms):
 	return roomTotalUse
 
 #View methods
+def show_building():
+    #if request.METHOD == 'POST':
+    rooms = Room.objects.all()
+    build_list = []
+    for room in rooms:
+        #build_list.append(room.building)
+            matching_list = [b for b in build_list if b == room.building]
+            if len(matching_list) == 0:
+                build_list.append(room.building)
+    return build_list
 
-"""
-def algo_stats_total(request):
+def algo_stats_total():
 	rooms = Room.objects.all()
 	blocks = Block.objects.all()
 	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
-	return render(request, 'index.html' ,{'algo_stats': algo_results}) #The name of the context object is algo_stats, this is the object we would access in the template
-"""
+	return round(algo_results, 4) #The name of the context object is algo_stats, this is the object we would access in the template
 
 def algo_stats_by_building(request, room_building): # I setup this method to take a room_building to determine what building we are getting data for,
 	rooms = Rooms.objects.get(building = room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
@@ -379,4 +387,7 @@ def index(request):
 
     # dump our graph data into json and use tha for calling in our html page
     dump = json.dumps(chart)
-    return render(request, 'index.html', {'chart': dump})
+    return render(request, 'index.html', {
+    'chart': dump,
+    'algo_stats':algo_stats_total,
+    'building': show_building})
