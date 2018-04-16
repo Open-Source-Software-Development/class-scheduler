@@ -314,7 +314,14 @@ def handler500(request):
 
 #Helper methods
 def get_room_use(room):
-	return len(room.hunk_set.all()) #Individual room use is determined by how many hunks it has
+    latestRun = Run.objects.latest('id').id
+    hunks_from_run = Hunk.objects.filter(section__run__id__contains = latestRun)
+    time_blocks = Block.objects.all()
+
+    times_used = 0
+    hunks = [hunk for hunk in hunks_from_run if hunk.room == room]
+
+    return (len(hunks)/len(time_blocks))
 
 def get_total_use(rooms):
 	roomTotalUse = 0
@@ -334,12 +341,21 @@ def show_building(request):
     return build_list
 
 def algo_stats_total():
-    rooms = Room.objects.all()
+    latestRun = Run.objects.latest('id').id
+    hunks_from_run = Hunk.objects.filter(section__run__id__contains = latestRun)
     blocks = Block.objects.all()
-    if (len(rooms) or len(blocks)) == 0:
+    unique_rooms = []
+
+    for hunk in hunks_from_run:
+        matching_list = [r for r in unique_rooms if r == hunk.room]
+        if len(matching_list) == 0:
+             unique_rooms.append(hunk.room)
+
+    if (len(unique_rooms) or len(blocks)) == 0:
         return 0
-    algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks)))
-    
+    algo_results = (get_total_use(unique_rooms)/(len(unique_rooms)*len(blocks)))
+    return algo_results
+
 def algo_stats_by_building(room_building): # I setup this method to take a room_building to determine what building we are getting data for,
 	rooms = Room.objects.filter(building=room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
 	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
