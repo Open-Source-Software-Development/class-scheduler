@@ -1,15 +1,13 @@
 (function() {
 
 function schedulerIsActive() {
-  // replace this with some real implementation
-  console.log("Scheduler is active!");
   document.getElementById("status").innerHTML = "Active";
+  $(".lockout").addClass("schedulerActive");
 }
 
 function schedulerIsNotActive() {
-  // replace this with some real implementation
-  console.log("Scheduler is not active!");
   document.getElementById("status").innerHTML = "Not Active";
+  $(".lockout").removeClass("schedulerActive");
 }
 
 function parseStatus(data) {
