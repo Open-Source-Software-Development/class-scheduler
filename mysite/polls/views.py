@@ -119,19 +119,24 @@ def course_selection(request):
     for title in removed:
         remove_course.append(CourseLevel().get_course_by_title(title.strip()))#theres trailing spaces from somewhere
 
-    excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
-    if course_filter != 'None':
-        courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
-    else:
-        courses = Course.objects.exclude(id__in=excluded_courses)
+    # excluded_courses = CourseLevel().get_grade_by_year(year).values('course')
+    # if course_filter != 'None':
+        # courses = Course.objects.exclude(id__in=excluded_courses).filter(program=course_filter)
+    # else:
+        # courses = Course.objects.exclude(id__in=excluded_courses)
 
     if running_filter != 'None':
         program_restriction = Course.objects.filter(program=running_filter).values('id')
         season = CourseSeason().get_courses_from_recent_season()
         running = season.filter(courses__in=program_restriction)
     else:
-        program_restriction = Course.objects.filter().values('id')
-        running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+        try:
+            program_restriction = Course.objects.filter().values('id')
+            season = CourseSeason().get_grade_by_year(year).filter(course__in=program_restriction)
+            running = season.filter(id__in=program_restriction)
+        except:
+            running = []
+            # running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
 
     for course in selected:
         CourseSeason().add_course_season(course)
@@ -337,11 +342,12 @@ def show_building(request):
     return build_list
 
 def algo_stats_total():
-	rooms = Room.objects.all()
-	blocks = Block.objects.all()
-	algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks))) #Divide total room usages by the total number of blocks multiplied by the total number of rooms
-	return round(algo_results, 4) #The name of the context object is algo_stats, this is the object we would access in the template
-
+    rooms = Room.objects.all()
+    blocks = Block.objects.all()
+    if (len(rooms) or len(blocks)) == 0:
+        return 0
+    algo_results = (get_total_use(rooms)/(len(rooms)*len(blocks)))
+    
 def algo_stats_by_building(room_building): # I setup this method to take a room_building to determine what building we are getting data for,
 	rooms = Room.objects.filter(building=room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
 	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
