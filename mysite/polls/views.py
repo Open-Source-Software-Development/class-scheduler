@@ -17,12 +17,9 @@ from scheduler.courseConstraints import CourseLevel
 from scheduler.courseSeason import CourseSeason
 from polls.templatetags.poll_extras import register
 from collections import OrderedDict
-<<<<<<< HEAD
 import polls.run
-=======
 import subprocess, threading, time
 from django.shortcuts import redirect
->>>>>>> feature/RedoCoursePage
 
 def blank(request):
     return render(request, 'blank.html')
@@ -177,21 +174,15 @@ def course_review(request):
 def simple_upload(request):
     return render(request, 'import_data.html')
 
+#Collect all objects from the Seasons table and display them in the drop-down
+#list on the history page
 def history(request):
 	seasonList = Season.objects.all
 	
 	return render(request, 'history.html', {'seasonList': seasonList})
 
-def run(request):
-    action = request.GET.get('action')
-    if action:
-        {"run": polls.run.start_run,
-         "cancel": polls.run.cancel_run,
-        }[action]()
-        return HttpResponseRedirect(reverse("run"))
-    return render(request, 'run.html')
-
-## TODO: Documentation
+#Take the selected Season from the drop-down list and display objects from the
+#Hunks table which belong to that Season
 def view_history(request):
 	if request.method == 'POST':
 		chooseSeason = request.POST['item']
@@ -203,7 +194,18 @@ def view_history(request):
 	else:
 		return render(request, 'view_history.html')
 
-## TODO: Documentation
+#Call the start_run function from run.py when the start button is clicked and 
+#call the cancel_run function from run.py when the cancel button is clicked
+def run(request):
+    action = request.GET.get('action')
+    if action:
+        {"run": polls.run.start_run,
+         "cancel": polls.run.cancel_run,
+        }[action]()
+        return HttpResponseRedirect(reverse("run"))
+    return render(request, 'run.html')
+	
+#Display the objects from Hunks that belong to the most recent Run
 def results(request):
 	latestRun = Run.objects.latest('id').id
 	algo_results = Hunk.objects.filter(section__run__id__contains = latestRun)
@@ -289,12 +291,3 @@ def loginUser(request):
         else:
             return render(request, 'Login.html')
 
-
-## Create views for custom 404 and 500 error pages
-def handler404(request):
-    
-    return render(request, 'error_404.html', status=404)
-    
-def handler500(request):
-    
-    return render(request, 'error_500.html', status=500)
