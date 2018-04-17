@@ -22,12 +22,11 @@
     {% include 'blank.html' %}
     <div id="page-wrapper">
       <br/>
-      <!-- if we're in the program director view, render a professor select dropdown -->
       <!-- room selection menu -->
       <form action="{% url 'index' %}" method="post">
         {% csrf_token %}
       <select class="form-control" name="select_building" style="width: 15%">
-        <option value="placeholder">Select Building</option>
+        <option value="Select Building">Select Building</option>
         {% for room in building %}
           <option value="{{room}}">{{room}}</option>
         {% endfor %}
@@ -50,7 +49,7 @@
       <br/>
 
       {% block content %}
-      <p>The percentage of room usage</p>
+      <p>Total room utilization rate:</p>
       <div class="progress" style="width:55%; background-color: #e2e1e1">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{algo_stats}}" aria-valuemin="0" aria-valuemax="100" style="width:{{algo_stats}}%">
           {{algo_stats}}%

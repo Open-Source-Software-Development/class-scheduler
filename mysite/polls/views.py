@@ -30,8 +30,6 @@ def blank(request):
 
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"]
 
-## TODO: Documentation
-#
 def professor_settings(request):
     #Get the Professor instance representing the current user
     first = request.user.first_name
@@ -53,15 +51,11 @@ def PD_professor_settings(request):
     template_args['pd'] = True
     return render(request, 'profSettings.html', template_args, selected)
 
-
-
-
 def professor_settings_helper(professor, request):
     if request.method == 'POST':
         return update_professor_constraints(professor, request.POST)
     else:
         return get_professor_constraints(professor)
-
 
 def get_professor_constraints(professor):
     #Get list of current professors constraints
@@ -126,7 +120,6 @@ def course_selection(request):
 
     season = CourseSeason().get_courses_from_recent_season()
     running = season.filter()
-    # running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
     
     already_running = CourseSeason().get_courses_from_recent_season().values('id')
     courses = Course.objects.exclude(id__in=already_running)
@@ -135,7 +128,7 @@ def course_selection(request):
         CourseSeason().add_course_season(course)
     for course in removed:
         CourseSeason().remove_course_season(course)
-    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected':selected, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter,'course_filter': course_filter})
+    return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected': selected, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter, 'course_filter': course_filter})
 
 
 def course_review(request):
@@ -187,22 +180,22 @@ def simple_upload(request):
 #Collect all objects from the Seasons table and display them in the drop-down
 #list on the history page
 def history(request):
-	seasonList = Season.objects.all
+        seasonList = Season.objects.all
 
-	return render(request, 'history.html', {'seasonList': seasonList})
+        return render(request, 'history.html', {'seasonList': seasonList})
 
 #Take the selected Season from the drop-down list and display objects from the
 #Hunks table which belong to that Season
 def view_history(request):
-	if request.method == 'POST':
-		chooseSeason = request.POST['item']
-		if chooseSeason == "":
-			return render(request, 'view_history.html')
-		else:
-			query_results = Hunk.objects.filter(section__run__season__id__contains = chooseSeason)
-			return render(request, 'view_history.html', {'selected_item':chooseSeason, 'query_results': query_results})
-	else:
-		return render(request, 'view_history.html')
+        if request.method == 'POST':
+                chooseSeason = request.POST['item']
+                if chooseSeason == "":
+                        return render(request, 'view_history.html')
+                else:
+                        query_results = Hunk.objects.filter(section__run__season__id__contains = chooseSeason)
+                        return render(request, 'view_history.html', {'selected_item':chooseSeason, 'query_results': query_results})
+        else:
+                return render(request, 'view_history.html')
 
 #Call the start_run function from run.py when the start button is clicked and
 #call the cancel_run function from run.py when the cancel button is clicked
@@ -217,11 +210,11 @@ def run(request):
 
 #Display the objects from Hunks that belong to the most recent Run
 def results(request):
-	latestRun = Run.objects.latest('id').id
-	algo_results = Hunk.objects.filter(section__run__id__contains = latestRun)
-	print(algo_results)
+        latestRun = Run.objects.latest('id').id
+        algo_results = Hunk.objects.filter(section__run__id__contains = latestRun)
+        print(algo_results)
 
-	return render(request, 'results.html', {'algo_results': algo_results})
+        return render(request, 'results.html', {'algo_results': algo_results})
 
 ## TODO: Documentation
 #
@@ -314,117 +307,90 @@ def handler500(request):
 #Algorithim stats views
 
 #Helper methods
-def get_room_use(room):
+def normalize_rate(rate):
+    pct = rate * 100
+    # Round to 2 decimal places
+    return int(pct * 100) / 100
+
+def room_utilization_number(room):
     latestRun = Run.objects.latest('id').id
     hunks_from_run = Hunk.objects.filter(section__run__id__contains = latestRun)
-    time_blocks = Block.objects.all()
 
-    times_used = 0
-    hunks = [hunk for hunk in hunks_from_run if hunk.room == room]
+    # Since scheduling is by block pairs, we need to multiply by 2
+    # to get the "actual" utilization number.
+    return 2 * len([hunk for hunk in hunks_from_run if hunk.room == room])
 
-    return (len(hunks)/len(time_blocks))
-
-def get_total_use(rooms):
-	roomTotalUse = 0
-	for r in rooms:
-		roomTotalUse = roomTotalUse + get_room_use(r)
-	return roomTotalUse
-
-#View methods
-def show_building(request):
-    rooms = Room.objects.all()
-    build_list = []
-    for room in rooms:
-        #build_list.append(room.building)
-            matching_list = [b for b in build_list if b == room.building]
-            if len(matching_list) == 0:
-                build_list.append(room.building)
-    return build_list
-
-def algo_stats_total():
-    latestRun = Run.objects.latest('id').id
-    hunks_from_run = Hunk.objects.filter(section__run__id__contains = latestRun)
+def room_utilization_rate(room):
     blocks = Block.objects.all()
-    unique_rooms = []
+    rate = room_utilization_number(room) / len(blocks)
+    return normalize_rate(rate)
 
-    for hunk in hunks_from_run:
-        matching_list = [r for r in unique_rooms if r == hunk.room]
-        if len(matching_list) == 0:
-             unique_rooms.append(hunk.room)
+def total_utilization_number(rooms):
+    return sum([room_utilization_number(room) for room in rooms])
 
-    if (len(unique_rooms) or len(blocks)) == 0:
-        return 0
-    algo_results = (get_total_use(unique_rooms)/(len(unique_rooms)*len(blocks)))
-    return algo_results
+def total_utilization_rate(latest_run):
+    blocks = Block.objects.all()
+    rooms = Room.objects.all()
+    hunks_from_run = Hunk.objects.filter(section__run__id__contains = latest_run)
+    rooms_from_run = set([hunk.room for hunk in hunks_from_run])
+    rate = total_utilization_number(rooms_from_run) / (len(blocks) * len(rooms))
+    return normalize_rate(rate)
 
-def algo_stats_by_building(room_building): # I setup this method to take a room_building to determine what building we are getting data for,
-	rooms = Room.objects.filter(building=room_building) #Get all rooms in this building, could replace room_building with request.POST['building'] or request.GET.get('building')
-	building_stats = {} #Empty dictionary to store {Room number : Room utilization}
-	for r in rooms:
-		building_stats.update({str(r.room_number): get_room_use(r)}) #places the individual room utilization in a dict with the room_number
-	return building_stats #The name of the context object is building_stats, this is the object we would access in the template
+def utilization_rates_by_building(room_building):
+    rooms = Room.objects.filter(building=room_building)
+    building_stats = {}
+    for room in rooms:
+        key = str(room.room_number)
+        building_stats[key] = room_utilization_rate(room)
+    return building_stats
 
 def index(request):
-    """
-        create room data: (this is simple graph)
-        values: count the number of builds
-        annotate: add hover label to show data, capacity_count is variable
-                  that holds the sum of all room_capacity
-        order_by: order by building data
-    """
-    if request.method == 'POST':
-        builds = request.POST['select_building']
-        if builds == 'Select Building':
-            return render(request, {'error':'No selection made'})
-        dataset = algo_stats_by_building(builds)
+    template_parameters = {
+        'algo_stats': 0,
+        'building': set([room.building for room in Room.objects.all()])
+    }
 
-        """
-            store list of data
-            categories: contains category data
-            room_capacity_data: contains room capacity
-        """
-        categories = list()
-        room_capacity_data = list()
+    try:
+        latest_run = Run.objects.latest('id').id
+    except Run.DoesNotExist:
+        template_parameters['error'] = 'The scheduler hasn\'t been run yet'
+        return render(request, 'index.html', template_parameters)
 
-        for key, util_value in dataset.items():
-            # append building data to categories list
-            categories.append(builds+" "+str(key))
-            # append the room capacity using 'capacity_count' variable
-            #room_capacity_data.append(entry['capacity_count'])
-            room_capacity_data.append(util_value)
+    try:
+        template_parameters['algo_stats'] = total_utilization_rate(latest_run)
+    except ZeroDivisionError:
+        template_parameters['error'] = 'No rooms and/or time blocks present in the system'
+        return render(request, 'index.html', template_parameters)
 
-        """
-            defined data on our graph
-            name: graph name
-            data: the room capacity by each building
-            color: the color of the graph
-        """
-        room_capacity_data = {
-            'name': 'Overall Room Cap.',
-            'data': room_capacity_data,
-            'color': '#0095ff'
-        }
+    if request.method != 'POST':
+        return render(request, 'index.html', template_parameters)
 
-        """
-            defined chart
-            chart: defined chart type
-            title, xAxis, yAxis:
-            series: plot the data
-        """
-        chart = {
-            'chart': {'type': 'column'},
-            'title': {'text': 'Room Capacity by each building'},
-            'xAxis': {'categories': categories},
-            'yAxis': { 'title': { 'text': 'Room Capacity'}, 'visible': 'true' },
-            'series': [room_capacity_data],
-            }
+    building_name = request.POST['select_building']
+    if building_name == 'Select Building':
+        template_paremters['error'] = 'Please select a building'
+        return render(request, 'index.html', template_parameters)
+    dataset = utilization_rates_by_building(building_name)
 
-        # dump our graph data into json and use tha for calling in our html page
-        dump = json.dumps(chart)
-        return render(request, 'index.html', {
-        'chart': dump,
-        'algo_stats':algo_stats_total,
-        'building': show_building(request)})
-    else:
-        return render(request, 'index.html', {'algo_stats':algo_stats_total,
-        'building': show_building(request)})
+    room_names = []
+    room_utilization_rates = []
+    for key, rate in dataset.items():
+        room_names.append(building_name + " " + str(key))
+        room_utilization_rates.append(rate)
+
+    room_utilization_rates = {
+        'name': 'Utilization rate',
+        'data': room_utilization_rates,
+        'color': '#0095ff'
+    }
+
+    chart = {
+        'chart': {'type': 'column'},
+        'title': {'text': 'Room utilization for {}'.format(building_name)},
+        'xAxis': {'categories': room_names},
+        'yAxis': { 'title': { 'text': 'Utilization rate'}, 'visible': 'true' },
+        'series': [room_utilization_rates],
+    }
+
+    # dump our graph data into json and use tha for calling in our html page
+    template_parameters['chart'] = json.dumps(chart)
+    return render(request, 'index.html', template_parameters)
