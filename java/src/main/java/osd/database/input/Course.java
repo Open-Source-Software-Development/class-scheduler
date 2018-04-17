@@ -15,11 +15,13 @@ import java.util.stream.Stream;
 public class Course extends SchedulingElement {
 
     private final int baseSectionCount;
+    private final String program;
 
     @RecordConversion
     Course(final CourseRecord record, final RecordAccession recordAccession) {
         super(record.getId(), record.getName());
         this.baseSectionCount = record.getBaseSectionCount();
+        this.program = record.getProgram();
     }
 
     /**
@@ -42,6 +44,14 @@ public class Course extends SchedulingElement {
     public Function<Block, Stream<Block>> getBlockingStrategy() {
         // TODO: proper implementation
         return BlockingStrategy.PAIR;
+    }
+
+    /**
+     * Returns the program/subject of this course.
+     * @return what program this course is in
+     */
+    public String getProgram() {
+        return program;
     }
 
 }

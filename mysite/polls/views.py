@@ -98,7 +98,6 @@ def update_professor_constraints(professor, post_data):
     return result
 
 def course_selection(request):
-    courses = Course.objects.all()
     running_filter = request.GET.get('running-list')
     if running_filter == None:
         running_filter = 'None'
@@ -125,10 +124,12 @@ def course_selection(request):
     # else:
         # courses = Course.objects.exclude(id__in=excluded_courses)
 
-    program_restriction = Course.objects.filter().values('id')
     season = CourseSeason().get_courses_from_recent_season()
-    running = season.filter(id__in=program_restriction)
+    running = season.filter()
     # running = CourseLevel().get_grade_by_year(year).filter(course__in=program_restriction)
+    
+    already_running = CourseSeason().get_courses_from_recent_season().values('id')
+    courses = Course.objects.exclude(id__in=already_running)
 
     for course in selected:
         CourseSeason().add_course_season(course)
