@@ -22,7 +22,7 @@ class Considerations {
 
     /**
      * Get a comparator representing all the preferences for this schedule.
-     * Since base preferences are not referentially transparent, we need to
+     * Since rules preferences are not referentially transparent, we need to
      * supply {@linkplain Lookups some additional context}. The resulting
      * comparator sorts hunks with a higher preference score before those
      * with a lower preference score.
@@ -46,11 +46,11 @@ class Considerations {
     }
 
     /**
-     * Get a predicate representing the base constraints for this schedule.
-     * Since base constraints are not referentially transparent, we need to
+     * Get a predicate representing the rules constraints for this schedule.
+     * Since rules constraints are not referentially transparent, we need to
      * supply {@linkplain Lookups some additional context}.
      * @param lookups a {@link Lookups} instance representing the schedule so far
-     * @return a predicate representing the base constraints for this schedule
+     * @return a predicate representing the rules constraints for this schedule
      */
     Predicate<Hunk> getBaseConstraints(final Lookups lookups) {
         return hunk -> baseConstraints.test(lookups, hunk);

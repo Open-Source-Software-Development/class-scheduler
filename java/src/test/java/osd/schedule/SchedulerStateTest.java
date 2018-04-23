@@ -101,12 +101,16 @@ class SchedulerStateTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         when(mockSection1.getCourse()).thenReturn(mockCourse1);
+        when(mockCourse1.streamSections()).then(unused -> Stream.of(mockSection1));
         when(mockCourse1.getBlockingStrategy()).thenReturn(blockingStrategy);
         when(mockSection2.getCourse()).thenReturn(mockCourse2);
+        when(mockCourse2.streamSections()).then(unused -> Stream.of(mockSection2));
         when(mockCourse2.getBlockingStrategy()).thenReturn(blockingStrategy);
         when(mockSection3.getCourse()).thenReturn(mockCourse3);
+        when(mockCourse3.streamSections()).then(unused -> Stream.of(mockSection3));
         when(mockCourse3.getBlockingStrategy()).thenReturn(blockingStrategy);
         when(mockSection4.getCourse()).thenReturn(mockCourse4);
+        when(mockCourse4.streamSections()).then(unused -> Stream.of(mockSection4));
         when(mockCourse4.getBlockingStrategy()).thenReturn(blockingStrategy);
         when(mockConsiderations.getUserConstraints()).thenReturn(userConstraints);
         when(mockConsiderations.getBaseConstraints(any())).thenReturn(hunk -> true);
@@ -117,7 +121,7 @@ class SchedulerStateTest {
         when(mockBlock2A.getPairedWith()).thenReturn(mockBlock2B);
         when(mockBlock2B.getPairedWith()).thenReturn(mockBlock2A);
 
-        when(mockSources.get(Course.class).flatMap(Course::streamSections)).then(unused -> Stream.of(mockSection1, mockSection2, mockSection3, mockSection4));
+        when(mockSources.get(Course.class)).then(unused -> Stream.of(mockCourse1, mockCourse2, mockCourse3, mockCourse4));
         when(mockSources.get(Professor.class)).then(unused -> Stream.of(mockProfessor1, mockProfessor2, mockProfessor3));
         when(mockSources.get(Room.class)).then(unused -> Stream.of(mockRoom1, mockRoom2, mockRoom3));
         when(mockSources.get(Block.class)).then(unused -> Stream.of(mockBlock1A, mockBlock1B, mockBlock2A, mockBlock2B));

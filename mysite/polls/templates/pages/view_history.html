@@ -46,6 +46,7 @@
 					
 					<!-- welcome panel bottom -->
 					<div class="panel-footer">
+					<!-- create table and populate it with objects from Hunks model that have the requested Season ID using for loop -->
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
@@ -55,6 +56,7 @@
 								<th width="120px">Time Block</th>
 							</tr>
 						</thead>
+						<!-- begin for loop -->
 							{% for item in query_results %}
 							<tr> 
 								<td width="120px">{{ item.section }}</td>
@@ -63,6 +65,7 @@
 								<td width="120px">{{ item.block }}</td>
 							</tr>
 							{% endfor %}
+						<!-- end for loop -->
 					</table>	
 					</div>	
 				</div>
