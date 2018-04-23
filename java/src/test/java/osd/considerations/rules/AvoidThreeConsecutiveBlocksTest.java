@@ -1,4 +1,4 @@
-package osd.considerations.base;
+package osd.considerations.rules;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

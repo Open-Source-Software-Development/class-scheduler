@@ -1,14 +1,13 @@
-package osd.considerations.base;
+package osd.considerations.rules;
 
 import osd.considerations.BaseConstraint;
 import osd.considerations.Constraint;
 import osd.schedule.Lookups;
 import osd.database.input.*;
-import osd.schedule.Hunk;
 
-import java.util.function.Predicate;
+class RoomCanOnlyHostCourseOfSameProgram implements BaseConstraint {
 
-class RoomDivision implements BaseConstraint {
+    // TODO: this should really be applied "early", as user constraints are
 
     @Override
     public Constraint bind(final Lookups lookups) {
