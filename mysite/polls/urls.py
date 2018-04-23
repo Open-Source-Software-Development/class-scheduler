@@ -6,8 +6,7 @@ import polls.views
 from django.contrib import admin
 import scheduler.views
 
-## TODO: Documentation
-#
+#URL patterns that will be loaded by the website if added onto the URL. (Ex. www.website.com/[pattern])
 urlpatterns = [
     url(r'^$', polls.views.loginUser, name='login'),
     url(r'^index/', polls.views.index, name='index'),

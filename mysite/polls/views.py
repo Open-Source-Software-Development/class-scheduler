@@ -24,7 +24,7 @@ from django.db.models import Count, Q
 import json
 from django.db.models import Sum
 
-
+#View to show template page for the website that just contains the navigation bars
 def blank(request):
     return render(request, 'blank.html')
 
@@ -91,6 +91,9 @@ def update_professor_constraints(professor, post_data):
     result['message'] = 'Settings applied'
     return result
 
+#Allows user to select courses from a master list, and move them into a running list that will then be updated based on
+#what is in the running list when applied. Populates both lists by course objects that are in the master list of course
+#objects, and the course objects in the season in the database.
 def course_selection(request):
     running_filter = request.GET.get('running-list')
     if running_filter == None:
@@ -130,7 +133,9 @@ def course_selection(request):
         CourseSeason().remove_course_season(course)
     return render(request, 'PDcoursesSelector.html', {'courses': courses, 'selected': selected, 'running': running, 'removed': removed, 'programs': programs, 'running_filter': running_filter, 'course_filter': course_filter})
 
-
+#Currently not in use, when creating this page we found out that selection of courses does not change when viewed by a PD or DH.
+#This page would allow for the user to select a year, and add courses to each years running list from the master list. This was
+#depreciated for the reason above. Currently redirects to course_selection view.
 def course_review(request):
     return redirect(course_selection)
 #    programs = [i['program'] for i in list(Course.objects.order_by().values('program').distinct())]
@@ -216,8 +221,10 @@ def results(request):
 
         return render(request, 'results.html', {'algo_results': algo_results})
 
-## TODO: Documentation
-#
+#Currently not compatable with user account and professor object relation, as when a user changes their account
+#name, the relation between the professor object and account is lost, as the relation is based on name. Allows
+#user to enter in desired password, username, first name, last name, and email, and will change current ones to
+#entered ones. If desired username is taken, an error will be thrown.
 def userSettings(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -252,8 +259,9 @@ def userSettings(request):
     else:
         return render(request, 'userSettings.html')
 
-## TODO: Documentation
-#
+#Called when user wants to create an account. This is mainly used for testing purposes, as accounts will be entered
+#in manually by the IT team to make sure accounts relate to professor objects. Takes entered credentials, and creates
+#an account with desired username and password. If passwords do not match, or username is taken, page will reload with error
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
@@ -268,14 +276,13 @@ def signup(request):
     else:
         return render(request, 'signup.html')
 
-## TODO: Documentation
-#
+#Called when user wants to log out, calls Django logout function with user object, then redirects to login page
 def logout_view(request):
     logout(request)
     return render(request, 'Login.html')
 
-## TODO: Documentation
-#
+#Called when user tries to access website when not logged in, tries to log in with entered credentials
+#if entered username and password does not match, reload page with error. if successful then redirect to index
 def loginUser(request):
     if request.user.is_authenticated:
         return index(request)
