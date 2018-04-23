@@ -31,7 +31,6 @@ class SchedulerCandidateTest {
     are complete.
      */
 
-    private final List<Section> sections = new ArrayList<>();
     private final List<Block> blocks = new ArrayList<>();
     private final List<Room> rooms = new ArrayList<>();
     private final List<Professor> professors = new ArrayList<>();
@@ -50,7 +49,7 @@ class SchedulerCandidateTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(mockSources.get(Course.class).flatMap(Course::streamSections)).then(unused -> sections.stream());
+        when(mockSources.get(Course.class)).then(unused -> Stream.of(mockCourse1, mockCourse2));
         when(mockSources.get(Block.class)).then(unused -> blocks.stream());
         when(mockSources.get(Room.class)).then(unused -> rooms.stream());
         when(mockSources.get(Professor.class)).then(unused -> professors.stream());
@@ -86,7 +85,7 @@ class SchedulerCandidateTest {
                 Comparator.comparingInt(hunk -> (hunk.getProfessor() == mockProfessor2 ? 0 : 1))
         );
 
-        // No base constraints.
+        // No rules constraints.
         when(mockConsiderations.getBaseConstraints(any())).thenReturn(hunk -> true);
 
         when(mockCourse1.getBlockingStrategy()).thenReturn(Stream::of);
@@ -94,8 +93,8 @@ class SchedulerCandidateTest {
         when(mockSection1.getCourse()).thenReturn(mockCourse1);
         when(mockSection2.getCourse()).thenReturn(mockCourse2);
 
-        sections.add(mockSection1);
-        sections.add(mockSection2);
+        when(mockCourse1.streamSections()).then(unused -> Stream.of(mockSection1));
+        when(mockCourse2.streamSections()).then(unused -> Stream.of(mockSection2));
         professors.add(mockProfessor1);
         professors.add(mockProfessor2);
         rooms.add(mockRoom1);

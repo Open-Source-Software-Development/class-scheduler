@@ -1,4 +1,4 @@
-package osd.considerations.base;
+package osd.considerations.rules;
 
 import osd.considerations.BasePreference;
 import osd.considerations.Preference;
@@ -12,14 +12,14 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 /**
- * A base preference that discourages back-to-back-to-back courses.
+ * A rules preference that discourages back-to-back-to-back courses.
  */
 class AvoidThreeConsecutiveBlocks implements BasePreference {
 
     @Override
     public int worth() {
         // Feel free to tinker with this value, but for
-        // the base preference to have desired behavior,
+        // the rules preference to have desired behavior,
         // the worth needs to be negative... otherwise
         // we'd *encourage* back-to-back-to-back classes.
         return -5;
