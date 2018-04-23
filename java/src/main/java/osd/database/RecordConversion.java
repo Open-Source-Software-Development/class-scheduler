@@ -18,6 +18,14 @@ import java.util.function.Predicate;
 @Target(ElementType.CONSTRUCTOR)
 public @interface RecordConversion {
 
+    /**
+     * Implements "partial functions" among conversions. The indicated class
+     * should be a {@linkplain Predicate predicate} of whatever the annotated constructor's first
+     * argument is. Only records matching that predicate are converted.
+     * @deprecated better API TBD
+     * @return a predicate over the record type
+     */
+    @Deprecated
     Class<? extends Predicate> filter() default RecordConversionPredicate.Dummy.class;
 
 }

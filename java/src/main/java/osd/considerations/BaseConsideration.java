@@ -12,7 +12,7 @@ import osd.schedule.Lookups;
  * {@linkplain Lookups the full scheduling data}.
  * <p>Note that these considerations are bound and evaluated <em>before</em>
  * the hunk is added to the schedule. In practice, this means that the lookups
- * will not find it.</p>
+ * will <em>not</em> find the hunk that's about to be added. Be careful!!</p>
  * @param <T> {@link Constraint} or {@link Preference} as appropriate
  */
 interface BaseConsideration<T> {

@@ -7,6 +7,8 @@ import osd.database.input.*;
 
 class RoomCanOnlyHostCourseOfSameProgram implements BaseConstraint {
 
+    // TODO: this should really be applied "early", as user constraints are
+
     @Override
     public Constraint bind(final Lookups lookups) {
         return h -> {

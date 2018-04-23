@@ -6,7 +6,7 @@ import osd.database.input.Section;
 import java.util.stream.Stream;
 
 /**
- * Additional information available to rules constraints and rules preferences.
+ * Additional information available to base constraints and base preferences.
  */
 public interface Lookups {
 
