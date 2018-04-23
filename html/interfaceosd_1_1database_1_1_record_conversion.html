@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -82,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>osd</b></li><li class="navelem"><b>database</b></li><li class="navelem"><a class="el" href="interfaceosd_1_1database_1_1_record_conversion.html">RecordConversion</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceosd.html">osd</a></li><li class="navelem"><a class="el" href="namespaceosd_1_1database.html">database</a></li><li class="navelem"><a class="el" href="interfaceosd_1_1database_1_1_record_conversion.html">RecordConversion</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -96,14 +97,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af8d9b06c0265ee541321943cee36a0ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8d9b06c0265ee541321943cee36a0ce"></a>
-Class&lt;?extends Predicate &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>filter</b> () default RecordConversionPredicate.Dummy.class</td></tr>
+<tr class="memitem:af8d9b06c0265ee541321943cee36a0ce"><td class="memItemLeft" align="right" valign="top">Class&lt;?extends Predicate &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceosd_1_1database_1_1_record_conversion.html#af8d9b06c0265ee541321943cee36a0ce">filter</a> () default RecordConversionPredicate.Dummy.class</td></tr>
 <tr class="separator:af8d9b06c0265ee541321943cee36a0ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Indicates that an input element can be constructed from a record type. The annotated constructor should take exactly two arguments. The first is an instance of the record type in question. The second is an <a class="el" href="classosd_1_1database_1_1_record_accession.html">RecordAccession</a> instance that may be used to assist the conversion. Such a constructor must not throw any checked exceptions. </p>
-<dl class="section see"><dt>See Also</dt><dd>#filter() </dd></dl>
-</div><hr/>The documentation for this interface was generated from the following file:<ul>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="interfaceosd_1_1database_1_1_record_conversion.html#af8d9b06c0265ee541321943cee36a0ce">filter()</a> </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af8d9b06c0265ee541321943cee36a0ce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Class&lt;? extends Predicate&gt; osd.database.RecordConversion.filter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Implements "partial functions" among conversions. The indicated class should be a  Predicate predicate} of whatever the annotated constructor's first argument is. Only records matching that predicate are converted. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>better API TBD <dl class="section return"><dt>Returns</dt><dd>a predicate over the record type </dd></dl>
+</dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this interface was generated from the following file:<ul>
 <li>/home/travis/build/Open-Source-Software-Development/class-scheduler/java/src/main/java/osd/database/RecordConversion.java</li>
 </ul>
 </div><!-- contents -->

@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -137,18 +138,20 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>course_number</b> = 
 <div class="textblock"><pre class="fragment">    Table: Room
     PrimaryKey: Composite (building, room_number)
     Columns:
-        room_number: PositiveInteger
-            - The number label for a room (ex. 220)
+
         building: CharField(Max Lenghth: 20)
             - The name of the building the room is in (ex. Joyce)
+        room_number: PositiveInteger
+            - The number label for a room (ex. 220)
+        room_capacity: PositiveInteger
+            - The number of students a room can hold
+        room_type: Foreign Key (Room Type)
         division: Foreign Key (Division)
         subject: CharField(Max Lenghth: 20)
             - The subject taught in the room (ex. EGP)
             - This field constrains the classes taught down to the programs listed.
         style: CharField(Max Lenghth: 20)
-            - The style of course taught in a room (ex. Studio)
-        room_type: Foreign Key (Room Type)
-</pre> </div><hr/>The documentation for this class was generated from the following file:<ul>
+            - The style of course taught in a room (ex. Studio)</pre> </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/travis/build/Open-Source-Software-Development/class-scheduler/mysite/scheduler/models.py</li>
 </ul>
 </div><!-- contents -->

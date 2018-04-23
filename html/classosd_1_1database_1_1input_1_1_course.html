@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -82,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>osd</b></li><li class="navelem"><b>database</b></li><li class="navelem"><b>input</b></li><li class="navelem"><a class="el" href="classosd_1_1database_1_1input_1_1_course.html">Course</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceosd.html">osd</a></li><li class="navelem"><a class="el" href="namespaceosd_1_1database.html">database</a></li><li class="navelem"><a class="el" href="namespaceosd_1_1database_1_1input.html">input</a></li><li class="navelem"><a class="el" href="classosd_1_1database_1_1input_1_1_course.html">Course</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -102,6 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a42e007b3b2935de3ad35e8b3df313807"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cce6a51fff2b148b48e76dd9634ed8d"><td class="memItemLeft" align="right" valign="top">Function&lt; <a class="el" href="classosd_1_1database_1_1input_1_1_block.html">Block</a>, Stream&lt; <a class="el" href="classosd_1_1database_1_1input_1_1_block.html">Block</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classosd_1_1database_1_1input_1_1_course.html#a1cce6a51fff2b148b48e76dd9634ed8d">getBlockingStrategy</a> ()</td></tr>
 <tr class="separator:a1cce6a51fff2b148b48e76dd9634ed8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ce15585d73c7560e4745f8c36e5a45a"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classosd_1_1database_1_1input_1_1_course.html#a1ce15585d73c7560e4745f8c36e5a45a">getProgram</a> ()</td></tr>
+<tr class="separator:a1ce15585d73c7560e4745f8c36e5a45a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a specific course. The most important element of a course is its sections, so that's what this focuses on. </p>
@@ -129,6 +132,31 @@ Public Member Functions</h2></td></tr>
 <p>Indicate how to generate block pairs for this course. </p>
 <dl class="section return"><dt>Returns</dt><dd>how to generate block pairs for this course </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd>BlockingStrategy </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1ce15585d73c7560e4745f8c36e5a45a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">String osd.database.input.Course.getProgram </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the program/subject of this course. </p>
+<dl class="section return"><dt>Returns</dt><dd>what program this course is in </dd></dl>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['test',['test',['../interfaceosd_1_1considerations_1_1_constraint.html#a50c53a0c89a4cfb8b58deae081ca3787',1,'osd.considerations.Constraint.test()'],['../classosd_1_1considerations_1_1_user_constraint.html#a9378d413848106a42ede0782730c0408',1,'osd.considerations.UserConstraint.test()']]]
+  ['streamsections',['streamSections',['../classosd_1_1database_1_1input_1_1_course.html#a42e007b3b2935de3ad35e8b3df313807',1,'osd::database::input::Course']]]
 ];

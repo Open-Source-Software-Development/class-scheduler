@@ -1,7 +1,13 @@
 var searchData=
 [
   ['get',['get',['../classosd_1_1util_1_1relation_1_1_relation_3_01_k_00_01_l_00_01_v_00_01_w_01_4.html#aacda8aa86e25b21488c4f2b4f67f88fe',1,'osd::util::relation::Relation&lt; K, L, V, W &gt;']]],
+  ['get_5fblocks',['get_blocks',['../classscheduler_1_1blockcalendar_1_1_block_calendar.html#aaaaf19723c117a36cc8d4a800d6bc75f',1,'scheduler::blockcalendar::BlockCalendar']]],
   ['get_5fblocks_5fby_5fday',['get_blocks_by_day',['../classscheduler_1_1blockcalendar_1_1_block_calendar.html#a6ae5b4451575209a8d94617805275636',1,'scheduler::blockcalendar::BlockCalendar']]],
+  ['get_5fcourse_5fby_5fid',['get_course_by_id',['../classscheduler_1_1course_constraints_1_1_course_level.html#a0379807777941fff1358e8fcda6f60f1',1,'scheduler::courseConstraints::CourseLevel']]],
+  ['get_5fcourse_5fby_5ftitle',['get_course_by_title',['../classscheduler_1_1course_constraints_1_1_course_level.html#ab6320fbf9e6d8279675e349b83a37c2e',1,'scheduler::courseConstraints::CourseLevel']]],
+  ['get_5fdays',['get_days',['../classscheduler_1_1blockcalendar_1_1_block_calendar.html#aeb7ede3e4d28688562f256c1a7baeeea',1,'scheduler::blockcalendar::BlockCalendar']]],
+  ['get_5fgrade_5fby_5fyear',['get_grade_by_year',['../classscheduler_1_1course_constraints_1_1_course_level.html#aa3938a587dfe7b426597cb42a517445b',1,'scheduler::courseConstraints::CourseLevel']]],
+  ['get_5fgrade_5flevel',['get_grade_level',['../classscheduler_1_1course_constraints_1_1_course_level.html#af1f050c5471d30d5d4a77b82a6c38c17',1,'scheduler::courseConstraints::CourseLevel']]],
   ['get_5fmodels',['get_models',['../classscheduler_1_1csv__parser_1_1_parser.html#aa027bee616fae829ff53a1591818f2d8',1,'scheduler::csv_parser::Parser']]],
   ['get_5fprofessor_5favailable',['get_professor_available',['../classscheduler_1_1blockcalendar_1_1_block_calendar.html#a7f7b78525ebf51679cbdd336f57b156a',1,'scheduler::blockcalendar::BlockCalendar']]],
   ['get_5funique_5ftimes',['get_unique_times',['../classscheduler_1_1blockcalendar_1_1_block_calendar.html#ac60efd8c37dc72880438b342eaf5317c',1,'scheduler::blockcalendar::BlockCalendar']]],
@@ -16,7 +22,9 @@ var searchData=
   ['getpairedwith',['getPairedWith',['../classosd_1_1database_1_1input_1_1_block.html#abb2a073612f36ea627b4c5e147eb8d8c',1,'osd::database::input::Block']]],
   ['getprevious',['getPrevious',['../classosd_1_1database_1_1input_1_1_block.html#a1179dd97dd9d3a486669eeb3e1a0228d',1,'osd::database::input::Block']]],
   ['getprofessor',['getProfessor',['../classosd_1_1schedule_1_1_hunk.html#a3b62b424e4223b9af1de49c32333b18e',1,'osd::schedule::Hunk']]],
+  ['getprogram',['getProgram',['../classosd_1_1database_1_1input_1_1_course.html#a1ce15585d73c7560e4745f8c36e5a45a',1,'osd::database::input::Course']]],
   ['getroom',['getRoom',['../classosd_1_1schedule_1_1_hunk.html#a0492a9bd927a9aa7ddad0dfbd928b7e9',1,'osd::schedule::Hunk']]],
   ['getroomtype',['getRoomType',['../classosd_1_1database_1_1input_1_1_room.html#acd83e63aaa9d93e4d5014ca4ec81719a',1,'osd::database::input::Room']]],
-  ['getsection',['getSection',['../classosd_1_1schedule_1_1_hunk.html#ad4503df58c025daf217ab97ed1547003',1,'osd::schedule::Hunk']]]
+  ['getsection',['getSection',['../classosd_1_1schedule_1_1_hunk.html#ad4503df58c025daf217ab97ed1547003',1,'osd::schedule::Hunk']]],
+  ['getsubject',['getSubject',['../classosd_1_1database_1_1input_1_1_room.html#a64bb7d1402b09e66b6ffb27c53b45db6',1,'osd::database::input::Room']]]
 ];

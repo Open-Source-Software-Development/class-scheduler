@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -64,7 +65,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -78,8 +79,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Class Scheduler Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>OSD</p>
-<p>Documentation: <a href="https://open-source-software-development.github.io/class-scheduler/html/">https://open-source-software-development.github.io/class-scheduler/html/</a> </p>
+<div class="textblock"><p>Documentation: <a href="https://open-source-software-development.github.io/class-scheduler/html/">https://open-source-software-development.github.io/class-scheduler/html/</a></p>
+<h1>Algorithm overview</h1>
+<p>The scheduler algorithm is a variant of <a href="https://en.wikipedia.org/wiki/Backtracking">backtracking search</a>. In brief, we start with an empty schedule, and repeatedly add entries to it. If the schedule ever gets into an invalid state - if all the professors who can teach a class are unavailable, and that class still has unscheduled sections, for example - the algorithm backs up until it gets back to a valid state. In order to minimize the number of backtracks needed, the algorithm tries to pick the hardest courses and schedule them first.</p>
+<p>Consule the various <code>package-info.java</code> files for specifics. The root package (<code>osd</code>) is a good place to start. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
