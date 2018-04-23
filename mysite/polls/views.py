@@ -49,15 +49,22 @@ def PD_professor_settings(request):
     template_args['profs'] = Professor.objects.all()
     template_args['selected'] = selected
     template_args['pd'] = True
-    return render(request, 'profSettings.html', template_args, selected)
+    return render(request, 'profSettings.html', template_arg)
 
 def professor_settings_helper(professor, request):
+    """Generate template parameters for profSettings.html.
+
+    Generate template parameters to display the indicate professor's schedule.
+    If appropriate, first apply any update specified in the request.
+    """
+
     if request.method == 'POST':
         return update_professor_constraints(professor, request.POST)
     else:
         return get_professor_constraints(professor)
 
 def get_professor_constraints(professor):
+    """Get profSettings.html parameters to display some professor's schedule."""
     #Get list of current professors constraints
     calendar = BlockCalendar(professor)
     constraints = calendar.get_professor_available()
@@ -75,6 +82,12 @@ def get_professor_constraints(professor):
     return {'data': constraints, 'blocks_by_time': blocks_by_time, 'days': DAYS, 'end_times':end_times}
 
 def update_professor_constraints(professor, post_data):
+    """Update a professor's schedule.
+
+    After making the update, defer to `get_professor_constraints` to get
+    template parameters for profSettings.html to display the updated schedule.
+    """
+
     result = get_professor_constraints(professor)
     constraints = result['data']
 
