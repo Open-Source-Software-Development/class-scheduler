@@ -8,7 +8,7 @@ import osd.schedule.Hunk;
 import java.util.function.Function;
 
 /**
- * Abstract base class for user preferences and constraints. User preferences
+ * Abstract rules class for user preferences and constraints. User preferences
  * and constraints are both represented in the database as pairs of scheduling
  * elements. This class exists as a convenience to help read them in.
  * Interpretation of those element pairs is up to the specific implementation.

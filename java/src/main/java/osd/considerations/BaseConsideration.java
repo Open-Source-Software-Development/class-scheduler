@@ -3,8 +3,8 @@ package osd.considerations;
 import osd.schedule.Lookups;
 
 /**
- * Superinterface for base constraints and base preferences. Unlike user
- * considerations, base considerations are not referentially transparent.
+ * Superinterface for rules constraints and rules preferences. Unlike user
+ * considerations, rules considerations are not referentially transparent.
  * For example, determining whether or not a professor is teaching too many
  * courses is a function of the entire schedule, not just the hunk being
  * tested. Base considerations, therefore, are implemented as a "wrapper"
@@ -18,7 +18,7 @@ import osd.schedule.Lookups;
 interface BaseConsideration<T> {
 
     /**
-     * Binds this base consideration to the current schedule data.
+     * Binds this rules consideration to the current schedule data.
      * <p>Example implementation:
      * {@code return h -> {
      *     final Professor professor = h.getProfessor();

@@ -85,7 +85,7 @@ class SchedulerCandidateTest {
                 Comparator.comparingInt(hunk -> (hunk.getProfessor() == mockProfessor2 ? 0 : 1))
         );
 
-        // No base constraints.
+        // No rules constraints.
         when(mockConsiderations.getBaseConstraints(any())).thenReturn(hunk -> true);
 
         when(mockCourse1.getBlockingStrategy()).thenReturn(Stream::of);
