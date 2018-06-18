@@ -1,0 +1,253 @@
+body {
+	background-color: #fff;
+}
+
+.no-break {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.col-md {
+  height : 8em;
+  margin-left: 40px;
+  outline: 2px solid #ccc;
+}
+
+.row
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.ClickableTimeBlock {
+
+}
+
+.center {
+	position: absolute;
+     margin: auto;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+}
+
+.inline {
+	display: inline;
+}
+
+.wrapper {
+	text-align: center;
+}
+
+.spacing {
+	padding: 10px 0px 5px 0px;
+}
+
+.linkHide {
+	text-decoration: none;
+	color: black;
+}
+
+.themeLight {
+	color: #3278b3;
+}
+
+.themeDark {
+	color: #0057A1;
+}
+
+.smallButton {
+	background-color: #3278b3;
+	border: none;
+	width: 10%;
+	color: white;
+	padding: 3px 10px;
+	text-align: center;
+	font-size: 14px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+.smallButton:focus {
+	outline:0;
+}
+
+.smallButton:hover {
+	background-color: #0057A1;
+}
+
+.scrollableMenu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.scrollableMenuCourses {
+    height: auto;
+    max-height: 30vh;
+    overflow-x: hidden;
+}
+
+.schedulerActive {
+	opacity = 0.5;
+	background-color = gray;
+	pointer-events = none;
+}
+
+#profSettingsHead {
+	margin: 25px auto;
+	width: 100%;
+}
+
+#loginFields {
+	width: 98%;
+	height: 36px;
+	border-radius: 6px;
+}
+
+#loginFields[type=text]:focus, #loginFields[type=password]:focus {
+	border: 2px solid #0057A1;
+	outline: none;
+}
+
+#loginFields[type=text], #loginFields[type=password] {
+	padding: 0px 5px;
+	font-size: 16px;
+}
+
+#loginButton {
+	background-color: #3278b3;
+	border: none;
+	width: 98%;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+	display: block;
+}
+
+#loginButton:hover {
+	background-color: #0057A1;
+}
+
+#logo {
+	height: auto;
+	width: 60%;
+	margin: 20px 0px;
+}
+
+#logo2 {
+	height: 5%;
+	width: 20%;
+	margin: 20px 0px;
+}
+
+#forgotPass {
+	margin:auto 1% auto auto;
+	float: right;
+}
+
+#login {
+	width: 50%;
+    height: 60%;
+}
+
+#signUp {
+	margin:auto auto auto 1%;
+}
+
+#timeBlocks {
+	height: 100%;
+	text-align: center;
+}
+
+#loginForm {
+	position: relative;
+}
+
+#goodMsg div {
+	background-color: #f5f5f5;
+	border: 3px solid #3bee3b;
+	border-radius: 8px;
+	color: black;
+	font-size: 120%;
+	cursor: pointer;
+    width: 80%;
+    height: auto;
+	margin: 10px auto;
+}
+
+#goodMsg div:hover {
+	background-color: #c4c4c4;
+}
+
+#goodMsg div p {
+	margin: 5px auto 5px auto;
+	line-height: 100%;
+}
+
+#errorMsg div {
+	background-color: #f5f5f5;
+	border: 3px solid #EE3B3B;
+	border-radius: 8px;
+	color: black;
+	font-size: 120%;
+	cursor: pointer;
+    width: 80%;
+    height: auto;
+	margin: 10px auto;
+}
+
+#errorMsg div:hover {
+	background-color: #c4c4c4;
+}
+
+#errorMsg div p {
+	margin: 5px auto 5px auto;
+	line-height: 100%;
+}
+
+#timeTable, #timeTable table tbody th, #timeTable table thead th{
+	text-align: center;
+	user-select: none;
+}
+
+#dropdownMenu {
+	margin: 0px 0px 15px 45%;
+}
+
+#dropdownMenu button{
+	background-color: #3278b3;
+	border: none;
+	width: 98%;
+	color: white;
+	padding: 12px 24px;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#dropdownMenu:hover button{
+	background-color: #0057A1;
+}
+
+#ScrollMenuSearch {
+    margin: -5px auto 10px auto;
+}
+
+#yearSelect {
+    width: 100%;
+    margin: 0 auto;
+}

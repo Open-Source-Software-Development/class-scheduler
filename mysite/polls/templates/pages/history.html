@@ -1,0 +1,95 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+
+    <title>Champlain Scheduler</title>
+
+    <!-- bootstrap css -->
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- SB admin 2 css -->
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<!-- custom css -->
+    <link href="{% static 'css/cssLocal.css' %}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+	<!-- page content -->
+    <div id="wrapper">
+	
+        {% include 'blank.html' %}
+
+		<!-- page content -->
+        <div id="page-wrapper">
+            
+			<!-- PD review panel -->
+			<div id="profSettingsHead">
+			
+				<!-- PD welcome panel -->
+				<div class="panel panel-primary">
+				
+					<!-- welcome panel top -->
+					<div class="panel-heading">
+					
+						<H1 id="titleScreen"> Review Previous Schedules</H1>
+						
+					</div>
+					
+					<!-- welcome panel bottom -->
+					<div class="panel-footer">
+						
+						<h4> Hello, {{request.user.username}}</h4>
+						<h6>Choose a season to view the schedules that were generated for it</h6>
+						<!-- create form that submits to view_history page -->
+						<form action="{% url 'view_history' %}" method="post">
+						{% csrf_token %}
+								<div class="spacing wrapper">
+									<h4>Choose a Season:</h4>
+									<select name="item">
+										<option value="">Select...</option>
+										<!-- pull objects from Seasons model to display in drop down list, use season's ID as select value -->
+										{% for item in seasonList %}
+										<option <option value="{{ item.id }}" {% if selected_item == item %}selected{% endif %}>{{ item.name }}</option>
+										{% endfor %}
+									</select>
+								</div>
+
+							<input type="submit" value="Submit" id="loginButton">
+						</form>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+    <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+    <script src="{% static 'js/professorSettings.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#sidebar").mCustomScrollbar({
+          theme: "minimal"
+        });
+
+        $('#sidebarCollapse').on('click', function() {
+          $('#sidebar, #content').toggleClass('active');
+          $('.collapse.in').toggleClass('in');
+          $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+      });
+    </script>
+</body>
+</html>

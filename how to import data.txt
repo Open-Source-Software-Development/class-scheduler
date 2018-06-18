@@ -1,0 +1,18 @@
+full faculty data are imported correctly.
+
+to import data there are few commands needs to be typed:
+
+for faculty data: type
+>>> python manage.py import_faculty_data
+
+*** THIS COMMANDS BELOW IS NOT COMPLETE YET
+for course data: type
+>>> python manage.py import_course_data
+
+for time-block data: type
+>>> python manage.py import_tblock_data
+
+for room data: type
+>>> python manage.py import_room_data
+
+Front-end database analysis >>> visit 127.0.0.1:8000/details/

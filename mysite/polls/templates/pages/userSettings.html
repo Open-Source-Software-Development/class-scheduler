@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <title>Champlain Scheduler</title>
+
+    <!-- bootstrap css -->
+    <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- metis graphs css -->
+    <link href="{% static '/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+	<!-- morris graphs css -->
+	<link href="{% static '/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+	<!-- SB admin 2 css -->
+    <link href="{% static '/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	<!-- font awesome css -->
+    <link href="{% static '/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/cssLocal.css' %}">
+
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="wrapper">
+	
+        {% include 'blank.html' %}
+
+		<!-- page content -->
+        <div id="page-wrapper">
+            
+			<div id="profSettingsHead">
+		
+				<!-- user settings panel -->
+				<div class="panel panel-primary">
+				
+					<!-- user setting panel top -->
+					<div class="panel-heading">
+					
+						<H1 id="titleScreen"> User Settings</H1>
+						
+					</div>
+					
+					<!-- user settings form -->
+					<form action="{% url 'userSettings' %}" method="post">
+					{% csrf_token %}
+					
+						<!-- user setting panel bottom -->
+						<div class="panel-footer">
+						
+							<!-- first row of settings form -->
+							<div class="row">
+								
+								<div class="col-lg-6">
+									
+									<!-- username input form -->
+									<div class="spacing wrapper">
+										<h4>Username:</h4>
+										<input id="loginFields" onClick="this.select();" value="{{request.user.username}}" placeholder="Username" name="username" type="text" autofocus>
+									</div>	
+									
+								</div>
+								
+								<div class="col-lg-6">
+
+									<!-- password input form -->
+									<div class="spacing wrapper">
+										<h4>Password:</h4>
+										<input id="loginFields" class="passwordBox" onClick="this.select();" placeholder="Password" name="password" type="password" autofocus>
+									</div>		
+									
+								</div>
+								
+							</div>
+							
+							<!-- second row of settings form -->
+							<div class="row">
+								
+								<div class="col-lg-3">
+									
+									<!-- first name input form -->
+									<div class="spacing wrapper">
+										<h4>First Name:</h4>
+										<input id="loginFields" onClick="this.select();" value="{{request.user.first_name}}" placeholder="First Name" name="first" type="text" autofocus>
+									</div>	
+									
+								</div>
+								
+								<div class="col-lg-3">
+									
+									<!-- last name input form -->
+									<div class="spacing wrapper">
+										<h4>Last Name:</h4>
+										<input id="loginFields" onClick="this.select();" value="{{request.user.last_name}}" placeholder="Last Name" name="last" type="text" autofocus>
+									</div>	
+									
+								</div>
+								
+								<div class="col-lg-6">
+
+									<!-- email input form -->
+									<div class="spacing wrapper">
+										<h4>Email:</h4>
+										<input id="loginFields" onClick="this.select();" value="{{request.user.email}}" placeholder="Email" name="email" type="text" autofocus>
+									</div>		
+									
+								</div>
+								
+							</div>
+							
+							<!-- error message -->
+							{% if error %}
+								<span id="errorMsg" onclick='this.remove(this); return false;'>
+									<div class="panel panel-primary wrapper">
+										<p>
+											{{ error }}
+										</p>
+									</div>
+								</span>
+							{% endif %}
+							
+							<!-- success message -->
+							{% if message %}
+								<span id="goodMsg" onclick='this.remove(this); return false;'>
+									<div class="panel panel-primary wrapper">
+										<p>
+											{{ message }}
+										</p>
+									</div>
+								</span>
+							{% endif %}
+							
+							<!-- user setting form submit button -->
+							<div class="spacing wrapper">
+								<input type="submit" value="Apply Settings" id="loginButton" class="lockout"/>
+							</div>
+							
+						</div>
+					
+					</form>
+					
+				</div>
+		
+			</div>
+			
+        </div>
+
+    </div>
+
+    <!-- jquery javascript -->
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+	<!-- bootstrap javascript -->
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- metis graph javascript -->
+    <script src="{% static '/vendor/metisMenu/metisMenu.min.js' %}"></script>
+	<!-- SB admin 2 javascript -->
+    <script src="{% static '/dist/js/sb-admin-2.js' %}"></script>
+	<!-- custom javascript -->
+	<script src="{% static 'js/professorSettings.js' %}"></script>
+
+</body>
+
+</html>

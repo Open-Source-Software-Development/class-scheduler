@@ -1,0 +1,226 @@
+body {
+	background-color: #f7f7f7;
+}
+
+nav {
+	text-decoration: none;
+	padding-bottom: 20px;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+a:link {
+    color: #0057A1;
+}
+
+a:visited {
+    color: #0057A1;
+}
+
+a:hover {
+    color: #3278b3;
+}
+
+.center {
+	position: absolute;
+     margin: auto;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     width: 50%;
+     height: 60%;
+}
+
+.wrapper {
+	text-align: center;
+}
+
+.spacing {
+	padding: 5px 0px 5px 0px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.linkHide {
+	text-decoration: none;
+	color: black;
+}
+
+.themeLight {
+	color: #3278b3;
+}
+
+.themeDark {
+	color: #0057A1;
+}
+
+#loginFields {
+	width: 98%;
+	height: 36px;
+	border-radius: 6px;
+}
+
+#loginFields[type=text]:focus, #loginFields[type=password]:focus {
+	border: 2px solid #0057A1;
+	outline: none;
+}
+
+#loginFields[type=text], #loginFields[type=password] {
+	padding: 0px 5px;
+	font-size: 16px;
+}
+
+#loginButton {
+	background-color: #3278b3;
+	border: none;
+	width: 98%;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#loginButton:hover {
+	background-color: #0057A1;
+}
+
+#main {
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#container {
+	clear: both;
+	border: 2px solid grey;
+	border-radius: 8px;
+	padding: 5px 15px 15px 10px;
+	background-color: #f2f2f2;
+}
+
+#logo {
+	height: auto;
+	width: 60%;
+	margin: 20px 0px;
+}
+
+#logoutButton {
+	float: right;
+	background-color: #3278b3;
+	border: none;
+	width: 6%;
+	color: white;
+	padding: 5px 19px;
+	text-align: center;
+	font-size: 13px;
+	margin: 2px 2px;
+	cursor: pointer;
+	border-radius: 8px;
+	outline: none;
+	font-weight: bold;
+}
+
+#logoutButton:hover {
+	background-color: #0057A1;
+}
+
+footer {
+	text-align: center;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.tabs-left, .tabs-right {
+border-bottom: none;
+padding-top: 2px;
+}
+.tabs-left {
+border-right: 1px solid #ddd;
+}
+.tabs-right {
+border-left: 1px solid #ddd;
+}
+.tabs-left>li, .tabs-right>li {
+float: none;
+margin-bottom: 2px;
+}
+.tabs-left>li {
+margin-right: -1px;
+}
+.tabs-right>li {
+margin-left: -1px;
+}
+.tabs-left>li.active>a,
+.tabs-left>li.active>a:hover,
+.tabs-left>li.active>a:focus {
+border-bottom-color: #ddd;
+border-right-color: transparent;
+}
+
+.tabs-right>li.active>a,
+.tabs-right>li.active>a:hover,
+.tabs-right>li.active>a:focus {
+border-bottom: 1px solid #ddd;
+border-left-color: transparent;
+}
+.tabs-left>li>a {
+border-radius: 4px 0 0 4px;
+margin-right: 0;
+display:block;
+}
+.tabs-right>li>a {
+border-radius: 0 4px 4px 0;
+margin-right: 0;
+}
+.sideways {
+margin-top:50px;
+border: none;
+position: relative;
+}
+.sideways>li {
+height: 20px;
+width: 120px;
+margin-bottom: 100px;
+}
+.sideways>li>a {
+border-bottom: 1px solid #ddd;
+border-right-color: transparent;
+text-align: center;
+border-radius: 4px 4px 0px 0px;
+}
+.sideways>li.active>a,
+.sideways>li.active>a:hover,
+.sideways>li.active>a:focus {
+border-bottom-color: transparent;
+border-right-color: #ddd;
+border-left-color: #ddd;
+}
+.sideways.tabs-left {
+left: -50px;
+}
+.sideways.tabs-right {
+right: -50px;
+}
+.sideways.tabs-right>li {
+-webkit-transform: rotate(90deg);
+-moz-transform: rotate(90deg);
+-ms-transform: rotate(90deg);
+-o-transform: rotate(90deg);
+transform: rotate(90deg);
+}
+.sideways.tabs-left>li {
+-webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+transform: rotate(-90deg);
+}
