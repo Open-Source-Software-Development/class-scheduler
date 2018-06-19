@@ -49,7 +49,7 @@ def PD_professor_settings(request):
     template_args['profs'] = Professor.objects.all()
     template_args['selected'] = selected
     template_args['pd'] = True
-    return render(request, 'profSettings.html', template_arg)
+    return render(request, 'profSettings.html', template_args)
 
 def professor_settings_helper(professor, request):
     """Generate template parameters for profSettings.html.
